@@ -81,6 +81,13 @@ Run one composer, one renderer and one broadcaster per station.
 
 ## Verification
 
+Every PR runs Python 3.11/3.14 unit checks and a container integration job. The
+integration job builds the actual image, runs tests with FFmpeg installed,
+validates a FluidSynth render and Liquidsoap's script, starts all four services,
+and decodes/measures ten seconds from the real Icecast mount. It removes only
+its own ephemeral Compose project/data. PRs may be merged after these checks pass;
+missing checks do not count as clearance.
+
 ```sh
 python3 -m unittest discover -s tests -v
 docker compose run --rm --no-deps broadcaster liquidsoap --check /app/deploy/radio.liq
