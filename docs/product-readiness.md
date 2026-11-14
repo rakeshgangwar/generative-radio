@@ -70,3 +70,20 @@ The snapshot and restored test data remain in the separate Docker volumes
 This validates local consistency and queue continuity. These volumes are on the
 same host and are not protection against host loss. A shipped operator command,
 off-host copy/retention instructions and target-VPS restore drill remain open.
+
+## Acceptance-script correction and active soak — 15 November 2026
+
+Found and reproduced a validation bug: the recording script returned success
+after a one-second HTTP source ended during a requested five-second capture.
+PR #4 adds a decoded-duration check, rejects invalid durations, removes stale
+analysis and allows an explicit station URL. The exact controlled HTTP fixture
+now returns failure as expected. Five new FFmpeg integration tests pass; combining
+the fix with the musical-variety change in a temporary checkout passes 18 tests.
+PR #4 is based on PR #1 and does not require the pending watchdog implementation.
+
+A new one-hour uninterrupted recording and resource/queue/health monitor started
+at 01:12 on 15 November (Asia/Kolkata). Evidence is being written under
+`artifacts/soak-20261115/`. The active main-checkout script was not edited; the fix
+was made in a separate worktree. Verify the resulting recording's duration
+independently before claiming success. This run is not complete yet, and a soak
+of the eventual watchdog/deployment configuration will still be required.

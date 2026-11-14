@@ -64,6 +64,17 @@ maximum ID 61 in 3.705 seconds. The ready buffer returned to 11 tracks. Details
 and remaining off-host/operator-command work are in `docs/product-readiness.md`.
 No watchdog code has been implemented or deployed yet.
 
+Started a one-hour uninterrupted recording and health/resource monitor at 01:12
+on 15 November, with evidence under `artifacts/soak-20261115/`. During validation,
+reproduced an early-EOF acceptance-script bug and fixed it separately in PR #4:
+the original script accepted one recorded second for five requested seconds.
+The fix rejects it, clears stale analysis and validates input duration. The five
+new capture tests and musical-variety tests pass together (18 total) in an
+assembled temporary checkout. The fix lives in the separate
+`/tmp/generative-radio-capture-duration` worktree and does not alter the script
+currently recording the soak. The hour-long test is still running; verify actual
+duration and metrics after completion before updating its gate.
+
 ### Musical variety implementation — 15 November 2026
 
 User approved and requested implementation of
