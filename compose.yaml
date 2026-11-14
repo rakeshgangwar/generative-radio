@@ -1,0 +1,66 @@
+name: generative-radio
+x-common: &common
+  image: generative-radio:local
+  build: .
+  init: true
+  restart: unless-stopped
+  environment: &environment
+    RADIO_DATA: /data
+    SEGMENT_SECONDS: ${SEGMENT_SECONDS:-120}
+    BUFFER_SECONDS: ${BUFFER_SECONDS:-1200}
+    BPM: ${BPM:-60}
+    STATION_SEED: ${STATION_SEED:-20261114}
+    ICECAST_SOURCE_PASSWORD: ${ICECAST_SOURCE_PASSWORD:-local-source-change-me}
+    ICECAST_ADMIN_PASSWORD: ${ICECAST_ADMIN_PASSWORD:-local-admin-change-me}
+  volumes:
+    - radio-data:/data
+  logging:
+    driver: json-file
+    options:
+      max-size: 10m
+      max-file: "3"
+
+services:
+  composer:
+    <<: *common
+    command: [python, -m, radio, composer]
+    healthcheck:
+      test: [CMD, python, -m, radio, health, --role, composer]
+      interval: 20s
+      timeout: 10s
+      retries: 3
+  renderer:
+    <<: *common
+    command: [python, -m, radio, renderer]
+    healthcheck:
+      test: [CMD, sh, -c, 'test -s /data/audio/fallback.wav && python -m radio health --role renderer']
+      interval: 10s
+      timeout: 10s
+      start_period: 120s
+      retries: 3
+  icecast:
+    <<: *common
+    command: [python, /app/deploy/icecast.py]
+    ports:
+      - 127.0.0.1:8000:8000
+    healthcheck:
+      test: [CMD, curl, -fsS, http://localhost:8000/status-json.xsl]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+  broadcaster:
+    <<: *common
+    command: [liquidsoap, /app/deploy/radio.liq]
+    depends_on:
+      icecast:
+        condition: service_healthy
+      renderer:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, python, /app/deploy/stream_health.py]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  radio-data:

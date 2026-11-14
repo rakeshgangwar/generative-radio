@@ -1,0 +1,127 @@
+# Generative Radio
+
+**Integration draft:** unit tests pass; the initial Docker build was cancelled for
+a laptop move. Actual rendering and streaming have not yet been verified. Read
+[HANDOFF.md](HANDOFF.md) for current status and continuation steps.
+
+A CPU-only ambient music station: Python composition → MIDI → FluidSynth →
+buffered WAV segments → Liquidsoap → Icecast. No sound card, GPU, AI model or
+external music API is needed. This project lives in the existing `radiojack`
+checkout; the package and Compose project are named `generative-radio`.
+
+## Run locally
+
+Install Docker with Compose and start the Docker engine. Then:
+
+```sh
+cp .env.example .env
+docker compose up --build -d
+docker compose logs -f renderer broadcaster
+```
+
+The first build downloads the Python/Debian base and audio tools. Startup renders
+a 60-second emergency track before starting Liquidsoap. Open
+[the live stream](http://localhost:8000/radio.mp3) in a browser or VLC.
+[Icecast status](http://localhost:8000/status.xsl) shows the active mount/listeners.
+Only port 8000 is published, bound to **127.0.0.1**.
+
+```sh
+docker compose exec composer python -m radio status
+docker compose ps
+docker stats --no-stream
+docker compose down
+```
+
+`down` retains music and queue state in the named volume. `down -v` destroys
+that state. No source files or secrets are mounted into the containers.
+
+## Listen to a standalone preview
+
+```sh
+docker compose run --rm --no-deps renderer python -m radio preview --seconds 120 --seed 42
+mkdir -p artifacts
+docker compose cp renderer:/data/audio/preview.wav artifacts/preview.wav
+```
+
+The copy command assumes the normal renderer container exists (`up -d` first).
+Alternatively, use `docker compose run --rm -v "$PWD/artifacts:/preview" renderer`
+with `RADIO_DATA=/preview` set via `-e` **before** the service name.
+
+## Music and queue behavior
+
+The MVP creates slow A-minor arrangements with warm pads, bass and sparse electric
+piano phrases. A repeating four-chord arc and recurring motifs provide structure;
+seeded variation changes note placement, voicing and dynamics. All segments use
+the same tonal centre, allowing safe crossfades. This is a starting musical palette,
+not a claim of professional composition quality. Listen and iterate.
+
+`SEGMENT_SECONDS` defaults to 120; `BUFFER_SECONDS` to 1200 (20 minutes).
+The queue counts five seconds of crossfade overlap per segment. `BPM` is 40–90;
+`STATION_SEED` makes generation reproducible. Edit `.env` and run
+`docker compose up -d` to apply changes. Existing queued segments retain their
+original settings; changes become audible after the queue drains.
+
+The composer adds jobs until the target is reached. A single renderer generates
+each job, processes it to a conservative loudness target, checks duration, peak
+and excessive silence, then atomically publishes it. Jobs retry up to three times;
+abandoned render leases expire after ten minutes. Liquidsoap independently claims
+ready files through a local Python command and crossfades them. If the queue runs
+dry, it loops cached music, returning to new music at a track boundary.
+
+`served` in status means **dispatched to Liquidsoap**, which may prefetch; it is
+not precise now-playing history. A broadcaster crash can skip a dispatched track.
+Served files/history expire after one hour. Ready/in-flight jobs are bounded by
+the buffer; subprocesses have timeouts and Docker logs rotate. Allow approximately
+1 GB for the default audio buffer/history plus container images. SQLite requires
+a local Docker volume; do not place the queue on NFS or share it across VPS hosts.
+Run one composer, one renderer and one broadcaster per station.
+
+## Verification
+
+```sh
+python3 -m unittest discover -s tests -v
+docker compose run --rm --no-deps broadcaster liquidsoap --check /app/deploy/radio.liq
+sh scripts/capture.sh 1800
+```
+
+The Liquidsoap check requires the fallback file from the renderer. The recording
+uses locally installed FFmpeg and runs in real time. Review `artifacts/analysis.log`
+for long silence, clipping/peak levels, and listen to transitions in the WAV.
+Automatic gates check measurable audio properties; listening establishes whether
+the music is worth broadcasting.
+
+While capturing, exercise these recovery cases:
+
+1. `docker compose stop composer renderer` — buffered segments should continue,
+   followed by cached fallback music. Use a smaller buffer for a short drill.
+2. `docker compose start composer renderer` — new music should resume at a track
+   boundary after rendering catches up.
+3. `docker compose restart icecast` — Liquidsoap should reconnect. Listener clients
+   may need to reconnect; an Icecast restart cannot preserve their TCP sessions.
+4. `docker compose restart renderer` — the worker should retry abandoned work once
+   its lease expires; the broadcaster keeps playing.
+
+Health checks monitor worker heartbeats and mount presence. Docker automatically
+restarts exited containers, **not** merely unhealthy ones. Health checks do not
+detect every possible silent or hung broadcast; external stream monitoring and a
+long soak test remain prerequisites for unattended production use.
+
+## VPS deployment
+
+Start with the same Compose stack on a Linux CPU VPS. Measure resource use for your
+chosen SoundFont and audience before choosing capacity. No VPS deployment is
+performed by this project setup. Before public access, replace local passwords,
+put Icecast behind an HTTPS reverse proxy, and restrict administrative endpoints.
+Keep the local binding and proxy to it. Plan outbound bandwidth: 128 kbps is about
+41.5 GB per continuously connected listener per 30 days, before overhead.
+
+## SoundFont and licenses
+
+Code is MIT licensed. The container installs Debian's `timgm6mb-soundfont` package;
+its TimGM6mb SoundFont is GPL-2 licensed, separately from this code. Package license
+and attribution are installed at `/usr/share/doc/timgm6mb-soundfont/copyright`.
+FluidSynth, Liquidsoap, FFmpeg and Icecast retain their own licenses. Review those
+licenses when distributing images or substituting assets. To use another local
+SoundFont, mount it read-only and set `SOUNDFONT` in the renderer environment.
+
+Architecture and deferred work: [docs/architecture.md](docs/architecture.md).
