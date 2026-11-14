@@ -73,7 +73,12 @@ jobs:
             -c:a pcm_s16le /tmp/ci-stream.wav
           docker compose -p "$RADIO_CI_PROJECT" exec -T broadcaster python -c \
             'from pathlib import Path; from radio.render import analyze; result=analyze(Path("/tmp/ci-stream.wav")); assert abs(result["duration"]-10)<.1, result; print(result)'
-      - name: Show service logs
+      - name: Validate a short decoded-audio probe with startup margin
+        if: success()
+        run: |
+          docker compose -p "$RADIO_CI_PROJECT" exec -T broadcaster python -c \
+            'from dataclasses import replace; from threading import Event; from radio.watchdog import Options, probe_stream; result=probe_stream(replace(Options.load(),probe_seconds=1,timeout=8),Event()); assert result.kind=="healthy", result; print(result)'
+      - name: Show final service logs
         if: always()
         run: docker compose -p "$RADIO_CI_PROJECT" logs --no-color --tail 100
       - name: Remove only this CI run's containers and data
