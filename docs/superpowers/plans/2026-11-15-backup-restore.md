@@ -24,9 +24,9 @@ No new dependencies, schema changes, Docker socket or credentials in backups. Th
 **Files:** Create `radio/backup.py`, `tests/test_backup.py`, `docs/operations.md`; update `README.md`, `HANDOFF.md`, `docs/product-readiness.md`.
 **Interfaces:** `create_backup(data: Path, destination: Path) -> dict`, `verify_backup(backup: Path) -> dict`, `restore_backup(backup: Path, data: Path) -> dict`, and `python -m radio.backup {create,verify,restore}` CLI. Raise ValueError/OSError/sqlite3.Error for invalid inputs/IO, CLI returns nonzero with concise diagnostics.
 
-- [ ] Add tests for a real Store in WAL mode, ready/served/rendering jobs, fallback and optional MIDI; round-trip into new root verifies checksums, reset leases/heartbeats, dispatch and new IDs/seeds. Run focused tests; expect missing-module RED.
-- [ ] Implement snapshot/manifest/verification/restore. Add adversarial and IO-failure tests from Review Focus, observe each RED and fix to GREEN. Run full unittest suite; expect all passing.
-- [ ] Add concise non-root Docker/off-host/restore runbook and update current watchdog acceptance facts.
-- [ ] Build actual image without replacing the live image tag. Create from live read-only volume; restore to a separate volume, dispatch/analyze and render a new segment. Expected unchanged live service identities, valid audio and advancing job IDs.
-- [ ] Request one independent whole-branch review; fix Important/Critical findings with failing regressions and the full green suite.
+- [x] Add tests for a real Store in WAL mode, ready/served/rendering jobs, fallback and optional MIDI; round-trip into new root verifies checksums, reset leases/heartbeats, dispatch and new IDs/seeds. Run focused tests; expect missing-module RED.
+- [x] Implement snapshot/manifest/verification/restore. Add adversarial and IO-failure tests from Review Focus, observe each RED and fix to GREEN. Run full unittest suite; expect all passing.
+- [x] Add concise non-root Docker/off-host/restore runbook and update current watchdog acceptance facts.
+- [x] Build actual image without replacing the live image tag. Create from live read-only volume; restore to a separate volume, dispatch/analyze and render a new segment. Expected unchanged live service identities, valid audio and advancing job IDs.
+- [x] Request one independent whole-branch review; fix Important/Critical findings with failing regressions and the full green suite.
 - [ ] Commit/push PR, await current-head CI, mark ready and merge only after final CI passes. Record measured evidence without claiming whole-product completion.

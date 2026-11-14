@@ -3,6 +3,8 @@ import sqlite3
 import tempfile
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor
+from threading import Event
 import unittest
 from pathlib import Path
 from unittest.mock import patch
@@ -206,6 +208,33 @@ class BackupTests(unittest.TestCase):
         invalid = subprocess.run(command + ['create', str(self.backup), '--data', str(self.data)], capture_output=True, text=True)
         self.assertNotEqual(invalid.returncode, 0)
         self.assertNotIn('Traceback', invalid.stderr)
+
+    def test_concurrent_restore_cannot_enter_the_same_empty_destination(self):
+        create_backup(self.data, self.backup)
+        target = self.root / 'concurrent'
+        target.mkdir()
+        entered, release = Event(), Event()
+        original = tempfile.TemporaryDirectory
+        calls = []
+        def delayed(*args, **kwargs):
+            calls.append(True)
+            if len(calls) == 1:
+                entered.set()
+                if not release.wait(5):
+                    raise RuntimeError('test restore was not released')
+            return original(*args, **kwargs)
+        with ThreadPoolExecutor(max_workers=1) as pool:
+            with patch('radio.backup.tempfile.TemporaryDirectory', side_effect=delayed):
+                first = pool.submit(restore_backup, self.backup, target)
+                self.assertTrue(entered.wait(2))
+                try:
+                    with self.assertRaises(ValueError):
+                        restore_backup(self.backup, target)
+                finally:
+                    release.set()
+                first.result(timeout=3)
+        self.assertEqual(len(calls), 1)
+        self.assertTrue((target/'radio.sqlite').is_file())
 
 
 if __name__ == '__main__':

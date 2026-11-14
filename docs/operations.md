@@ -55,7 +55,7 @@ Keep several independently verified recovery points (for example seven daily and
 
 ## Restore into a new volume
 
-Use a fresh volume; never restore over a running station's data. Existing nonempty destinations are rejected. The backup is mounted read-only and is never edited. Already-dispatched jobs remain dispatched; interrupted renders become pending with a fresh retry budget. Stale worker heartbeats are removed; job IDs/seeds continue rather than repeating old segments. Saved paths are rewritten to the new data root.
+Use a fresh volume; never restore over a running station's data. Existing nonempty destinations are rejected. An exclusive `.restore-in-progress` reservation prevents concurrent restores from writing into the same empty volume. The backup is mounted read-only and is never edited. Already-dispatched jobs remain dispatched; interrupted renders become pending with a fresh retry budget. Stale worker heartbeats are removed; job IDs/seeds continue rather than repeating old segments. Saved paths are rewritten to the new data root.
 
 If importing one of your own exported archives on a new host, first create the backup volume and unpack it without networking or privileged mounts:
 
@@ -84,7 +84,7 @@ docker run --rm --network none \
 
 Verify a ready track's audio and render a new preview using this isolated volume before switching playback. `python -m radio next` consumes a ready job; do this only on the isolated restore when testing. Rendering `python -m radio preview --seconds 20` verifies the toolchain without contacting Icecast. The module resets leases for recovery; it does not merge queues or reconstruct exact on-air history.
 
-A copy/validation error exits nonzero. Caught errors remove staged/published restore files; a hard kill may leave `.restore-*` staging. Do not start services against an interrupted restore. Keep the source backup and use another fresh volume, or inspect and clear only the failed restore volume before retrying. Keep the old live data until successful recovery has been verified.
+A copy/validation error exits nonzero. Caught errors remove staged/published restore files; a hard kill may leave the `.restore-in-progress` reservation and/or `.restore-*` staging. Do not start services against an interrupted restore. Keep the source backup and use another fresh volume, or inspect and clear only the failed restore volume before retrying. Keep the old live data until successful recovery has been verified.
 
 To switch Compose to the verified volume, create an override such as `/tmp/radio-restored.compose.yaml`:
 

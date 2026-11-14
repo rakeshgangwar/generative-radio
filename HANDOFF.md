@@ -18,6 +18,28 @@ and asked to publish this work to a private GitHub repository.
 Architecture source conversation:
 https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
 
+## Latest iteration — 15 November 2026
+
+The repository is public under MIT at https://github.com/rakeshgangwar/generative-radio.
+The [product journal](docs/product-journal.md) is on main via CI-cleared PR #7;
+keep it current with proposed, active and shipped work as the product evolves.
+Release readiness evidence is not an exhaustive definition of the user's goal.
+
+PRs #1–#7 are merged after CI passed. Watchdog PR #3 is deployed locally with
+all four services healthy and zero recovery restarts; a 30-second post-rollout
+recording passed. A new one-hour watchdog soak is running (capture session 73227,
+monitor 15955 at launch); inspect the same handles/artifacts, do not restart only
+because observation times out. Evidence: `artifacts/watchdog-soak-20261115/`.
+
+Backup tooling now has create/verify/restore commands, 16 dedicated tests and a
+58-test full local suite. Actual live read-only backup/isolated restore preserved
+43 jobs/89 files and seed/ID continuity; restored 120-second audio passed and a
+new 20-second job rendered in about 0.9s. Independent review found no remaining Important/Critical issues. Hosted CI delivery is pending; see
+[operator commands](docs/operations.md) and `artifacts/backup-tools-20261115/`.
+The live volume was not modified by these backup tests. Target VPS/domain,
+actual off-host recovery and listening acceptance remain open. Next proposed
+product work is the listener page, followed by musical memory/longer arcs.
+
 ## What is implemented
 
 - Deterministic ambient composer: seeded harmonic paths, developed phrases and
@@ -328,8 +350,8 @@ Work through these steps before claiming the MVP works:
   not NFS. This is not a distributed job system.
 - A `served` record means dispatched/prefetched, not confirmed on-air. Broadcaster
   crashes can skip a dispatched segment. Exact playback history is deferred.
-- Health checks report problems; Compose does not restart a merely unhealthy
-  process. There is no external stream monitor or silence-triggered restart yet.
+- The decoded-audio watchdog recovers its owned Liquidsoap child on persistent
+  silence/hang. There is no external monitor of the public listening path yet.
 - The shared A-minor palette helps transitions but still limits harmonic range;
   variety now comes from several progressions, developed phrases and texture.
 - `.env` changes affect newly queued work; existing jobs retain seed/tempo/duration.

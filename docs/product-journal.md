@@ -34,7 +34,7 @@ The stream is locally accessible, not a deployed public service. Objective audio
 
 The one-off backup/restore experiment worked. I am turning it into `create`, `verify` and `restore` commands, with a consistent SQLite snapshot, completed audio, checksums and refusal to overwrite existing station data. A restore should carry the station to another machine, preserve its musical seed sequence, recover interrupted render jobs and replenish the queue.
 
-The first 14 backup tests and the full 56-test local suite pass on the feature worktree. This has not yet shipped: isolated live-volume validation, independent review, a PR and hosted CI are still required. Off-host transfer and a fresh-volume recovery procedure will accompany it.
+The backup feature now has 16 tests; the full 58-test local suite passes. An actual read-only live-volume backup captured 43 jobs and 89 files (about 921 MB). An isolated restore dispatched valid two-minute audio and rendered a new 20-second segment in about 0.9 seconds while preserving job/seed continuity. Review also exposed a concurrent-restore race; an exclusive reservation and a failing-then-passing regression now protect the empty destination. Operator commands and off-host/fresh-volume instructions are included. Hosted CI and merge are the remaining delivery steps for this iteration.
 
 ### In progress: longer listening with the watchdog deployed
 

@@ -200,8 +200,17 @@ def restore_backup(backup: Path, data: Path) -> dict:
     existed = data.exists()
     if not existed:
         data.mkdir(mode=0o700)
-    published = []
+    lock = data / '.restore-in-progress'
     try:
+        fd = os.open(lock, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+        os.close(fd)
+    except FileExistsError as exc:
+        raise ValueError('Restore is already in progress') from exc
+    published = []
+    success = False
+    try:
+        if set(data.iterdir()) != {lock}:
+            raise ValueError('Restore destination changed; it must remain empty')
         with tempfile.TemporaryDirectory(prefix='.restore-', dir=data) as temp:
             staging = Path(temp)
             for name in [*manifest['files'], 'manifest.json']:
@@ -219,6 +228,7 @@ def restore_backup(backup: Path, data: Path) -> dict:
                 target = data / path.name
                 path.rename(target)
                 published.append(target)
+        success = True
         return {'jobs': manifest['jobs'], 'data': str(data), 'verified_files': len(manifest['files'])}
     except BaseException:
         for path in published:
@@ -226,9 +236,11 @@ def restore_backup(backup: Path, data: Path) -> dict:
                 shutil.rmtree(path)
             else:
                 path.unlink(missing_ok=True)
-        if not existed:
-            data.rmdir()
         raise
+    finally:
+        lock.unlink(missing_ok=True)
+        if not existed and not success and not any(data.iterdir()):
+            data.rmdir()
 
 
 def main():
