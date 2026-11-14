@@ -54,6 +54,16 @@ The next proposed change is described in
 Liquidsoap child, monitor actual decoded audio, and bound automatic restarts.
 Implementation awaits review of that design; current playback is unchanged.
 
+Published that design and the remaining completion gates in draft PR #3, based
+on PR #2's branch. While awaiting review, tested backup/restore without modifying
+the live station: a read-only source mount and SQLite backup API produced a
+920,880,272-byte snapshot in a separate volume. All 88 checksums matched after
+restore to another isolated volume; SQLite integrity passed, restored track 51
+passed audio gates, and the restored queue allocated/rendered new job 62 after
+maximum ID 61 in 3.705 seconds. The ready buffer returned to 11 tracks. Details
+and remaining off-host/operator-command work are in `docs/product-readiness.md`.
+No watchdog code has been implemented or deployed yet.
+
 ### Musical variety implementation — 15 November 2026
 
 User approved and requested implementation of
