@@ -1,6 +1,6 @@
 # Generative Radio — laptop handoff
 
-Updated: 14 November 2026 (Asia/Kolkata).
+Updated: 15 November 2026 (Asia/Kolkata).
 
 ## Goal and agreed scope
 
@@ -34,6 +34,114 @@ https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
   to record/analyze a real-time acceptance broadcast.
 
 ## Verified versus pending
+
+### Recovery and acceptance run — 14–15 November 2026
+
+The user requested fallback/recovery drills, a 30-minute listening test and an
+ordered startup of all four services. Failure injection uses an isolated Compose
+project, `generative-radio-drill`, with its own volume, 20-second segments,
+20-second target buffer and localhost port 8001. The main station on port 8000
+continues playing and is being recorded independently.
+
+Verified drill results:
+
+- Stopped the drill composer and renderer, drained all generated tracks, and
+  observed Liquidsoap switch to cached fallback. Restarted generation and observed
+  recovery to generated music at a fallback track boundary.
+- Recorded that sequence continuously for 240 seconds. FFmpeg reported no silence
+  events at -50 dB for 2 seconds or longer; overall peak was -8.87 dBFS and RMS
+  -24.76 dBFS. Evidence: `artifacts/recovery-20261114/`.
+- Restarted drill Icecast. Liquidsoap detected a broken pipe and reconnected
+  automatically approximately four seconds later; mount health passed and a new
+  10-second recording decoded successfully. Existing listener TCP sessions cannot
+  survive an Icecast restart.
+- Restarted the drill broadcaster; it reconnected without intervention, mount
+  health passed, and a new 10-second recording decoded successfully.
+- Killed the drill renderer with SIGKILL while job 11 was rendering (600-second
+  segment, attempt 1), then restarted it. Without editing job timestamps, the
+  worker reclaimed it after the real ten-minute lease expiry. Attempt 2 rendered
+  successfully in 18.1 seconds, passed audio gates, and Liquidsoap logged playback
+  of `/data/audio/11.wav` after fallback. `/data/work` was empty afterward. A
+  20-second post-recovery recording had no >=2-second silence and a peak of
+  -9.67 dBFS. Job states and full drill logs are saved with the audio evidence.
+- The isolated drill containers/network were removed with `down` after testing.
+  Its named test volume was retained; the main station was not interrupted.
+
+Completed a fresh 30-minute main-station recording, with 56 resource/queue/health
+samples from 23:52 on 14 November to 00:22 on 15 November (Asia/Kolkata):
+
+- Decoded audio duration: exactly 1800.000 seconds, stereo PCM16 at 44.1 kHz.
+- No silence events at -50 dB for 2 seconds or longer. Overall peak -8.05 dBFS;
+  RMS -25.20 dBFS; integrated loudness -23.0 LUFS; true peak -8.1 dBFS; loudness
+  range 5.1 LU. No clipping observed by these measurements.
+- All health samples were healthy, with zero restarts/OOM kills and no recent
+  queue errors. Generation replenished the buffer throughout the run.
+- Broadcaster RAM stayed between 226.9 and 228.6 MiB. Composer used 14.1–15.0
+  MiB; renderer 15.0–71.8 MiB including sampled render activity; Icecast 4.2–6.2
+  MiB. These are sampled ranges, not guaranteed peak allocations. No broadcaster
+  memory growth trend was evident over this run; a longer soak is still needed.
+- Evidence: `artifacts/acceptance-20261114/broadcast-30min.wav`,
+  `analysis-30min.log`, `loudness-30min.log`, `vitals.jsonl`,
+  `resource-summary.json`, `queue-before-restart.json`, and
+  `services-before-restart.log` in the same directory. Artifacts are ignored by Git.
+
+**Technical continuity and recovery checks passed. Musical variety is not yet
+accepted:** user listening feedback during the run was **"Too repetitive."**
+Earlier feedback was that the melody sounds nice. No composition changes were
+made during this run.
+
+Completed the requested final startup: stopped the main stack, then started
+**Icecast → composer → renderer → broadcaster** sequentially with `--no-deps
+--wait`, requiring each service to become healthy before starting the next. All
+four reported healthy. Startup evidence is saved in
+`artifacts/acceptance-20261114/ordered-startup.log`. The main stream remains at
+`http://localhost:8000/radio.mp3`; reconnect the player if its TCP connection was
+closed by this intentional restart. No main data volume was deleted.
+A fresh 30-second post-startup recording decoded successfully, with no >=2-second
+silence and a peak of -9.51 dBFS. Liquidsoap then logged fallback-to-generated
+playback of `/data/audio/27.wav`; the queue had 11 ready tracks and no recent
+errors, and all four services remained healthy.
+
+Next work: address musical repetition, then run a longer unattended soak and
+verify retention/cleanup after at least an hour. Public VPS deployment and an
+external stream watchdog remain deferred.
+
+### Continuation on the new laptop — 14 November 2026
+
+- Docker 29.8.2 / Compose 5.6.0: image build completed successfully.
+- All eight unit tests pass on this laptop.
+- Actual FluidSynth preview: 20 seconds, peak 0.3614, RMS -25.12 dBFS,
+  quiet fraction 0.11; the renderer's audio gates passed. Exported to
+  `artifacts/preview.wav` (ignored by Git). Independent FFmpeg analysis measured
+  -22.1 LUFS integrated loudness and -8.8 dBFS true peak.
+- Actual 120-second segments render in approximately 3.7–4.0 seconds, with no
+  queue errors observed while filling the default buffer.
+- Installed Liquidsoap 2.1.3 exposed two script compatibility issues: use
+  `getenv(...)` instead of `environment.get(...)`, and wrap the crossfade source
+  in `mksafe(...)` to satisfy the output's infallibility requirement. The updated
+  script passes `liquidsoap --check` and connects to the Icecast MP3 mount.
+- All four default Compose services were started on this laptop. The stream is
+  bound to `127.0.0.1:8000`; data is in `generative-radio_radio-data`. No `.env`
+  was needed: Compose used the documented local defaults.
+- Idle snapshot after filling the queue: broadcaster about 146 MiB RAM / 9% CPU;
+  Icecast about 5 MiB; composer and renderer about 15 MiB each. This is a single
+  snapshot, not a rendering-load or long-term resource benchmark.
+- Inspected the installed SoundFont copyright: TimGM6mb.sf2 is GPL-2,
+  copyright 2004 Tim Brechbill and 2010 David Bolton. The configured path worked.
+- Completed `sh scripts/capture.sh 150`: decoded recording is exactly 150 seconds,
+  overall peak -8.87 dBFS, RMS -25.89 dBFS, with no silence events at the script's
+  -50 dB / 2-second threshold. Recording and analysis are in
+  `artifacts/broadcast.wav` and `artifacts/analysis.log` (ignored by Git).
+  Liquidsoap logged fallback-to-generated and generated-to-generated crossfades;
+  all four containers were healthy afterward, the buffer replenished to 11 ready
+  tracks, and the queue reported no recent errors. This is a short technical
+  smoke test; no human listening review was performed.
+
+At this earlier point the 30-minute acceptance recording, human listening review,
+fallback/recovery drills, renderer lease recovery and long soak were pending.
+See the newer results above. The next snapshot describes the previous laptop.
+
+### Previous laptop snapshot
 
 **Verified:** eight unit tests pass on Python 3.14.5 using
 `python3 -m unittest discover -s tests -v`. Python compilation checks also pass.

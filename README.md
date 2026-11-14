@@ -1,7 +1,8 @@
 # Generative Radio
 
-**Integration draft:** unit tests pass; the initial Docker build was cancelled for
-a laptop move. Actual rendering and streaming have not yet been verified. Read
+**Local integration verified:** rendering, a 30-minute broadcast and fallback/recovery
+drills pass. Listener feedback identifies excessive repetition; musical variety and
+a longer soak remain open. Read
 [HANDOFF.md](HANDOFF.md) for current status and continuation steps.
 
 A CPU-only ambient music station: Python composition → MIDI → FluidSynth →
@@ -118,7 +119,8 @@ Keep the local binding and proxy to it. Plan outbound bandwidth: 128 kbps is abo
 ## SoundFont and licenses
 
 Code is MIT licensed. The container installs Debian's `timgm6mb-soundfont` package;
-its TimGM6mb SoundFont is GPL-2 licensed, separately from this code. Package license
+its TimGM6mb SoundFont is GPL-2 licensed, separately from this code, with copyright
+attributed to Tim Brechbill (2004) and David Bolton (2010). Package license
 and attribution are installed at `/usr/share/doc/timgm6mb-soundfont/copyright`.
 FluidSynth, Liquidsoap, FFmpeg and Icecast retain their own licenses. Review those
 licenses when distributing images or substituting assets. To use another local
