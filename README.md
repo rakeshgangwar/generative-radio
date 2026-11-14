@@ -186,3 +186,5 @@ licenses when distributing images or substituting assets. To use another local
 SoundFont, mount it read-only and set `SOUNDFONT` in the renderer environment.
 
 Architecture and deferred work: [docs/architecture.md](docs/architecture.md).
+
+Back up, verify, transfer off-host and restore the station: [operator commands](docs/operations.md).

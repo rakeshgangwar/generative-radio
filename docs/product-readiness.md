@@ -12,13 +12,13 @@ multiple genres or external composition API is required for this release.
 | Original coherent, reproducible music | Note/MIDI tests, real SoundFont renders, user listening | Technical checks pass; listening acceptance of the variety update is pending |
 | Buffered continuous output | Full-stack recording and queue replenishment evidence | 30-minute recording passed; 11 ready tracks maintained |
 | Recovery from interrupted generation and streaming | Failure drills and decoded audio after recovery | Fallback, restart, Icecast reconnect and real lease-expiry drills passed |
-| Silent/hung broadcaster detection and recovery | Missing-stream/silent-audio/hung-child drills, bounded restart evidence | Watchdog implemented in draft PR #3; final runtime/CI validation in progress |
+| Silent/hung broadcaster detection and recovery | Missing-stream/silent-audio/hung-child drills, bounded restart evidence | PR #3 merged after CI; isolated silence/hang/missing-mount drills passed; deployed locally |
 | Bounded storage and resource use | More than one retention interval observed, longer unattended soak | One-hour variety soak passed; final watchdog/deployment configuration soak remains |
 | Repeatable validation of changes | Automated PR unit checks and short container integration checks | CI is on main: Python 3.11/3.14 plus real rendering/streaming checks |
 | Safe operation on the target VPS | HTTPS, non-default credentials, restricted administration, startup/reboot verification | Target host/domain not yet provided; deployment package still needed |
-| Backup and recovery | Consistent queue/audio backup and tested restore on isolated data | Local isolated restore passes; repeatable operator command and off-host storage still needed |
-| Operator documentation | Install, upgrade, monitor, recover, back up and roll back commands | Local startup/recovery documented; production runbook incomplete |
-| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | PRs #1/#2/#4/#5/#6 merged only after CI passed; unfinished watchdog PR #3 remains draft |
+| Backup and recovery | Consistent queue/audio backup and tested restore on isolated data | Repeatable create/verify/restore commands and off-host runbook validated locally; target-host/off-host exercise pending |
+| Operator documentation | Install, upgrade, monitor, recover, back up and roll back commands | Local recovery/backup runbook implemented; production deployment runbook incomplete |
+| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | PRs #1–#7 merged after CI; backup tooling is the next reviewed iteration |
 
 These are release readiness gates, not an exhaustive definition of the evolving
 product goal. The [product journal](product-journal.md) records that direction.
@@ -145,3 +145,28 @@ Evidence is in `artifacts/watchdog-20261115/final-process-recovery.json`,
 `final-audio-recovery.json`, `final-native-reconnect.json` and associated logs.
 The final operator documentation/short-probe CI step still needs current-head CI
 clearance before merge. The live broadcaster has not yet been updated.
+
+
+## Watchdog rollout and repeatable backups — 15 November 2026
+
+PR #3 passed current-head CI, was marked ready, then passed its readiness-triggered
+CI run and merged. All four local services are healthy. The broadcaster now runs
+the supervisor with production defaults; decoded audio is healthy with zero
+failure/recovery counters. A 30-second post-rollout capture completed with no
+silence at -50 dB lasting two seconds. Icecast retained its container identity.
+A separate one-hour watchdog recording/monitor is running; result remains pending.
+
+The new backup module uses no new dependencies and reads the source volume
+read-only. Actual create captured 43 jobs and 89 files (920,879,096 bytes), verified
+and restored to a separate volume. Restored track 117 passed analysis at 120
+seconds; the queue allocated ID 128 after snapshot maximum 127 and rendered a
+new 20-second segment in 0.906 seconds with no queue errors. Source/restore
+volumes were never mounted together during the restore/render test. Evidence:
+`artifacts/backup-tools-20261115/{create,restore,round-trip}.json`.
+
+The full 58-test local suite includes snapshot/manifest/restore tests and an
+exclusive concurrent-restore regression. [Operator commands](operations.md)
+cover off-host export, encrypted transfer, fresh-volume restore, validation and
+volume switch/rollback. An actual off-host transfer/target-VPS recovery remains
+unverified until those destinations exist. The software does not claim a
+same-host backup volume protects against host loss.
