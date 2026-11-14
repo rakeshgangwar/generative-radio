@@ -20,9 +20,9 @@ https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
 
 ## What is implemented
 
-- Deterministic ambient composer: four-chord A-minor arc, pads, bass and sparse
-  electric-piano motifs, with a Standard MIDI File writer using only Python's
-  standard library.
+- Deterministic ambient composer: seeded harmonic paths, developed phrases and
+  changing pad/bass/electric-piano texture, with a Standard MIDI File writer using
+  only Python's standard library.
 - FluidSynth fast rendering, FFmpeg loudness processing, fades, peak/silence checks
   and atomic publication of completed WAV files.
 - Shared local SQLite queue with transactional claims, render leases, three-attempt
@@ -34,6 +34,52 @@ https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
   to record/analyze a real-time acceptance broadcast.
 
 ## Verified versus pending
+
+### Musical variety implementation — 15 November 2026
+
+User approved and requested implementation of
+`docs/superpowers/specs/2026-11-15-musical-variety-design.md`. Work is on
+`feat/musical-variety`, based on `fix/liquidsoap-integration` so the earlier runtime
+fixes can be reviewed independently. The user subsequently requested ongoing PRs
+for completed work; that standing workflow is recorded in `AGENTS.md`.
+
+- Composer now selects among five curated harmonic paths and three chord-hold
+  patterns in A natural minor, develops related melodic phrases with bounded
+  pitch movement, shapes sparse openings/endings, and selects sparse/moderate/
+  active rhythmic profiles. Instruments and public composition/MIDI interfaces
+  are unchanged; no dependencies or schema changes were introduced.
+- Same-pitch pad retriggers no longer overlap. This fixes a pre-existing MIDI
+  note-off interaction exposed by the new duration/tempo boundary tests.
+- All 13 unit tests pass. Coverage includes harmonic/rhythmic diversity, activity
+  differences between profiles, section density, deterministic notes/MIDI,
+  20/120/600-second durations and 40/60/90 BPM, note bounds and pad lifetimes.
+- Independent review found no playback correctness issues. Its density-profile
+  finding was fixed with a failing regression test followed by a green full
+  suite. The reviewer additionally checked 4,060 note cases and parsed 110 MIDI
+  files without errors.
+- Six real 120-second previews passed existing audio gates. Measured render
+  times were approximately 3.6–4.2 seconds each. Seeds 0/7/5 provide sparse,
+  moderate and active examples (36/42/48 melody notes respectively).
+- `artifacts/variety-20261115/variety-crossfade.wav` is a 350-second FFmpeg
+  listening preview of seeds 0/7/5 with two five-second crossfades. No >=2-second
+  silence was detected at -50 dB; overall peak -8.03 dBFS, RMS -24.39 dBFS.
+  Per-seed render metrics, review summary and transition analysis are beside it.
+- Updated only composer/renderer using `up --no-deps --wait`. Broadcaster and
+  Icecast container identities/start times were verified unchanged. The existing
+  11-track buffer was retained. Expect roughly 20–25 minutes before new-version
+  tracks reach playback, including the current track and prefetch.
+- Confirmed the deployed source hash matches the local composer and observed a
+  new live-queue render: segment 54, seed 20261168, 120 seconds rendered in 3.7
+  seconds, peak 0.3550 and quiet fraction 0.00417. Evidence is saved as
+  `artifacts/variety-20261115/first-live-render.log`.
+- The previous local image is retained as `generative-radio:before-variety` for
+  rollback. Preview rendering used a separate volume,
+  `generative-radio-variety-preview`, without touching the station queue.
+
+Structural variety and measurable audio checks pass. Whether this adequately
+addresses the user's **"Too repetitive"** feedback remains a listening judgment;
+do not claim subjective acceptance without new feedback. A longer unattended soak,
+retention/cleanup verification, and a stream watchdog remain future work.
 
 ### Recovery and acceptance run — 14–15 November 2026
 
@@ -203,7 +249,8 @@ Work through these steps before claiming the MVP works:
   crashes can skip a dispatched segment. Exact playback history is deferred.
 - Health checks report problems; Compose does not restart a merely unhealthy
   process. There is no external stream monitor or silence-triggered restart yet.
-- Uniform A-minor harmony simplifies transitions but limits musical diversity.
+- The shared A-minor palette helps transitions but still limits harmonic range;
+  variety now comes from several progressions, developed phrases and texture.
 - `.env` changes affect newly queued work; existing jobs retain seed/tempo/duration.
 - Check cleanup after failed renders and unusual shutdowns during a longer soak.
 - All four containers currently share one image including all audio tools; split
