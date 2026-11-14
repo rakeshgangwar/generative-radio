@@ -13,7 +13,7 @@ multiple genres or external composition API is required for this release.
 | Buffered continuous output | Full-stack recording and queue replenishment evidence | 30-minute recording passed; 11 ready tracks maintained |
 | Recovery from interrupted generation and streaming | Failure drills and decoded audio after recovery | Fallback, restart, Icecast reconnect and real lease-expiry drills passed |
 | Silent/hung broadcaster detection and recovery | Missing-stream/silent-audio/hung-child drills, bounded restart evidence | PR #3 merged after CI; isolated silence/hang/missing-mount drills passed; deployed locally |
-| Bounded storage and resource use | More than one retention interval observed, longer unattended soak | One-hour variety soak passed; final watchdog/deployment configuration soak remains |
+| Bounded storage and resource use | More than one retention interval observed, longer unattended soak | One-hour variety and deployed-watchdog soaks passed; actual target deployment still needs validation |
 | Repeatable validation of changes | Automated PR unit checks and short container integration checks | CI is on main: Python 3.11/3.14 plus real rendering/streaming checks |
 | Safe operation on the target VPS | HTTPS, non-default credentials, restricted administration, startup/reboot verification | Target host/domain not yet provided; deployment package still needed |
 | Backup and recovery | Consistent queue/audio backup and tested restore on isolated data | Repeatable create/verify/restore commands and off-host runbook validated locally; target-host/off-host exercise pending |
@@ -154,7 +154,7 @@ CI run and merged. All four local services are healthy. The broadcaster now runs
 the supervisor with production defaults; decoded audio is healthy with zero
 failure/recovery counters. A 30-second post-rollout capture completed with no
 silence at -50 dB lasting two seconds. Icecast retained its container identity.
-A separate one-hour watchdog recording/monitor is running; result remains pending.
+The separate one-hour watchdog recording/monitor completed successfully; full results follow.
 
 The new backup module uses no new dependencies and reads the source volume
 read-only. Actual create captured 43 jobs and 89 files (920,879,096 bytes), verified
@@ -188,3 +188,37 @@ uses a temporary headless Chrome profile; no user browser/profile was changed.
 Physical iOS/Android devices and public HTTPS remain unverified. CI is being
 extended to cover controls, non-root proxy config, restricted paths, decoded
 proxied audio and browser behavior against the real stack.
+
+
+## Completed deployed-watchdog soak — 15 November 2026
+
+Both recording and monitor processes exited0. The recording contains exactly
+3,600 seconds. No silence at -50dB lasting two seconds was detected; overall peak
+was -7.9912dBFS and RMS -24.5169dBFS. All 114 samples from 21:34:32 to 22:35:32UTC
+(03:04–04:05 Asia/Kolkata) had healthy core services and decoded-audio reports.
+There were zero container/recovery restarts, OOM kills or queue errors. Container
+identities/start times and the Liquidsoap child PID stayed unchanged.
+
+| Core service | Observed memory range (MiB) |
+| --- | --- |
+| Broadcaster, including supervised probes | 240.3–263.4 |
+| Renderer | 14.69–72.43 |
+| Composer | 14.07–27.55 |
+| Icecast | 4.13–6.00 |
+
+Broadcaster quarter averages were 243.43, 243.24, 244.54, 243.91 MiB; first/last samples
+were 240.6/241.1 MiB. No continuing rise is evident in this hour. Worker heartbeat
+ages stayed at or below 2 s. Post-run SQLite quick_check returned ok; 11 tracks ready,
+31 retained dispatched, work directory empty, 907,415,726 data bytes. The optional
+web service was added during this run: 62 partial-run observations measured
+14.06–24.64 MiB. It is not claimed as a full-hour web soak.
+
+Local evidence: `artifacts/watchdog-soak-20261115/summary.json`, `vitals.jsonl`,
+`broadcast-60min.wav`, `analysis-60min.log`, and `retention-after.json`. This proves
+local observed behavior while development/browser QA ran on the host. Target-VPS
+capacity/reboot/HTTPS and subjective listening acceptance remain open.
+
+PR #9 merged the listener after all four checks passed, including browser tests
+against the actual stack. Native-pause cancellation and no-JS/description fixes
+were regression-tested before merge. Musical-memory work has not changed the
+live station; its baseline score sample is recorded in the product journal.
