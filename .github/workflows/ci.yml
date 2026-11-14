@@ -1,0 +1,81 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, synchronize, reopened, ready_for_review, edited]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  python-tests:
+    name: Python ${{ matrix.python }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ['3.11', '3.14']
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Run unit tests on supported Python versions
+        run: >-
+          docker run --rm -v "$PWD:/app:ro" -w /app
+          python:${{ matrix.python }}-slim-bookworm
+          python -m unittest discover -s tests -v
+
+  container-integration:
+    name: Audio and streaming integration
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    env:
+      RADIO_CI_PROJECT: radio-ci-${{ github.run_id }}-${{ github.run_attempt }}
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Build the actual station image
+        run: docker build -t generative-radio:local .
+      - name: Run all tests with real audio tools available
+        run: >-
+          docker run --rm --network none
+          -v "$PWD/tests:/app/tests:ro" -v "$PWD/scripts:/app/scripts:ro"
+          generative-radio:local python -m unittest discover -s tests -v
+      - name: Validate real rendering and the Liquidsoap script
+        run: |
+          docker run --rm --network none -e ICECAST_SOURCE_PASSWORD=ci-test-source \
+            generative-radio:local sh -eu -c '
+              python -m radio preview --seconds 20 --seed 42
+              cp /data/audio/preview.wav /data/audio/fallback.wav
+              liquidsoap --check /app/deploy/radio.liq
+            '
+      - name: Start all four services and require healthy status
+        env:
+          SEGMENT_SECONDS: '20'
+          BUFFER_SECONDS: '20'
+        run: >-
+          docker compose -p "$RADIO_CI_PROJECT" up --no-build
+          --detach --wait --wait-timeout 180
+      - name: Decode and validate ten seconds of the real MP3 stream
+        run: |
+          docker compose -p "$RADIO_CI_PROJECT" exec -T broadcaster \
+            ffmpeg -nostdin -v error -y -rw_timeout 15000000 \
+            -i http://icecast:8000/radio.mp3 -t 10 -ac 2 -ar 44100 \
+            -c:a pcm_s16le /tmp/ci-stream.wav
+          docker compose -p "$RADIO_CI_PROJECT" exec -T broadcaster python -c \
+            'from pathlib import Path; from radio.render import analyze; result=analyze(Path("/tmp/ci-stream.wav")); assert abs(result["duration"]-10)<.1, result; print(result)'
+      - name: Show service logs
+        if: always()
+        run: docker compose -p "$RADIO_CI_PROJECT" logs --no-color --tail 100
+      - name: Remove only this CI run's containers and data
+        if: always()
+        run: docker compose -p "$RADIO_CI_PROJECT" down --volumes --remove-orphans
