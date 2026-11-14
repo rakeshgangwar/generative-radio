@@ -1,7 +1,8 @@
 # Generative Radio
 
-**Integration draft:** unit tests pass; the initial Docker build was cancelled for
-a laptop move. Actual rendering and streaming have not yet been verified. Read
+**Local integration verified:** rendering, a 30-minute broadcast and fallback/recovery
+drills pass. Listener feedback identifies excessive repetition; musical variety and
+a longer soak remain open. Read
 [HANDOFF.md](HANDOFF.md) for current status and continuation steps.
 
 A CPU-only ambient music station: Python composition → MIDI → FluidSynth →
@@ -78,6 +79,13 @@ Run one composer, one renderer and one broadcaster per station.
 
 ## Verification
 
+Every PR runs Python 3.11/3.14 unit checks and a container integration job. The
+integration job builds the actual image, runs tests with FFmpeg installed,
+validates a FluidSynth render and Liquidsoap's script, starts all four services,
+and decodes/measures ten seconds from the real Icecast mount. It removes only
+its own ephemeral Compose project/data. PRs may be merged after these checks pass;
+missing checks do not count as clearance.
+
 ```sh
 python3 -m unittest discover -s tests -v
 docker compose run --rm --no-deps broadcaster liquidsoap --check /app/deploy/radio.liq
@@ -118,7 +126,8 @@ Keep the local binding and proxy to it. Plan outbound bandwidth: 128 kbps is abo
 ## SoundFont and licenses
 
 Code is MIT licensed. The container installs Debian's `timgm6mb-soundfont` package;
-its TimGM6mb SoundFont is GPL-2 licensed, separately from this code. Package license
+its TimGM6mb SoundFont is GPL-2 licensed, separately from this code, with copyright
+attributed to Tim Brechbill (2004) and David Bolton (2010). Package license
 and attribution are installed at `/usr/share/doc/timgm6mb-soundfont/copyright`.
 FluidSynth, Liquidsoap, FFmpeg and Icecast retain their own licenses. Review those
 licenses when distributing images or substituting assets. To use another local
