@@ -1,6 +1,6 @@
 # Supervise the broadcaster and detect silent output
 
-Status: proposed; awaiting user design approval.
+Status: engineering design; implementation proceeding under the active finished-product goal. Separate design approval is not claimed; PR review remains open.
 
 ## Intent
 

@@ -50,16 +50,26 @@ services:
       retries: 3
   broadcaster:
     <<: *common
-    command: [liquidsoap, /app/deploy/radio.liq]
+    command: [python, -m, radio.watchdog]
+    environment:
+      <<: *environment
+      WATCHDOG_GRACE_SECONDS: ${WATCHDOG_GRACE_SECONDS:-90}
+      WATCHDOG_PROBE_SECONDS: ${WATCHDOG_PROBE_SECONDS:-12}
+      WATCHDOG_INTERVAL_SECONDS: ${WATCHDOG_INTERVAL_SECONDS:-30}
+      WATCHDOG_TIMEOUT_SECONDS: ${WATCHDOG_TIMEOUT_SECONDS:-20}
+      WATCHDOG_FAILURES: ${WATCHDOG_FAILURES:-3}
+      WATCHDOG_RESTART_LIMIT: ${WATCHDOG_RESTART_LIMIT:-3}
+      WATCHDOG_RESTART_WINDOW_SECONDS: ${WATCHDOG_RESTART_WINDOW_SECONDS:-900}
     depends_on:
       icecast:
         condition: service_healthy
       renderer:
         condition: service_healthy
     healthcheck:
-      test: [CMD, python, /app/deploy/stream_health.py]
+      test: [CMD, python, -m, radio.watchdog, --health]
       interval: 30s
       timeout: 10s
+      start_period: 150s
       retries: 3
 
 volumes:

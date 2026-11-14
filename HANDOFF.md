@@ -35,6 +35,32 @@ https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
 
 ## Verified versus pending
 
+### CI, completed soak and watchdog implementation — 15 November 2026
+
+The user authorized merging ready PRs once CI clears them. Added CI in PR #6:
+Python 3.11/3.14 tests plus an image build, real render, Liquidsoap check, full
+four-service startup and ten-second decoded MP3 validation. PR #6 passed and
+merged into #1's branch; #1 then passed and merged to main. PRs #2/#4/#5 were
+updated against main and merged after fresh CI passed. Unfinished PR #3 stays draft.
+
+The one-hour variety soak completed: exactly 3,600 seconds, no >=2-second silence
+at -50 dB, peak -8.21 dBFS and RMS -24.59 dBFS. All 64 samples were healthy, with
+zero restarts/OOM kills/queue errors and unchanged container identities/start
+times. Broadcaster RAM stayed within 226.8–232.0 MiB. Evidence is in
+`artifacts/soak-20261115/summary.json`, `vitals.jsonl`, and the recording/analysis.
+This validates the variety station; the final watchdog/deployment configuration
+still needs its own runtime acceptance.
+
+Watchdog implementation is proceeding under the active finished-product goal;
+separate human design approval is not claimed. The source passes 35 local tests.
+It owns Liquidsoap, probes decoded audio, rate-limits restarts, atomically reports
+health, and handles shutdown and disk-write failures. Independent review's status
+lookup deadline finding was reproduced and fixed using owned/cancellable curl
+and a whole-probe deadline. Short-threshold drills exposed decoder startup delay;
+bounded FFmpeg input analysis measured about 0.3s versus the previous 4.5s for a
+one-second probe. Final drills/CI are in progress; the main broadcaster has not
+yet been changed. See `docs/product-readiness.md` for remaining release gates.
+
 ### Product-readiness follow-up — 15 November 2026
 
 The active objective is to take the station to a finished product. Concrete
@@ -52,7 +78,7 @@ long-soak acceptance of a completed release.
 The next proposed change is described in
 `docs/superpowers/specs/2026-11-15-stream-watchdog-design.md`: supervise only the
 Liquidsoap child, monitor actual decoded audio, and bound automatic restarts.
-Implementation awaits review of that design; current playback is unchanged.
+At that point implementation awaited design review; see the newer status above.
 
 Published that design and the remaining completion gates in draft PR #3, based
 on PR #2's branch. While awaiting review, tested backup/restore without modifying
@@ -62,7 +88,7 @@ restore to another isolated volume; SQLite integrity passed, restored track 51
 passed audio gates, and the restored queue allocated/rendered new job 62 after
 maximum ID 61 in 3.705 seconds. The ready buffer returned to 11 tracks. Details
 and remaining off-host/operator-command work are in `docs/product-readiness.md`.
-No watchdog code has been implemented or deployed yet.
+At that earlier checkpoint no watchdog code had been implemented or deployed.
 
 Started a one-hour uninterrupted recording and health/resource monitor at 01:12
 on 15 November, with evidence under `artifacts/soak-20261115/`. During validation,

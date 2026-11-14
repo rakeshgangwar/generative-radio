@@ -1,8 +1,7 @@
-import json
-import urllib.request
+"""Compatibility entry point for the decoded-audio health check."""
+import os
+from pathlib import Path
+import sys
 
-with urllib.request.urlopen("http://icecast:8000/status-json.xsl", timeout=5) as response:
-    sources = json.load(response)["icestats"].get("source", [])
-if isinstance(sources, dict):
-    sources = [sources]
-raise SystemExit(0 if any(s.get("listenurl", "").endswith("/radio.mp3") for s in sources) else 1)
+os.chdir(Path(__file__).resolve().parents[1])
+os.execv(sys.executable, [sys.executable, "-m", "radio.watchdog", "--health"])

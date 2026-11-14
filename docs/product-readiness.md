@@ -12,13 +12,13 @@ multiple genres or external composition API is required for this release.
 | Original coherent, reproducible music | Note/MIDI tests, real SoundFont renders, user listening | Technical checks pass; listening acceptance of the variety update is pending |
 | Buffered continuous output | Full-stack recording and queue replenishment evidence | 30-minute recording passed; 11 ready tracks maintained |
 | Recovery from interrupted generation and streaming | Failure drills and decoded audio after recovery | Fallback, restart, Icecast reconnect and real lease-expiry drills passed |
-| Silent/hung broadcaster detection and recovery | Missing-stream/silent-audio/hung-child drills, bounded restart evidence | Not implemented; watchdog design proposed |
-| Bounded storage and resource use | More than one retention interval observed, longer unattended soak | Retention cleanup observed after one hour; continuous long soak still needed |
-| Repeatable validation of changes | Automated PR unit checks and short container integration checks | Local tests pass; CI workflow still needed |
+| Silent/hung broadcaster detection and recovery | Missing-stream/silent-audio/hung-child drills, bounded restart evidence | Watchdog implemented in draft PR #3; final runtime/CI validation in progress |
+| Bounded storage and resource use | More than one retention interval observed, longer unattended soak | One-hour variety soak passed; final watchdog/deployment configuration soak remains |
+| Repeatable validation of changes | Automated PR unit checks and short container integration checks | CI is on main: Python 3.11/3.14 plus real rendering/streaming checks |
 | Safe operation on the target VPS | HTTPS, non-default credentials, restricted administration, startup/reboot verification | Target host/domain not yet provided; deployment package still needed |
 | Backup and recovery | Consistent queue/audio backup and tested restore on isolated data | Local isolated restore passes; repeatable operator command and off-host storage still needed |
 | Operator documentation | Install, upgrade, monitor, recover, back up and roll back commands | Local startup/recovery documented; production runbook incomplete |
-| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | PRs #1 and #2 open; merges require user instruction |
+| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | PRs #1/#2/#4/#5/#6 merged only after CI passed; unfinished watchdog PR #3 remains draft |
 
 The goal is not complete while any gate is missing or unverified. A green unit
 suite alone is insufficient. Local audio artifacts are referenced in HANDOFF.md
@@ -34,8 +34,9 @@ and remain Git-ignored; measured results are recorded in tracked documentation.
    the target host/domain and access. Do not provision a paid VPS implicitly.
 4. Run the final configuration through an uninterrupted soak, including at least
    one retention cycle, resource monitoring and user listening acceptance.
-5. Resolve release findings through PRs. Keep PRs open until the user requests
-   merges; do not claim the unmerged main branch is the finished release.
+5. Resolve release findings through PRs. The user has authorized merging ready
+   PRs after real CI passes; keep unfinished work in draft and revalidate changed
+   merge candidates. Do not claim the release is finished before every gate passes.
 
 ## Runtime retention observation — 15 November 2026
 
@@ -103,3 +104,28 @@ with the variety and capture-duration updates passes 20 tests. PR #5 is based on
 PR #1, independent of PRs #2–#4. It has not been deployed during the current soak.
 The live stream now includes new-composer tracks (for example, track 59); fresh
 listening feedback has been requested and remains pending.
+
+## Completed one-hour variety soak and CI — 15 November 2026
+
+The recording completed with exactly 3,600.000 seconds of decoded audio. No
+silence at -50 dB lasting at least two seconds was detected; peak was -8.21 dBFS
+and RMS -24.59 dBFS. All 64 monitoring samples were healthy, with zero restarts,
+OOM kills or queue errors. Each container's identity/start time stayed unchanged.
+Broadcaster RAM ranged from 226.8–232.0 MiB; composer 14.06–15.64 MiB, renderer
+15.04–74.85 MiB including rendering, and Icecast 4.16–6.05 MiB. Full evidence is in
+`artifacts/soak-20261115/`, including `summary.json` and `vitals.jsonl`.
+
+PR #6 added actual CI and was merged after its checks passed. It enabled the same
+checks on PR #1, which then merged to main. PRs #2/#4/#5 were retargeted/updated
+against the integrated base and merged only after their Python and real streaming
+checks passed. No draft watchdog work was merged as part of this sequence.
+
+The watchdog currently passes 35 local tests, including real decoder timeout/
+cancellation, rolling restart limits, process/descendant cleanup, signal handling
+and health-report write failures. Independent review found a synchronous status
+lookup outside the deadline; two failing regressions reproduced it, and owned
+cancellable curl execution now shares the overall probe deadline. Curl was
+already installed in the image. Runtime drills also exposed slow default FFmpeg
+input analysis with short test thresholds; explicit analysis bounds reduced a
+measured one-second probe from about 4.5 seconds to 0.3 seconds. Final stability
+and recovery drills and PR CI remain required before that change can be released.
