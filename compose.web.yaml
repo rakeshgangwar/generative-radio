@@ -1,0 +1,25 @@
+# Optional local listener UI. Core services/data are inherited without changes.
+services:
+  web:
+    image: generative-radio-web:local
+    build: ./web
+    init: true
+    restart: unless-stopped
+    read_only: true
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    ports:
+      - 127.0.0.1:8080:8080
+    depends_on:
+      icecast:
+        condition: service_healthy
+    healthcheck:
+      test: [CMD, wget, -q, --spider, http://127.0.0.1:8080/]
+      interval: 15s
+      timeout: 5s
+      retries: 3
+    logging:
+      driver: json-file
+      options:
+        max-size: 10m
+        max-file: "3"

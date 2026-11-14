@@ -170,3 +170,21 @@ cover off-host export, encrypted transfer, fresh-volume restore, validation and
 volume switch/rollback. An actual off-host transfer/target-VPS recovery remains
 unverified until those destinations exist. The software does not claim a
 same-host backup volume protects against host loss.
+
+
+## Listener experience — local validation
+
+The optional page at localhost:8080 provides explicit start/pause, volume,
+truthful buffering/retry feedback, bounded automatic reconnection and native
+no-JavaScript fallback. Only the static page and /radio.mp3 are proxied; actual
+admin/status/data-path requests returned404. Ten seconds of proxied audio decoded
+successfully. Core container identities and the active watchdog soak are preserved.
+
+Nineteen deterministic JS/presentation tests pass. Isolated headless Chrome tests
+passed actual play/keyboard/volume/pause/resume, failed-request reconnection,
+390px/320px layout, reduced motion and native fallback. Desktop/mobile screenshots
+were visually inspected. Native browser tooling lacked a display server, so QA
+uses a temporary headless Chrome profile; no user browser/profile was changed.
+Physical iOS/Android devices and public HTTPS remain unverified. CI is being
+extended to cover controls, non-root proxy config, restricted paths, decoded
+proxied audio and browser behavior against the real stack.

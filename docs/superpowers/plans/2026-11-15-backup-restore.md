@@ -1,6 +1,6 @@
 # Backup and Restore Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Ship repeatable verified queue/audio backups and safe isolated restores.
 **Architecture:** Standard-library module snapshots SQLite, copies referenced media, publishes a final manifest, verifies bundles, and restores only into empty data roots.
@@ -29,4 +29,6 @@ No new dependencies, schema changes, Docker socket or credentials in backups. Th
 - [x] Add concise non-root Docker/off-host/restore runbook and update current watchdog acceptance facts.
 - [x] Build actual image without replacing the live image tag. Create from live read-only volume; restore to a separate volume, dispatch/analyze and render a new segment. Expected unchanged live service identities, valid audio and advancing job IDs.
 - [x] Request one independent whole-branch review; fix Important/Critical findings with failing regressions and the full green suite.
-- [ ] Commit/push PR, await current-head CI, mark ready and merge only after final CI passes. Record measured evidence without claiming whole-product completion.
+- [x] Commit/push PR, await current-head CI, mark ready and merge only after final CI passes. Record measured evidence without claiming whole-product completion.
+
+Delivery verified: merged after passing current-head CI (PR #8 for backup tools, PR #3 for watchdog). Later listener work preserves the core configuration and documents remaining release gates separately.

@@ -12,6 +12,35 @@ buffered WAV segments → Liquidsoap → Icecast. No sound card, GPU, AI model o
 external music API is needed. This project lives in the existing `radiojack`
 checkout; the package and Compose project are named `generative-radio`.
 
+## Listen in your browser
+
+The optional listener page adds play/pause, volume and bounded reconnection at
+[localhost:8080](http://localhost:8080). It joins the existing live stream when you
+press play. To start a new station with the page:
+
+```sh
+docker compose -f compose.yaml -f compose.web.yaml up --build -d --wait --wait-timeout 180
+```
+
+For a station that is already playing, add only the page without recreating its
+core services:
+
+```sh
+docker compose -f compose.yaml -f compose.web.yaml build web
+docker compose -f compose.yaml -f compose.web.yaml up -d --no-deps --wait web
+```
+
+The page/proxy runs non-root with a read-only filesystem and exposes only the
+static page and audio mount. Icecast administration and station data stay behind
+the proxy. This configuration is local HTTP; public HTTPS deployment still needs
+a chosen hostname. Core streaming remains available without the optional page.
+
+Listener tests (Node 20+): `node web/tests/unit.mjs`. For isolated browser QA, run
+`npm --prefix web ci --ignore-scripts`, then
+`CHROME_BIN=/path/to/chrome npm --prefix web run test:browser` with the page running.
+The browser dependency is test-only; the listening page requires no Node server,
+frontend build, external font, account or analytics.
+
 ## Run locally
 
 Install Docker with Compose and start the Docker engine. Then:
