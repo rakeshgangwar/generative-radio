@@ -1,6 +1,6 @@
 # Stream Watchdog Implementation Plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Detect and recover persistent silent/hung Liquidsoap output unattended.
 
@@ -40,19 +40,21 @@ and never controls Docker, workers, or Icecast.
 `report_is_healthy(path, now=None)` checks freshness and PID liveness;
 `Supervisor(options, command=None).run()` owns child/probe lifecycle.
 
-- [ ] Write failing tests for healthy/silent/partial PCM, failure streak reset,
+- [x] Write failing tests for healthy/silent/partial PCM, failure streak reset,
   unavailable-server behavior, rolling budget, stale reports and dead PIDs.
-- [ ] Implement bounded probes/policy/report health. Run focused tests; expected
+- [x] Implement bounded probes/policy/report health. Run focused tests; expected
   all pass, including real FFmpeg fixtures and probe cancellation/timeout.
-- [ ] Add failing subprocess tests for crash recovery, restart limiting and
+- [x] Add failing subprocess tests for crash recovery, restart limiting and
   termination; implement supervisor ownership and signal handling. Expected:
   children reaped, no restart loop, no live-station changes.
-- [ ] Wire Compose command/health and configuration. Run full suite; expected all
+- [x] Wire Compose command/health and configuration. Run full suite; expected all
   tests pass. Validate Compose config and script with the built image.
-- [ ] Run isolated healthy/silent/hung-child/server-outage drills using shorter
+- [x] Run isolated healthy/silent/hung-child/server-outage drills using shorter
   test thresholds. Expected bounded recovery and decodable post-recovery audio.
-- [ ] Request one fresh review; fix important findings using RED→GREEN tests.
-- [ ] Preserve the currently running one-hour soak. After it completes and is
+- [x] Request one fresh review; fix important findings using RED→GREEN tests.
+- [x] Preserve the currently running one-hour soak. After it completes and is
   independently validated, update only broadcaster and verify health/audio.
-- [ ] Record measured results and update draft PR #3. Leave no speculative
+- [x] Record measured results and update draft PR #3. Leave no speculative
   completion claims: final configuration soak and actual VPS remain required.
+
+Delivery verified: merged after passing current-head CI (PR #8 for backup tools, PR #3 for watchdog). Later listener work preserves the core configuration and documents remaining release gates separately.

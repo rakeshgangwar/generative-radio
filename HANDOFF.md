@@ -18,6 +18,17 @@ and asked to publish this work to a private GitHub repository.
 Architecture source conversation:
 https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
 
+## Current listener iteration
+
+PR #8 is merged after CI. Optional listener page is implemented locally in
+`web/` with `compose.web.yaml` (localhost:8080). Start only web beside a running
+station to preserve playback; see README. It has explicit start/pause, volume,
+bounded retries, native no-JS fallback and no accounts/analytics. Fifteen JS tests
+and isolated headless Chrome checks pass; real proxied MP3 decoded successfully.
+No core service was recreated. UI delivery still needs final review/current-head
+CI. Public HTTPS, target VPS, physical-device listening and musical acceptance
+remain open. Keep evolving the [journal](docs/product-journal.md).
+
 ## Latest iteration — 15 November 2026
 
 The repository is public under MIT at https://github.com/rakeshgangwar/generative-radio.

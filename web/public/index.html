@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#d8e3ed">
+  <meta name="description" content="Original ambient music, continuously unfolding. Join Generative Radio and make a little room for listening.">
+  <title>Generative Radio — a little room for listening</title>
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="/style.css">
+  <script type="module" src="/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#player">Skip to player</a>
+  <header class="masthead">
+    <a class="wordmark" href="/" aria-label="Generative Radio home"><span class="brand-mark" aria-hidden="true"></span>Generative Radio</a>
+    <a href="#about">About the station</a>
+  </header>
+  <main>
+    <section class="listening-room" aria-labelledby="headline">
+      <div class="introduction">
+        <p class="station-note"><span aria-hidden="true">◌</span> A continuous ambient station</p>
+        <h1 id="headline">A little room<br>for listening.</h1>
+        <p class="lede">Original music, quietly unfolding.<br>Stay for a moment. Stay for a while.</p>
+      </div>
+      <figure class="dial" aria-hidden="true">
+        <img src="/dial.svg" alt="" width="560" height="560">
+        <div class="dial-center"><span></span></div>
+      </figure>
+      <section class="player" id="player" aria-label="Live radio player" data-state="idle">
+        <audio id="stream" preload="none" aria-hidden="true"></audio>
+        <div class="play-row">
+          <button class="play-button" id="toggle" type="button" aria-describedby="playback-status">
+            <span class="play-symbol" aria-hidden="true"></span><span id="toggle-label">Start listening</span>
+          </button>
+          <span class="live-label" id="live-label" hidden><span aria-hidden="true"></span>Live stream</span>
+        </div>
+        <p class="playback-status" id="playback-status" role="status" aria-live="polite" aria-atomic="true">Ready when you are.</p>
+        <div class="volume-row" id="volume-control">
+          <label for="volume">Volume</label>
+          <input id="volume" type="range" min="0" max="100" step="1" value="65" aria-describedby="volume-note">
+          <output id="volume-value" for="volume">65%</output>
+        </div>
+        <p class="volume-note" id="volume-note" hidden>Use your device’s volume buttons to adjust the sound.</p>
+        <noscript><p>Use the audio player below to join the station.</p><audio controls preload="none" src="/radio.mp3">Open <a href="/radio.mp3">the audio stream</a>.</audio></noscript>
+      </section>
+    </section>
+    <section class="about" id="about" aria-labelledby="about-title">
+      <h2 id="about-title">Music with room to breathe.</h2>
+      <div>
+        <p>When you press play, you join the station where it is now. Melodies emerge, familiar shapes return, and the texture slowly changes.</p>
+        <p>New arrangements are composed and rendered ahead of playback, then blended into one continuous stream. Made for the unhurried parts of your day.</p>
+      </div>
+    </section>
+  </main>
+  <footer>
+    <p>Generative Radio <span>Always a work in progress.</span></p>
+    <nav aria-label="Project links">
+      <a href="https://github.com/rakeshgangwar/generative-radio/blob/main/docs/product-journal.md" target="_blank" rel="noopener noreferrer">Product journal</a>
+      <a href="https://github.com/rakeshgangwar/generative-radio" target="_blank" rel="noopener noreferrer">Source</a>
+      <a href="/radio.mp3">Open audio stream</a>
+    </nav>
+  </footer>
+</body>
+</html>

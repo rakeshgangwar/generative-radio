@@ -40,11 +40,17 @@ The backup feature now has 16 tests; the full 58-test local suite passes. An act
 
 A fresh one-hour decoded recording and resource/queue/health monitor are running against the deployed watchdog configuration. This is separate from the completed pre-watchdog baseline. The result is pending; I will record duration, silence, restarts, queue errors and memory when the processes actually finish.
 
-### Next: an approachable listening experience
+### Built locally: an approachable listening experience
 
-A stream URL proves the plumbing. The product needs a small, inviting listening page: an obvious play/pause control, volume, an honest connection/reconnection state and a restrained identity that suits the music. It should explain that original music is continuously composed and buffered, without requiring the listener to understand the infrastructure.
+The first listener page now runs at `http://localhost:8080`: a quiet blue radio dial, an obvious play/pause control, volume and honest connection state. It opens no audio connection until you ask. Pause releases the stream; resume joins where the station is now. Network failures get three automatic reconnect attempts, then an explicit retry button. The page explains that new music is composed ahead of playback.
 
-A useful first version needs no account, subscription, dashboard or settings maze. It should work on a phone and remain understandable when audio cannot start automatically. A reconnect button and clear feedback matter more than decorative visualizers. This is proposed next work, not an implemented player.
+The page is static HTML/CSS/JavaScript with an optional non-root, read-only Caddy service. The proxy exposes the audio mount and page, with administration/status/data paths returning 404. It adds no account, external assets, analytics or Node server. JavaScript-disabled browsers get native audio controls.
+
+Actual isolated Chrome tests have played and resumed the stream, adjusted volume by keyboard, recovered after a real failed media request, checked 390px/320px layouts and reduced motion, and verified the native fallback. Fifteen deterministic tests cover controller races, cancellation, bounded recovery and text contrast. Visual review led to darker secondary text to meet 4.5:1 contrast. Real mobile devices and public HTTPS still need validation. This local iteration is under PR/CI delivery; it is not a public listening URL yet.
+
+![The local Generative Radio listening page](images/listener.png)
+
+The product is now becoming a place to listen, rather than a stream address to copy. Next, the musical-memory and longer-arc experiments below should improve what it feels like to stay there.
 
 ### Next: an operable public station
 
@@ -104,3 +110,12 @@ These are prompts for observation, not blockers to the work already underway.
 ## Evidence and continuation
 
 Operational details and measured acceptance results live in [product-readiness.md](product-readiness.md), with implementation context in [HANDOFF.md](../HANDOFF.md). Local recordings, runtime logs and backup fixtures remain Git-ignored. This journal will gain dated entries as ideas are tested, shipped, revised or dropped.
+
+
+## Iteration log
+
+### 15 November: recovery tools landed; listening gets a front door
+
+PR #8 merged verified backup/restore commands and the operator runbook after all current-head CI checks passed. An actual isolated recovery preserved 43 jobs/89 files, dispatched valid two-minute music and rendered the next segment in under a second. Off-host and target-VPS recovery still need real destinations.
+
+The listener page is being delivered next, including controller tests, browser checks and proxied-audio CI. The deployed watchdog's one-hour soak continues; no final result is claimed until recording and monitoring finish. No core service was recreated to add the page.

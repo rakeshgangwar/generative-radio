@@ -33,11 +33,25 @@ jobs:
           python:${{ matrix.python }}-slim-bookworm
           python -m unittest discover -s tests -v
 
+  listener-tests:
+    name: Listener controls
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          persist-credentials: false
+      - name: Run deterministic playback and presentation tests
+        run: >-
+          docker run --rm -v "$PWD:/app:ro" -w /app
+          node:22-alpine node web/tests/unit.mjs
+
   container-integration:
     name: Audio and streaming integration
     runs-on: ubuntu-latest
     timeout-minutes: 15
     env:
+      COMPOSE_FILE: compose.yaml:compose.web.yaml
       RADIO_CI_PROJECT: radio-ci-${{ github.run_id }}-${{ github.run_attempt }}
     steps:
       - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
@@ -45,6 +59,11 @@ jobs:
           persist-credentials: false
       - name: Build the actual station image
         run: docker build -t generative-radio:local .
+      - name: Build and validate the listener image
+        run: |
+          docker compose -p "$RADIO_CI_PROJECT" build web
+          docker run --rm --network none --read-only --cap-drop ALL generative-radio-web:local \
+            caddy validate --config /etc/caddy/Caddyfile --adapter caddyfile
       - name: Run all tests with real audio tools available
         run: >-
           docker run --rm --network none
@@ -78,6 +97,31 @@ jobs:
         run: |
           docker compose -p "$RADIO_CI_PROJECT" exec -T broadcaster python -c \
             'from dataclasses import replace; from threading import Event; from radio.watchdog import Options, probe_stream; result=probe_stream(replace(Options.load(),probe_seconds=1,timeout=8),Event()); assert result.kind=="healthy", result; print(result)'
+      - name: Validate the listener page, restricted routes and proxied audio
+        run: |
+          python3 - <<'PY'
+          import urllib.request, urllib.error
+          with urllib.request.urlopen('http://127.0.0.1:8080/', timeout=5) as response:
+              assert response.status == 200
+              assert b'Start listening' in response.read()
+              assert "default-src 'self'" in response.headers['Content-Security-Policy']
+          for path in ['/admin/', '/status-json.xsl', '/radio.sqlite']:
+              try:
+                  urllib.request.urlopen('http://127.0.0.1:8080'+path, timeout=5)
+              except urllib.error.HTTPError as error:
+                  assert error.code == 404, (path, error.code)
+              else:
+                  raise AssertionError(path+' was exposed')
+          PY
+          docker compose -p "$RADIO_CI_PROJECT" exec -T broadcaster \
+            ffmpeg -nostdin -v error -y -rw_timeout 15000000 \
+            -i http://web:8080/radio.mp3 -t 5 -c:a pcm_s16le /tmp/ci-web.wav
+          docker compose -p "$RADIO_CI_PROJECT" exec -T broadcaster python -c \
+            'from pathlib import Path; from radio.render import analyze; result=analyze(Path("/tmp/ci-web.wav")); assert abs(result["duration"]-5)<.1, result; print(result)'
+      - name: Browser-test the listener against the actual live stream
+        run: |
+          npm --prefix web ci --ignore-scripts
+          CHROME_BIN="$(command -v google-chrome)" npm --prefix web run test:browser
       - name: Show final service logs
         if: always()
         run: docker compose -p "$RADIO_CI_PROJECT" logs --no-color --tail 100
