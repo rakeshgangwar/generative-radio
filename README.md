@@ -81,13 +81,22 @@ dry, it loops cached music, returning to new music at a track boundary.
 
 `served` in status means **dispatched to Liquidsoap**, which may prefetch; it is
 not precise now-playing history. A broadcaster crash can skip a dispatched track.
-Served files/history expire after one hour. Ready/in-flight jobs are bounded by
+Served files/history expire after one hour. Expired failed jobs also remove
+temporary render WAV files left by abruptly stopped workers. Active work and
+recently dispatched/failed files are retained. Ready/in-flight jobs are bounded by
 the buffer; subprocesses have timeouts and Docker logs rotate. Allow approximately
 1 GB for the default audio buffer/history plus container images. SQLite requires
 a local Docker volume; do not place the queue on NFS or share it across VPS hosts.
 Run one composer, one renderer and one broadcaster per station.
 
 ## Verification
+
+Every PR runs Python 3.11/3.14 unit checks and a container integration job. The
+integration job builds the actual image, runs tests with FFmpeg installed,
+validates a FluidSynth render and Liquidsoap's script, starts all four services,
+and decodes/measures ten seconds from the real Icecast mount. It removes only
+its own ephemeral Compose project/data. PRs may be merged after these checks pass;
+missing checks do not count as clearance.
 
 ```sh
 python3 -m unittest discover -s tests -v
@@ -96,7 +105,17 @@ sh scripts/capture.sh 1800
 ```
 
 The Liquidsoap check requires the fallback file from the renderer. The recording
-uses locally installed FFmpeg and runs in real time. Review `artifacts/analysis.log`
+uses locally installed FFmpeg and ffprobe and runs in real time. It fails if the
+decoded duration is shorter than requested, even when FFmpeg exits successfully
+after an early stream disconnect. Incomplete WAV files are retained for diagnosis,
+and stale analysis from a previous run is removed. Positive fractional durations
+are supported. Set `RADIO_STREAM_URL` to validate another station endpoint:
+
+```sh
+RADIO_STREAM_URL=http://localhost:8001/radio.mp3 sh scripts/capture.sh 120
+```
+
+Review `artifacts/analysis.log`
 for long silence, clipping/peak levels, and listen to transitions in the WAV.
 Automatic gates check measurable audio properties; listening establishes whether
 the music is worth broadcasting.
