@@ -34,7 +34,7 @@ because observation times out. Evidence: `artifacts/watchdog-soak-20261115/`.
 Backup tooling now has create/verify/restore commands, 16 dedicated tests and a
 58-test full local suite. Actual live read-only backup/isolated restore preserved
 43 jobs/89 files and seed/ID continuity; restored 120-second audio passed and a
-new 20-second job rendered in about 0.9s. Independent review found no remaining Important/Critical issues. Hosted CI delivery is pending; see
+new 20-second job rendered in about 0.9s. Independent review found no remaining Important/Critical issues. The PR workflow requires hosted CI clearance before merge; see
 [operator commands](docs/operations.md) and `artifacts/backup-tools-20261115/`.
 The live volume was not modified by these backup tests. Target VPS/domain,
 actual off-host recovery and listening acceptance remain open. Next proposed
