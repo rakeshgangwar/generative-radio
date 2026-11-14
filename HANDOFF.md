@@ -18,6 +18,24 @@ and asked to publish this work to a private GitHub repository.
 Architecture source conversation:
 https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
 
+## Latest verified state — 15 November 2026
+
+PRs #1–#9 have merged after real current-head CI. The public MIT repository now
+includes the listener page, backup/restore commands and an evolving journal.
+Local page: http://localhost:8080. Core station remains CPU-only.
+
+The deployed-watchdog hour completed:3,600 seconds, no >=2s silence at -50 dB,
+114/114 healthy samples, zero restart/OOM/queue errors and unchanged core IDs.
+Broadcaster memory240.3–263.4 MiB with stable quarter averages; SQLite integrity ok,
+11 ready, work empty,907 MB data. Capture73227 and monitor15955 are terminal exit 0;
+do not restart or repoll them. Evidence: `artifacts/watchdog-soak-20261115/`.
+
+Next work: musical memory/chapters. A 256-seed score baseline had 54/255 repeated
+adjacent four-chord openings and 198/256 first melody notes on A. No new planner is
+on air yet. Preserve live playback while testing the iteration in an isolated
+worktree. Target VPS/domain, actual off-host recovery, physical-device/public
+HTTPS validation and musical listening acceptance remain open.
+
 ## Current listener iteration
 
 PR #8 is merged after CI. Optional listener page is implemented locally in
@@ -25,8 +43,7 @@ PR #8 is merged after CI. Optional listener page is implemented locally in
 station to preserve playback; see README. It has explicit start/pause, volume,
 bounded retries, native no-JS fallback and no accounts/analytics. Nineteen JS tests
 and isolated headless Chrome checks pass; real proxied MP3 decoded successfully.
-No core service was recreated. UI delivery still needs final review/current-head
-CI. Public HTTPS, target VPS, physical-device listening and musical acceptance
+No core service was recreated. UI PR #9 is merged after final review fixes and all four CI checks passed. Public HTTPS, target VPS, physical-device listening and musical acceptance
 remain open. Keep evolving the [journal](docs/product-journal.md).
 
 ## Latest iteration — 15 November 2026
@@ -38,9 +55,8 @@ Release readiness evidence is not an exhaustive definition of the user's goal.
 
 PRs #1–#7 are merged after CI passed. Watchdog PR #3 is deployed locally with
 all four services healthy and zero recovery restarts; a 30-second post-rollout
-recording passed. A new one-hour watchdog soak is running (capture session 73227,
-monitor 15955 at launch); inspect the same handles/artifacts, do not restart only
-because observation times out. Evidence: `artifacts/watchdog-soak-20261115/`.
+recording passed. The one-hour watchdog soak completed (capture73227 and monitor15955 exited0);
+its summary is now verified. Evidence: `artifacts/watchdog-soak-20261115/`.
 
 Backup tooling now has create/verify/restore commands, 16 dedicated tests and a
 58-test full local suite. Actual live read-only backup/isolated restore preserved
