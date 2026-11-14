@@ -86,7 +86,17 @@ sh scripts/capture.sh 1800
 ```
 
 The Liquidsoap check requires the fallback file from the renderer. The recording
-uses locally installed FFmpeg and runs in real time. Review `artifacts/analysis.log`
+uses locally installed FFmpeg and ffprobe and runs in real time. It fails if the
+decoded duration is shorter than requested, even when FFmpeg exits successfully
+after an early stream disconnect. Incomplete WAV files are retained for diagnosis,
+and stale analysis from a previous run is removed. Positive fractional durations
+are supported. Set `RADIO_STREAM_URL` to validate another station endpoint:
+
+```sh
+RADIO_STREAM_URL=http://localhost:8001/radio.mp3 sh scripts/capture.sh 120
+```
+
+Review `artifacts/analysis.log`
 for long silence, clipping/peak levels, and listen to transitions in the WAV.
 Automatic gates check measurable audio properties; listening establishes whether
 the music is worth broadcasting.
