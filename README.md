@@ -81,7 +81,9 @@ dry, it loops cached music, returning to new music at a track boundary.
 
 `served` in status means **dispatched to Liquidsoap**, which may prefetch; it is
 not precise now-playing history. A broadcaster crash can skip a dispatched track.
-Served files/history expire after one hour. Ready/in-flight jobs are bounded by
+Served files/history expire after one hour. Expired failed jobs also remove
+temporary render WAV files left by abruptly stopped workers. Active work and
+recently dispatched/failed files are retained. Ready/in-flight jobs are bounded by
 the buffer; subprocesses have timeouts and Docker logs rotate. Allow approximately
 1 GB for the default audio buffer/history plus container images. SQLite requires
 a local Docker volume; do not place the queue on NFS or share it across VPS hosts.

@@ -149,6 +149,49 @@ class QueueTests(unittest.TestCase):
         self.store.cleanup()
         self.assertFalse(path.exists())
 
+    def test_cleanup_removes_temporary_audio_after_final_abandoned_attempt(self):
+        self.store.enqueue(self.config)
+        for _ in range(3):
+            job = self.store.claim()
+            self.assertIsNotNone(job)
+            with self.store.db:
+                self.store.db.execute("UPDATE jobs SET updated=? WHERE id=?",
+                                      (time.time() - 601, job["id"]))
+        self.assertIsNone(self.store.claim())
+        self.assertEqual(self.store.status()["queue"]["failed"]["count"], 1)
+        leftovers = [self.data / "work" / f"{job['id']}.raw.wav",
+                     self.data / "work" / f"{job['id']}.wav",
+                     self.data / "audio" / f"{job['id']}.wav",
+                     self.data / "midi" / f"{job['id']}.mid"]
+        for path in leftovers:
+            path.parent.mkdir(exist_ok=True)
+            path.write_bytes(b"interrupted render")
+        with self.store.db:
+            self.store.db.execute("UPDATE jobs SET updated=? WHERE id=?",
+                                  (time.time() - 3601, job["id"]))
+        self.store.cleanup()
+        for path in leftovers:
+            self.assertFalse(path.exists(), str(path))
+        self.assertNotIn("failed", self.store.status()["queue"])
+
+    def test_cleanup_preserves_active_and_recent_terminal_work(self):
+        paths = []
+        for status in ["pending", "rendering", "ready", "served", "failed"]:
+            self.assertTrue(self.store.enqueue(self.config))
+            job_id = self.store.db.execute("SELECT max(id) FROM jobs").fetchone()[0]
+            age = 10 if status in {"served", "failed"} else 3700
+            with self.store.db:
+                self.store.db.execute("UPDATE jobs SET status=?,updated=? WHERE id=?",
+                                      (status, time.time() - age, job_id))
+            for suffix in ["wav", "raw.wav"]:
+                path = self.data / "work" / f"{job_id}.{suffix}"
+                path.parent.mkdir(exist_ok=True)
+                path.write_bytes(b"still needed")
+                paths.append(path)
+        self.store.cleanup()
+        self.assertTrue(all(p.is_file() for p in paths))
+        self.assertEqual(sum(v["count"] for v in self.store.status()["queue"].values()), 5)
+
     def test_seed_is_not_reused_after_cleanup(self):
         self.store.enqueue(self.config)
         job = self.store.claim()

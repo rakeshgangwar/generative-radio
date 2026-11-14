@@ -83,7 +83,8 @@ class Store:
         # Retain dispatched files for an hour: exceeds maximum segment + prefetch.
         rows = self.db.execute("SELECT id FROM jobs WHERE status IN ('served','failed') AND updated<?", (time.time() - 3600,)).fetchall()
         for row in rows:
-            for directory, extension in [("audio", "wav"), ("midi", "mid")]:
+            for directory, extension in [("audio", "wav"), ("midi", "mid"),
+                                         ("work", "raw.wav"), ("work", "wav")]:
                 (self.data / directory / f"{row['id']}.{extension}").unlink(missing_ok=True)
         with self.db:
             # Preserve IDs/seeds via AUTOINCREMENT even after history expires.
