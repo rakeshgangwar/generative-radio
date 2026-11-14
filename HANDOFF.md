@@ -35,6 +35,25 @@ https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
 
 ## Verified versus pending
 
+### Product-readiness follow-up — 15 November 2026
+
+The active objective is to take the station to a finished product. Concrete
+completion gates and remaining work are tracked in `docs/product-readiness.md`.
+Current PRs: #1 for runtime integration, #2 for musical variety, with #2 based on
+#1's branch. Both remain open; no merges are authorized by the PR workflow alone.
+
+A fresh live SQLite/filesystem inspection after more than an hour of activity
+confirmed 11 ready tracks, 32 retained dispatched tracks, zero expired terminal
+rows and an empty render work directory. Earlier dispatched IDs had been removed.
+The data volume used 928,553,349 bytes, and broadcaster RAM was 227.1 MiB. All four
+services were healthy. This is evidence of working retention cleanup, not a final
+long-soak acceptance of a completed release.
+
+The next proposed change is described in
+`docs/superpowers/specs/2026-11-15-stream-watchdog-design.md`: supervise only the
+Liquidsoap child, monitor actual decoded audio, and bound automatic restarts.
+Implementation awaits review of that design; current playback is unchanged.
+
 ### Musical variety implementation — 15 November 2026
 
 User approved and requested implementation of
