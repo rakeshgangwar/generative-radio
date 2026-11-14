@@ -11,15 +11,20 @@ class Config:
     bpm: int
     seed: int
     soundfont: str
+    musical_memory: bool = True
 
     @classmethod
     def load(cls):
+        memory = os.getenv("MUSICAL_MEMORY", "1")
+        if memory not in {"0", "1"}:
+            raise ValueError("MUSICAL_MEMORY must be 0 or 1")
         c = cls(Path(os.getenv("RADIO_DATA", "data")),
                 int(os.getenv("SEGMENT_SECONDS", "120")),
                 int(os.getenv("BUFFER_SECONDS", "1200")),
                 int(os.getenv("BPM", "60")),
                 int(os.getenv("STATION_SEED", "20261114")),
-                os.getenv("SOUNDFONT", "/usr/share/sounds/sf2/TimGM6mb.sf2"))
+                os.getenv("SOUNDFONT", "/usr/share/sounds/sf2/TimGM6mb.sf2"),
+                memory == "1")
         if not 20 <= c.segment_seconds <= 600:
             raise ValueError("SEGMENT_SECONDS must be between 20 and 600")
         if not c.segment_seconds <= c.buffer_seconds <= 3600:

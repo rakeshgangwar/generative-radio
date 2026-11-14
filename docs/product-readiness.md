@@ -222,3 +222,28 @@ PR #9 merged the listener after all four checks passed, including browser tests
 against the actual stack. Native-pause cancellation and no-JS/description fixes
 were regression-tested before merge. Musical-memory work has not changed the
 live station; its baseline score sample is recorded in the product journal.
+
+
+## Musical-memory candidate — isolated render validation
+
+The planner uses saved job seed/ID and constant-work shuffled blocks; no queue
+schema change. A 256-position score comparison has 0/255 equal adjacent harmonic
+openings versus 54/255 in the baseline, and eight first melody pitches versus three.
+A starts 65/256 rather than 198/256. These are score properties, not a subjective
+acceptance claim. Queue skips can skip chapter stages; on-air history is not added.
+
+All 15 palette/stage 20-second renders passed existing gates (maximum quiet fraction
+0.025, peak at most -8.43 dBFS). Twelve planned 120-second renders took 3.648–3.819 s,
+with peak at most -7.78 dBFS. Baseline and planned 12-segment offline crossfades are
+1,385 seconds each; both have no -50 dB silence lasting two seconds. Planned sequence
+RMS is -24.30 dBFS, peak -7.78 dBFS. Offline linear crossfades stress transitions;
+actual live Liquidsoap/user listening remains separately required.
+
+An actual renderer consumed two saved job origins 42/5000 while its environment
+station seed was 9999, saved the expected plans, replenished two ready jobs and
+kept fallback independent. Repeating with MUSICAL_MEMORY=0 produced legacy metadata
+shape, no queue errors. Explicit planned preview CLI rendered valid 20-second audio.
+Artifacts: `artifacts/musical-memory-20261115/` (baseline/planned-score JSON,
+audio-report, worker-check, cli-preview, paired sequence WAVs/analysis). The lab
+volume is isolated from live data. 74 backend and 19 listener checks pass locally;
+final independent review/current-head CI and production worker rollout are pending.

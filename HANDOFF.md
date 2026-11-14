@@ -18,6 +18,18 @@ and asked to publish this work to a private GitHub repository.
 Architecture source conversation:
 https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
 
+## Current musical-memory iteration
+
+PR #10 has merged the completed-watchdog evidence/journal after CI. The musical
+candidate is implemented in an isolated worktree: versioned plans from saved
+seed/ID, balanced nonrepeating harmonic paths, 3–5 segment chapter themes, stage
+changes, three GM palettes, strict MUSICAL_MEMORY 0/1 rollback and explicit planned
+preview flags. No schema migration or new runtime dependency. 74 backend/19 JS tests
+pass; actual 39 renders and paired 23m05s crossfade rehearsals pass quality/gap
+checks. Actual worker tests preserve saved job origins and verify legacy rollback.
+No live worker rollout yet; preserve ready files/data/Icecast/broadcaster. Final
+review/CI and listening remain pending; see journal/readiness for measured facts.
+
 ## Latest verified state — 15 November 2026
 
 PRs #1–#9 have merged after real current-head CI. The public MIT repository now
