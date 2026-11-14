@@ -8,4 +8,6 @@
   remaining limitations in each PR.
 - Split independent changes into separate PRs. When a change depends on an
   unmerged PR, state the dependency and merge order in its description.
-- Leave PRs open for review; merge only when the user requests it.
+- The user has authorized merging ready PRs after CI clears them. Require real
+  passing checks; an absence of checks is not clearance. Keep unfinished PRs in
+  draft, merge dependencies first, and revalidate CI when a PR's base changes.
