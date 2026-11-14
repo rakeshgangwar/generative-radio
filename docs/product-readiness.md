@@ -87,3 +87,19 @@ at 01:12 on 15 November (Asia/Kolkata). Evidence is being written under
 was made in a separate worktree. Verify the resulting recording's duration
 independently before claiming success. This run is not complete yet, and a soak
 of the eventual watchdog/deployment configuration will still be required.
+
+## Interrupted-render storage regression — 15 November 2026
+
+PR #5 fixes a second retention failure path: a renderer killed on its last
+allowed attempt can leave raw/processed temporary WAVs behind. Existing cleanup
+removed the expired failed row and its published/MIDI files, leaving the work
+files permanently untracked. A regression exhausting all three real queue claims
+through stale-lease recovery reproduced that leak. Cleanup now includes that
+expired terminal job's two temporary audio paths. A safety test proves active
+and recent work remains untouched.
+
+The fix passes 10 tests on the integration base. A temporary combined checkout
+with the variety and capture-duration updates passes 20 tests. PR #5 is based on
+PR #1, independent of PRs #2–#4. It has not been deployed during the current soak.
+The live stream now includes new-composer tracks (for example, track 59); fresh
+listening feedback has been requested and remains pending.

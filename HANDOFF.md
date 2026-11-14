@@ -75,6 +75,14 @@ assembled temporary checkout. The fix lives in the separate
 currently recording the soak. The hour-long test is still running; verify actual
 duration and metrics after completion before updating its gate.
 
+PR #5 separately fixes temporary WAV leakage after a final abandoned render
+attempt. The regression failed on an expired job's `work/1.raw.wav` before the
+fix, then passed; a safety test preserves active and recent work. Integration-base
+tests pass (10), and the assembled set with PRs #2/#4 passes 20 tests. Its worktree
+is `/tmp/generative-radio-render-cleanup`; the live soak configuration is unchanged.
+Live logs now confirm new-composer track 59 reached playback, so a new user
+listening judgment has been requested. No subjective acceptance is assumed.
+
 ### Musical variety implementation — 15 November 2026
 
 User approved and requested implementation of
