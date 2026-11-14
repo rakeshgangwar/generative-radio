@@ -25,6 +25,9 @@ a 60-second emergency track before starting Liquidsoap. Open
 [the live stream](http://localhost:8000/radio.mp3) in a browser or VLC.
 [Icecast status](http://localhost:8000/status.xsl) shows the active mount/listeners.
 Only port 8000 is published, bound to **127.0.0.1**.
+Audio can begin before the broadcaster's audio-health grace period finishes.
+For startup that waits for all health checks, use
+`docker compose up --build -d --wait --wait-timeout 180`.
 
 ```sh
 docker compose exec composer python -m radio status
@@ -131,10 +134,35 @@ While capturing, exercise these recovery cases:
 4. `docker compose restart renderer` — the worker should retry abandoned work once
    its lease expires; the broadcaster keeps playing.
 
-Health checks monitor worker heartbeats and mount presence. Docker automatically
-restarts exited containers, **not** merely unhealthy ones. Health checks do not
-detect every possible silent or hung broadcast; external stream monitoring and a
-long soak test remain prerequisites for unattended production use.
+Worker health checks monitor heartbeats. The broadcaster runs a non-root Python
+supervisor which owns Liquidsoap and probes the actual decoded MP3 stream.
+After a 90-second startup grace it samples 12 seconds of mono audio and waits
+30 seconds between completed probes. Three consecutive missing, stalled,
+undecodable or continuously quiet samples (below -50 dBFS) trigger a Liquidsoap
+restart. Healthy samples reset the failure streak; ordinary short fades remain
+audible within the full probe. Icecast outages report unhealthy and rely on
+Liquidsoap's reconnection rather than repeatedly restarting the child.
+
+Recovery is limited to three child restarts in a rolling 15-minute window.
+Cooldown remains visible as unhealthy; recovery can resume as the window permits.
+Shutdown terminates owned processes, and a failed health-report write preserves
+otherwise working audio. Docker still restarts exited containers rather than
+merely unhealthy ones. Public DNS/HTTPS reachability and host failures require
+deployment-level monitoring.
+
+```sh
+docker compose exec broadcaster python -m radio.watchdog --health
+docker compose exec broadcaster cat /data/broadcaster-health.json
+docker compose logs --tail 50 broadcaster
+```
+
+The report contains the failure reason, current child PID, restart count and last
+successful audio-probe time. Its RMS value is the loudest one-second decoded
+window. Stale reports or dead child PIDs fail health checks.
+`WATCHDOG_*` settings are documented in `.env.example`; retain the defaults for
+normal operation and include startup/decoding and native reconnect time when
+changing probe deadlines or intervals.
+The supervisor has no Docker socket and cannot restart Icecast, workers or a VPS.
 
 ## VPS deployment
 

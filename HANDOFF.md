@@ -52,14 +52,21 @@ This validates the variety station; the final watchdog/deployment configuration
 still needs its own runtime acceptance.
 
 Watchdog implementation is proceeding under the active finished-product goal;
-separate human design approval is not claimed. The source passes 35 local tests.
+separate human design approval is not claimed. The source passes 42 local tests.
 It owns Liquidsoap, probes decoded audio, rate-limits restarts, atomically reports
 health, and handles shutdown and disk-write failures. Independent review's status
 lookup deadline finding was reproduced and fixed using owned/cancellable curl
 and a whole-probe deadline. Short-threshold drills exposed decoder startup delay;
 bounded FFmpeg input analysis measured about 0.3s versus the previous 4.5s for a
-one-second probe. Final drills/CI are in progress; the main broadcaster has not
+one-second probe. Final isolated drills passed; final-commit CI is pending. The main broadcaster has not
 yet been changed. See `docs/product-readiness.md` for remaining release gates.
+The fully integrated candidate now passes 42 tests. Final isolated checks passed:
+60 seconds of ordinary playback without a restart, real child crash/hang recovery,
+missing-mount and encoded-silence detection, rolling-budget cooldown and recovery,
+and native Icecast reconnect without restarting the child (using a probe interval
+that allows the native reconnect delay). The final documentation/CI-step commit
+still needs CI; the live broadcaster is unchanged. Evidence files are under
+`artifacts/watchdog-20261115/final-*`.
 
 ### Product-readiness follow-up — 15 November 2026
 

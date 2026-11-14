@@ -19,7 +19,7 @@ and never controls Docker, workers, or Icecast.
 - Defaults: grace 90 seconds, 12-second audio samples, 30-second probe interval,
   three consecutive failures, three restarts per rolling 900 seconds.
 - Handle signals and reap all child/probe processes; bound probe memory and time.
-- Keep PR draft until tests and isolated runtime drills pass; do not merge PRs.
+- Keep PR draft until tests and isolated runtime drills pass. The later user instruction authorizes merging ready PRs after current-head CI clears.
 
 ## Review Focus
 

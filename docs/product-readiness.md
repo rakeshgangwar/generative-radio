@@ -82,12 +82,12 @@ now returns failure as expected. Five new FFmpeg integration tests pass; combini
 the fix with the musical-variety change in a temporary checkout passes 18 tests.
 PR #4 is based on PR #1 and does not require the pending watchdog implementation.
 
-A new one-hour uninterrupted recording and resource/queue/health monitor started
-at 01:12 on 15 November (Asia/Kolkata). Evidence is being written under
+A one-hour uninterrupted recording and resource/queue/health monitor started
+at 01:12 on 15 November (Asia/Kolkata). Evidence was written under
 `artifacts/soak-20261115/`. The active main-checkout script was not edited; the fix
-was made in a separate worktree. Verify the resulting recording's duration
-independently before claiming success. This run is not complete yet, and a soak
-of the eventual watchdog/deployment configuration will still be required.
+was made in a separate worktree. Its completed duration was independently checked;
+results follow. A soak of the eventual watchdog/deployment configuration is still
+required.
 
 ## Interrupted-render storage regression — 15 November 2026
 
@@ -120,12 +120,27 @@ checks on PR #1, which then merged to main. PRs #2/#4/#5 were retargeted/updated
 against the integrated base and merged only after their Python and real streaming
 checks passed. No draft watchdog work was merged as part of this sequence.
 
-The watchdog currently passes 35 local tests, including real decoder timeout/
+The integrated watchdog candidate passes 42 local tests, including real decoder timeout/
 cancellation, rolling restart limits, process/descendant cleanup, signal handling
 and health-report write failures. Independent review found a synchronous status
 lookup outside the deadline; two failing regressions reproduced it, and owned
 cancellable curl execution now shares the overall probe deadline. Curl was
 already installed in the image. Runtime drills also exposed slow default FFmpeg
 input analysis with short test thresholds; explicit analysis bounds reduced a
-measured one-second probe from about 4.5 seconds to 0.3 seconds. Final stability
-and recovery drills and PR CI remain required before that change can be released.
+measured one-second probe from about 4.5 seconds to 0.3 seconds. Startup/transport
+margin is still required; this timing comparison is not a latency guarantee.
+
+Final isolated drills passed with explicit shortened thresholds (10-second grace,
+one-second sample, eight-second deadline, two failures and two restarts per 60
+seconds). A 60-second ordinary-playback baseline had 56 observations and zero
+restarts. Killed and stopped/hung Liquidsoap children recovered. Missing mounts
+and real encoded silence were detected, restart limits held at two, and restoring
+the correct script recovered decoded audio after the rolling window permitted it.
+The server-outage/native-reconnect case used a five-second probe interval to allow
+Liquidsoap's native retry (production uses 30 seconds); the child PID and restart
+count stayed unchanged through the outage and restoration.
+
+Evidence is in `artifacts/watchdog-20261115/final-process-recovery.json`,
+`final-audio-recovery.json`, `final-native-reconnect.json` and associated logs.
+The final operator documentation/short-probe CI step still needs current-head CI
+clearance before merge. The live broadcaster has not yet been updated.
