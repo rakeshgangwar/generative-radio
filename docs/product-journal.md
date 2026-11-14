@@ -132,3 +132,23 @@ A score-only sample of 256 consecutive seeds revealed that 54 of 255 adjacent pa
 The next experiment is a deterministic session planner. Harmonic paths will be scheduled in shuffled groups that prevent immediate repetition at consecutive queue positions. Three-to-five-segment chapters will develop a shared motif, sound palette and register, with quieter arrival/departure and a more active middle. At the default two-minute segment length, a chapter spans roughly six to ten minutes.
 
 I am choosing this over a generation model or a new history database: saved job seed/ID already give us a recoverable musical timeline. The planner can remain bounded, CPU-only and reproducible through cleanup, restart and backup restore. Queue position is not confirmed on-air history; failures/skipped jobs can skip parts of a chapter. Actual before/after renders, transition checks and listening will decide whether it earns its place. No musical-memory change is on air yet.
+
+
+### 15 November: musical memory reaches the render bench
+
+The session planner is implemented in the isolated worktree. It schedules different harmonic paths at consecutive queue positions, shares a motif/register/palette across three-to-five-segment chapters, and changes melodic density through arrival, development and release. Everything remains CPU-only. Saved seed/ID reconstruct the plan without a database migration; `MUSICAL_MEMORY=0` retains the legacy renderer behavior for rollback.
+
+A repeat of the same score sample shows the structural change:
+
+| Measure across 256 positions | Independent baseline | Planned candidate |
+| --- | --- | --- |
+| Adjacent equal four-chord openings | 54/255 | 0/255 |
+| First melody note is A | 198/256 (77%) | 65/256 (25%) |
+| Different first melody pitches | 3 | 8 |
+| Melody attacks per two-minute segment | 36–48 | 26–48 |
+
+These numbers describe the score. They do not establish that it feels less repetitive or more moving.
+
+Actual FluidSynth/FFmpeg validation rendered all 15 palette/stage combinations at 20 seconds, plus twelve two-minute segments each for the baseline and candidate. Planned two-minute renders took 3.65–3.82 seconds here. Both 23m05s crossfade rehearsals have no detected -50 dB silence lasting two seconds; planned RMS was -24.30 dBFS and peak -7.78 dBFS, close to the comparison's listening level. An actual worker test preserved two saved job origins while its environment used a different station seed, and verified the legacy toggle.
+
+The candidate has 74 backend tests, including bounded/out-of-order planning, no-repeat boundaries, safe notes/programs, legacy MIDI compatibility, preview validation and saved-job routing. Independent review found no defects, reran all 74 tests, confirmed 300 legacy MIDI comparisons against the base and checked 1,200 planned compositions across seeds/ages/durations/tempos. Current-head CI and a measured worker rollout come next. The live stream still contains the existing immutable buffer; no promise of improved listening quality is made before listening. Public HTTPS/target VPS work remains open.

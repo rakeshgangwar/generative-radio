@@ -7,6 +7,7 @@ import threading
 import time
 
 from .config import Config
+from .arrangement import arrangement_for
 from .render import render
 from .store import Store
 
@@ -19,8 +20,21 @@ def main():
     parser.add_argument("command", choices=["composer", "renderer", "next", "status", "health", "preview"])
     parser.add_argument("--role", choices=["composer", "renderer"])
     parser.add_argument("--seconds", type=int, default=120)
-    parser.add_argument("--seed", type=int, default=42)
+    seeds = parser.add_mutually_exclusive_group()
+    seeds.add_argument("--seed", type=int, default=42, help="Individual preview seed")
+    seeds.add_argument("--station-seed", type=int, help="Preview a planned station sequence")
+    parser.add_argument("--position", type=int, help="Positive queue position for --station-seed")
     args = parser.parse_args()
+    planned = args.station_seed is not None or args.position is not None
+    if planned and args.command != "preview":
+        parser.error("--station-seed and --position are for preview only")
+    if args.command == "preview":
+        if not 20 <= args.seconds <= 1800:
+            parser.error("preview --seconds must be between 20 and 1800")
+        if (args.station_seed is None) != (args.position is None):
+            parser.error("preview requires both --station-seed and --position")
+        if args.position is not None and args.position < 1:
+            parser.error("preview --position must be positive")
     logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
     config = Config.load()
     store = Store(config.data)
@@ -34,9 +48,10 @@ def main():
         age = store.status()["heartbeats"].get(args.role, float("inf"))
         raise SystemExit(0 if age < 450 else 1)
     if args.command == "preview":
-        if not 20 <= args.seconds <= 1800:
-            parser.error("preview --seconds must be between 20 and 1800")
-        path, metrics = render(config, args.seed, args.seconds, "preview")
+        arrangement = arrangement_for(args.station_seed, args.position) if planned else None
+        seed = args.station_seed + args.position if planned else args.seed
+        stem = f"preview-{args.position}" if planned else "preview"
+        path, metrics = render(config, seed, args.seconds, stem, arrangement=arrangement)
         print(json.dumps({"path": str(path), **metrics}, indent=2))
         return
     signal.signal(signal.SIGTERM, lambda *_: stop.set())
@@ -58,7 +73,11 @@ def main():
                 if job:
                     try:
                         started = time.monotonic()
-                        path, analysis = render(replace(config, bpm=job["bpm"]), job["seed"], job["seconds"], job["id"])
+                        # A queued job retains its originating seed even if .env changes.
+                        arrangement = (arrangement_for(job["seed"] - job["id"], job["id"])
+                                       if config.musical_memory else None)
+                        path, analysis = render(replace(config, bpm=job["bpm"]), job["seed"],
+                                                job["seconds"], job["id"], arrangement=arrangement)
                         store.finish(job, path, analysis)
                         log.info("Rendered segment=%s seed=%s in %.1fs metrics=%s", job["id"], job["seed"], time.monotonic()-started, analysis)
                     except Exception as exc:

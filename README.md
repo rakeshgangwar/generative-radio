@@ -82,23 +82,47 @@ The copy command assumes the normal renderer container exists (`up -d` first).
 Alternatively, use `docker compose run --rm -v "$PWD/artifacts:/preview" renderer`
 with `RADIO_DATA=/preview` set via `-e` **before** the service name.
 
+To audition a planned station segment, use its station seed and queue position:
+
+```sh
+docker compose run --rm --no-deps renderer python -m radio preview \
+  --station-seed 20261114 --position 7 --seconds 120
+docker compose cp renderer:/data/audio/preview-7.wav artifacts/planned-preview.wav
+```
+
+`--seed` retains the original independent-preview behavior; it cannot be combined
+with `--station-seed`. Planned previews need a positive `--position`. Preview files
+are standalone and do not enter the queue; archive/remove them manually when done.
+
 ## Music and queue behavior
 
-The MVP creates slow A-minor arrangements with warm pads, bass and electric-piano
-phrases. Seeds select among five harmonic paths and several chord-hold patterns.
-Related phrases change their rhythm, endings and direction; sparse, moderate and
-active profiles change the amount of melody. Openings and endings are quieter and
-sparser than the central development. Bass participation also changes over time.
-All tracks share a scale to help transitions; listening is still needed to judge
-musical coherence and crossfade consonance.
+The station creates slow A-minor arrangements using five harmonic paths, developed
+phrase families and changing pad/bass/keys texture. With `MUSICAL_MEMORY=1`
+(default), consecutive queue positions use different harmonic paths. Three-to-five
+segment chapters share a motif, register and sound palette, with a spare arrival,
+a more active middle and a release. Palettes vary warm/halo pads and electric
+piano/vibraphone over acoustic bass. At the default two-minute length a chapter
+spans roughly six to ten minutes.
 
-The same seed, duration and tempo reproduce notes/MIDI within a composer version;
-upgrading the composer can change the music associated with a seed. The variety
-update retains existing buffered files, so allow roughly 20–25 minutes before new
-arrangements reach the live stream. To listen immediately, the validated local
-examples are in `artifacts/variety-20261115/`; `variety-crossfade.wav` joins three
-two-minute examples with five-second FFmpeg crossfades. It is a listening preview,
-not a recording of the live Liquidsoap output.
+Plans are reconstructed from each saved job's seed and ID, so cleanup, restart,
+restore or later station-seed changes do not shift existing queued jobs. Versioned
+chapter/stage/program metadata is saved in analysis and renderer logs. The schedule
+follows queue order, not confirmed on-air history: skipped/failed jobs can skip
+chapter stages or weaken the consecutive-position guarantee on air.
+
+Set `MUSICAL_MEMORY=0` in `.env` and recreate composer/renderer to return new renders
+to independent legacy arrangements. No database migration is needed. Cached
+fallback and already-ready WAVs remain unchanged; allow roughly 20–25 minutes for
+newly rendered arrangements to reach the live stream. The original `--seed`
+preview path remains available for comparison. Seed/duration/tempo plus arrangement
+context reproduce notes/MIDI within a composer version; upgrades can change music.
+
+The same 256-position score sample reduced equal adjacent four-chord openings from
+54 to 0 and broadened first melody notes from 3 pitches to 8. Actual paired 12-segment
+rehearsals are in `artifacts/musical-memory-20261115/`: each joins twelve two-minute
+renders with five-second FFmpeg crossfades (23m05s). They pass the existing quality
+gates and have no detected two-second silence at -50 dB. These are offline listening
+comparisons; user listening and the actual target VPS remain acceptance gates.
 
 `SEGMENT_SECONDS` defaults to 120; `BUFFER_SECONDS` to 1200 (20 minutes).
 The queue counts five seconds of crossfade overlap per segment. `BPM` is 40–90;

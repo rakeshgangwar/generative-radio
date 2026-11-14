@@ -1,4 +1,5 @@
 import array
+from dataclasses import asdict
 import math
 import os
 import subprocess
@@ -41,14 +42,16 @@ def analyze(path: Path):
     return result
 
 
-def render(config, seed, seconds, stem):
+def render(config, seed, seconds, stem, *, arrangement=None):
     for directory in ["midi", "audio", "work"]:
         (config.data / directory).mkdir(exist_ok=True)
     mid = config.data / "midi" / f"{stem}.mid"
     raw = config.data / "work" / f"{stem}.raw.wav"
     temporary = config.data / "work" / f"{stem}.wav"
     final = config.data / "audio" / f"{stem}.wav"
-    mid.write_bytes(midi(compose(seed, seconds, config.bpm), seconds, config.bpm))
+    notes = compose(seed, seconds, config.bpm, arrangement=arrangement)
+    programs = arrangement.programs if arrangement else None
+    mid.write_bytes(midi(notes, seconds, config.bpm, programs=programs))
     try:
         run(["fluidsynth", "-ni", "-q", "-r", "44100", "-g", "0.5",
              "-T", "wav", "-O", "s16", "-F", str(raw), config.soundfont, str(mid)])
@@ -60,6 +63,8 @@ def render(config, seed, seconds, stem):
         if abs(analysis["duration"] - seconds) > .1:
             raise ValueError("Unexpected rendered duration")
         os.replace(temporary, final)
+        if arrangement:
+            analysis["arrangement"] = asdict(arrangement)
         return final, analysis
     finally:
         raw.unlink(missing_ok=True)
