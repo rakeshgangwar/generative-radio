@@ -35,7 +35,7 @@ static page and audio mount. Icecast administration and station data stay behind
 the proxy. This configuration is local HTTP; public HTTPS deployment still needs
 a chosen hostname. Core streaming remains available without the optional page.
 
-Listener tests: `node web/tests/unit.mjs`. For isolated browser QA, run
+Listener tests (Node 20+): `node web/tests/unit.mjs`. For isolated browser QA, run
 `npm --prefix web ci --ignore-scripts`, then
 `CHROME_BIN=/path/to/chrome npm --prefix web run test:browser` with the page running.
 The browser dependency is test-only; the listening page requires no Node server,

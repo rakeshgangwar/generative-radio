@@ -23,7 +23,7 @@ https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
 PR #8 is merged after CI. Optional listener page is implemented locally in
 `web/` with `compose.web.yaml` (localhost:8080). Start only web beside a running
 station to preserve playback; see README. It has explicit start/pause, volume,
-bounded retries, native no-JS fallback and no accounts/analytics. Fifteen JS tests
+bounded retries, native no-JS fallback and no accounts/analytics. Nineteen JS tests
 and isolated headless Chrome checks pass; real proxied MP3 decoded successfully.
 No core service was recreated. UI delivery still needs final review/current-head
 CI. Public HTTPS, target VPS, physical-device listening and musical acceptance

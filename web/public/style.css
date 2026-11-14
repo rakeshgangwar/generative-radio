@@ -14,6 +14,7 @@
 * { box-sizing: border-box; }
 body { margin: 0; }
 button, input { font: inherit; }
+audio[controls] { max-width: 100%; }
 a { color: inherit; text-underline-offset: .25em; }
 a:hover { text-decoration-thickness: 2px; }
 button, a, input { -webkit-tap-highlight-color: transparent; }

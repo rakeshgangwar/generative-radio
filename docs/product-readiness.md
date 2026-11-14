@@ -180,7 +180,7 @@ no-JavaScript fallback. Only the static page and /radio.mp3 are proxied; actual
 admin/status/data-path requests returned404. Ten seconds of proxied audio decoded
 successfully. Core container identities and the active watchdog soak are preserved.
 
-Fifteen deterministic JS/presentation tests pass. Isolated headless Chrome tests
+Nineteen deterministic JS/presentation tests pass. Isolated headless Chrome tests
 passed actual play/keyboard/volume/pause/resume, failed-request reconnection,
 390px/320px layout, reduced motion and native fallback. Desktop/mobile screenshots
 were visually inspected. Native browser tooling lacked a display server, so QA

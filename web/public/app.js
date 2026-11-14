@@ -37,6 +37,7 @@ function setVolume() {
 }
 volume.addEventListener('input', setVolume);
 setVolume();
+document.querySelector("#enhanced-controls").hidden = false;
 
 if ('mediaSession' in navigator) {
   if ('MediaMetadata' in window) {

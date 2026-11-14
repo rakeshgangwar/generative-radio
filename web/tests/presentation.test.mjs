@@ -13,3 +13,11 @@ test('small body/status/control copy meets WCAG AA text contrast',()=>{
     assert.ok((b+.05)/(a+.05)>=4.5,`${foreground} on ${background} needs 4.5:1`);
   }
 });
+const html=readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
+test('custom controls start hidden until JavaScript works; native fallback stays available',()=>{
+  assert.match(html, /id="enhanced-controls" hidden/);
+  assert.match(html, /<noscript>[\s\S]*<audio controls/);
+});
+test('working volume control is not described by hidden device-volume fallback',()=>{
+  assert.doesNotMatch(html, /<input[^>]*aria-describedby="volume-note"/);
+});

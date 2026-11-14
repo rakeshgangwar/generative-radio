@@ -99,7 +99,7 @@ export function createPlayer(audio, options = {}) {
     error() { failed(); },
     ended() { failed(); },
     pause() {
-      if (!intent || !['playing', 'buffering'].includes(state)) return;
+      if (!intent || !audio.paused || !['connecting', 'playing', 'buffering'].includes(state)) return;
       if (audio.ended || audio.error) failed();
       else pause();
     }

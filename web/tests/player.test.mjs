@@ -126,3 +126,16 @@ test('repeated play intent does not reconnect an already playing source', () => 
   const f=fixture();f.player.start();f.audio.emit('playing');const source=f.audio.src;
   f.player.start();assert.equal(f.state().state,'playing');assert.equal(f.audio.src,source);
 });
+
+test('native pause during pending connection cancels intent and AbortError recovery', async () => {
+  const f=fixture();let reject;
+  f.audio.play=()=>{f.audio.paused=false;return new Promise((_,no)=>{reject=no;});};
+  f.player.start();f.audio.pause();reject(new DOMException('native pause','AbortError'));
+  await settle();f.tick(100000);
+  assert.equal(f.state().state,'paused');assert.equal(f.audio.src,'');assert.equal(f.jobs.size,0);
+});
+test('stale pause events cannot cancel a newer unpaused connection',()=>{
+  const f=fixture();f.player.start();f.audio.dispatchEvent(new Event('pause'));
+  assert.equal(f.state().state,'connecting');f.audio.emit('playing');f.audio.dispatchEvent(new Event('pause'));
+  assert.equal(f.state().state,'playing');
+});

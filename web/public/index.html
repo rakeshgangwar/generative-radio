@@ -29,6 +29,7 @@
       </figure>
       <section class="player" id="player" aria-label="Live radio player" data-state="idle">
         <audio id="stream" preload="none" aria-hidden="true"></audio>
+        <div id="enhanced-controls" hidden>
         <div class="play-row">
           <button class="play-button" id="toggle" type="button" aria-describedby="playback-status">
             <span class="play-symbol" aria-hidden="true"></span><span id="toggle-label">Start listening</span>
@@ -38,10 +39,11 @@
         <p class="playback-status" id="playback-status" role="status" aria-live="polite" aria-atomic="true">Ready when you are.</p>
         <div class="volume-row" id="volume-control">
           <label for="volume">Volume</label>
-          <input id="volume" type="range" min="0" max="100" step="1" value="65" aria-describedby="volume-note">
+          <input id="volume" type="range" min="0" max="100" step="1" value="65">
           <output id="volume-value" for="volume">65%</output>
         </div>
         <p class="volume-note" id="volume-note" hidden>Use your device’s volume buttons to adjust the sound.</p>
+        </div>
         <noscript><p>Use the audio player below to join the station.</p><audio controls preload="none" src="/radio.mp3">Open <a href="/radio.mp3">the audio stream</a>.</audio></noscript>
       </section>
     </section>

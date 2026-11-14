@@ -46,7 +46,7 @@ The first listener page now runs at `http://localhost:8080`: a quiet blue radio 
 
 The page is static HTML/CSS/JavaScript with an optional non-root, read-only Caddy service. The proxy exposes the audio mount and page, with administration/status/data paths returning 404. It adds no account, external assets, analytics or Node server. JavaScript-disabled browsers get native audio controls.
 
-Actual isolated Chrome tests have played and resumed the stream, adjusted volume by keyboard, recovered after a real failed media request, checked 390px/320px layouts and reduced motion, and verified the native fallback. Fifteen deterministic tests cover controller races, cancellation, bounded recovery and text contrast. Visual review led to darker secondary text to meet 4.5:1 contrast. Real mobile devices and public HTTPS still need validation. This local iteration is under PR/CI delivery; it is not a public listening URL yet.
+Actual isolated Chrome tests have played and resumed the stream, adjusted volume by keyboard, recovered after a real failed media request, checked 390px/320px layouts and reduced motion, and verified the native fallback. Nineteen deterministic tests cover controller races, cancellation, bounded recovery and text contrast. Visual review led to darker secondary text to meet 4.5:1 contrast. Review found and fixed a native-pause-during-connection race; a real delayed-request browser test now proves it cancels automatic retries. Real mobile devices and public HTTPS still need validation. This local iteration is under PR/CI delivery; it is not a public listening URL yet.
 
 ![The local Generative Radio listening page](images/listener.png)
 
@@ -119,3 +119,5 @@ Operational details and measured acceptance results live in [product-readiness.m
 PR #8 merged verified backup/restore commands and the operator runbook after all current-head CI checks passed. An actual isolated recovery preserved 43 jobs/89 files, dispatched valid two-minute music and rendered the next segment in under a second. Off-host and target-VPS recovery still need real destinations.
 
 The listener page is being delivered next, including controller tests, browser checks and proxied-audio CI. The deployed watchdog's one-hour soak continues; no final result is claimed until recording and monitoring finish. No core service was recreated to add the page.
+
+Compute check: the host can access an 8 GB RTX 3070 Ti. GPU experiments remain optional; the current station, player and recovery path remain CPU-only.
