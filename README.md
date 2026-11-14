@@ -1,8 +1,8 @@
 # Generative Radio
 
 **Local integration verified:** rendering, a 30-minute broadcast and fallback/recovery
-drills pass. Listener feedback identifies excessive repetition; musical variety and
-a longer soak remain open. Read
+drills pass. The composer now includes varied harmony, developed phrases and changing
+texture; listening review of this update and a longer soak remain open. Read
 [HANDOFF.md](HANDOFF.md) for current status and continuation steps.
 
 A CPU-only ambient music station: Python composition → MIDI → FluidSynth →
@@ -50,11 +50,21 @@ with `RADIO_DATA=/preview` set via `-e` **before** the service name.
 
 ## Music and queue behavior
 
-The MVP creates slow A-minor arrangements with warm pads, bass and sparse electric
-piano phrases. A repeating four-chord arc and recurring motifs provide structure;
-seeded variation changes note placement, voicing and dynamics. All segments use
-the same tonal centre, allowing safe crossfades. This is a starting musical palette,
-not a claim of professional composition quality. Listen and iterate.
+The MVP creates slow A-minor arrangements with warm pads, bass and electric-piano
+phrases. Seeds select among five harmonic paths and several chord-hold patterns.
+Related phrases change their rhythm, endings and direction; sparse, moderate and
+active profiles change the amount of melody. Openings and endings are quieter and
+sparser than the central development. Bass participation also changes over time.
+All tracks share a scale to help transitions; listening is still needed to judge
+musical coherence and crossfade consonance.
+
+The same seed, duration and tempo reproduce notes/MIDI within a composer version;
+upgrading the composer can change the music associated with a seed. The variety
+update retains existing buffered files, so allow roughly 20–25 minutes before new
+arrangements reach the live stream. To listen immediately, the validated local
+examples are in `artifacts/variety-20261115/`; `variety-crossfade.wav` joins three
+two-minute examples with five-second FFmpeg crossfades. It is a listening preview,
+not a recording of the live Liquidsoap output.
 
 `SEGMENT_SECONDS` defaults to 120; `BUFFER_SECONDS` to 1200 (20 minutes).
 The queue counts five seconds of crossfade overlap per segment. `BPM` is 40–90;
