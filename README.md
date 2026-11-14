@@ -1,5 +1,7 @@
 # Generative Radio
 
+
+Read the [product journal](docs/product-journal.md) for the starting idea, current work and directions we may explore next.
 **Local integration verified:** rendering, a 30-minute broadcast and fallback/recovery
 drills pass. The composer now includes varied harmony, developed phrases and changing
 texture; listening review of this update and a longer soak remain open. Read

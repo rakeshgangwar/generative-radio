@@ -1,4 +1,4 @@
-# Product completion requirements
+# Release readiness evidence
 
 The goal is a finished, unattended 24×7 CPU-only generative ambient station on a
 single Linux VPS. The accepted architecture remains Python, FluidSynth,
@@ -20,8 +20,9 @@ multiple genres or external composition API is required for this release.
 | Operator documentation | Install, upgrade, monitor, recover, back up and roll back commands | Local startup/recovery documented; production runbook incomplete |
 | Reviewed delivery | Scoped PRs with measured validation and resolved release findings | PRs #1/#2/#4/#5/#6 merged only after CI passed; unfinished watchdog PR #3 remains draft |
 
-The goal is not complete while any gate is missing or unverified. A green unit
-suite alone is insufficient. Local audio artifacts are referenced in HANDOFF.md
+These are release readiness gates, not an exhaustive definition of the evolving
+product goal. The [product journal](product-journal.md) records that direction.
+A green unit suite alone is insufficient for a release. Local audio artifacts are referenced in HANDOFF.md
 and remain Git-ignored; measured results are recorded in tracked documentation.
 
 ## Work order
