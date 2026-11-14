@@ -27,5 +27,5 @@ CPU-only, no new runtime asset/model/dependency/schema. Natural A-minor, pitches
 - [x] Write failing planner tests for bounded deterministic schedules, no-repeat/balanced paths, chapter themes/arcs, safe composed notes and varied starts; observe missing module RED. Record legacy MIDI hash before edits.
 - [x] Implement planner and optional composition/MIDI integration to GREEN; verify legacy hash unchanged. Add RED tests for Config/renderer/preview integration, implement and run full Python/JS suites.
 - [x] Reproduce256-position score benchmark, render all palettes/stages and crossfade a multi-segment sequence; expected unchanged quality gates and render comfortably faster than playback. Record only measured differences.
-- [ ] One independent whole-branch review, fix important findings RED→GREEN, update journal with evidence/limits and completed watchdog soak.
+- [x] One independent whole-branch review, fix important findings RED→GREEN, update journal with evidence/limits and completed watchdog soak.
 - [ ] Commit/push PR, merge latest main, require current-head CI before merge. After validation deploy workers only (preserve live data/Icecast/broadcaster), verify new planned renders/replenishment/audio and monitor. Record pending listening/target-deployment gates.
