@@ -1,0 +1,197 @@
+{
+  "source_commit": "7e00548e615784ddcae50eafa747fc41a3252314",
+  "cases": [
+    {
+      "station_seed": 42,
+      "position": 2,
+      "seconds": 20,
+      "bpm": 90,
+      "version": null,
+      "sha256": "094fcaa408ba1689fb53756f04ef42e4beca22a8880eb2c0a2468f35e0627521"
+    },
+    {
+      "station_seed": 42,
+      "position": 2,
+      "seconds": 20,
+      "bpm": 90,
+      "version": 1,
+      "sha256": "b05d8a9234e00a928962a3a7b99efc2bf463f204b4d5068efb49294d047e074a"
+    },
+    {
+      "station_seed": 42,
+      "position": 2,
+      "seconds": 20,
+      "bpm": 90,
+      "version": 2,
+      "sha256": "0c148461069f4896e1f1100e9cab875a97370f33769c461bdc4dfcbec815051b"
+    },
+    {
+      "station_seed": 42,
+      "position": 2,
+      "seconds": 120,
+      "bpm": 60,
+      "version": null,
+      "sha256": "4f17ab57ea6da8ceb09cd1871221d2dc7d44acdf7aba177260e89f080def223a"
+    },
+    {
+      "station_seed": 42,
+      "position": 2,
+      "seconds": 120,
+      "bpm": 60,
+      "version": 1,
+      "sha256": "77922d671e2a8691cfb823ce8b66c389725e09b331270fb1db9cdcd4bb451b75"
+    },
+    {
+      "station_seed": 42,
+      "position": 2,
+      "seconds": 120,
+      "bpm": 60,
+      "version": 2,
+      "sha256": "553af3aaf2fe6f58ce89e93359b0aa27a7937cc5cf282e1dd7ecb55d2d53fab0"
+    },
+    {
+      "station_seed": 42,
+      "position": 5,
+      "seconds": 20,
+      "bpm": 90,
+      "version": null,
+      "sha256": "dc65c536d9900815490af57294a6e1b6ec84c934fb3b975f27baddcd55519a24"
+    },
+    {
+      "station_seed": 42,
+      "position": 5,
+      "seconds": 20,
+      "bpm": 90,
+      "version": 1,
+      "sha256": "6d0a4ee14cfb000005ee3f8bfb88f5fc61684d84ce3fc1c2aadcf38ce76c4529"
+    },
+    {
+      "station_seed": 42,
+      "position": 5,
+      "seconds": 20,
+      "bpm": 90,
+      "version": 2,
+      "sha256": "5caccb5ccf69e6c8b0d73dfc94b179d6adc332b165eb2677babaed3bc0c7f5f0"
+    },
+    {
+      "station_seed": 42,
+      "position": 5,
+      "seconds": 120,
+      "bpm": 60,
+      "version": null,
+      "sha256": "f0244df38a7dc54679abd5920bab442ad97df592d5c5ee2c1a3fd2f4c22f5d08"
+    },
+    {
+      "station_seed": 42,
+      "position": 5,
+      "seconds": 120,
+      "bpm": 60,
+      "version": 1,
+      "sha256": "5b57fadae597605cf2ef6328de24a33f086fe953e9508388a9ee872462251e43"
+    },
+    {
+      "station_seed": 42,
+      "position": 5,
+      "seconds": 120,
+      "bpm": 60,
+      "version": 2,
+      "sha256": "f35f0889a7f3939c108efbfd529db1bbd833be764f327c6db4b16d0600925070"
+    },
+    {
+      "station_seed": 20261114,
+      "position": 2,
+      "seconds": 20,
+      "bpm": 90,
+      "version": null,
+      "sha256": "9f08724f06848b6e6cad35c2fdde596110c401268448cde10b307fd9712ca0f3"
+    },
+    {
+      "station_seed": 20261114,
+      "position": 2,
+      "seconds": 20,
+      "bpm": 90,
+      "version": 1,
+      "sha256": "53c5b1f40a01b592e92fe56fb95277dd064c7d7c352548f81dddcb507738b5cb"
+    },
+    {
+      "station_seed": 20261114,
+      "position": 2,
+      "seconds": 20,
+      "bpm": 90,
+      "version": 2,
+      "sha256": "c93ba89a338bc1a168e5f4b7498c8bd765bc98ae96c2ab3dd526101e2d15cea7"
+    },
+    {
+      "station_seed": 20261114,
+      "position": 2,
+      "seconds": 120,
+      "bpm": 60,
+      "version": null,
+      "sha256": "62c03430a4a54da636e039eab6dcc46e0fa5bd396fc62e8bcf3a1b16fe243cd9"
+    },
+    {
+      "station_seed": 20261114,
+      "position": 2,
+      "seconds": 120,
+      "bpm": 60,
+      "version": 1,
+      "sha256": "5193d60c03a941c316f9f5c3e45da91b50d4d58d5995d6b020111616a7fa7955"
+    },
+    {
+      "station_seed": 20261114,
+      "position": 2,
+      "seconds": 120,
+      "bpm": 60,
+      "version": 2,
+      "sha256": "e945287e47a1a88d9fef28d58c1dd827ca3370ff19bd6ca1911753ae64167e80"
+    },
+    {
+      "station_seed": 20261114,
+      "position": 5,
+      "seconds": 20,
+      "bpm": 90,
+      "version": null,
+      "sha256": "e531f1537d00f15f26a931a9faad3dfcdc3c7993b9b9e23670c36c701d091cfb"
+    },
+    {
+      "station_seed": 20261114,
+      "position": 5,
+      "seconds": 20,
+      "bpm": 90,
+      "version": 1,
+      "sha256": "7661713d1c1483f8938e41ca19897e82ae8b0398260154e0c21e7eb65a45e67e"
+    },
+    {
+      "station_seed": 20261114,
+      "position": 5,
+      "seconds": 20,
+      "bpm": 90,
+      "version": 2,
+      "sha256": "7661713d1c1483f8938e41ca19897e82ae8b0398260154e0c21e7eb65a45e67e"
+    },
+    {
+      "station_seed": 20261114,
+      "position": 5,
+      "seconds": 120,
+      "bpm": 60,
+      "version": null,
+      "sha256": "cd0a41d7d8d07b02dca86376acc672b52d651ecbf28b03e36ed83fff71b81a1f"
+    },
+    {
+      "station_seed": 20261114,
+      "position": 5,
+      "seconds": 120,
+      "bpm": 60,
+      "version": 1,
+      "sha256": "95bdeed70b7b2bb0372891fb61a97973f38b1355c392190c02ee92fad2465c53"
+    },
+    {
+      "station_seed": 20261114,
+      "position": 5,
+      "seconds": 120,
+      "bpm": 60,
+      "version": 2,
+      "sha256": "cb58365a1e0a1a5aca7521224a4827abee2ef8476ce0fb72747b1581c49ec67d"
+    }
+  ]
+}
