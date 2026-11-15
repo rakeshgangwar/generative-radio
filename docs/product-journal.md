@@ -186,3 +186,50 @@ found two preflight bypasses via Compose configs/secrets mounts and alternate
 networks; both now have failing-before/passing-after regressions and were rejected
 through real Compose resolution. The actual media image passes94 Python tests;
 listener tests pass19. This validates the package locally, not public deployment.
+
+### 15 November: let listening end gently
+
+PR #12 merged the production package after all four CI checks passed. CI also
+caught a Compose-version difference: inherited security lists needed explicit
+replacement. The fix passed a full local rehearsal with CI's exact Compose 5.1.3,
+then the complete current-head pipeline. No public station has been deployed.
+
+While the two-hour musical rollout recording continues, I am adding a small
+listener feature for rest: an optional 15/30/60-minute sleep timer. It affects only
+that browser, starts with explicit listening and keeps its deadline through
+reconnects. Pause cancels it. The final 20 seconds fade where the device permits
+volume control, then playback stops and releases the stream. Manual resume keeps
+the listener's chosen volume and has no timer unless they choose one again.
+
+The timer is implemented in an isolated worktree, not deployed yet. It has 30
+passing listener tests and nine real-browser groups, including actual MP 3
+playback/fade/expiry, changing volume during the fade, device-owned volume,
+expiry during a failed-request retry and the existing mobile/native controls.
+Screenshots retain the quiet page design at 390/320 px. No deadline is saved across
+reloads. A suspended browser cannot run JavaScript: keep the page open, and do not
+treat this as a device alarm. Independent review and current-head CI come next.
+
+
+Independent timer review found and reproduced a transient-volume failure: one
+throwing setter during a fade could leave manual playback attenuated afterward.
+A bounded restoration attempt now recovers the chosen volume and slider when
+control works again. A second regression keeps the expiry explanation visible
+when returning to the page. Both failed before the fixes and pass afterward.
+The full 94-test Python suite and 30 listener tests pass; nine actual browser groups
+pass, including the injected transient fault. Physical-device testing remains open.
+
+The original two-hour recorder terminated with signal 15 after about 90 minutes;
+it is **not** a completed two-hour acceptance test. Its preserved decoded portion
+contains 5,403.38 seconds, no detected -50 dB silence lasting 2 seconds, peak-7.37 dBFS
+and RMS-24.62 dBFS. All 167 watchdog observations within that portion were healthy,
+with no watchdog/container restarts or OOM events. The two intentional worker
+replacements are distinguished from restarts. The WAV tail was interrupted, so
+its final incomplete PCM frame and unfinalized header remain documented.
+
+A fresh full two-hour capture began at 06:19:46 IST, using an immutable capture
+script, a detached bounded supervisor and durable child/exit receipts. Audio and
+vitals are confirmed arriving. This run contains planned music from its start.
+No station process was restarted to replace the recorder. Its final result is
+pending; source-stream continuity and recording-process lifetime are separate.
+
+![The personal sleep timer, armed before listening](images/listener-timer.png)

@@ -18,12 +18,25 @@ and asked to publish this work to a private GitHub repository.
 Architecture source conversation:
 https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
 
+## Current personal listening timer iteration
+
+Production PR #12 merged at41dd48f after all four current-head CI checks. The next
+isolated feature adds an opt-in sleep timer to the listener only. No live services
+have changed.30 listener tests and9 real-browser groups pass; independent review
+findings are fixed. Current-head CI/merge and listener-only deployment remain.
+Capture21660 is terminal143 after90min, preserved and analyzed as partial. New
+full2h detached acceptance started00:49:46 UTC in
+artifacts/musical-memory-acceptance-20261115-004946, supervisor456169,
+capture456184, monitor456185. Inspect run.json and matching live /proc identity;
+do not restart on timeouts. Old monitor84280 was still live at last poll. Primary
+now41dd48f; new recorder uses a script snapshot, so checkout updates are safe.
+
 ## Current musical-memory and production iteration
 
 PR #11 merged after all four CI checks. Workers rolled out at04:54 IST; eleven
 ready audio hashes stayed unchanged, with no broadcaster/Icecast/web replacement.
-Liquidsoap crossed into planned job182 at05:19:43 IST. Two-hour capture21660 and
-monitor84280 remain running; preserve primary capture.sh until they terminate.
+Liquidsoap crossed into planned job182 at05:19:43 IST. The original capture21660 terminated143; its90-minute partial recording is preserved.
+The fresh full2h run above is pending, and old monitor84280 remains separate.
 Evidence: artifacts/musical-memory-20261115/ and
 artifacts/musical-memory-rollout-20261115/. Musical listening acceptance is pending.
 

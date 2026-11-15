@@ -1,4 +1,5 @@
 import { createPlayer } from './player.js';
+import { createSleepTimer } from './sleep-timer.js';
 
 const audio = document.querySelector('#stream');
 const button = document.querySelector('#toggle');
@@ -9,11 +10,43 @@ const live = document.querySelector('#live-label');
 const volume = document.querySelector('#volume');
 const volumeValue = document.querySelector('#volume-value');
 const activeStates = new Set(['connecting', 'playing', 'buffering', 'retrying']);
-let active = false;
+let active = false, gain = 1, requestedVolume = Number(volume.value) / 100;
+let volumeSupported = true, player;
+const timerSelect = document.querySelector('#sleep-timer');
+const timerRemaining = document.querySelector('#timer-remaining');
+const timerStatus = document.querySelector('#timer-status');
+function applyVolume(force = false) {
+  if (!player || (!volumeSupported && !force)) return;
+  volumeSupported = player.setVolume(requestedVolume * gain);
+  document.querySelector('#volume-control').hidden = !volumeSupported;
+  document.querySelector('#volume-note').hidden = volumeSupported;
+}
+const timer = createSleepTimer({
+  onGain(value) {
+    const restoring = value === 1 && gain < 1;
+    gain = value;
+    applyVolume(restoring);
+  },
+  onExpire() { player.pause(); },
+  onChange(value) {
+    timerSelect.value = String(value.minutes);
+    timerRemaining.hidden = value.phase !== 'running';
+    const seconds = value.remainingSeconds;
+    timerRemaining.textContent = `Stops in ${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, '0')}`;
+    const message = value.phase === 'expired' ? 'Timer ended. Rest well.'
+      : value.phase === 'armed' ? 'Starts when you press play.'
+      : value.phase === 'running' ? 'Timer set. Keep this page open.'
+      : 'Stops playback on this device. Keep this page open.';
+    if (timerStatus.textContent !== message) timerStatus.textContent = message;
+  }
+});
+timerSelect.addEventListener('change', () => timer.setMinutes(Number(timerSelect.value)));
+document.addEventListener('visibilitychange', () => timer.refresh());
 
-const player = createPlayer(audio, {
+player = createPlayer(audio, {
   onChange(value) {
     active = activeStates.has(value.state);
+    timer.setActive(active);
     panel.dataset.state = value.state;
     document.body.dataset.playing = String(value.state === 'playing');
     label.textContent = active ? 'Pause' : value.state === 'error' ? 'Try again' : value.state === 'paused' ? 'Resume listening' : 'Start listening';
@@ -26,14 +59,10 @@ const player = createPlayer(audio, {
 });
 button.addEventListener('click', () => active ? player.pause() : player.start());
 function setVolume() {
-  const value = Number(volume.value) / 100;
-  const controlled = player.setVolume(value);
+  requestedVolume = Number(volume.value) / 100;
+  applyVolume(true);
   volumeValue.textContent = `${volume.value}%`;
   volume.setAttribute('aria-valuetext', `${volume.value} percent`);
-  if (!controlled) {
-    document.querySelector('#volume-control').hidden = true;
-    document.querySelector('#volume-note').hidden = false;
-  }
 }
 volume.addEventListener('input', setVolume);
 setVolume();
@@ -49,4 +78,4 @@ if ('mediaSession' in navigator) {
     try { navigator.mediaSession.setActionHandler(action, handler); } catch { /* Optional platform capability. */ }
   }
 }
-window.addEventListener('pagehide', () => player.pause());
+window.addEventListener('pagehide', () => { player.pause(); timer.setMinutes(0); });

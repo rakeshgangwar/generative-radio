@@ -243,3 +243,10 @@ Architecture and deferred work: [docs/architecture.md](docs/architecture.md).
 Back up, verify, transfer off-host and restore the station: [operator commands](docs/operations.md).
 
 Production setup and recovery: [deployment runbook](docs/deployment.md).
+
+The listener's optional **Sleep timer** offers 15, 30 or 60 minutes. Choosing it before
+play arms it for the next explicit start; choosing it while listening starts it
+from now. It keeps counting through reconnects. Pause cancels it, and the final 20
+seconds fade where browser volume control works before releasing the stream.
+The timer belongs to this page and is not saved across reloads. Keep the page
+open; a frozen/suspended browser cannot execute its deadline.

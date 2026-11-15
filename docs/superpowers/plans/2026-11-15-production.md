@@ -28,4 +28,6 @@ No public deployment/purchase/current-machine credential or trust-store changes.
 - [x] Implement host commands, pure parsers and production/shared Caddy configuration; unit suite GREEN. Validate real resolved config without exposing secrets.
 - [x] Build separate candidate tags; run full isolated production/TLS smoke with loopback ports/internal CA, capture/decode audio and persistence/restart, inspect hardening. Keep core live IDs unchanged. Reproduce/fix transport trust defects with RED→GREEN if found.
 - [x] Update CI and deployment runbook with exact setup, DNS/ports, health/TLS checks, reboot, upgrade/rollback/backup and recovery commands. Journal records actual musical rollout plus package evidence/limits.
-- [ ] Independent whole-branch security/correctness review, one fix pass with regressions; current-head CI then merge. Keep actual target deployment and active musical soak completion as separate work. Primary checkout's running capture script remains unchanged until its process completes.
+- [x] Independent whole-branch security/correctness review, one fix pass with regressions; current-head CI then merge. Keep actual target deployment and active musical soak completion as separate work. Primary checkout's running capture script remains unchanged until its process completes.
+
+Receipt: PR #12 merged at41dd48f after all four exact-head CI checks onab64377. Review bypasses fixed; complete local and CI TLS/audio/certificate-persistence rehearsals passed, including Compose5.1.3 compatibility. No public target deployment.
