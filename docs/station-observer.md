@@ -3,6 +3,7 @@
 From a Linux station host with Python 3.11+ and existing Docker CLI access:
 
 ```sh
+mkdir -p artifacts
 python -m radio.observer --expect-web --output artifacts/vitals-snapshot
 python -m radio.observer --expect-web --duration 1800 --interval 30 \
   --max-samples 120 --output artifacts/vitals-half-hour
