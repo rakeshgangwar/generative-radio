@@ -1,0 +1,282 @@
+{
+  "pr": 31,
+  "url": "https://github.com/rakeshgangwar/generative-radio/pull/31",
+  "head_commit": "2d33a8651a62b04928eb83745a1f3c3baa091117",
+  "base_commit": "65180518bd9cf4b9849cab1f3d6896a1146e3d1c",
+  "merge_commit": "9318741eab42f3724f2ec06706dbdb983304cdee",
+  "merged_at": "2026-11-15T15:42:27Z",
+  "status": "Merged and deployed locally; explicit volume preference survives refresh, with manual play and page-local timers preserved",
+  "ci_run": {
+    "id": 43729672983,
+    "head_sha": "2d33a8651a62b04928eb83745a1f3c3baa091117",
+    "status": "completed",
+    "conclusion": "success",
+    "run_number": 98,
+    "workflow_id": 418602628,
+    "updated_at": "2026-11-15T15:38:26Z",
+    "html_url": "https://github.com/rakeshgangwar/generative-radio/actions/runs/43729672983"
+  },
+  "ci_jobs": [
+    {
+      "name": "Python 3.14",
+      "conclusion": "success"
+    },
+    {
+      "name": "Audio and streaming integration",
+      "conclusion": "success"
+    },
+    {
+      "name": "Listener controls",
+      "conclusion": "success"
+    },
+    {
+      "name": "Python 3.11",
+      "conclusion": "success"
+    }
+  ],
+  "stock_firefox_ci_step": {
+    "name": "Check stock Firefox playback",
+    "status": "completed",
+    "conclusion": "success",
+    "number": 13,
+    "started_at": "2026-11-15T15:30:01Z",
+    "completed_at": "2026-11-15T15:30:37Z"
+  },
+  "before_services": {
+    "broadcaster": {
+      "id": "abb87b80c56c007c8240d5df311c9a96af9f96824c423e5b34460a138fa171fc",
+      "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+      "started": "2026-11-15T05:57:04.799911735Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "composer": {
+      "id": "0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started": "2026-11-15T03:23:31.379138171Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "icecast": {
+      "id": "78f7a60cd2c96ce90c32f4ee896bd67cfb02646ebd7529f26ca402798da3bd6d",
+      "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+      "started": "2026-11-15T05:56:38.273381611Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "renderer": {
+      "id": "04a26abb33422649a11752d188ca9e2eb149fbe50c981fc3a2eced30a00805d4",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started": "2026-11-15T03:23:31.259377863Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "web": {
+      "id": "dcb1fdd578b4b750521fa5e1522ef01c3d7a57da09b1ecb082500fc97a0e5029",
+      "image": "sha256:e69f1155cbb8a16abe093dd1965b677c5a84b1485a9d8a60c518d0170919fca6",
+      "started": "2026-11-15T13:52:49.7273011Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    }
+  },
+  "after_services": {
+    "broadcaster": {
+      "id": "abb87b80c56c007c8240d5df311c9a96af9f96824c423e5b34460a138fa171fc",
+      "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+      "started": "2026-11-15T05:57:04.799911735Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "composer": {
+      "id": "0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started": "2026-11-15T03:23:31.379138171Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "icecast": {
+      "id": "78f7a60cd2c96ce90c32f4ee896bd67cfb02646ebd7529f26ca402798da3bd6d",
+      "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+      "started": "2026-11-15T05:56:38.273381611Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "renderer": {
+      "id": "04a26abb33422649a11752d188ca9e2eb149fbe50c981fc3a2eced30a00805d4",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started": "2026-11-15T03:23:31.259377863Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "web": {
+      "id": "7e1f7d622adf91baa05701f0ad603fd81418dacb7cca6a3bd549f8898578e46b",
+      "image": "sha256:fb8404f39fb902ebfd56528c75d7c5dc70c51cd7bacd933868506ab5d4a07ccc",
+      "started": "2026-11-15T15:43:00.527941831Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    }
+  },
+  "core_identities_preserved": true,
+  "existing_listener": {
+    "recovered_without_second_gesture": true,
+    "confirmed_within_seconds": 27.517,
+    "requests": 2,
+    "final": {
+      "state": "playing",
+      "time": 44.885434
+    },
+    "scope": "One existing Chromium listener across web-only recreation; bound includes Compose health waiting, not an exact audible interruption duration or gapless claim"
+  },
+  "core_capture": {
+    "duration_seconds": 60,
+    "mean_dbfs": -24.9,
+    "peak_dbfs": -9.3,
+    "no_silence_at_minus50dbfs_for_two_seconds": true,
+    "analysis_sha256": "615790b474306758389e1876b597fd8e5dfde550eaa555439e3bc4b85b975197",
+    "decoded_bytes_present_before_web_restart": true,
+    "wav_sha256": "feceb8a6f93b065ff9dcbdfb0bd9ac56c322ad40c391827eb434cdbfc0f68b30",
+    "scope": "60-second direct loopback Icecast recording; not independent-host or human listening evidence"
+  },
+  "served_asset_sha256": {
+    "app.js": "7ddc09f3c2c48c813a5b07e75aa8ae829961de726a7eb2041998537b0fed2547",
+    "broadcast-context.js": "afafb4dbaed6ec78338c7affe13c1b46c5687a1c834c70a956a3f485b134b29f",
+    "dial.svg": "066b109b2c0a13cba2c0b89381607df6253c23e0b540017e8c3ce0a974bbf0d1",
+    "favicon.svg": "18868c09e40c51595e26d64d3cd2ff12f6ca33b26784ea64b8c56d7e3d010179",
+    "index.html": "202e6e9d81550495f3e73b385c2fa0a090d76b2db192257855b3c1a5dbfa6a1d",
+    "player.js": "c13f200e1d71b75eb6e58449fc832f90fd54a66f8edc5400fdb367140607e00d",
+    "sleep-timer.js": "6b0d495a76ef37402e1924b2a512a8e12449116592eb077c3bfb1b435246e9a6",
+    "style.css": "6b17280fc0ae6cdc3b08969edb70bef600db908605c5d1557858d55c7fca58cb"
+  },
+  "live_firefox": {
+    "browser": {
+      "name": "firefox",
+      "platform": "linux",
+      "version": "157.0.1"
+    },
+    "checks": [
+      {
+        "name": "idle_without_source",
+        "pass": true
+      },
+      {
+        "name": "click_starts_advancing_mp3",
+        "pass": true
+      },
+      {
+        "name": "keyboard_changes_audio_volume",
+        "pass": true
+      },
+      {
+        "name": "pause_releases_source",
+        "pass": true
+      },
+      {
+        "name": "resume_advances_mp3",
+        "pass": true
+      }
+    ],
+    "cleanup": {
+      "driver_reaped": true,
+      "profiles_removed": true
+    },
+    "pass": true
+  },
+  "live_firefox_volume_memory": {
+    "scope": "Actual installed Firefox, full-player trusted volume keys, refresh persistence and manual playback",
+    "pass": true,
+    "browser": {
+      "browserName": "firefox",
+      "browserVersion": "157.0.1",
+      "platformName": "linux"
+    },
+    "before": {
+      "audio_volume": 0.65,
+      "percent": 65,
+      "saved": null,
+      "source": null,
+      "state": "idle",
+      "timer": "0"
+    },
+    "chosen": {
+      "audio_volume": 0.37,
+      "percent": 37,
+      "saved": "37",
+      "source": null,
+      "state": "idle",
+      "timer": "0"
+    },
+    "after_refresh": {
+      "audio_volume": 0.37,
+      "percent": 37,
+      "saved": "37",
+      "source": null,
+      "state": "idle",
+      "timer": "0"
+    },
+    "manual_playback": {
+      "paused": false,
+      "time": 1.079569,
+      "volume": 0.37
+    },
+    "source_sha256": {
+      "app.js": "7ddc09f3c2c48c813a5b07e75aa8ae829961de726a7eb2041998537b0fed2547",
+      "index.html": "202e6e9d81550495f3e73b385c2fa0a090d76b2db192257855b3c1a5dbfa6a1d"
+    },
+    "driver_reaped": true,
+    "private_profile_removed": true
+  },
+  "maintenance_events": [
+    {
+      "at": "2026-11-15T15:42:49.975Z",
+      "kind": "planned web-only maintenance",
+      "phase": "start",
+      "pr": 31,
+      "head": "2d33a8651a62b04928eb83745a1f3c3baa091117",
+      "prior_web": "dcb1fdd578b4b750521fa5e1522ef01c3d7a57da09b1ecb082500fc97a0e5029",
+      "active_observation": "/home/rakeshgangwar/Projects/generative-radio/artifacts/station-observer-20261115/six-hour-durable-20261115T145518Z"
+    },
+    {
+      "at": "2026-11-15T15:43:19.641Z",
+      "kind": "planned web-only maintenance",
+      "phase": "healthy_after",
+      "pr": 31,
+      "head": "2d33a8651a62b04928eb83745a1f3c3baa091117",
+      "new_web": "7e1f7d622adf91baa05701f0ad603fd81418dacb7cca6a3bd549f8898578e46b",
+      "core_identities_preserved": true,
+      "active_observation": "/home/rakeshgangwar/Projects/generative-radio/artifacts/station-observer-20261115/six-hour-durable-20261115T145518Z"
+    }
+  ],
+  "monitor_scope": {
+    "status": "Separate six-hour observation remains in progress; not a completed acceptance result",
+    "maintenance": "One recorded not_healthy sample during web maintenance; raw counts remain unmodified",
+    "previous_attempt": "Interrupted after about 40 minutes, retained separately and never combined with the fresh attempt",
+    "measurement": "Host/service metrics and station-provided audio-watchdog reports; not six hours of independent audio recording"
+  },
+  "raw_proof_sha256": {
+    "rollout/result.json": "af74550c903549dcb203b15b62bfe7ee1b195328aea425b811801c02e84e427d",
+    "rollout/audio-analysis.log": "615790b474306758389e1876b597fd8e5dfde550eaa555439e3bc4b85b975197",
+    "live-firefox-enhanced/result.json": "99e1b2eab115e4466c01e4a9ddbf06c2298eb704961f690be2577481d411f996",
+    "live-firefox-volume-memory-proof.json": "c8fc52bfafcdef7c9d1af4b9d1014324a0be7ffa18b5478645f05338d3c5f178",
+    "pr-delivery/ci-receipt.json": "9ee5aa1778b03ff21e4a904d8298a2eed9bb1893c0ec9050db0bc0060bbc67ef",
+    "pr-delivery/merge-receipt.json": "6579a5933b6a7aa87db272b0b54181e04cb90ab03923236d84811cbc869177bd"
+  },
+  "local_evidence": "/home/rakeshgangwar/Projects/generative-radio/artifacts/listener-volume-20261115",
+  "remaining": [
+    "Physical devices, Safari and assistive-technology combinations remain unverified",
+    "Public hosting, independent monitoring and off-host recovery await target details",
+    "Human long-listening acceptance and TimGM/FluidR3/connecting-note preference remain open",
+    "Six-hour metrics observation is in progress with annotated web maintenance, not all-healthy uninterrupted acceptance",
+    "One deferred Minor regression fixture: accessible storage object whose getItem method throws; getter and write failures are covered",
+    "A failed initial capability probe can conservatively retain device-volume fallback until refresh or a distinct successful write"
+  ]
+}

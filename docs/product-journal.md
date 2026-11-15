@@ -11,27 +11,29 @@ The next musical decision is listening to the
 [matched connecting-note comparison](http://localhost:18091), starting near the
 2:20 cue, and the TimGM/FluidR3 comparison. Both remain candidates; the listening-preference questions are open.
 
-The latest listener work is deployed through PR #29. The full player has chapter
-labels, a personal sleep timer and bounded reconnection. Native controls remain
-usable when scripts fail; late scripts preserve listening already started there.
-An idle native control hands keyboard focus to visible full-player controls, and
-the fallback explains its feature limits and reloading. Actual Chromium and stock
-Firefox playback passed. The last web-only rollout preserved all four core roles
-and recovered an existing listener without another click. Its
-[measured delivery receipt](evidence/native-listener-polish-delivery-20261115.json)
+The latest listener work is deployed through PR #31. The full player has chapter
+labels, a personal sleep timer, bounded reconnection and browser-local volume
+memory. An explicit volume choice survives refresh; play stays manual and the
+sleep timer resets. Native controls remain usable when scripts fail, and late
+scripts preserve listening already started there. Actual Chromium and stock
+Firefox checks passed. The latest web-only rollout preserved all four core roles,
+recovered an existing listener without another click, and passed a 60-second
+decoded-audio check. Its [delivery receipt](evidence/listener-volume-memory-delivery-20261115.json)
 records the exact scope; this is local evidence, not public or physical-device
 acceptance.
 
 The [host-side vitals recorder](station-observer.md) is also shipped. Its completed
-half-hour observation retained 60 healthy samples, without controlling services.
-Monitoring reports uncertainty when evidence is incomplete.
+half-hour observation retained 60 healthy samples. A separate six-hour attempt is
+now running; the earlier attempt stopped after about 40 minutes and is retained
+separately. The fresh attempt includes an annotated web-maintenance interruption,
+with its unhealthy sample preserved. It is not a completed uninterrupted soak.
 
-The next comfort change is a browser-local volume-memory candidate. It restores
-an explicit choice after refresh, keeps play manual and resets the sleep timer.
-Local tests and Firefox refresh/playback checks pass. The single review correction
-is verified; CI and rollout are still pending. The live listener remains the PR #29 build. Musical
-development remains the main product question: it should stay worth hearing over
-hours, with room to breathe.
+Musical development remains the main product question: it should stay worth
+hearing over hours, with room to breathe. The next listening decision remains the
+matched connecting-note and SoundFont comparisons above. A possible later
+experiment is a slower, deliberate energy arc within the existing station: let a
+chapter settle before its density rises again. That is an idea to compare offline,
+not a change to the current broadcast or a substitute for listening feedback.
 
 The repository is public under MIT; the station itself remains local. Public
 operation needs a supplied host/domain and off-host backup/alert destinations,
@@ -60,7 +62,7 @@ The listener also asked whether the music is generated live, wanted memory/syste
 - A render-ahead queue, independent fallback music, crossfades, retries, cleanup and bounded retained audio.
 - Decoded-audio supervision: it can detect persistent silent, missing or hung output and restart its owned Liquidsoap process within a rolling restart budget. Icecast outages allow native reconnection.
 - Actual failure drills, 30-minute and one-hour baselines, and a completed two-hour musical-memory recording. That two-hour recording contains exactly 7,200 seconds with no detected silence at −50 dB lasting two seconds; all 226 watchdog observations were healthy.
-- Automated Python 3.11/3.14, rendering/streaming, browser and hardened HTTPS checks. Application changes through PR #29 have merged after passing final-head/current-base CI. Stock Firefox basic flows and the broader Chromium suite both run in integration.
+- Automated Python 3.11/3.14, rendering/streaming, browser and hardened HTTPS checks. Application changes through PR #31 have merged after passing final-head/current-base CI. Stock Firefox basic flows and the broader Chromium suite both run in integration.
 - A local listening page with bounded reconnection, native fallback and an optional personal sleep timer.
 - Recoverable musical chapters, verified backup/restore commands and an opt-in production deployment package.
 - An offline, matched-score SoundFont comparison bench and a read-only HTTPS monitor that decodes actual audio. The current TimGM sound stays on air.
@@ -1078,3 +1080,29 @@ existing enclosing try catches that path. No rereview. PR #31 remains a candidat
 until actual final-head/current-base CI clears and a measured web-only rollout.
 The current visual proof uses a distinct corrected-run directory; one initial
 root screenshot filename was reused during rerun and its old bitmap is superseded.
+
+## Delivered: volume memory — 15 November 2026
+
+PR #31 merged as `9318741` after all four final-head/current-base CI jobs passed,
+including stock Firefox playback. The local player now remembers an explicit
+volume choice in this browser. It stores the requested level rather than a sleep
+fade, makes no preference write on page load, and keeps listening usable when
+storage is unavailable. Refresh does not resume playback or restore the timer.
+Native sessions already playing are preserved; unsupported volume controls keep
+the device-button fallback. No account or listening history is added.
+
+The web-only rollout changed no music-service identity, image, start time,
+restart count or OOM value. An existing Chromium listener recovered without
+another gesture, confirmed within 27.517 seconds including Compose health wait.
+The direct 60-second audio capture had mean −24.9 dBFS, peak −9.3 dBFS and no
+silence at −50 dB lasting two seconds. Live Firefox passed five basic playback
+flows and a separate trusted-keyboard test: choose 37%, refresh to 37% with no
+source and timer off, then manually play at 37%. All eight served assets matched.
+See the [delivery receipt](evidence/listener-volume-memory-delivery-20261115.json).
+
+The separate six-hour vitals observation remains in progress. One unhealthy
+sample coincided with the recorded web maintenance; it is retained, not removed
+or presented as continuous healthy acceptance. The earlier interrupted attempt is
+not added to the fresh run. Neither run is an independent long audio recording.
+Physical devices, Safari, assistive technology, off-host recovery, public deployment
+and human long-listening acceptance remain open.

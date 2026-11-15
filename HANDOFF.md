@@ -44,17 +44,24 @@ sleep-timer rollout at 06:34 IST left all four music-service IDs/restarts unchan
 
 ## Delivery and operator tools
 
-Latest local listener delivery is PR #29 (`de1c460`): native-first fallback,
-visible keyboard focus handoff and clearer basic-mode help are live. All four
-final-head/current-base jobs passed on `1c0e79b`, run43719973080. Only web changed;
-all four core identities/start/restart/OOM values were preserved. An existing
-listener recovered without another gesture,60seconds of direct core audio decoded,
-and fresh liveFirefox/all-eight-asset checks passed. The confirmation bound includes
-health waiting; physical audibility and public access are not established.
-See the [current delivery receipt](docs/evidence/native-listener-polish-delivery-20261115.json).
+Latest local listener delivery is PR #31 (`9318741`): explicit browser-local volume
+memory is live, alongside native fallback and focus/help polish. All four latest
+final-head/current-base jobs passed on `2d33a86`, run 43729672983, including actual
+stock Firefox playback. Only web changed; all four core identities, images,
+start/restart/OOM values were preserved. An existing listener recovered without
+another gesture within 27.517 seconds including Compose health wait. A 60-second
+direct audio capture, live Firefox basic flows and 37% refresh/manual-play proof,
+and all-eight-asset hashes passed. Physical audibility and public access are not
+established. Refresh once to load the new player; it never resumes automatically.
+See the [current delivery receipt](docs/evidence/listener-volume-memory-delivery-20261115.json).
+
+The separate six-hour vitals observation is still in progress. Its earlier
+40-minute attempt was interrupted and retained separately. The fresh run includes
+one unhealthy sample during annotated web maintenance; preserve raw counts and do
+not claim uninterrupted healthy acceptance or independent six-hour audio capture.
 Detailed paragraphs below retain historical rollout scope.
 
-Application changes through PR #29 merged after actual final-head/current-base CI. PR #16 (`a00557d`) records the completed
+Application changes through PR #31 merged after actual final-head/current-base CI. PR #16 (`a00557d`) records the completed
 two-hour acceptance and replaces the stale first-laptop handoff. Generation source
 is PR #17 (`d82bd17`), version-2 melodic phrasing. All four checks passed on final
 head `84c9d33`, run 43671299403. Its candidate image matches all 17 runtime source files at the reviewed commit. Composer/renderer now use it; broadcaster/Icecast/web stayed unchanged.
