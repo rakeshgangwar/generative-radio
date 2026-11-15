@@ -111,9 +111,10 @@ def fetch(host, port, method, path, payload=None, limit=1024*1024):
 
 
 class Client:
-    def __init__(self, port):
+    def __init__(self, port, expected_origin):
         self.port = port
         self.session = None
+        self.expected_origin = expected_origin
 
     def request(self, method, path, payload=None):
         try:
@@ -134,7 +135,15 @@ class Client:
         while self.script(script) is not True:
             time.sleep(.1)
 
+    def check_origin(self):
+        try:
+            if origin(self.command('GET', '/url')) != self.expected_origin:
+                raise Problem('unexpected_origin')
+        except ValueError as exc:
+            raise Problem('unexpected_origin') from exc
+
     def element(self, selector):
+        self.check_origin()
         value = self.command('POST', '/element', {'using': 'css selector', 'value': selector})
         try:
             ident = value[ELEMENT]
@@ -177,7 +186,7 @@ def run(options):
         process = subprocess.Popen([str(options.driver), '--host', '127.0.0.1', '--port', str(port),
                                     '--profile-root', str(profiles), '--log', 'error'],
                                    stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
-        client = Client(port)
+        client = Client(port, origin(options.url))
         while True:
             if process.poll() is not None:
                 raise Problem('driver_exited')
@@ -208,8 +217,7 @@ def run(options):
             raise Problem('invalid_session') from exc
         stage = 'navigate'
         client.command('POST', '/url', {'url': options.url})
-        if origin(client.command('GET', '/url')) != origin(options.url):
-            raise Problem('unexpected_origin')
+        client.check_origin()
         stage = 'idle'
         client.until("return document.querySelector('#player')?.dataset.state==='idle' && document.querySelector('#stream').paused && document.querySelector('#stream').getAttribute('src')===null")
         report['checks'].append({'name': 'idle_without_source', 'pass': True})

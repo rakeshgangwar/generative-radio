@@ -792,8 +792,8 @@ the current main checkout; the temporary driver listener closed after cleanup.
 The repeatable version uses Mozilla GeckoDriver's W3C interface and Python's
 standard library, so it tests the installed branded Firefox without another client
 package or a Playwright browser download. It constrains the target to loopback,
-owns a new profile and driver group, caps responses and has a whole-operation
-browser/network POSIX deadline, followed by cleanup. Protocol fixtures cover malformed/oversized data, unknown error
+owns a new profile and driver group, caps responses and has a browser/network
+POSIX deadline, followed by cleanup. Protocol fixtures cover malformed/oversized data, unknown error
 text, redirects before clicks, stalled/dripping HTTP and SIGTERM cleanup. The first
 tracked actual Firefox run passed all five flows in about 4.4 seconds, including
 cleanup. The host suite passes 186 tests with six media/explicit opt-in skips.
@@ -815,3 +815,13 @@ service identities/start/restart/OOM values still match the earlier completed
 observer snapshot. This is not a before/after claim about unobserved source hashes
 or an independent audio-quality verdict. Cleanup follows the browser/network
 deadline; elapsed time includes shutdown waits and profile deletion.
+
+
+The final author audit found that checking origin only after navigation was not
+enough: a protocol regression reproduced a redirect between idle and the first
+click. Every control lookup now checks origin again. The regression failed before
+the guard and passed afterward; eight focused tests pass. The guarded tool was
+rerun on actual Firefox for success, SIGTERM and deadline. It observed 24/7/23 owned
+processes respectively, with none active afterward and private profiles removed.
+The deadline run retained one completed check but correctly failed; partial work
+was not reported as a pass. The final whole-suite gate for this fix remains ahead.

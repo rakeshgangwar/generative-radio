@@ -27,7 +27,7 @@
       "pass": true
     }
   ],
-  "elapsed_seconds": 4.403867918001197,
+  "elapsed_seconds": 4.441750485995726,
   "cleanup": {
     "driver_reaped": true,
     "profiles_removed": true
@@ -43,33 +43,36 @@
     "style.css": "6b17280fc0ae6cdc3b08969edb70bef600db908605c5d1557858d55c7fca58cb"
   },
   "served_assets_match_base_checkout": true,
-  "tool_source_sha256": "88e91c119c01e61a8be1e57eaa92f5cc31be6b08781d8bb900a621d8bd028469",
-  "result_sha256": "f92e09c22e2c1fa6d9d0b988baebd199961bcdefa45bf81c5fa148c3e7af8671",
-  "screenshot_sha256": "2bdd103c6c098285c50f645b8fbbdddb28f0171df46c55629f02beda818178cc",
+  "tool_source_sha256": "7c3b7600da7c10b7a2b4c4be2455b74f6e20769b8d398b4eebf6ebc013fe4971",
+  "result_sha256": "f3a195a0e4e250800de63f3b5e09665150ece539cee5418b4725650c3ac0d433",
+  "screenshot_sha256": "a80fa3d030e506db6e2c3becbbd14e29d515b8db5dcecbcfc6a0d90880dbffd4",
+  "actual_failure_cleanup": {
+    "cancel": {
+      "exit_code": 130,
+      "observed_owned_processes": 7,
+      "active_owned_after": [],
+      "profiles_removed": true
+    },
+    "deadline": {
+      "exit_code": 1,
+      "observed_owned_processes": 23,
+      "active_owned_after": [],
+      "profiles_removed": true
+    }
+  },
+  "raw_cleanup_proof_sha256": {
+    "guarded-success-proof.json": "ac3ce8c021fb72e556fdf743d00a69d41f3eeb76438778d57c1de4130b7b0990",
+    "guarded-cancel-proof.json": "1c2d5a6e3979cc570ea729cc5847f6867aade4c30b2687e632199d78b13bfd03",
+    "guarded-deadline-proof.json": "811428592849848997acae0686d32c3744c5aec216841ead58b8a1f3f89a4523"
+  },
   "five_service_identities_start_restart_oom_states_match_observer_end": true,
   "service_baseline_observed_at": 1794735161.4347672,
-  "post_check_observed_at": 1794737788.404893,
+  "post_check_observed_at": 1794738266.1338785,
   "local_evidence": "/home/rakeshgangwar/Projects/generative-radio/artifacts/firefox-check-20261115",
   "limitations": [
     "Basic Linux headless flows only",
     "No Firefox long-outage or sleep-timer acceptance",
     "No Safari, physical device, public deployment or subjective musical acceptance",
     "Timeout triggers cleanup; elapsed time includes shutdown and profile removal"
-  ],
-  "actual_failure_cleanup": {
-    "real_deadline": {
-      "exit_code": 1,
-      "active_owned_after": [],
-      "profiles_removed": true
-    },
-    "real_cancellation": {
-      "exit_code": 130,
-      "active_owned_after": [],
-      "profiles_removed": true
-    }
-  },
-  "raw_cleanup_proof_sha256": {
-    "deadline-real-proof.json": "255fb1605652cb3b7433be4db38016712832be69987d401ea45cc48c38c764ed",
-    "cancel-real-proof.json": "90f89f9cbf598972931279deb11faa70c5747da42b51e45be7abc7a5df9a24ae"
-  }
+  ]
 }

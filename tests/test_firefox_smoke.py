@@ -17,11 +17,16 @@ from http.server import BaseHTTPRequestHandler,HTTPServer
 parser=argparse.ArgumentParser();parser.add_argument('--port',type=int);parser.add_argument('--profile-root');args,_=parser.parse_known_args()
 Path(os.environ['RADIO_TEST_DRIVER_PID']).write_text(str(os.getpid()))
 Path(args.profile_root,'private-profile').write_text('owned profile')
-mode=os.environ['RADIO_TEST_DRIVER_MODE']
+mode=os.environ['RADIO_TEST_DRIVER_MODE'];url_reads=0
 class Handler(BaseHTTPRequestHandler):
     def log_message(self,*args):pass
     def do_GET(self):
-        body=json.dumps({'value':'http://example.com/' if mode=='redirect' and self.path.endswith('/url') else {'ready':True}}).encode()
+        global url_reads
+        if self.path.endswith('/url'):
+            url_reads+=1
+            value='http://example.com/' if mode=='redirect' or (mode=='redirect_late' and url_reads>1) else 'http://127.0.0.1:8080/'
+        else:value={'ready':True}
+        body=json.dumps({'value':value}).encode()
         self.send_response(200);self.end_headers();self.wfile.write(body)
     def do_POST(self):
         self.rfile.read(int(self.headers.get('Content-Length','0')))
@@ -31,7 +36,15 @@ class Handler(BaseHTTPRequestHandler):
             self.send_response(200);self.send_header('Content-Length','2000');self.end_headers()
             for _ in range(2000):self.wfile.write(b' ');self.wfile.flush();time.sleep(.1)
             return
-        if mode=='redirect':body=json.dumps({'value':{'sessionId':'fixture','capabilities':{'browserName':'firefox','platformName':'linux','browserVersion':'157'}} if self.path=='/session' else None}).encode()
+        if mode in ('redirect','redirect_late'):
+            if self.path=='/session':value={'sessionId':'fixture','capabilities':{'browserName':'firefox','platformName':'linux','browserVersion':'157'}}
+            elif self.path.endswith('/execute/sync'):value=True
+            elif self.path.endswith('/element'):value={'element-6066-11e4-a52e-4f735466cecf':'button'}
+            elif self.path.endswith('/click'):
+                Path(os.environ['RADIO_TEST_DRIVER_PHASE']+'.clicked').write_text('clicked after redirect')
+                value={'error':'unknown error','message':'private-protocol-error-canary'}
+            else:value=None
+            body=json.dumps({'value':value}).encode()
         elif mode=='oversize':body=b'x'*(1024*1024+1)
         elif mode=='nested':body=b'{"value":'+b'['*1900+b'0'+b']'*1900+b'}'
         elif mode=='missing':body=b'{"value":{"sessionId":"../../private","capabilities":{"browserName":"firefox","browserVersion":"private-protocol-error-canary"}}}'
@@ -83,9 +96,9 @@ class OwnedProtocolTests(unittest.TestCase):
         args=[sys.executable,'-m','radio.firefox_smoke','--driver',str(self.driver),'--firefox',sys.executable,'--output',str(output),'--timeout','1']
         return args,env,output
 
-    def assert_receipt(self,mode,output,expected_state='failed'):
+    def assert_receipt(self,mode,output,expected_state='failed',expected_checks=0):
         result=json.loads((output/'result.json').read_text())
-        self.assertEqual(result['state'],expected_state);self.assertFalse(result['pass']);self.assertEqual(result['checks'],[])
+        self.assertEqual(result['state'],expected_state);self.assertFalse(result['pass']);self.assertEqual(len(result['checks']),expected_checks)
         self.assertTrue(result['cleanup']['driver_reaped']);self.assertFalse((output/'.profiles').exists())
         self.assertEqual(output.stat().st_mode&0o777,0o700)
         self.assertNotIn(SECRET,(output/'result.json').read_text())
@@ -107,6 +120,13 @@ class OwnedProtocolTests(unittest.TestCase):
         self.assertEqual(p.returncode,1,p.stderr)
         result=self.assert_receipt('redirect',out)
         self.assertEqual(result['failure']['stage'],'navigate')
+
+    def test_redirect_between_idle_and_click_is_blocked(self):
+        args,env,out=self.command('redirect_late')
+        p=subprocess.run(args,env=env,capture_output=True,text=True,timeout=6)
+        self.assertEqual(p.returncode,1,p.stderr)
+        self.assert_receipt('redirect_late',out,expected_checks=1)
+        self.assertFalse((self.root/'redirect_late.phase.clicked').exists(),'must not click after navigation left the allowed origin')
 
     def test_whole_deadline_bounds_stalled_and_dripping_http(self):
         for mode in ['stall','drip']:
