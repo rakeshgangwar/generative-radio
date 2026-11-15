@@ -28,11 +28,11 @@
 **Files:** Create radio/profile_audition.py and tests/test_profile_audition.py; modify radio/audition.py HTML helper, docs/resting-profile-experiment.md, README, HANDOFF, journal; add source-linked evidence.
 **Interfaces:** score_for(profile,station_seed,position,seconds) returns (Arrangement,list[Note],bpm). audition_profile(output,soundfont,station_seed=42,positions=tuple(range(1,13)),seconds=120) returns report. audition.report_html(report,*,description=None) preserves existing default copy and escapes a supplied description.
 
-- [ ] Write CLI --help acceptance; run `python -m unittest discover -s tests -p test_profile_audition.py -v`, expect an assertion failure because the command is absent.
-- [ ] Add tests for reference parity, candidate score/tempo/palette and256-position reduction, invalid output/inputs/markers, engine and MIDI/font failure boundaries, HTML escaping and actual paired rendering without SQLite.
-- [ ] Implement from the spec and public helpers; do not adapt the throwaway prototype. Run targeted tests to GREEN.
-- [ ] Run full Python tests with real audio tools and Node tests; inspect every result. Render real three-chapter CLI output, verify fingerprints/duration/levels and actual browser playback/seek/native/narrow behavior on a separate preview.
-- [ ] Update truthful docs/evidence; commit and record the locally verified task.
+- [x] Write CLI --help acceptance; run `python -m unittest discover -s tests -p test_profile_audition.py -v`, expect an assertion failure because the command is absent.
+- [x] Add tests for reference parity, candidate score/tempo/palette and256-position reduction, invalid output/inputs/markers, engine and MIDI/font failure boundaries, HTML escaping and actual paired rendering without SQLite.
+- [x] Implement from the spec and public helpers; do not adapt the throwaway prototype. Run targeted tests to GREEN.
+- [x] Run full Python tests with real audio tools and Node tests; inspect every result. Render real three-chapter CLI output, verify fingerprints/duration/levels and actual browser playback/seek/native/narrow behavior on a separate preview.
+- [x] Update truthful docs/evidence; commit and record the locally verified task.
 
 ## Branch delivery
 

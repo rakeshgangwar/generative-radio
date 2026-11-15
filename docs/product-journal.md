@@ -1190,13 +1190,14 @@ open; the separate six-hour vitals attempt is still incomplete.
 
 The previous prototype is now a bounded-input offline command:
 `python -m radio.profile_audition --output PATH`. It generates the reference
-version-2 score at 60 BPM and the resting 52 BPM/spare/warm-palette candidate, checks
-the intended MIDI against the renderer, verifies one unchanged SoundFont, then
+version-2 score at 60 BPM and a resting candidate at 52 BPM with spare lead
+density and a warm palette. It checks the intended MIDI against the renderer,
+verifies one unchanged SoundFont, then
 stitches and matches levels with attenuation only. It refuses existing outputs
 and station-data trees, records failed/cancelled runs, and publishes a page only
 after successful validation. It adds no running station mode or automatic schedule.
 
-A fresh default run produced two 23m05s masters at −22.13 LUFS. All24MIDI hashes
+A fresh default run produced two 23m05s masters at −22.13 LUFS. All 24 MIDI hashes
 matched the retained prototype. Actual playback, seeking, mutual exclusion,
 320/390px layouts, byte ranges and JavaScript-disabled native playback passed at
 [localhost:18096](http://localhost:18096); the original 18095 comparison remains
