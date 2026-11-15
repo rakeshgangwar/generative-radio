@@ -231,13 +231,38 @@ Original architecture conversation reference:
 https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
 
 
-## Station observer iteration (in progress)
+## Station observer delivered; half-hour observation complete
 
-PR #24 is merged at `7db3067`; the matched connecting-note candidate is available
-at http://localhost:18091 but has not been adopted on air. The next branch
-`feat/station-observer` adds a host-only bounded read-only vitals recorder; see
-`docs/station-observer.md` and the 2026-11-15 spec/plan. Actual local 60-second recording passed six healthy samples with three retained
-slots and unchanged service identities/state; a final-source 10-second recording
-also passed. Independent review and final-head/current-base CI remain before merge. Main station
-services are not redeployed for this tool. Local ignored evidence is under
-`artifacts/station-observer-20261115/`; failed first template runs are retained.
+PR #25 merged at 09:15:30 UTC as `4f3ef70` after final head `a0ce9d0` passed all four
+jobs in CI run 43697320412 on unchanged base `7db3067`. Local main is clean and
+fast-forwarded. The real Docker-vitals step passed, as did browser playback and
+production TLS/certificate recovery. There were two Important review findings;
+both were reproduced and fixed in one pass. No Critical findings, deferred minors
+or declined behaviors. Final full media suite: 179 tests pass, one explicit live
+opt-in skipped; all 18 observer tests pass with that opt-in against Docker.
+
+The host-only [recorder](docs/station-observer.md) was run without replacing any
+station role. The one-minute recording passed six healthy samples/three retained
+slots with unchanged five-service IDs/state; a corrected-source short recording
+passed four healthy samples/two retained slots. Actual SIGTERM retained a cancelled
+partial receipt. Failed initial template runs are preserved.
+
+The finite observation completed: session 84456 is terminal exit 0, never restart
+or repoll it. The checked run lasted 1800.000301 seconds with 60 healthy
+samples and zero unknown/unhealthy observations. All five roles' IDs/start times,
+restart/OOM values and source hashes matched before/after and every sample; all
+60 watchdog-report observations were healthy with restart count 0. Broadcaster
+RAM sampled 233.6–249.7 MiB, quarter means 236.56/236.49/236.28/236.60 MiB. This is sampled vitals plus
+existing watchdog reports, not a new audio capture or independent listener probe.
+
+The [half-hour receipt](docs/evidence/station-observer-half-hour-20261115.json)
+contains raw SHA-256 fingerprints, ranges and process exit proof; the
+[delivery receipt](docs/evidence/station-observer-delivery-20261115.json) records
+exact-head/current-base CI and the merge. Raw local evidence remains ignored under
+`artifacts/station-observer-20261115/`. The completed feature workflow is archived
+in its `workflow-final` directory. Do not infer indefinite stability or public
+capacity from this local observation.
+
+PR #24's matched connecting-note candidate remains at http://localhost:18091 with
+no on-air adoption. Public target/off-host recovery and human/device acceptance
+remain open.

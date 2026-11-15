@@ -1,7 +1,7 @@
 # Release readiness evidence
 
-The goal is a finished, unattended 24×7 CPU-only generative ambient station on a
-single Linux VPS. The accepted architecture remains Python, FluidSynth,
+This release's operational target is an unattended 24×7 CPU-only generative
+ambient station on a single Linux VPS. The accepted architecture remains Python, FluidSynth,
 Liquidsoap, Icecast, local SQLite and Docker Compose. No GPU, management UI,
 multiple genres or external composition API is required for this release.
 
@@ -16,13 +16,13 @@ latest dated receipt and [current handoff](../HANDOFF.md) for present state.
 | Buffered continuous output | Full-stack recording and queue replenishment evidence | Two-hour version-1 recording and mixed version-2 rollout capture passed; ready queue stayed at 10–11 |
 | Recovery from interrupted generation and streaming | Failure drills and decoded audio after recovery | Fallback, restart, Icecast reconnect and real lease-expiry drills passed |
 | Silent/hung broadcaster detection and recovery | Missing-stream/silent-audio/hung-child drills, bounded restart evidence | PR #3 merged after CI; isolated silence/hang/missing-mount drills passed; deployed locally |
-| Bounded storage and resource use | More than one retention interval observed, longer unattended soak | Two-hour musical-memory soak and retention checks passed locally; actual target capacity remains open |
+| Bounded storage and resource use | More than one retention interval observed, longer unattended soak | Two-hour musical-memory soak/retention and 60 healthy half-hour observer samples passed locally; actual target capacity remains open |
 | Repeatable validation of changes | Automated PR unit checks and short container integration checks | CI is on main: Python 3.11/3.14 plus real rendering/streaming checks |
 | Safe operation on the target VPS | HTTPS, non-default credentials, restricted administration, startup/reboot verification | Production package validated locally; actual target host/domain not yet provided |
 | Audible public listening path | Authenticated HTTPS fetch, bounded decode and audibility check on an independent host | Read-only command and local TLS rehearsal passed; independent deployment pending |
 | Backup and recovery | Consistent queue/audio backup and tested restore on isolated data | Repeatable create/verify/restore commands and off-host runbook validated locally; target-host/off-host exercise pending |
 | Operator documentation | Install, upgrade, monitor, recover, back up and roll back commands | Local recovery/backup runbook implemented; production deployment runbook added; target-host exercise pending |
-| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | PRs #1–#19 merged after CI; latest source adds phrase breathing and explicit offline backup recovery |
+| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | Changes through PR #25 merged after final-head/current-base CI; recent work includes audible chapter context, deployed listener recovery, an offline melody audition and host-side vitals recording |
 
 These are release readiness gates, not an exhaustive definition of the evolving
 product goal. The [product journal](product-journal.md) records that direction.
@@ -335,3 +335,23 @@ committed-WAL/hot-journal and actual rendered-audio restore checks, then final-h
 CI before PR #19 merged. It is an on-demand tool; making its verified image available
 changed no running service. Actual public-target/reboot/capacity, off-host recovery,
 physical-device and subjective listening acceptance remain open.
+
+
+## Completed reusable vitals observation — 15 November 2026
+
+PR #25 merged as `4f3ef70` after all four actual final-head/current-base checks
+passed, including its real Docker-vitals step. The host-only recorder then
+completed a 1800.000301-second observation with 60 healthy samples,
+zero unknown/unhealthy samples, and unchanged five-service identities/start times,
+restart/OOM state and observer source hashes. Broadcaster RAM sampled
+233.6–249.7 MiB; quarter means 236.56/236.49/236.28/236.60 MiB. It retained 60 samples plus one
+summary within 120 configured slots. Actual rotation was tested separately in the
+one-minute/six-sample acceptance with three retained slots.
+
+The [measured receipt](evidence/station-observer-half-hour-20261115.json) includes
+process exit 0, per-service ranges, host metrics and raw-file fingerprints; the
+[delivery receipt](evidence/station-observer-delivery-20261115.json) records the
+exact CI run, head/base and merge. This observes existing station decoded-audio
+reports, not a new audio capture or independent probe. It does not establish
+unsampled peaks, indefinite stability, subjective listening, physical devices,
+public-target capacity or off-host recovery. Those release gates remain open.

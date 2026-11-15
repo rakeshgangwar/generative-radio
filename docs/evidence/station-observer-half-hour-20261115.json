@@ -1,0 +1,171 @@
+{
+  "kind": "completed local 30-minute read-only vitals observation",
+  "summary": {
+    "elapsed_seconds": 1800.0003006789993,
+    "finished_at": 1794735148.2633252,
+    "healthy": 60,
+    "interval_seconds": 30.0,
+    "max_samples": 120,
+    "not_healthy": 0,
+    "project": "generative-radio",
+    "requested_seconds": 1800.0,
+    "retained": 60,
+    "samples": 60,
+    "started_at": 1794733348.2630262,
+    "state": "complete",
+    "unknown": 0
+  },
+  "process": {
+    "session_id": 84456,
+    "exit_code": 0,
+    "terminal_observed_at": 1794735161.434611,
+    "authority": "exec session completion returned exit_code 0"
+  },
+  "identities_start_times_restart_oom_states_unchanged": true,
+  "all_five_roles_healthy_in_each_sample": true,
+  "watchdog_reports_healthy": 60,
+  "watchdog_restart_counts_observed": [
+    0
+  ],
+  "resources": {
+    "broadcaster": {
+      "sampled_memory_bytes_min": 244947354,
+      "sampled_memory_bytes_max": 261829427,
+      "sampled_memory_bytes_mean": 247969000.16666666,
+      "quarter_means_bytes": [
+        248051138.66666666,
+        247974243.06666666,
+        247757537.26666668,
+        248093081.66666666
+      ],
+      "sampled_cpu_percent_max": 15.15
+    },
+    "composer": {
+      "sampled_memory_bytes_min": 16609444,
+      "sampled_memory_bytes_max": 17878221,
+      "sampled_memory_bytes_mean": 16680747.1,
+      "quarter_means_bytes": [
+        16615036.333333334,
+        16721292,
+        16615036.333333334,
+        16771623.733333332
+      ],
+      "sampled_cpu_percent_max": 19.68
+    },
+    "icecast": {
+      "sampled_memory_bytes_min": 7237272,
+      "sampled_memory_bytes_max": 15917384,
+      "sampled_memory_bytes_mean": 8181426.883333334,
+      "quarter_means_bytes": [
+        9442357.133333333,
+        7786445.666666667,
+        7718078.666666667,
+        7778826.066666666
+      ],
+      "sampled_cpu_percent_max": 3.59
+    },
+    "renderer": {
+      "sampled_memory_bytes_min": 26266829,
+      "sampled_memory_bytes_max": 84651540,
+      "sampled_memory_bytes_mean": 29707206.6,
+      "quarter_means_bytes": [
+        31032956.066666666,
+        26995239.6,
+        30289166.4,
+        30511464.333333332
+      ],
+      "sampled_cpu_percent_max": 121.52
+    },
+    "web": {
+      "sampled_memory_bytes_min": 18412995,
+      "sampled_memory_bytes_max": 20499661,
+      "sampled_memory_bytes_mean": 19034800.183333334,
+      "quarter_means_bytes": [
+        18674439.466666665,
+        19244165.866666667,
+        19497222.333333332,
+        18723373.066666666
+      ],
+      "sampled_cpu_percent_max": 2.86
+    }
+  },
+  "observer_host_available_memory_bytes_min": 22975373312,
+  "observer_host_available_memory_bytes_max": 23123439616,
+  "report_filesystem_free_bytes_min": 588179128320,
+  "source_commit_at_start": "a0ce9d0454df74619dbe70ad93f1e109ad4d7515",
+  "source_sha256": {
+    "radio/observer.py": "71299f5249882c5ea3b175f647ce79df7c2d57f7d13568062cae59fafcda3370",
+    "radio/station_vitals.py": "5e1bc5defa1c87437f53372bfde52981cf1a2e434b2ee72604d3bab137383e23"
+  },
+  "raw_sha256": {
+    "half-hour/sample-0000.json": "b73b94f681154f1c39a9b9783212e052a7c8d328654d57012ca3437683fb7ff4",
+    "half-hour/sample-0001.json": "e6dc8eec80c2cd4539ae3cf07d68bf30775a08c534fca7e79f85c39887a10871",
+    "half-hour/sample-0002.json": "80b0b4a8e24ef910887d724fb5b0f3f898fd1a0481754a8e76f96390d6b31506",
+    "half-hour/sample-0003.json": "7204f5541fe529903266892ea2b46f4b12549aa14547184f374996ebd4f92b12",
+    "half-hour/sample-0004.json": "3e31cbf3ab689fd3329605a32f759a229768d7aba4d680cd2dfb53fa55635046",
+    "half-hour/sample-0005.json": "495195e35d5d60f288ef42dae2027c599b9aeee57720603951078c9d7d26edb6",
+    "half-hour/sample-0006.json": "1a91446318e9269c45c2eaa38aae8ee1a4262af2baf7b871fefc8293f5fc41d9",
+    "half-hour/sample-0007.json": "b683b8b3685b57796349b31731feb6e5779dc4f8336daa42b9a6237f1be716f2",
+    "half-hour/sample-0008.json": "f7390e220a8b9a67febc654b0fb65789f2563ce0a7354427d14186b21aaa65e3",
+    "half-hour/sample-0009.json": "dc40d4048b65400b778f8dab7e14afb22c425ac21de7ed48e601995c8ce0d0ab",
+    "half-hour/sample-0010.json": "ee39920e68ab2a7ce92d3c47395bd8697da037b8455accf17bcdefe13e8ca42d",
+    "half-hour/sample-0011.json": "f582abaa4e01a3529403c14fa71751bf2b9e200eba3eb4bf0d86d9ed4ac1e49a",
+    "half-hour/sample-0012.json": "9ac4150179c0ec4aecf98110c1c7176b705405671c9399b80f87a3e30cf8a95a",
+    "half-hour/sample-0013.json": "b54e24c41053aa6461782424faef5f538ee99c8cb62d5fba1480e99c9dde92c7",
+    "half-hour/sample-0014.json": "034adafb1dccc986abec78225fbc4a0406976e1a49ac1ca47b006f247b39b837",
+    "half-hour/sample-0015.json": "90bfc57db24e86545553d8f48f937d49a32b15a42febdf45c06dba024e505b7c",
+    "half-hour/sample-0016.json": "70618438e423f27b24e24a61851bcc8a8c326b250c4a10c20877c182425afa61",
+    "half-hour/sample-0017.json": "e0bd688ddb182e5636457bdfa35860650c52af531a2ee1053ba2029d5d2ae054",
+    "half-hour/sample-0018.json": "079df9f6f121e0a12044eb55ad26d4baddef0b2a363a8c45685efe36a44cb9b7",
+    "half-hour/sample-0019.json": "0774f068c774c093b419d8083c23f72f609acefb0666a441ec35ee4e36bba2ed",
+    "half-hour/sample-0020.json": "d062e222d06bd236b0271f4719d6772e23d3696787c005365ee7f562c52c360a",
+    "half-hour/sample-0021.json": "1b852d1ca2287e43e2492f56242b608c940dfc2fe99dc786cc6dfcb0a0cb7514",
+    "half-hour/sample-0022.json": "ac9f4ed6f848c9cf680b5207809c448535622d1d559b098afd2e61aebcd29705",
+    "half-hour/sample-0023.json": "caefab073256233baf960b60ba81df45311226b3e54a8c6ebe2474eb1f2c6e23",
+    "half-hour/sample-0024.json": "654581f6f20df97cd95c3db012dadb293a60ae44ab5bccfce3544c720aced275",
+    "half-hour/sample-0025.json": "ee5c4497d15599c4cd606328f7cc222ede37af86ef2c14cb070e569d06209d22",
+    "half-hour/sample-0026.json": "89f60f7976856d950a1bb173f98fed6e0df264ccb5415bf22372481e4d5cf6e4",
+    "half-hour/sample-0027.json": "55efb633483b12b68289638269f50e65ac5706466d5e999cc64a8365bd13a92b",
+    "half-hour/sample-0028.json": "83ee56bad009b27cbfc291574f1d8c7e56de8d0a34235359eb4dea9eead9166c",
+    "half-hour/sample-0029.json": "025773d13668cea348457135bfed0214576f42397ac7558de0ba7cc48fb99035",
+    "half-hour/sample-0030.json": "b95bdf79d21eb6aac252325c9e3e1c5ec42ba125854db8f30e46defc57535f76",
+    "half-hour/sample-0031.json": "e6dfae3a0e071602da060cdbf55c1249715e05d8c8d93943792e34fa57df05d6",
+    "half-hour/sample-0032.json": "79c90f3923e1d2bdb5b0ec3c759c5387fc91f6174f79c4fdb6c634190737b759",
+    "half-hour/sample-0033.json": "23e10cfd7e007622d4fa833cb8bc70c062ee50f78dd0f42afe126854cddb6c05",
+    "half-hour/sample-0034.json": "8ce1c44ce4fbb9889ecaaf19296637c3a9fa507e23c356301141cba0f28e523b",
+    "half-hour/sample-0035.json": "b089068e264972db2b26f5568f7c2cf0e1bf0d742bcd8851b1a0e480484576a2",
+    "half-hour/sample-0036.json": "040de50ed6d960ade4a9eeebc8b1a1528c264fec806c6210af939ba6a7c17ae8",
+    "half-hour/sample-0037.json": "1b55d154aebe4e92433c4c5afb579be84780852c7d1c7a847dbb0390a4c36e14",
+    "half-hour/sample-0038.json": "b6352a2f22aaa9789d03c054dc6dda5ddcfdb1bcd905a1eea84f2d41a7c0273e",
+    "half-hour/sample-0039.json": "12289270a7a7ff05fa670fe3e82918e1817066cc7c579a51f86355c4db0a4489",
+    "half-hour/sample-0040.json": "b80975b27970c1af034c61b2e5444ea2831b7d8a50248383a139e4fd20c382b6",
+    "half-hour/sample-0041.json": "3949338e0d83a1fd0e3333124089cfbb4e2c17986b0deb23c6270746556b3b12",
+    "half-hour/sample-0042.json": "65228a75e642beab62a3c78fba7269d77a05b4f29850133d9dbee30722ad5797",
+    "half-hour/sample-0043.json": "5ae3b85f5be6b3301c2f334739bbfb8f1d034e49893a9d909d91274813ea538c",
+    "half-hour/sample-0044.json": "06085d508d3ca12290e83dffe67332380f7f92b1cd2ff8241ae8d30cb6d06b24",
+    "half-hour/sample-0045.json": "f84c69068ae37b963c7cea0bdb8d7b1325da374e89964b3b4d809b73d526447f",
+    "half-hour/sample-0046.json": "22c89e926aef4d7a8c0d68628dc5c326b0267ff7312d42dca3dd84a79d52ee4d",
+    "half-hour/sample-0047.json": "0df70697e30656791e23013dae16e4ba2d3716d22ecdbadb2d10f15173301980",
+    "half-hour/sample-0048.json": "3a445fd2fd85d053474554ab2df9b052ae73eb8a4493ce264bd71d98d16d508d",
+    "half-hour/sample-0049.json": "18ef3870ca030a83297e36dda64a1c9c6bee5f009809b9d1dfe05f2016d1596d",
+    "half-hour/sample-0050.json": "4944382b86352d383fced2a05ae4226e5d7a8116e961bb837a58a25aef86ad63",
+    "half-hour/sample-0051.json": "265dc25b4ac585b29b4e790d44c425de2fa78fbe892d60b135306acdc24c1269",
+    "half-hour/sample-0052.json": "981d6b7c6cbd183ab6e981e47b9620dc8371b5c67fc3f0536c4db1048ffe5ef3",
+    "half-hour/sample-0053.json": "7b88f4da356f567a86cdea3e54e8b97c5f4e9a3045bd9665d7528180ebcac0ff",
+    "half-hour/sample-0054.json": "8aa2d65fdd784d0af261e356e19ff46223fa00b137b799f8e012e068e728ebab",
+    "half-hour/sample-0055.json": "5a036c180d7a54a260c99f457cef165e099e21b0ac99bf5d61a83c39367b3a95",
+    "half-hour/sample-0056.json": "165282dc28dfff6589d3edd73c2936f85a25a7ededd0e8066a82a9299789f450",
+    "half-hour/sample-0057.json": "c11e643ab0e1efae32bb5502e1e7b3c88ada2d64a7d7de9b38502374042f91ca",
+    "half-hour/sample-0058.json": "2fd9e5e843d7f84d2c07a3210af5a579fb9d70aa0f072222392f922edce71ff2",
+    "half-hour/sample-0059.json": "6f2326aff90c69a8cadaef99ea923a02c8c4327ff29afc040705e7fa30e62bd2",
+    "half-hour/summary.json": "71389b9c5a7c18c5a26ca948bd00c1c23d9792eea954f421d8921ed99a1fe9f3",
+    "half-hour-before.json": "0dece64b685395785688eae31815c8222cf5092d98de07d768227483bff5d22c",
+    "half-hour-after.json": "fb94fc2e80fdf186c5fb6ea1f2971ab1d8fcc40bad30cf1a472267a2c55ce63f",
+    "half-hour-process-result.json": "358dc6d81598e613941e4f9508755eb24b216f0d53c3fc2d1e860a64169acb73"
+  },
+  "limitations": [
+    "Sequential sampled observations, not an atomic snapshot or continuous resource peak measurement",
+    "Existing station decoded-audio reports, not a new audio recording or independent listener probe",
+    "No host-wide leak absence, public capacity, off-host recovery or subjective listening claim"
+  ]
+}

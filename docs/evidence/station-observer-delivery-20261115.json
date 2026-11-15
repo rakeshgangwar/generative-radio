@@ -1,0 +1,53 @@
+{
+  "pr": 25,
+  "url": "https://github.com/rakeshgangwar/generative-radio/pull/25",
+  "merged_at": "2026-11-15T09:15:30Z",
+  "merge_commit": "4f3ef70f6f7c7f32279a1f995a1ff0b6ecc73e5b",
+  "source_head": "a0ce9d0454df74619dbe70ad93f1e109ad4d7515",
+  "base": "7db306715b5a38bbc541f08801c0cb8d1eb5f8be",
+  "ci": {
+    "id": 43697320412,
+    "head_sha": "a0ce9d0454df74619dbe70ad93f1e109ad4d7515",
+    "status": "completed",
+    "conclusion": "success",
+    "run_number": 67,
+    "workflow_id": 418602628,
+    "updated_at": "2026-11-15T09:14:26Z",
+    "html_url": "https://github.com/rakeshgangwar/generative-radio/actions/runs/43697320412"
+  },
+  "jobs": [
+    {
+      "name": "Listener controls",
+      "conclusion": "success"
+    },
+    {
+      "name": "Python 3.11",
+      "conclusion": "success"
+    },
+    {
+      "name": "Python 3.14",
+      "conclusion": "success"
+    },
+    {
+      "name": "Audio and streaming integration",
+      "conclusion": "success"
+    }
+  ],
+  "actual_vitals_step": "success",
+  "post_merge_service_identities_and_states_unchanged": true,
+  "source_sha256": {
+    "radio/observer.py": "71299f5249882c5ea3b175f647ce79df7c2d57f7d13568062cae59fafcda3370",
+    "radio/station_vitals.py": "5e1bc5defa1c87437f53372bfde52981cf1a2e434b2ee72604d3bab137383e23"
+  },
+  "half_hour": {
+    "receipt": "station-observer-half-hour-20261115.json",
+    "state": "complete",
+    "elapsed_seconds": 1800.0003006789993,
+    "samples": 60,
+    "healthy": 60,
+    "unknown": 0,
+    "not_healthy": 0,
+    "process_exit_code": 0
+  },
+  "local_evidence": "/home/rakeshgangwar/Projects/generative-radio/artifacts/station-observer-20261115"
+}
