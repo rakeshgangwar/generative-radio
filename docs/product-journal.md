@@ -641,7 +641,7 @@ five tails. This remains a subtle audition, not a solution declared from a metri
 
 Both masters measure -22.07 LUFS, with true peaks -8.35/-8.36 dBFS. Their61,078,500-frame
 PCM files have exact 1385-second duration, and independent FFmpeg checks found no
-silence at least two seconds below -50 dB. All 160 real-media tests and 46 listener
+silence at least two seconds below -50 dB. All 161 real-media tests and 46 listener
 tests pass, including 24 historical default/v1/v2 MIDI fingerprints and the existing
 render cleanup. Workers retain the original compose path; the experiment has not
 changed the station.
@@ -659,8 +659,11 @@ record source/font/MIDI fingerprints, additions, shortened tails and measured au
 One zero-addition copy issue was corrected so unchanged scores are honestly labeled.
 Because these changes are sparse in a long sequence, the time guides now have
 explicit cue buttons: both players seek to the same lead-in and stay paused until
-you choose a version. Musical/render-source hashes still match the completed audio;
-only the offline presentation was regenerated. Independent whole-branch review and actual
-final-head CI remain ahead. The question to listening is simple: does the line feel
+you choose a version. The later phrase-guard fix regenerates all 24 archived MIDI inputs exactly;
+unchanged synthesis and SoundFont provenance keep the measured audio valid. Independent review found one important boundary gap: a connection could borrow
+an anchor from the previous phrase even after clearing its rest. All three notes
+now must share a phrase. Synthetic and real-score regressions failed before the
+fix and pass afterward; the final full suite has 161 tests. No minors were deferred.
+Actual final-head CI remains ahead. The question to listening is simple: does the line feel
 more intentional, or do the small connections disturb its restfulness? Current
 version 2 remains on air while that preference is open.

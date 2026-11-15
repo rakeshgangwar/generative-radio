@@ -55,7 +55,8 @@ def connect_melody(notes, seconds, bpm, arrangement) -> list[Note]:
         last_bar = int((at + duration - 1e-9) // bar)
         target_bar = int(target.start // bar)
         group=target_bar//phrase_bars
-        if (first_bar//phrase_bars!=group or group in used
+        if (int(previous.start // bar) // phrase_bars != group
+                or first_bar//phrase_bars!=group or group in used
                 or any(index%phrase_bars==phrase_bars-1 for index in (first_bar,last_bar,target_bar))
                 or (arrangement.profile==1 and group%2)):
             continue

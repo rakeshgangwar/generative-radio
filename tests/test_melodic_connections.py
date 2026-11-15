@@ -77,6 +77,15 @@ class MelodicConnectionsTests(unittest.TestCase):
         self.assertEqual((result[-3].start,result[-3].pitch,result[-3].velocity),(5,64,40))
         self.assertEqual(result[-2],original[-1])
 
+    def test_connection_does_not_reach_back_across_a_phrase_rest(self):
+        original=fixture(40)
+        original[-2]=Note(19,.25,72,40,2)
+        original[-1]=Note(25.5,1,76,40,2)
+        self.assertEqual(connect_melody(original,40,60,plan()),original)
+        a=arrangement_for(42,10);notes=compose(52,120,60,a)
+        result=connect_melody(notes,120,60,a)
+        self.assertFalse(any(n.start==64.75 and n.pitch==74 for n in result[len(notes):]))
+
     def test_existing_default_and_explicit_legacy_midi_hashes_are_unchanged(self):
         data=json.loads((Path(__file__).parent/'fixtures/melody-baseline-midi.json').read_text())
         self.assertEqual(len(data['cases']),24)
@@ -106,6 +115,11 @@ class MelodicConnectionsTests(unittest.TestCase):
                     for note in extra:
                         beat=60/bpm;bar_index=int(note.start/(4*beat));group=bar_index//a.phrase_bars
                         self.assertNotEqual(bar_index%a.phrase_bars,a.phrase_bars-1)
+                        anchors=sorted((n for n in original if n.channel==2),key=lambda n:n.start)
+                        before=max((n for n in anchors if n.start<note.start),key=lambda n:n.start)
+                        after=min((n for n in anchors if n.start>note.start),key=lambda n:n.start)
+                        self.assertEqual(int(before.start/(4*beat))//a.phrase_bars,group)
+                        self.assertEqual(int(after.start/(4*beat))//a.phrase_bars,group)
                         self.assertIn(note.pitch%12,{0,2,4,5,7,9,11});self.assertEqual(note.channel,2)
                         self.assertGreaterEqual(note.start,seconds*.2-1e-8)
                         if a.profile==1:self.assertEqual(group%2,0)

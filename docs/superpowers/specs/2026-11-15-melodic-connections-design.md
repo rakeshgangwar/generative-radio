@@ -40,7 +40,9 @@ Both sets must match, contain at least3 classes and contain both anchor classes.
 Thus the connection does not cross a harmony change or a partially assembled pad.
 It may be a chord tone or a passing scale tone; no chromatic notes are introduced.
 
-Reject insertion in the last bar of a6/8/10-bar phrase or across a phrase boundary.
+Reject insertion in the last bar of a6/8/10-bar phrase. The predecessor anchor,
+insertion and target must all belong to the same phrase, including when an insertion
+would otherwise clear the intervening rest.
 At most one insertion per target phrase; profile1 uses even-numbered phrases only,
 profile2 may use every phrase. No random state/new seed mapping. If no eligible gap
 exists, preserve identical notes and report zero additions rather than forcing change.

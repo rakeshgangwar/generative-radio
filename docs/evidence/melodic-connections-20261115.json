@@ -1,6 +1,6 @@
 {
   "base_commit": "7e00548e615784ddcae50eafa747fc41a3252314",
-  "delivery": "offline candidate; local preview ready; live version2 unchanged; final independent review and real final-head CI pending",
+  "delivery": "offline candidate; review resolved and local preview ready; live version2 unchanged; real final-head CI pending",
   "comparison": {
     "seconds": 1385,
     "positions": [
@@ -135,18 +135,23 @@
     },
     "current_sources": {
       "melody_audition.py": "7c30f88147a6a392acbcf139d48332901720921b770b259478ed2213e575eec2",
-      "melodic_connections.py": "0a5532cdcb69a64e3151bbf4493bfd1062def50b15b8209a79811d8e4f640fc4",
+      "melodic_connections.py": "d1b0434a523d0913a9f6ea3c4ca78f1c75a49d4962448394a79c5b09216d27aa",
       "audition.py": "2e0f4a1d72f35a834bd262848368f7f0dc432fd363de95d305326ae1edb48db0",
       "compose.py": "843b3c8dbdaa19db7c5e44e83841927aeb5d7fad41c86845d3229b7b4e5b885e",
       "arrangement.py": "fb1cd67ac84761d1062f1cebbc865e57493785bed07926776448ba83502b3423",
       "render.py": "b9843b7ac2f2c786cf82d76a7a338e5db639a6f7ef8186ec1ba9bd5f3f21af09"
     },
-    "post_render_change": "Presentation only: honest zero-addition wording and clickable phrase cues. Musical/render-helper source hashes match the rendered audio; only offline HTML was regenerated."
+    "post_render_change": "Presentation fixes plus a cross-phrase validation guard after independent review. The final algorithm regenerates all24 recorded MIDI scores byte-for-byte; synthesis/normalization sources and font are unchanged. Existing measured audio retained.",
+    "final_midi_proof": {
+      "final_algorithm_midi_scores_match_rendered": 24,
+      "all_exact": true,
+      "reason": "Cross-phrase guard fix does not change any current-seed audition score; original measured audio retained."
+    }
   },
   "tests": {
-    "media": 160,
-    "media_log": "guides-media-final.log",
-    "seconds": 89.606,
+    "media": 161,
+    "media_log": "review-media-final.log",
+    "seconds": 89.97,
     "listener": 46,
     "legacy_midi_fingerprints": 24
   },
@@ -166,7 +171,8 @@
     "browser-regression.log": "acfdc4421012418f2dd602fda1641f02941b1c92607af1fd6983584545306bd6",
     "browser-guides-red.log": "0796d9906769fddab3c7473ef35335d5ffb5d2a1ceed549cf89309aabe60fb6b",
     "browser-guides-red.json": "532f716c5c9513e19baedcc9ec0f9fae0af426d7d298b5e4a17402df7bd1f6eb",
-    "long/index.html": "46b2bde53114e4080ed5310bc93de4daaad51bb26694f1147d230a4139ee4509"
+    "long/index.html": "46b2bde53114e4080ed5310bc93de4daaad51bb26694f1147d230a4139ee4509",
+    "review-audio-provenance.json": "d7cae5c39751d9e563582179ed9c246d180364e087017d39ec596fff27fb0049"
   },
   "limits": [
     "No claim of improved musical quality or subjective preference.",
@@ -176,5 +182,12 @@
   "main_five_roles_unchanged": true,
   "candidate_runtime_source_files_matched": 21,
   "repeatable_browser_test": "web/tests/melody-audition.mjs",
-  "ci_acceptance": "Generate120s same-font pair, isolated read-only Caddy preview, verify206 and run same browser acceptance with always-run cleanup."
+  "ci_acceptance": "Generate120s same-font pair, isolated read-only Caddy preview, verify206 and run same browser acceptance with always-run cleanup.",
+  "review": {
+    "critical": 0,
+    "important": 1,
+    "minor": 0,
+    "resolution": "Predecessor, insertion and target must share a phrase. Synthetic rest-clearing and real seed42/position10 regressions RED then GREEN; score-matrix property strengthened.",
+    "suite_status": "161 real-media tests and46 listener tests pass after one RED/GREEN fix pass"
+  }
 }

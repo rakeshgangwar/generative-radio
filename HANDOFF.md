@@ -95,7 +95,8 @@ beat; original attacks/pitches/velocities, pads/bass and phrase rests remain fix
 The preview passed real Chromium playback/seeking/one-at-a-time controls and narrow
 layouts. A read-only Caddy audition-only server provides 206 byte ranges; the initial
 simple server failed seeking and was stopped. Main station containers/aliases are
-unchanged. Review/CI and subjective preference are pending; no default adoption.
+unchanged. Independent review is resolved (one phrase-boundary fix); real CI and subjective
+preference are pending. No default adoption.
 See the [audition runbook](docs/melodic-connections.md).
 
 Source checkout is clean on main. Public decoded HTTPS monitoring remains an
