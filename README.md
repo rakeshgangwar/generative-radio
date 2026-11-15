@@ -250,3 +250,5 @@ from now. It keeps counting through reconnects. Pause cancels it, and the final 
 seconds fade where browser volume control works before releasing the stream.
 The timer belongs to this page and is not saved across reloads. Keep the page
 open; a frozen/suspended browser cannot execute its deadline.
+
+Compare instrument libraries using identical, matched-level music: [sound auditions](docs/sound-auditions.md).

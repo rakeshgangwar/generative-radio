@@ -1,0 +1,8 @@
+# Optional listening lab. Never used by the station's Compose services.
+ARG BASE_IMAGE=generative-radio:local
+FROM ${BASE_IMAGE}
+USER root
+RUN apt-get update && apt-get install -y --no-install-recommends fluid-soundfont-gm time \
+    && rm -rf /var/lib/apt/lists/*
+COPY radio /app/radio
+USER radio
