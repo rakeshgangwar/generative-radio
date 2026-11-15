@@ -363,14 +363,18 @@ seconds. Bloom averaged 40.53 attacks there. Changing harmony alone had left the
 foreground line almost continuously speaking.
 
 The candidate uses chapter-shared six/eight/ten-bar phrases. Melody leaves the
-last bar empty, including note-release tails; pads and bass sustain underneath.
+last bar free of new attacks and held MIDI notes; pads and bass sustain underneath.
+Melody note-offs occur at least 0.1 beat before that bar; SoundFont release and
+reverb can still ring through it.
 No key modulation, extra instrument or new SoundFont is added. Version-2 plans
 carry the phrase length in their metadata. Explicit version-1 and independent
 legacy MIDI remain byte-identical, verified against preserved fixtures.
 
 Middle-stage attacks average 30.44 (unfold), 34.59 (bloom) and 30.90 (settle), down
-from 35.72, 40.53 and 36.57. Each sampled middle-stage segment now has two complete
-melodic rests in that window. This proves space in the score, not better music.
+from 35.72, 40.53 and 36.57. Each sampled middle-stage segment now has two or three complete
+bars without held melody notes in that window (171 total in bloom, 117 unfold,
+57 settle). Counts include bars ending exactly at the window boundary. This
+proves space in the score, not acoustic silence or better music.
 
 Both actual three-chapter rehearsals contain 23m05s. The matched masters measure
 −22.08 LUFS, with true peaks −7.77 dBTP (current) and −8.36 dBTP (candidate); neither

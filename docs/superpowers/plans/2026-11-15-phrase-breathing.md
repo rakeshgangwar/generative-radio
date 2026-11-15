@@ -14,7 +14,7 @@
 
 - Append `phrase_bars: int = 0` without breaking positional arguments; default constructor version stays 1.
 - New planner version 2 uses chapter-shared integer phrase lengths {6, 8, 10}; preserve all existing scheduling choices.
-- Every phrase's final bar has no melody attack or tail; release margin is 0.1 beat; pads/bass continue.
+- Every phrase's final bar has no new melody attack or held MIDI note; note-off margin is 0.1 beat; pads/bass continue.
 - Legacy/unplanned and explicit version-1 MIDI are byte-identical; unsupported versions/invalid version-2 lengths fail clearly.
 - Keep TimGM, immutable ready audio and current live services; no public deployment or listening acceptance claim.
 

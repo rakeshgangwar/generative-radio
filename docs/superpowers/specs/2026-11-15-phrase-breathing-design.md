@@ -29,8 +29,9 @@ under a new `phrasing` label. Existing progression/motif/palette scheduling stay
 identical; the new choice must not consume shared randomness.
 
 For version-2 plans, omit melody attacks in the last bar of every phrase, in every
-stage. Clip preceding melody notes so they release at least 0.1 beat before that
-bar. Sustained pads/bass continue through these melodic rests. Existing sparse
+stage. End preceding MIDI note durations at least 0.1 beat before that
+bar. Instrument release envelopes/reverb may continue; this is a score/MIDI rest,
+not a guarantee of acoustic silence in an isolated melodic stem. Sustained pads/bass continue through these melodic rests. Existing sparse
 stage gaps and quiet segment edges still apply; a new rest may coincide with an
 existing one. Do not require a complete phrase in a short 20-second clip. Do not
 change note velocity or harmony in this iteration.

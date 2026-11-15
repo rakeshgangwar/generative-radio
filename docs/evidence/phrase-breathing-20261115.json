@@ -39,60 +39,80 @@
       "baseline": {
         "segments": 64,
         "mean_middle_melody_attacks": 22.96875,
-        "full_bar_rest_count": 105
+        "full_bar_rest_count": 254,
+        "per_segment_rest_min": 2,
+        "per_segment_rest_max": 6
       },
       "candidate": {
         "segments": 64,
         "mean_middle_melody_attacks": 19.546875,
-        "full_bar_rest_count": 177
+        "full_bar_rest_count": 386,
+        "per_segment_rest_min": 3,
+        "per_segment_rest_max": 8
       }
     },
     "bloom": {
       "baseline": {
         "segments": 64,
         "mean_middle_melody_attacks": 40.53125,
-        "full_bar_rest_count": 0
+        "full_bar_rest_count": 0,
+        "per_segment_rest_min": 0,
+        "per_segment_rest_max": 0
       },
       "candidate": {
         "segments": 64,
         "mean_middle_melody_attacks": 34.59375,
-        "full_bar_rest_count": 128
+        "full_bar_rest_count": 171,
+        "per_segment_rest_min": 2,
+        "per_segment_rest_max": 3
       }
     },
     "release": {
       "baseline": {
         "segments": 64,
         "mean_middle_melody_attacks": 23.8125,
-        "full_bar_rest_count": 117
+        "full_bar_rest_count": 226,
+        "per_segment_rest_min": 2,
+        "per_segment_rest_max": 6
       },
       "candidate": {
         "segments": 64,
         "mean_middle_melody_attacks": 19.84375,
-        "full_bar_rest_count": 188
+        "full_bar_rest_count": 380,
+        "per_segment_rest_min": 3,
+        "per_segment_rest_max": 8
       }
     },
     "unfold": {
       "baseline": {
         "segments": 43,
         "mean_middle_melody_attacks": 35.72093023255814,
-        "full_bar_rest_count": 0
+        "full_bar_rest_count": 0,
+        "per_segment_rest_min": 0,
+        "per_segment_rest_max": 0
       },
       "candidate": {
         "segments": 43,
         "mean_middle_melody_attacks": 30.441860465116278,
-        "full_bar_rest_count": 86
+        "full_bar_rest_count": 117,
+        "per_segment_rest_min": 2,
+        "per_segment_rest_max": 3
       }
     },
     "settle": {
       "baseline": {
         "segments": 21,
         "mean_middle_melody_attacks": 36.57142857142857,
-        "full_bar_rest_count": 0
+        "full_bar_rest_count": 0,
+        "per_segment_rest_min": 0,
+        "per_segment_rest_max": 0
       },
       "candidate": {
         "segments": 21,
         "mean_middle_melody_attacks": 30.904761904761905,
-        "full_bar_rest_count": 42
+        "full_bar_rest_count": 57,
+        "per_segment_rest_min": 2,
+        "per_segment_rest_max": 3
       }
     }
   },
@@ -149,6 +169,8 @@
     "matrix-60/report.json": "95a876078b0c9fe17a86a3f710e221f7120cec33d1b807d7afe78131a7988891",
     "listening-pair.json": "e2e836a246fb57722cff1f3ea5cb53642d46602f2c063600ef0288999caa9304",
     "baseline/silence.log": "fa7e40fd40d4917b447f841ec9fc7a177094069427eb249e0ea2365b670b2d3d",
-    "candidate/silence.log": "161148c7f6e5fe119c388b7a52f34d5f15799cb1296fb098b04f552b2c487ac0"
-  }
+    "candidate/silence.log": "161148c7f6e5fe119c388b7a52f34d5f15799cb1296fb098b04f552b2c487ac0",
+    "whole-bar-score.json": "caca714f53c729378948e2df9caac730c06d00408ce964bf40940b06e61d7fd3"
+  },
+  "score_metric_definition": "Each complete 4-second bar wholly inside [24,96), counting it when no channel-2 MIDI note interval intersects it; all notes considered, including onsets outside the window. This is not acoustic silence."
 }
