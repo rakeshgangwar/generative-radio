@@ -841,3 +841,22 @@ the corrected source passed success/cancel/deadline with 23/7/21 observed owned
 processes and none active afterward; profiles were removed. The final whole suite
 for this correction passed all 188 tests with one explicit observer live-project
 opt-in skip. No second review is requested.
+
+
+### 15 November: Firefox CI correction, still awaiting acceptance
+
+PR #27 remains draft: runner 43708794835 failed during Firefox launch; three
+other jobs passed and later integration steps were skipped. A CI-only virtual
+audio sink is an investigated fixture, not a proven fix. No station rollout.
+A valid 16-second session response exposed a hidden 15-second socket cutoff.
+Session creation now uses the declared overall budget; the global deadline stays.
+Only bounded numeric/enum diagnostics are retained from existing polls. A native
+play-promise observer returns the original promise and records rejection before
+application recovery clears the source. A private 404 drill retained
+NotSupportedError/code 4 after the current error became null.
+Latest source passed 11 focused tests and 190 real-media tests (one explicit live
+observer skip). Actual Firefox passed all five playback flows; success/cancel/
+deadline observed 26/9/25 owned processes, none active afterward, profiles removed.
+The receipt links exact source hashes and raw proofs. These local results do not
+establish CI acceptance: all four final-head/current-base jobs, including the
+actual Firefox step, must pass before merging. No second review is requested.

@@ -27,7 +27,7 @@
       "pass": true
     }
   ],
-  "elapsed_seconds": 4.497636895001051,
+  "elapsed_seconds": 4.619861049010069,
   "cleanup": {
     "driver_reaped": true,
     "profiles_removed": true
@@ -43,31 +43,28 @@
     "style.css": "6b17280fc0ae6cdc3b08969edb70bef600db908605c5d1557858d55c7fca58cb"
   },
   "served_assets_match_base_checkout": true,
-  "tool_source_sha256": "d40adb04cc7a6f9aea71d20bd0f37fb3228a1195a3e3fe81b803063fc1117728",
-  "result_sha256": "edf703393017e3ad580cf5d1c4136a7d8422bd3bb271268867ce0bdd1b717ffd",
-  "screenshot_sha256": "ad5f2df6757dcdbd5ddfc2e007372a3983cb0d91f6c80f02248530fa965f7970",
+  "tool_source_sha256": "404b82fac5a504a1854cb0eda06afd82dc5633eaddbe8774617364d1c519e739",
+  "result_sha256": "e766e2170d6f7b56985f36c098fad881826014d6634c9b0c6c887c87e3505ef9",
+  "screenshot_sha256": "6977ad3f18c9c25060e35186beecd14cf24e44820109ad87019bf70dc7aaa5a9",
   "actual_failure_cleanup": {
     "cancel": {
       "exit_code": 130,
-      "observed_owned_processes": 7,
+      "observed_owned_processes": 9,
       "active_owned_after": [],
       "profiles_removed": true
     },
     "deadline": {
       "exit_code": 1,
-      "observed_owned_processes": 21,
+      "observed_owned_processes": 25,
       "active_owned_after": [],
       "profiles_removed": true
     }
   },
   "raw_cleanup_proof_sha256": {
-    "reviewed-success-proof.json": "4f7032943738f094bb7ad8267930fe448f2ac18afbd746c8cdac7e6c9be20b76",
-    "reviewed-cancel-proof.json": "768d86852b3bf9ee7e93ae9e6da38e52c231e69ffc3129855ff28e7f3afec0bd",
-    "reviewed-deadline-proof.json": "283adc372b751511b29b5f7b13d1ecc73a87d56ed67099994ca3f228c7773555"
+    "promise-final-success-proof.json": "73c1c23c414ec4949772d85baf914f994f96d57570a0f3d22f68ad8dbf09a094",
+    "promise-final-cancel-proof.json": "5129dd3f943d30e061a41e0ca1e9a1e23769a9c2786c65ce8d24cf9d7bc6aea9",
+    "promise-final-deadline-proof.json": "4c0409cae61dd00bcd9589d7b4034a551b9d37c7278270a3753d37827880857b"
   },
-  "five_service_identities_start_restart_oom_states_match_observer_end": true,
-  "service_baseline_observed_at": 1794735161.4347672,
-  "post_check_observed_at": 1794738266.1338785,
   "local_evidence": "/home/rakeshgangwar/Projects/generative-radio/artifacts/firefox-check-20261115",
   "limitations": [
     "Basic Linux headless flows only",
@@ -77,13 +74,13 @@
     "Signals during trusted process acquisition are honored immediately after the owned handle is registered"
   ],
   "verification": {
-    "focused_tests": 9,
-    "real_media_tests": 188,
+    "focused_tests": 11,
+    "real_media_tests": 190,
     "real_media_skips": 1,
     "skip_scope": "Explicit live-project observer opt-in, tested separately in PR25",
     "listener_tests": 46,
-    "real_media_log_sha256": "0a7f99af389a9010bbfc0184421b7025915f73887034e9dc6fd261f53e9a71a5",
-    "real_media_log": "reviewed-media.log"
+    "real_media_log_sha256": "afb9a3c65767a1214b68b1702a7658dff0ad590cada66656fb089a68cd54aca8",
+    "real_media_log": "promise-final-media.log"
   },
   "review": {
     "critical": 0,
@@ -92,5 +89,28 @@
     "fix": "Defer signal exceptions until the newly created process handle is registered, then honor pending cancellation/deadline immediately",
     "regression": "Real SIGTERM/SIGINT/SIGALRM at Popen return: three failures before the fix, all pass after",
     "rereview": false
-  }
+  },
+  "historical_station_identity_observation": {
+    "five_service_identities_start_restart_oom_states_match_observer_end": true,
+    "service_baseline_observed_at": 1794735161.4347672,
+    "post_check_observed_at": 1794738266.1338785
+  },
+  "native_error_drill": {
+    "expected_failure_exit": 1,
+    "native_failure_retained_before_recovery_clears_source": true,
+    "last_known_media": {
+      "audio_volume": 0.65,
+      "current_time": 0,
+      "error_code": null,
+      "last_error_code": 4,
+      "network_state": 0,
+      "paused": true,
+      "play_error_name": "NotSupportedError",
+      "player_state": "retrying",
+      "ready_state": 0,
+      "volume_value": 65
+    },
+    "proof_sha256": "e00a7b05ba3bce8faa44e6f16043e4e236bf31b25ecf01955cf2a3f8f9ead726"
+  },
+  "ci_status": "Draft: published 2c086d3 failed integration run 43708794835; corrected source cf69f1c requires actual CI acceptance."
 }
