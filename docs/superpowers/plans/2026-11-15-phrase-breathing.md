@@ -1,6 +1,6 @@
 # Melodic phrase breathing implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Compare a melody that leaves periodic phrase-ending rests with the current continuous middle stages.
 
@@ -48,5 +48,5 @@
 - [x] Build isolated candidate image; run full real-media Python and listener unit suites. Use isolated data, never live volume writes.
 - [x] Render every palette/stage case and a 12-position 120-second sequence; compare identical seeds against current image. Existing duration, audibility, peak/headroom and no-silence gates must pass. Export paired MP3s, report source/version provenance and render/resource measurements.
 - [x] Recompute the 256-position rest/density comparison; confirm complete phrase rests in middle stages while notes remain present. Record results without claiming subjective improvement.
-- [ ] Record concrete previews and measured decisions in journal; preserve current TimGM. One independent final review; fix/reproduce Important/Critical findings, then run required full checks.
-- [ ] Open scoped PR. Require all four real checks on the actual final head and current base before merge. After merge, any worker-only rollout must preserve ready hashes and other service identities, retain rollback image, and verify actual decoded audio; document delivered vs merely compared status.
+- [x] Record concrete previews and measured decisions in journal; preserve current TimGM. One independent final review; fix/reproduce Important/Critical findings, then run required full checks.
+- [x] Open scoped PR. Require all four real checks on the actual final head and current base before merge. After merge, any worker-only rollout must preserve ready hashes and other service identities, retain rollback image, and verify actual decoded audio; document delivered vs merely compared status.

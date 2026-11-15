@@ -29,8 +29,8 @@ Do not invent a target, provision paid infrastructure or publish this machine.
   means dispatched/prefetched, not exact on-air history.
 - Version-2 source plans add chapter-shared 6/8/10-bar melodic phrases with a
   one-bar score/MIDI rest over sustained harmony. Workers rolled out at 08:53 IST;
-  version-2 job 306 is actually ready with phrase_bars=10. Previously queued version-1
-  WAVs still play first; actual broadcaster transition is pending. SoundFont release/
+  version-2 job 306 with phrase_bars=10 actually crossed in the broadcaster at
+  09:17:28 IST. The queue now contains version-2 ready audio. SoundFont release/
   reverb can ring through MIDI rests. Explicit version-1/unplanned MIDI is unchanged.
 - TimGM remains the default sound. Paired TimGM/FluidR3 previews are available in
   the audition artifacts; the asynchronous listening-preference question is open.
@@ -44,12 +44,14 @@ sleep-timer rollout at 06:34 IST left all four music-service IDs/restarts unchan
 
 ## Delivery and operator tools
 
-PRs #1–#17 merged after current-head CI. PR #16 (`a00557d`) records the completed
-two-hour acceptance and replaces the stale first-laptop handoff. Latest source
+PRs #1–#19 merged after current-head CI. PR #16 (`a00557d`) records the completed
+two-hour acceptance and replaces the stale first-laptop handoff. Generation source
 is PR #17 (`d82bd17`), version-2 melodic phrasing. All four checks passed on final
-head `84c9d33`, run 43671299403. The candidate image matches all 17 tracked runtime
-source files. Composer/renderer now use it; broadcaster/Icecast/web stayed unchanged.
-The runtime feature branch has 127 real-media Python and 30 listener tests passing.
+head `84c9d33`, run 43671299403. Its candidate image matches all 17 runtime source files at the reviewed commit. Composer/renderer now use it; broadcaster/Icecast/web stayed unchanged.
+PR #19 adds explicit offline backup recovery, with 136 real-media Python and 30
+listener tests passing. The merged source is available in the local on-demand
+CLI image; all five running containers kept their IDs/images/start times. Their
+images need not be replaced for this backup-only tool.
 Source checkout is clean on main. Public decoded HTTPS monitoring remains an
 operator command, without an installed independent schedule or alert target.
 
@@ -126,21 +128,30 @@ the flag does not stop them. Non-root read-only mount/restore and actual rendere
 audio round trips pass. Use an image built from this source for the new CLI;
 no worker rollout is needed. Never silently use immutable=1 to bypass WAL recovery.
 
-The 30-minute live capture started 03:21:05 UTC /08:51 IST and remains in progress:
+The new live capture completed: both recorder and monitor exited 0. All three
+supervisor/capture/monitor PIDs 596862/596863/596864 are terminal, verified absent
+in the host process namespace. Never restart or repoll these terminal handles.
 
-- `artifacts/phrase-breathing-live-20261115-032105/run.json` is the exit receipt.
-- Supervisor PID 596862, capture 596863, monitor 596864; verify actual matching
-  /proc commands before treating them as live. Never restart on observation timeout.
-- Capture is 1,800 s, monitor 1,860 s, supervisor safety bound 1,980 s. Expected
-  recording finish around 03:51 UTC; monitor around 03:52 UTC.
-- Existing version-1 queue plays through naturally. Job 306 is ready, not proof
-  that a listener heard it. Match actual broadcaster transitions before claiming it.
-- The full completed two-hour result above belongs to the earlier version-1 run.
-  New rollout evidence does not relabel that as a version-2 soak.
+- Exactly 1,800 s of stereo PCM; no −50 dB silence lasting at least 2 s; peak
+  −8.067364 dBFS, RMS −24.540843 dBFS.
+- All 59 decoded-audio watchdog observations were healthy, restart count 0 / child
+  PID 8. Broadcaster/Icecast/web identities stayed fixed. Raw monitoring records
+  the intentional worker exits/warmup described above; it does not claim every
+  worker was healthy during maintenance.
+- Planned ready audio stayed at 10–11 tracks; the last observation had all 11 on
+  version 2. Actual version-2 prepared/crossfade entries are job 306 at 03:47:28 UTC
+  and job 307 at 03:49:23 UTC, within the nominal capture window.
+- This is a mixed old-buffer-to-new-phrasing recording, not 30 minutes exclusively
+  of version 2, confirmed individual listener history, or subjective acceptance.
+- Broadcaster RAM ranged 247.1–262.8 MiB; quarter means 249.10, 249.16, 250.95,
+  250.17 MiB. No continuing rise is evident in this observed window.
+- Post-run SQLite quick_check ok: 11 ready/31 dispatched, no errors, expired
+  terminal rows, missing referenced audio or work files; 907,408,579 data bytes.
 
-[Rollout receipt](docs/evidence/phrase-worker-rollout-20261115.json) records image/
-container identities, maintenance and the active test. Public deployment, physical
-mobile devices, actual off-host recovery and subjective listening stay open.
+The [completed receipt](docs/evidence/phrase-live-acceptance-20261115.json) ties
+these values to the raw WAV, analysis, monitoring and transition logs with hashes.
+The earlier two-hour recording remains version-1 evidence. Public target capacity,
+physical devices, off-host recovery and subjective listening remain open.
 
 ## Evidence locations
 
@@ -157,17 +168,15 @@ All local recordings, logs, assets and snapshots are Git-ignored:
 - `artifacts/musical-memory-acceptance-20261115-004946/`: completed full acceptance.
 - `artifacts/phrase-breathing-rollout-20261115/`: aborted/successful attempts, queued
   file hashes, source/image proof and isolated WAL/backup regressions.
-- `artifacts/phrase-breathing-live-20261115-032105/`: active new live capture/vitals.
+- `artifacts/phrase-breathing-live-20261115-032105/`: completed mixed rollout capture/vitals.
 
 `/tmp/generative-radio-continuation.json` holds convenient pointers, not proof of
 liveness or completion. Prefer files/processes/CI/PR state as authoritative.
 
 ## Remaining work
 
-Complete the current capture and actual version-2 transition evidence; fix the
-offline-backup delivery/CI gates. Obtain real listening feedback on repetition,
-coherence and sound character.
-Then deploy to the provided host/domain, verify public DNS/ACME/reboot/capacity,
+Obtain real listening feedback on repetition, coherence and sound character.
+When a host/domain is supplied, deploy and verify public DNS/ACME/reboot/capacity,
 perform actual off-host recovery and install independent monitoring/alerting at a
 chosen destination. Public/physical-device listening remains unverified.
 

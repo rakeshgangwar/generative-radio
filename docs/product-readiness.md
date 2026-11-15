@@ -13,7 +13,7 @@ latest dated receipt and [current handoff](../HANDOFF.md) for present state.
 | Requirement | Evidence required | Current state |
 | --- | --- | --- |
 | Original coherent, reproducible music | Note/MIDI tests, real SoundFont renders, user listening | Technical checks pass; listening acceptance of the variety update is pending |
-| Buffered continuous output | Full-stack recording and queue replenishment evidence | Two-hour musical-memory recording passed; planned ready queue stayed at 10–11 |
+| Buffered continuous output | Full-stack recording and queue replenishment evidence | Two-hour version-1 recording and mixed version-2 rollout capture passed; ready queue stayed at 10–11 |
 | Recovery from interrupted generation and streaming | Failure drills and decoded audio after recovery | Fallback, restart, Icecast reconnect and real lease-expiry drills passed |
 | Silent/hung broadcaster detection and recovery | Missing-stream/silent-audio/hung-child drills, bounded restart evidence | PR #3 merged after CI; isolated silence/hang/missing-mount drills passed; deployed locally |
 | Bounded storage and resource use | More than one retention interval observed, longer unattended soak | Two-hour musical-memory soak and retention checks passed locally; actual target capacity remains open |
@@ -22,7 +22,7 @@ latest dated receipt and [current handoff](../HANDOFF.md) for present state.
 | Audible public listening path | Authenticated HTTPS fetch, bounded decode and audibility check on an independent host | Read-only command and local TLS rehearsal passed; independent deployment pending |
 | Backup and recovery | Consistent queue/audio backup and tested restore on isolated data | Repeatable create/verify/restore commands and off-host runbook validated locally; target-host/off-host exercise pending |
 | Operator documentation | Install, upgrade, monitor, recover, back up and roll back commands | Local recovery/backup runbook implemented; production deployment runbook added; target-host exercise pending |
-| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | PRs #1–#15 merged after CI; production, personal timer, sound comparison and audible HTTPS verification implemented |
+| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | PRs #1–#19 merged after CI; latest source adds phrase breathing and explicit offline backup recovery |
 
 These are release readiness gates, not an exhaustive definition of the evolving
 product goal. The [product journal](product-journal.md) records that direction.
@@ -305,3 +305,33 @@ HTTPS sample and test audibility; no independent schedule or alert destination
 has been installed. Public host/domain/reboot/capacity, actual off-host recovery,
 physical-device behavior and subjective musical acceptance remain open. A local
 two-hour pass does not establish these requirements or indefinite 24×7 behavior.
+
+
+## Completed mixed phrase-rollout capture — 15 November 2026
+
+The new recorder and monitor both exited 0. Exactly 1,800 seconds of audio has no
+−50 dB silence lasting two seconds; peak −8.067364 dBFS and RMS −24.540843 dBFS.
+All 59 watchdog observations were healthy with restart count 0 and child PID 8.
+Broadcaster/Icecast/web identities stayed unchanged; all ready-file hashes from
+the successful worker replacement were preserved. Monitoring contains the
+intentional original-worker exits in the aborted snapshot attempt and replacement
+composer warmup. These are explicitly recorded maintenance, not uniformly healthy
+worker observations or evidence of no manual starts/stops.
+
+Actual broadcaster preparation/crossfade logs show version-2 jobs 306 and 307 at
+03:47:28 and 03:49:23 UTC during the nominal capture window. The recording mostly
+contains the preserved version-1 queue, then several minutes of new phrasing; it
+is not a full version-2-only thirty-minute soak or confirmed listener history.
+The ready queue stayed at 10–11 and ended with 11 version-2 tracks.
+
+Broadcaster memory ranged 247.1–262.8 MiB; quarter means 249.10/249.16/250.95/250.17.
+Post-run SQLite quick_check returned ok, with 11 ready/31 dispatched, no expired
+terminal rows, missing referenced audio or temporary work, and 907,408,579 bytes.
+The [tracked receipt](evidence/phrase-live-acceptance-20261115.json) includes raw
+hashes and exact scopes. The earlier full two-hour test remains version-1 evidence.
+
+Explicit offline backup recovery has also passed non-root read-only mount,
+committed-WAL/hot-journal and actual rendered-audio restore checks, then final-head
+CI before PR #19 merged. It is an on-demand tool; making its verified image available
+changed no running service. Actual public-target/reboot/capacity, off-host recovery,
+physical-device and subjective listening acceptance remain open.
