@@ -393,3 +393,28 @@ source and MP3 hashes. All 127 real-media Python and 30 listener tests pass. The
 running station still uses the previous composition; final independent review
 and current-head CI must clear before shipping this source iteration. Actual
 listening preference and any worker-only rollout remain separate decisions.
+
+
+### 15 November: phrase workers ship while the buffer keeps playing
+
+PR #17 merged after all four checks passed on its final head. The local composer
+and renderer now run the source-verified version-2 image. All 11 already-ready
+WAV hashes were preserved; broadcaster, Icecast and the listener retained their
+identities. Job 306 has actually rendered with version 2 / ten-bar phrasing, while
+the existing version-1 queue plays through naturally. Ready is not on-air proof.
+
+The first rollout attempt stopped the workers but failed its read-only SQLite
+snapshot before starting new code. I restored the original workers immediately,
+reproduced the missing-WAL-sidecar failure on isolated data, then retried using
+SQL read-only access through the existing mount. The second attempt completed.
+The stream and decoded-audio supervisor continued throughout; the extra manual
+worker stop/start is recorded separately from container recovery counters.
+
+A fresh 30-minute recording and vitals monitor started at 08:51 IST, before the
+rollout, to follow the old buffer into new phrasing. Its result is pending; the
+completed two-hour test describes the prior composer, not this new rollout.
+The [rollout receipt](evidence/phrase-worker-rollout-20261115.json) preserves both
+attempts and the current test identity. The current backup CLI also reproduces
+the stopped-WAL/read-only-source failure on tiny isolated data. Next I will add a
+safe explicit offline path, preserving WAL recovery rather than bypassing it with
+immutable reads. The live station will keep running during that work.
