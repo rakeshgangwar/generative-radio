@@ -59,6 +59,14 @@ The separate six-hour vitals observation is still in progress. Its earlier
 40-minute attempt was interrupted and retained separately. The fresh run includes
 one unhealthy sample during annotated web maintenance; preserve raw counts and do
 not claim uninterrupted healthy acceptance or independent six-hour audio capture.
+A fresh current-broadcast recording completed 15:48–16:18 UTC: exactly 1,800
+seconds decoded, RMS −24.62 dBFS, peak −7.95 dBFS, no −50 dB silence lasting two
+seconds, and all five service identities/lifecycle values preserved before/after.
+Separate stock Firefox checks passed a real 15-minute fade/expiry/refresh and
+30-second outage recovery with pause cancellation. Owned test resources are
+cleaned up. These checks establish local technical behavior, not human musical,
+physical-device or public-host acceptance. See the
+[current listening receipt](docs/evidence/current-listening-acceptance-20261115.json).
 Detailed paragraphs below retain historical rollout scope.
 
 Application changes through PR #31 merged after actual final-head/current-base CI. PR #16 (`a00557d`) records the completed
