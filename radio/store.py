@@ -66,18 +66,23 @@ class Store:
                             (str(error)[-2000:], time.time(), job["id"]))
 
     def next_track(self):
+        info = self.next_track_info()
+        return info['path'] if info else ''
+
+    def next_track_info(self):
+        """Dispatch one file plus its saved analysis; this is not on-air history."""
         with self.transaction() as db:
             while True:
                 row = db.execute("SELECT * FROM jobs WHERE status='ready' ORDER BY id LIMIT 1").fetchone()
                 if not row:
-                    return ""
+                    return None
                 path = self.data / "audio" / f"{row['id']}.wav"
                 if not path.is_file():
                     db.execute("UPDATE jobs SET status='failed',error='audio missing' WHERE id=?", (row["id"],))
                     continue
                 # Liquidsoap prefetches; 'served' means dispatched, not confirmed on-air.
                 db.execute("UPDATE jobs SET status='served',updated=? WHERE id=?", (time.time(), row["id"]))
-                return str(path.resolve())
+                return {'path': str(path.resolve()), 'analysis': row['analysis']}
 
     def cleanup(self):
         # Retain dispatched files for an hour: exceeds maximum segment + prefetch.

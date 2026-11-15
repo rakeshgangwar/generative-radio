@@ -10,6 +10,7 @@ from .config import Config
 from .arrangement import arrangement_for
 from .render import render
 from .store import Store
+from .labels import annotated_request
 
 log = logging.getLogger("radio")
 stop = threading.Event()
@@ -24,7 +25,10 @@ def main():
     seeds.add_argument("--seed", type=int, default=42, help="Individual preview seed")
     seeds.add_argument("--station-seed", type=int, help="Preview a planned station sequence")
     parser.add_argument("--position", type=int, help="Positive queue position for --station-seed")
+    parser.add_argument('--annotate', action='store_true', help='Attach safe broadcast labels to next request')
     args = parser.parse_args()
+    if args.annotate and args.command != 'next':
+        parser.error('--annotate is for next only')
     planned = args.station_seed is not None or args.position is not None
     if planned and args.command != "preview":
         parser.error("--station-seed and --position are for preview only")
@@ -39,7 +43,11 @@ def main():
     config = Config.load()
     store = Store(config.data)
     if args.command == "next":
-        print(store.next_track())
+        if args.annotate:
+            info = store.next_track_info()
+            print(annotated_request(info['path'], info['analysis']) if info else '')
+        else:
+            print(store.next_track())
         return
     if args.command == "status":
         print(json.dumps(store.status(), indent=2))

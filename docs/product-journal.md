@@ -477,3 +477,26 @@ do the new rests feel natural, and which matched SoundFont is preferable? Curren
 TimGM remains on air. Public server/domain and off-host backup destinations have
 been requested; none is assumed. Local evidence supports continuing development,
 not a claim that the public product or its musical acceptance is finished.
+
+
+### 15 November: make the musical chapter visible — in progress
+
+The next listener feature gives the music a little context: a sentence such as
+“Chapter 78 is unfolding. Warm keys.” It follows the broadcaster's metadata,
+with an explicit reminder that buffered audio can play behind the broadcast.
+It is not a confirmed individual listening history or a queue-position guess.
+
+The backend candidate now labels requests using their saved arrangement, while
+preserving the plain dispatch interface. A small Icecast response selects only
+this mount's title; the web gateway exposes that response alone. There are no
+new services or private data mounts. An actual two-track test keeps both requests
+marked served while the first label is still on air, then observes the second
+label and the fallback interlude. JSON escaping, title length and exclusion of
+other mounts are exercised against the installed server.
+
+Testing also caught that an annotated single URI is fallible in Liquidsoap2.1.
+The cached fallback therefore keeps its original file source and receives its
+fixed label through native metadata mapping. Its infallibility now has a direct
+regression check. All 145 real-media Python tests pass; the listener display,
+full browser/TLS rehearsal and independent final review are still ahead. The
+current main station has not been changed for this development work.
