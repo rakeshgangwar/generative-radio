@@ -696,3 +696,17 @@ service or replace the remaining public-host and off-host recovery work.
 The connecting-note audition stays at localhost:18091 while the current version 2
 continues on air. Musical preference and physical-device listening remain open;
 there is no automatic adoption based on an unanswered comparison.
+
+
+The independent final review found two Important malformed-evidence gaps. Huge
+integers and deeply nested JSON could stop an otherwise useful overnight record;
+those inputs now become retained unknown samples and later samples continue. A
+contradictory report (`healthy=true`, `kind=silent`) could also receive clearance;
+healthy assertions now must agree with the report kind. Both failures were
+reproduced before the single fix pass, including Python 3.11's JSON depth behavior.
+All 179 Python tests pass with real media tools (one live-project opt-in skip),
+and all 18 observer tests then passed against Docker; the corrected short recording
+again retained two slots with four healthy samples. Actual SIGTERM preserved a
+one-sample cancelled receipt and exited in under 0.01 seconds in the observed run.
+There were no Critical findings or deferred minors. These are robustness checks,
+not new memory thresholds or observer-side audio analysis.

@@ -95,6 +95,47 @@ class CollectionTests(unittest.TestCase):
                 self.assertEqual(result["assessment"], "unknown")
                 self.assertNotIn(SECRET, json.dumps(result))
 
+    def test_contradictory_audio_assertion_never_clears_health(self):
+        for kind in ["silent", "starting", "stream_error", "child_exited", "cooldown"]:
+            docker = DockerFixture()
+            def run(command, stop):
+                return health(kind=kind, rms_dbfs=-90) if command[1] == "cp" else docker(command, stop)
+            with self.subTest(kind=kind), patch("radio.station_vitals.run_command", run):
+                result = collect("generative-radio", True, threading.Event())
+                self.assertEqual(result["assessment"], "unknown")
+                self.assertIn("audio_report_unavailable", result["errors"])
+
+    def test_malformed_measurements_preserve_unknown_and_continue_recording(self):
+        nested = b"[" * 1900 + b"0" + b"]" * 1900
+        cases = [("cp", health(updated_at=10**400)),
+                 ("cp", health(restart_count=10**400)),
+                 ("cp", archive(nested)),
+                 ("inspect", nested), ("stats", nested),
+                 ("stats", json.dumps(dict(id=IDS["composer"], cpu="1%", memory="1MiB", pids=str(10**400))).encode())]
+        for command_name, payload in cases:
+            with self.subTest(command=command_name, size=len(payload)), tempfile.TemporaryDirectory() as root:
+                docker = DockerFixture()
+                calls = [0]
+                def run(command, stop):
+                    if command[1] == "ps":
+                        calls[0] += 1
+                    return payload if command[1] == command_name and calls[0] == 1 else docker(command, stop)
+                clock = [0.0]
+                stop = threading.Event()
+                def advance(seconds):
+                    clock[0] += seconds
+                with patch("radio.station_vitals.run_command", run), patch("radio.observer.time.monotonic", lambda: clock[0]), patch.object(stop, "wait", advance):
+                    out = Path(root)/"receipt"
+                    code = record(out, "generative-radio", True, 2, 1, 2, stop)
+                summary = json.loads((out/"summary.json").read_text())
+                self.assertEqual(code, 1)
+                self.assertEqual(summary["state"], "complete")
+                self.assertEqual(summary["samples"], 2)
+                self.assertEqual(summary["unknown"], 1)
+                self.assertEqual(summary["healthy"], 1)
+                self.assertEqual(json.loads((out/"sample-0000.json").read_text())["assessment"], "unknown")
+                self.assertNotIn(SECRET, json.dumps(summary))
+
     def test_memory_units_and_bad_values(self):
         self.assertEqual(parse_memory("1.5GiB / 8GiB"), 1610612736)
         self.assertEqual(parse_memory("2.1MB / 8GB"), 2100000)

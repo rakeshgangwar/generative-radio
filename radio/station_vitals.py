@@ -64,7 +64,7 @@ def run_command(command, stop):
 
 
 def number(value, low=0, high=10**18):
-    if type(value) not in (int, float) or not math.isfinite(value) or not low <= value <= high:
+    if type(value) not in (int, float) or not low <= value <= high or not math.isfinite(value):
         raise ValueError('invalid_number')
     return value
 
@@ -99,7 +99,7 @@ def parse_watchdog(data):
             raise ValueError('invalid_child')
         kinds = {'healthy', 'starting', 'incomplete', 'silent', 'stalled', 'server_unavailable',
                  'cancelled', 'stream_error', 'child_exited', 'cooldown'}
-        if value['kind'] not in kinds:
+        if value['kind'] not in kinds or (value['healthy'] and value['kind'] != 'healthy'):
             raise ValueError('invalid_kind')
         result = {key: value[key] for key in ('healthy', 'kind', 'updated_at')}
         for key in ('restart_count', 'consecutive_failures'):
@@ -109,7 +109,7 @@ def parse_watchdog(data):
         if value.get('rms_dbfs') is not None:
             result['rms_dbfs'] = number(value['rms_dbfs'], -150, 10)
         return result
-    except (KeyError, TypeError, UnicodeError, tarfile.TarError, OSError) as exc:
+    except (KeyError, TypeError, UnicodeError, tarfile.TarError, OSError, OverflowError, RecursionError) as exc:
         raise ValueError('invalid_report') from exc
 
 
@@ -127,10 +127,13 @@ def host_vitals(output):
 
 
 def rows(data):
-    result = [json.loads(line) for line in data.decode().splitlines() if line.strip()]
-    if len(result) > 16 or any(type(row) is not dict for row in result):
-        raise ValueError('invalid_rows')
-    return result
+    try:
+        result = [json.loads(line) for line in data.decode().splitlines() if line.strip()]
+        if len(result) > 16 or any(type(row) is not dict for row in result):
+            raise ValueError('invalid_rows')
+        return result
+    except (OverflowError, RecursionError) as exc:
+        raise ValueError('invalid_rows') from exc
 
 
 def collect(project, expect_web, stop):

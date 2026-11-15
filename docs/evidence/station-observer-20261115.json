@@ -58,5 +58,57 @@
   "failed_initial_runs_retained": [
     "snapshot",
     "minute"
-  ]
+  ],
+  "reviewed_source": {
+    "summary": {
+      "elapsed_seconds": 11.093266333999054,
+      "finished_at": 1794733223.1587093,
+      "healthy": 4,
+      "interval_seconds": 3.0,
+      "max_samples": 2,
+      "not_healthy": 0,
+      "project": "generative-radio",
+      "requested_seconds": 10.0,
+      "retained": 2,
+      "samples": 4,
+      "started_at": 1794733212.0654445,
+      "state": "complete",
+      "unknown": 0
+    },
+    "source_sha256": {
+      "radio/station_vitals.py": "5e1bc5defa1c87437f53372bfde52981cf1a2e434b2ee72604d3bab137383e23",
+      "radio/observer.py": "71299f5249882c5ea3b175f647ce79df7c2d57f7d13568062cae59fafcda3370",
+      "tests/test_observer.py": "32ed5b88e23f07dff34cb1346981bdd3ecd0eb9c05d15c380d9571ee1b7314a5"
+    }
+  },
+  "actual_sigterm": {
+    "returncode": 130,
+    "cancellation_seconds": 0.008590526995249093,
+    "summary": {
+      "elapsed_seconds": 2.128344286000356,
+      "finished_at": 1794733044.0944326,
+      "healthy": 1,
+      "interval_seconds": 30.0,
+      "max_samples": 2048,
+      "not_healthy": 0,
+      "project": "generative-radio",
+      "requested_seconds": 60.0,
+      "retained": 1,
+      "samples": 1,
+      "started_at": 1794733041.9660895,
+      "state": "cancelled",
+      "unknown": 0
+    }
+  },
+  "review": {
+    "critical": 0,
+    "important": 2,
+    "minor": 0,
+    "declined_to_judge": [],
+    "fixes": [
+      "Bounds precede numeric conversion; normalize parser recursion/overflow into unknown samples and continue recording",
+      "Require healthy audio assertion to agree with healthy report kind"
+    ],
+    "regressions": "Both findings reproduced before fixes, then passed on Python 3.11 and host Python; no rereview"
+  }
 }
