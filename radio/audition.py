@@ -108,7 +108,9 @@ def stitch(paths, output):
                     '-ar', '44100', '-ac', '2', '-c:a', 'pcm_s16le', str(output)])
 
 
-def report_html(report):
+def report_html(report, *, description=None):
+    intro = ('The same musical score, different sound libraries.' if description is None
+             else html.escape(description))
     sections = []
     for label, variant in report['variants'].items():
         name = html.escape(label, quote=True)
@@ -119,7 +121,7 @@ def report_html(report):
                         f'<a href="{quote(label, safe="")}/listen.wav">Download measured WAV</a></section>')
     return ('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
             '<title>Sound comparison — Generative Radio</title><style>body{font:18px/1.6 system-ui;max-width:800px;margin:3rem auto;padding:0 1rem;color:#17344b;background:#d8e3ed}section{border-top:1px solid #4a6275;padding:1rem 0}audio{max-width:100%}a{color:inherit}</style>'
-            '<h1>A closer listen</h1><p>The same musical score, different sound libraries. '
+            '<h1>A closer listen</h1><p>' + intro + ' '
             'Play one version at a time and compare the same moment. Levels are matched with attenuation only; '
             'metrics cannot decide which feels better.</p>'
             f'<p>Duration: {report["sequence_seconds"]:.1f} seconds. Shared level: {report["target_lufs"]:.2f} LUFS. '

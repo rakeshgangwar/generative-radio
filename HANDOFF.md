@@ -131,7 +131,9 @@ versions cover the same three chapters for 23m05s at matched −22.13 LUFS. The
 candidate uses 52 BPM, spare density and a fixed warm palette; timing differs, so
 it is a mood comparison. Browser playback/seek/narrow/native and measured audio
 checks passed. No station role, default or on-air music changed. This is not a
-supported profile CLI; listening preference remains open. See the
+on-air profile setting; listening preference remains open. A repeatable offline
+`python -m radio.profile_audition --output PATH` now generates fresh pairs; its
+actual CLI preview is http://localhost:18096. No station roles were redeployed. See the
 [experiment guide](docs/resting-profile-experiment.md) and its source-linked receipt.
 
 Source checkout is clean on main. Public decoded HTTPS monitoring remains an

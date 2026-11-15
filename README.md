@@ -274,6 +274,8 @@ The timer belongs to this page and is not saved across reloads. Keep the page
 open; a frozen/suspended browser cannot execute its deadline.
 
 Compare instrument libraries using identical, matched-level music: [sound auditions](docs/sound-auditions.md).
+Compare the reference music with a slower, spare resting profile using the [offline profile audition](docs/resting-profile-experiment.md).
+`python -m radio.profile_audition --output /path/to/new-pair` renders matched-level WAV/MP3 and a listening page without reading station data or changing on-air music.
 
 Verify decoded audible output from a separate machine: [public listening checks](docs/public-monitoring.md).
 
