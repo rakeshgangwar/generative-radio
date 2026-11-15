@@ -1,0 +1,179 @@
+{
+  "base_commit": "41d245676f675df0fb3b6bf4079d2e902b9ce0ff",
+  "status": "Local acceptance and one fresh clean review complete; actual final-head/current-base CI and web-only rollout pending",
+  "served_asset_sha256": {
+    "app.js": "8da780d35d74981e47d6cd55543d42e10ec8871064a2506f0b985b47afe76213",
+    "broadcast-context.js": "afafb4dbaed6ec78338c7affe13c1b46c5687a1c834c70a956a3f485b134b29f",
+    "dial.svg": "066b109b2c0a13cba2c0b89381607df6253c23e0b540017e8c3ce0a974bbf0d1",
+    "favicon.svg": "18868c09e40c51595e26d64d3cd2ff12f6ca33b26784ea64b8c56d7e3d010179",
+    "index.html": "202e6e9d81550495f3e73b385c2fa0a090d76b2db192257855b3c1a5dbfa6a1d",
+    "player.js": "c13f200e1d71b75eb6e58449fc832f90fd54a66f8edc5400fdb367140607e00d",
+    "sleep-timer.js": "6b0d495a76ef37402e1924b2a512a8e12449116592eb077c3bfb1b435246e9a6",
+    "style.css": "6b17280fc0ae6cdc3b08969edb70bef600db908605c5d1557858d55c7fca58cb"
+  },
+  "served_assets_match_candidate": true,
+  "node_tests": 46,
+  "focus_regressions": [
+    {
+      "test": "late enhancement transfers native focus to visible play; Space starts/releases real audio",
+      "pass": true
+    },
+    {
+      "test": "late enhancement preserves unrelated link focus without autoplay",
+      "pass": true
+    }
+  ],
+  "chromium": {
+    "version": "154.0.8037.92",
+    "full_scenarios": 22,
+    "full_result_sha256": "be555eda5792f1fb8ea8e04652d70eea6069080fc4e530af8445ad673b7b31e4",
+    "full_log_sha256": "be555eda5792f1fb8ea8e04652d70eea6069080fc4e530af8445ad673b7b31e4",
+    "test_module_sha256": "3efa31b9c9ddf6a5d2440110bd3db000f74754fed6f7f0e914e2bcd1fd10e2fb",
+    "focus_red_log_sha256": "294d36d5fdcc5f2ff15ae2709077a690e033537519d1bed3e473a95948f8113c",
+    "focus_green_log_sha256": "742abddc02afad0404dd72338f57a211ac464bb52d21e90d48f9e85f1fb89442",
+    "unit_log_sha256": "fcac0fe5d3db70d4c77e05253fbcbfadfd7090a6cd08fd44ed9add6667da88ae"
+  },
+  "firefox_enhanced": {
+    "browser": {
+      "name": "firefox",
+      "platform": "linux",
+      "version": "157.0.1"
+    },
+    "checks": [
+      {
+        "name": "idle_without_source",
+        "pass": true
+      },
+      {
+        "name": "click_starts_advancing_mp3",
+        "pass": true
+      },
+      {
+        "name": "keyboard_changes_audio_volume",
+        "pass": true
+      },
+      {
+        "name": "pause_releases_source",
+        "pass": true
+      },
+      {
+        "name": "resume_advances_mp3",
+        "pass": true
+      }
+    ],
+    "cleanup": {
+      "driver_reaped": true,
+      "profiles_removed": true
+    },
+    "result_sha256": "c094f17a68a383ab727cace53a23effd90ab343b3969591436779b946d1641a8"
+  },
+  "firefox_native": {
+    "scope": "Actual installed Firefox, JavaScript disabled, trusted keyboard native controls, candidate loopback URL",
+    "pass": true,
+    "browser": {
+      "browserName": "firefox",
+      "browserVersion": "157.0.1",
+      "platformName": "linux"
+    },
+    "before": {
+      "enhanced": false,
+      "paused": true,
+      "time": 0,
+      "visible": true
+    },
+    "media": {
+      "error_code": null,
+      "paused": false,
+      "ready": 4,
+      "time": 1.10297
+    },
+    "source_sha256": {
+      "app.js": "8da780d35d74981e47d6cd55543d42e10ec8871064a2506f0b985b47afe76213",
+      "index.html": "202e6e9d81550495f3e73b385c2fa0a090d76b2db192257855b3c1a5dbfa6a1d"
+    },
+    "driver_reaped": true,
+    "private_profile_removed": true
+  },
+  "firefox_native_proof_sha256": "99682a6f7430ad7216e33c51c370317ddcfabafae4cb990657109d10056c5f5a",
+  "visual_checks": {
+    "enhanced-focus-320.png": "4e8f14b8c2007c282b7812fd8ecf11de0e8ce3dfad0be7ca834c2638272eaed0",
+    "full-browser/native-app.js.png": "1779e0e49b18f558a353e0b769293f3aa58d180dfc4f6d065e98dd90079c7ffb"
+  },
+  "station_baseline": {
+    "assessment": "healthy",
+    "observed_at": 1794749503.7278175,
+    "services": {
+      "broadcaster": {
+        "id": "abb87b80c56c007c8240d5df311c9a96af9f96824c423e5b34460a138fa171fc",
+        "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+        "started": "2026-11-15T05:57:04.799911735Z",
+        "restarts": 0,
+        "oom": false,
+        "health": "healthy"
+      },
+      "composer": {
+        "id": "0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146",
+        "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+        "started": "2026-11-15T03:23:31.379138171Z",
+        "restarts": 0,
+        "oom": false,
+        "health": "healthy"
+      },
+      "icecast": {
+        "id": "78f7a60cd2c96ce90c32f4ee896bd67cfb02646ebd7529f26ca402798da3bd6d",
+        "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+        "started": "2026-11-15T05:56:38.273381611Z",
+        "restarts": 0,
+        "oom": false,
+        "health": "healthy"
+      },
+      "renderer": {
+        "id": "04a26abb33422649a11752d188ca9e2eb149fbe50c981fc3a2eced30a00805d4",
+        "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+        "started": "2026-11-15T03:23:31.259377863Z",
+        "restarts": 0,
+        "oom": false,
+        "health": "healthy"
+      },
+      "web": {
+        "id": "ffea2149cfa76b57d0fbeb69be2acf99d411cc4dfae68d8f70937ad8b1e85a7c",
+        "image": "sha256:de4f71cf8ac17e62579bbfb7e4e3b657104bbb7b3a969c04e1bc47414a59d667",
+        "started": "2026-11-15T13:14:15.812235799Z",
+        "restarts": 0,
+        "oom": false,
+        "health": "healthy"
+      }
+    },
+    "identities_match_prior_delivery": true,
+    "sample_sha256": "ccc1ca9174e9ebfd326073ef9b35de55bd54d9ea729e12eeae3e5bb6b5669640"
+  },
+  "preview_identity_correction": {
+    "initial_unknown_sample_sha256": "91ec56ef0823c8c393f2b6d5568b0ce7497af7a0a0bdfb46223173c08edee725",
+    "reason": "Compose-built image project labels were inherited by the standalone preview, creating an ambiguous second web role",
+    "correction": "Only the owned preview was recreated with project=radio-native-polish-preview; station inventory remains strict",
+    "all_eight_candidate_assets_unchanged": true,
+    "live_services_unchanged": true
+  },
+  "prior_delivery_receipt": "docs/evidence/native-listener-delivery-20261115.json",
+  "raw_local_evidence": "/home/rakeshgangwar/Projects/generative-radio/artifacts/native-polish-20261115",
+  "limits": [
+    "Local Linux headless browser evidence, not physical-device or Safari acceptance",
+    "Native mode keeps browser-managed playback without custom timer/chapter/app retries",
+    "No candidate deployment or music/core role change",
+    "Public hosting, off-host recovery and human musical acceptance remain open"
+  ],
+  "review": {
+    "range": "41d2456..7d9d648",
+    "critical": 0,
+    "important": 0,
+    "minor": 0,
+    "fresh_checks": [
+      "46 Node tests pass",
+      "git diff --check passes",
+      "eight served assets and recorded proof hashes match"
+    ],
+    "browser_scope": "Reviewed recorded actual playback evidence and screenshots; browser suites not rerun by reviewer",
+    "correction_pass_needed": false,
+    "rereview": false
+  }
+}

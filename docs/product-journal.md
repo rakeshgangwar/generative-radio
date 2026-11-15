@@ -921,3 +921,57 @@ recovers), and explain native limitations/reload more clearly on the page (READM
 already does). Their costs are a recoverable keyboard interruption and reduced
 discoverability. No rereview. PR #28 still needs final-head/current-base CI and a
 measured web-only rollout; no live role changed.
+
+
+### 15 November: native fallback reaches the local listener
+
+PR #28 merged as 41d2456 after all four jobs in CI 43716620329 passed on
+31d9fb8 against main5ab28f9, including stock Firefox, full Chromium scenarios,
+audition and TLS rehearsal. A web-only rollout now serves the exact eight verified
+assets at localhost8080. Only web changed: composer, renderer, broadcaster and
+Icecast retained IDs, images, start times, restart counts and OOM state.
+
+An already playing Chromium listener reconnected without another click, with two
+requests total and playback confirmed within27.623seconds of the restart. This
+bound includes health waiting; it is not an exact audible interruption or gapless
+web-update claim. The direct core recording started producing decoded data before
+restart and completed60.000seconds, with no -50dBFS silence lasting two seconds,
+RMS-24.4dBFS and peak-10.3dBFS. Fresh liveFirefox passed allfive flows and cleanup;
+its eight asset hashes match the merged source. The redundant candidate preview
+was removed; the melody audition preview remains. The source-linked delivery
+receipt is docs/evidence/native-listener-delivery-20261115.json.
+
+The next iteration addresses the two deferred Minor usability findings: transfer
+focus from an idle native control when successful enhancement hides it, and explain
+native-mode feature limits plus reloading on the page. This polish is planned,
+not yet implemented or deployed. Current version2 music stays on air. Actual
+public-host, off-host, physical-device and human listening gates remain open.
+
+
+### 15 November: visible keyboard handoff — candidate locally verified
+
+The delayed-script focus failure was reproduced before correction. The candidate
+now transfers focus from idle native controls to the revealed play button, without
+scrolling for focus; an unrelated header link keeps its focus. Real Space-key play
+and pause/source release pass, with zero pre-play requests and one stream afterward.
+Already started native sessions (playing, paused or pending) retain focus and source.
+The fallback help now names full-player features and says reload can try them.
+
+All46Node tests, all22 complete Chromium scenarios, five enhanced Firefox flows,
+and Firefox native keyboard playback with JavaScript disabled pass. Focus/help
+screenshots fit320px. The source-linked receipt is
+ docs/evidence/native-listener-polish-20261115.json. One fresh review, real CI and a
+verified web-only rollout remain; the live listener still runs PR28.
+
+A fresh observer correctly reported unknown when the standalone preview inherited
+main-project labels from a Compose-built image and appeared as a duplicate web
+role. Only that owned preview was recreated with distinct labels. All five live
+roles are healthy and match their PR28 delivery identities; the preview still
+serves the same eight tested assets. Keep inventory strict. Standalone previews
+made from Compose-built images need explicit project identity isolation.
+
+The sole fresh review found0Critical/0Important/0Minor. It independently reran46
+Node tests and diff checks, matched asset/proof hashes, and inspected the recorded
+actual browser/Firefox evidence and320px screenshots. No correction pass or
+rereview is needed. PR #29 is locally verified; final-head/current-base CI and a
+separate measured web-only rollout remain required.
