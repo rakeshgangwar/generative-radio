@@ -22,10 +22,11 @@ The listener also asked whether the music is generated live, wanted memory/syste
 - Original seeded arrangements with several harmonic paths, variable chord holds, developed melodic phrases, changing texture and quieter openings/releases.
 - A render-ahead queue, independent fallback music, crossfades, retries, cleanup and bounded retained audio.
 - Decoded-audio supervision: it can detect persistent silent, missing or hung output and restart its owned Liquidsoap process within a rolling restart budget. Icecast outages allow native reconnection.
-- Actual failure drills, a completed 30-minute test and a separate one-hour variety baseline. The hour contained 3,600 seconds of audio with no detected silence at −50 dB lasting at least two seconds; all 64 monitoring samples were healthy.
-- Automated Python 3.11/3.14, rendering/streaming, browser and hardened HTTPS checks. PRs #1–#13 have merged after passing current-head CI.
+- Actual failure drills, 30-minute and one-hour baselines, and a completed two-hour musical-memory recording. The latest run contains exactly 7,200 seconds with no detected silence at −50 dB lasting two seconds; all 226 watchdog observations were healthy.
+- Automated Python 3.11/3.14, rendering/streaming, browser and hardened HTTPS checks. PRs #1–#15 have merged after passing current-head CI.
 - A local listening page with bounded reconnection, native fallback and an optional personal sleep timer.
 - Recoverable musical chapters, verified backup/restore commands and an opt-in production deployment package.
+- An offline, matched-score SoundFont comparison bench and a read-only HTTPS monitor that decodes actual audio. The current TimGM sound stays on air.
 - A public repository under the MIT software license. Bundled/installed third-party tools and the SoundFont retain their own licenses; attribution is in the README.
 
 The stream is locally accessible, not a deployed public service. Objective audio analysis does not establish that the music is emotionally satisfying. Listening acceptance of the variety update is still open.
@@ -320,3 +321,34 @@ After the review fixes, all 121 Python/media tests and 30 listener tests pass. T
 standalone command's malformed-argument errors are JSON-safe, and normal help
 still works. Current-head CI and merge are the remaining delivery steps; these
 checks are not a claim of public deployment or a completed two-hour recording.
+
+
+### 15 November: two hours of musical memory, measured end to end
+
+The fresh long run completed: exactly two hours of decoded stereo audio, with no
+−50 dB silence lasting two seconds and comfortable peak headroom (−6.82 dBFS).
+All 226 audio-watchdog observations were healthy. No music-container restarts,
+recovery restarts or OOM events occurred; the sleep-timer gateway deployment is
+recorded separately. The planned ready queue stayed at 10–11 tracks. Broadcaster
+quarter memory means stayed around 250 MiB; post-run SQLite and retention checks
+passed with about 907 MB of data and no temporary render files.
+
+The [readiness receipt](product-readiness.md#completed-two-hour-musical-memory-acceptance--15-november-2026)
+records exact measurements and limitations. The earlier interrupted 90-minute
+recording is still partial evidence, not silently relabelled as a success. The
+current handoff now describes the running product rather than the first laptop's
+unbuilt prototype.
+
+PR #15 also shipped after all four current-head checks passed. We can now verify
+that authenticated HTTPS delivers audible decoded music, rather than trusting a
+successful HTTP response. This remains an operator command until an independent
+monitoring host is chosen.
+
+The next product decision is musical: hear whether the longer chapters actually
+feel less repetitive, and compare the matched TimGM/FluidR3 previews. More notes
+or a larger SoundFont alone do not establish a better station. TimGM stays on air
+while that preference is open. Potential next experiments are broader harmonic
+movement and more deliberate arrivals/rests within a chapter, measured against
+the existing same-seed recordings. These are ideas, not shipped behavior or an
+assumption that listening acceptance has passed. Public deployment and off-host
+recovery also need their real destinations before they can be exercised.

@@ -1,0 +1,226 @@
+{
+  "scope": "Local CPU-only musical-memory stream; technical continuity/resource observation, not subjective listening or target-VPS acceptance",
+  "artifact_directory": "artifacts/musical-memory-acceptance-20261115-004946",
+  "summary": {
+    "accepted_two_hour": true,
+    "issues": [],
+    "run": {
+      "started_at": "2026-11-15T00:49:46.819317+00:00",
+      "updated_at": "2026-11-15T02:50:53.021462+00:00",
+      "supervisor_pid": 456169,
+      "children": {
+        "capture": {
+          "pid": 456184,
+          "returncode": 0
+        },
+        "monitor": {
+          "pid": 456185,
+          "returncode": 0
+        }
+      }
+    },
+    "duration_seconds": 7200.0,
+    "pcm_frames": 317520000,
+    "format_ok": true,
+    "silences_ge2s_at_minus50dB": 0,
+    "peak_dbfs": -6.817653,
+    "rms_dbfs": -24.645587,
+    "monitor_samples": 226,
+    "first": "2026-11-15T00:49:46.844353+00:00",
+    "last": "2026-11-15T02:50:46.844487+00:00",
+    "healthy_watchdog_samples": 226,
+    "watchdog_restart_counts": [
+      0
+    ],
+    "watchdog_child_pids": [
+      8
+    ],
+    "ready_min": 10,
+    "ready_max": 11,
+    "planned_ready_min": 10,
+    "planned_ready_max": 11,
+    "observed_failed_job_ids": [],
+    "core_identity_counts": {
+      "generative-radio-composer-1": 1,
+      "generative-radio-renderer-1": 1,
+      "generative-radio-broadcaster-1": 1,
+      "generative-radio-icecast-1": 1
+    },
+    "intentional_web_replacement": {
+      "at": "2026-11-15T01:04:38.682666+00:00",
+      "observed_ids": [
+        "3e9f4637ec55801b3535319442d683e51ed528a8cdfab09084290bf70b1d903b",
+        "f49f4bb6a31ae18dd405cdfedddc1c826b7549bb763852d581b86794c82bd194"
+      ],
+      "health_states": [
+        "healthy"
+      ]
+    },
+    "memory_mib": {
+      "generative-radio-renderer-1": {
+        "min": 17.05,
+        "max": 75.29,
+        "mean": 19.829734513274335,
+        "first": 17.05,
+        "last": 18.61,
+        "quarter_means": [
+          19.594464285714285,
+          19.366315789473685,
+          20.350892857142856,
+          20.012280701754385
+        ]
+      },
+      "generative-radio-composer-1": {
+        "min": 14.53,
+        "max": 29.29,
+        "mean": 16.360752212389382,
+        "first": 15.16,
+        "last": 16.87,
+        "quarter_means": [
+          14.94517857142857,
+          16.726666666666667,
+          16.980357142857144,
+          16.77684210526316
+        ]
+      },
+      "generative-radio-web-1": {
+        "min": 16.02,
+        "max": 19.92,
+        "mean": 18.42774336283186,
+        "first": 17.39,
+        "last": 18.43,
+        "quarter_means": [
+          17.983035714285716,
+          18.524912280701756,
+          18.533571428571427,
+          18.663508771929823
+        ]
+      },
+      "generative-radio-broadcaster-1": {
+        "min": 246.5,
+        "max": 263.5,
+        "mean": 249.7632743362832,
+        "first": 247.3,
+        "last": 248.1,
+        "quarter_means": [
+          249.87142857142857,
+          249.93157894736842,
+          249.3875,
+          249.8578947368421
+        ]
+      },
+      "generative-radio-icecast-1": {
+        "min": 4.113,
+        "max": 11.65,
+        "mean": 4.995199115044247,
+        "first": 4.949,
+        "last": 6.141,
+        "quarter_means": [
+          4.820875,
+          4.779982456140351,
+          4.8579107142857145,
+          5.5165614035087716
+        ]
+      }
+    },
+    "observed_cpu_percent": {
+      "generative-radio-renderer-1": {
+        "min": 0.0,
+        "max": 119.17,
+        "mean": 5.587610619469026,
+        "first": 0.05,
+        "last": 0.1,
+        "quarter_means": [
+          4.513214285714286,
+          5.203508771929824,
+          7.928214285714286,
+          4.7277192982456135
+        ]
+      },
+      "generative-radio-composer-1": {
+        "min": 0.0,
+        "max": 21.04,
+        "mean": 1.1998672566371682,
+        "first": 0.0,
+        "last": 0.15,
+        "quarter_means": [
+          1.4780357142857143,
+          1.5264912280701755,
+          1.1898214285714286,
+          0.6098245614035088
+        ]
+      },
+      "generative-radio-web-1": {
+        "min": 0.0,
+        "max": 3.91,
+        "mean": 0.20911504424778762,
+        "first": 0.0,
+        "last": 0.0,
+        "quarter_means": [
+          0.18857142857142858,
+          0.17087719298245616,
+          0.19982142857142857,
+          0.27666666666666667
+        ]
+      },
+      "generative-radio-broadcaster-1": {
+        "min": 2.5,
+        "max": 33.65,
+        "mean": 10.427787610619468,
+        "first": 9.13,
+        "last": 11.4,
+        "quarter_means": [
+          10.738214285714285,
+          10.120701754385966,
+          10.56625,
+          10.293859649122806
+        ]
+      },
+      "generative-radio-icecast-1": {
+        "min": 0.09,
+        "max": 4.18,
+        "mean": 0.5314159292035399,
+        "first": 0.26,
+        "last": 0.21,
+        "quarter_means": [
+          0.49607142857142855,
+          0.4368421052631579,
+          0.5257142857142857,
+          0.6663157894736842
+        ]
+      }
+    },
+    "host_available_gib_min": 20.88111114501953,
+    "host_load_max": 2.1728515625,
+    "disk_free_gib_min": 552.7128448486328,
+    "observation_errors": [],
+    "seen_jobs": 105
+  },
+  "retention_after": {
+    "at": "2026-11-15T02:50:34.884205+00:00",
+    "quick_check": "ok",
+    "jobs": 42,
+    "statuses": {
+      "ready": 11,
+      "served": 31
+    },
+    "id_min": 247,
+    "id_max": 288,
+    "errors": [],
+    "expired_terminal_ids": [],
+    "missing_referenced_audio": [],
+    "work_files": [],
+    "file_count": 92,
+    "data_bytes": 907409376
+  },
+  "source_sha256": {
+    "capture.sh": "9ed2403fe4b29ee4a42699f27688cc45b43e59eb34ed9af67cf6afc1676612a4",
+    "monitor.py": "4b55759a39885ddd414778c3249e3fe7875bd2051127edf6561dedea1485db61",
+    "supervisor.py": "e4f2ea16d5d815683c27ef642a306667e65a0e3cc4acff9efbb61e3618a34ac7",
+    "run.json": "3909cc0641d83a2633239dea62d6996e0d7dc6d373728bd4ac1cf315cb22b7a5",
+    "vitals.jsonl": "f32b501d7c63dc9ce9e7bc2aa6347fff1e06d596a97e5e80e08d9e10c311e94b",
+    "artifacts/analysis.log": "e5c2f7c3a8e32703e4eade8b3977b3eb0cbe3268921fda95e573693b4ef57869",
+    "retention-after.json": "2c94ff8270deecbeb776ca033d925fcc075e2740ea0fdc82488cc3d73fc056bf",
+    "artifacts/broadcast.wav": "bb588d9e8517cd3e8756a3d003c0d89919eb8e78262a293303b0a0412eb670eb"
+  }
+}
