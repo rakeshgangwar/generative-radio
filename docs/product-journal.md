@@ -23,9 +23,9 @@ records the exact scope; this is local evidence, not public or physical-device
 acceptance.
 
 The [host-side vitals recorder](station-observer.md) is also shipped. Its completed
-half-hour observation retained 60 healthy samples. A separate six-hour attempt is
-now running; the earlier attempt stopped after about 40 minutes and is retained
-separately. The fresh attempt includes an annotated web-maintenance interruption,
+half-hour observation retained 60 healthy samples. A separate six-hour attempt was
+still in progress at this checkpoint; the earlier attempt stopped after about
+40 minutes and is retained separately. The fresh attempt includes an annotated web-maintenance interruption,
 with its unhealthy sample preserved. It is not a completed uninterrupted soak.
 
 A fresh current-broadcast check has now completed: 30 minutes of decoded audio,
@@ -47,6 +47,11 @@ available at [localhost:18095](http://localhost:18095): the same three chapters
 with a slower pulse, spare lead density and a fixed warm palette. Both 23m05s
 versions have matched levels. It now has a repeatable offline command and a fresh
 [command-generated comparison](http://localhost:18096). The broadcast stays unchanged.
+
+The offline profile command is merged and packaged locally. A fresh v2 data
+backup and isolated restore also passed: saved chapter metadata survived, the
+next seed/job sequence continued, and restored job 800 matched the live score.
+The portable archive is verified locally; off-host transfer remains open.
 
 The repository is public under MIT; the station itself remains local. Public
 operation needs a supplied host/domain and off-host backup/alert destinations,
@@ -1213,3 +1218,40 @@ evidence. See the [command receipt](evidence/profile-audition-20261116.json) and
 [usage guide](resting-profile-experiment.md). Musical preference and device/public/
 off-host acceptance remain open; the separate six-hour observation remains in
 progress with its recorded maintenance interruption.
+
+## 16 November: current tooling delivery and a fresh recovery point
+
+PR #35 merged as `e384215` after all four final-head/current-base CI jobs passed
+on `0f8c44e`, including stock Firefox. The dedicated local
+`generative-radio:profile-lab` image was built from that commit; all six module
+fingerprints match acceptance and the command help works. Main core/web aliases
+and live roles stayed unchanged. [Delivery evidence](evidence/profile-audition-delivery-20261116.json)
+retains the exact base, head, merge, jobs and package scope. One Minor is deferred:
+direct SIGTERM can leave a partial report marked running; require exit zero and
+`status: complete`, while Ctrl-C is recorded as cancelled.
+
+I also prepared a fresh recovery point of the music currently being generated.
+The snapshot captured 43 version-2 jobs and 89 verified files, about 921 MB. In a
+fresh isolated volume, SQLite integrity passed, all saved seed/analysis fields
+survived, stale heartbeats were cleared and a restored 120-second track decoded.
+The queue then allocated job 800 with seed 20261914 and rendered it ready. Reading
+both volumes without writing to the live queue confirmed that its MIDI exactly
+matched live job 800. This proves score continuity for this recovery point, not
+resumption at an exact on-air audio frame.
+
+A 60-second direct recording was running before and after online backup creation.
+It decoded fully with mean −24.7 dBFS, peak −9.5 dBFS and no silence at −50 dB
+lasting two seconds. All five live service identities/images/start/restart/OOM
+values matched before and after. The private 821 MB transport archive has its own
+checksum; every file was verified against the snapshot manifest. The
+[checkpoint receipt](evidence/current-recovery-checkpoint-20261116.json) retains
+exact scope and local artifact/volume locations. Nothing was uploaded or switched
+into live service. This remains same-host recovery; deployment secrets/configuration
+and the SoundFont are not included, and another snapshot is needed near migration.
+
+The existing six-hour recorder is still running. A separate bounded, read-only
+postprocessor will prepare local RAM/CPU/identity summaries after both owned
+recorder processes finish. It preserves the maintenance failure and earlier
+interrupted attempt, and distinguishes a completed observation from all-healthy
+acceptance. Final resource evidence still needs inspection before publication;
+there is no independent six-hour audio recording or human musical verdict.

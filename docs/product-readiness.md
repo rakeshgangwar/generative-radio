@@ -22,7 +22,7 @@ latest dated receipt and [current handoff](../HANDOFF.md) for present state.
 | Audible public listening path | Authenticated HTTPS fetch, bounded decode and audibility check on an independent host | Read-only command and local TLS rehearsal passed; independent deployment pending |
 | Backup and recovery | Consistent queue/audio backup and tested restore on isolated data | Repeatable create/verify/restore commands and off-host runbook validated locally; target-host/off-host exercise pending |
 | Operator documentation | Install, upgrade, monitor, recover, back up and roll back commands | Local recovery/backup runbook implemented; production deployment runbook added; target-host exercise pending |
-| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | Changes through PR #31 merged after final-head/current-base CI; volume memory, native fallback and focus/help polish are deployed locally with preserved core identities and live Firefox/decoded-audio proof; recent work includes audible chapter context, deployed listener recovery, an offline melody audition and host-side vitals recording |
+| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | Changes through PR #35 merged after final-head/current-base CI; volume memory, native fallback and focus/help polish are deployed locally with preserved core identities and live Firefox/decoded-audio proof; recent work includes audible chapter context, deployed listener recovery, an offline melody audition and host-side vitals recording |
 
 These are release readiness gates, not an exhaustive definition of the evolving
 product goal. The [product journal](product-journal.md) records that direction.
@@ -382,3 +382,17 @@ attempt is still in progress with annotated maintenance; neither earlier partial
 attempts nor this audio recording establish an uninterrupted healthy six-hour
 result. Public/off-host/physical-device and human musical acceptance gates remain
 open. No application change or deployment is part of this documentation update.
+
+## Current-v2 recovery checkpoint — 16 November 2026
+
+A fresh same-host backup/restore preserved the saved version-2 metadata and seed
+sequence for 43 jobs, passed SQLite/file verification, decoded restored audio
+and rendered the next allocated job. Its MIDI matched the corresponding live
+job. A 60-second recording across online backup creation and all-five-role
+preservation checks passed. The locally exported archive was checked against all
+89 manifest files. See the [checkpoint](evidence/current-recovery-checkpoint-20261116.json).
+
+This strengthens local recovery evidence, without closing off-host or target-host
+recovery. The [offline profile tool](evidence/profile-audition-delivery-20261116.json)
+is merged and packaged locally; it does not change the broadcast. The separate
+six-hour resource observation remains incomplete and includes planned maintenance.

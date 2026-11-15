@@ -1,0 +1,197 @@
+{
+  "status": "Current v2 data backup, isolated restore, next-job render and local transport archive verified; not off-host recovery or live migration",
+  "image_used": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+  "backup_started_at": 1794769694.2568693,
+  "backup_finished_at": 1794769696.1478682,
+  "backup_volume": "radio-current-backup-20261115t190811z",
+  "isolated_restore_volume": "radio-current-restore-20261115t190811z",
+  "snapshot": {
+    "jobs": 43,
+    "verified_files": 89,
+    "logical_bytes": 920899703,
+    "rendered_plan_versions": {
+      "2": 43
+    },
+    "sequence": 799,
+    "source_backup_verified_unchanged_after_restore": true
+  },
+  "recovery": {
+    "quick_check": "ok",
+    "copied_jobs": 43,
+    "snapshot_sequence": 799,
+    "snapshot_max_id": 799,
+    "source_rendered_plan_versions": {
+      "2": 43
+    },
+    "all_saved_seed_and_analysis_fields_preserved": true,
+    "stale_heartbeats_cleared": true,
+    "dispatched_restored_id": 789,
+    "dispatched_audio": {
+      "duration": 120.0,
+      "peak": 0.35498046875,
+      "rms_dbfs": -24.355042949781097,
+      "quiet_fraction": 0.0033333333333333335
+    },
+    "new_job_id": 800,
+    "new_job_seed": 20261914,
+    "seed_origin_derived_from_latest_snapshot_job": 20261114,
+    "new_ready_rendered_ids": [
+      800
+    ],
+    "restored_status": {
+      "queue": {
+        "ready": {
+          "count": 11,
+          "seconds": 1265.0
+        },
+        "served": {
+          "count": 33,
+          "seconds": 3795.0
+        }
+      },
+      "heartbeats": {},
+      "recent_errors": []
+    },
+    "work_empty": true,
+    "scope": "Isolated fresh volume only, no Icecast network or live queue; same-host drill, not off-host recovery"
+  },
+  "live_restored_midi_comparison": {
+    "job_id": 800,
+    "midi_sha256": {
+      "live": "b6221a85b6f52ec530f9400fc32eb3bcb28beabd40f7211ee9035f4455a0f575",
+      "restored": "b6221a85b6f52ec530f9400fc32eb3bcb28beabd40f7211ee9035f4455a0f575"
+    },
+    "same_score_after_restore": true,
+    "scope": "Read-only comparison, no live dispatch or writes"
+  },
+  "archive": {
+    "file": "/home/rakeshgangwar/Projects/generative-radio/artifacts/fresh-recovery-20261115T190811Z/snapshot.tar.gz",
+    "bytes": 821064842,
+    "sha256": "05a8d22cd74d2678cf52adf8baa1f85494cf62d7c8f33f4554f67da80d59fe14",
+    "scope": "Private same-host transport archive only; no upload, secrets/configuration/SoundFont not included"
+  },
+  "archive_checks": {
+    "verified_files": 89,
+    "manifest_matches_verified_snapshot": true,
+    "all_file_sizes_and_sha256_match": true,
+    "scope": "File contents checked against manifest; directory members restricted to snapshot/audio/midi tree; no transfer performed"
+  },
+  "core_capture": {
+    "duration_seconds": 60,
+    "mean_dbfs": -24.7,
+    "peak_dbfs": -9.5,
+    "no_silence_at_minus50db_for_two_seconds": true,
+    "running_before_backup_create": true,
+    "running_after_backup_create": true,
+    "exit_code": 0,
+    "scope": "Direct local MP3 capture across online backup creation, not an exact audible-interruption or public-listener measurement"
+  },
+  "before_services": {
+    "broadcaster": {
+      "id": "abb87b80c56c007c8240d5df311c9a96af9f96824c423e5b34460a138fa171fc",
+      "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+      "started": "2026-11-15T05:57:04.799911735Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "composer": {
+      "id": "0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started": "2026-11-15T03:23:31.379138171Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "icecast": {
+      "id": "78f7a60cd2c96ce90c32f4ee896bd67cfb02646ebd7529f26ca402798da3bd6d",
+      "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+      "started": "2026-11-15T05:56:38.273381611Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "renderer": {
+      "id": "04a26abb33422649a11752d188ca9e2eb149fbe50c981fc3a2eced30a00805d4",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started": "2026-11-15T03:23:31.259377863Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "web": {
+      "id": "7e1f7d622adf91baa05701f0ad603fd81418dacb7cca6a3bd549f8898578e46b",
+      "image": "sha256:fb8404f39fb902ebfd56528c75d7c5dc70c51cd7bacd933868506ab5d4a07ccc",
+      "started": "2026-11-15T15:43:00.527941831Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    }
+  },
+  "after_services": {
+    "broadcaster": {
+      "id": "abb87b80c56c007c8240d5df311c9a96af9f96824c423e5b34460a138fa171fc",
+      "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+      "started": "2026-11-15T05:57:04.799911735Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "composer": {
+      "id": "0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started": "2026-11-15T03:23:31.379138171Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "icecast": {
+      "id": "78f7a60cd2c96ce90c32f4ee896bd67cfb02646ebd7529f26ca402798da3bd6d",
+      "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+      "started": "2026-11-15T05:56:38.273381611Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "renderer": {
+      "id": "04a26abb33422649a11752d188ca9e2eb149fbe50c981fc3a2eced30a00805d4",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started": "2026-11-15T03:23:31.259377863Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "web": {
+      "id": "7e1f7d622adf91baa05701f0ad603fd81418dacb7cca6a3bd549f8898578e46b",
+      "image": "sha256:fb8404f39fb902ebfd56528c75d7c5dc70c51cd7bacd933868506ab5d4a07ccc",
+      "started": "2026-11-15T15:43:00.527941831Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    }
+  },
+  "all_five_lifecycle_values_preserved": true,
+  "raw_proof_sha256": {
+    "artifacts/fresh-recovery-20261115T190811Z/run.json": "13c3e3132496930401ab2defb6d2bf9c5d47ba297ab6e23b259ff91fba345849",
+    "artifacts/fresh-recovery-20261115T190811Z/create.json": "65b8b360155a9630764c6c4010fb9beb1209656b3fab65c5a4faa13688dc2a9b",
+    "artifacts/fresh-recovery-20261115T190811Z/verify-before.json": "65b8b360155a9630764c6c4010fb9beb1209656b3fab65c5a4faa13688dc2a9b",
+    "artifacts/fresh-recovery-20261115T190811Z/restore.json": "d9de98a1c336caad6cfd803c277e69c7aada1639e82d4af1a3420030f54041ca",
+    "artifacts/fresh-recovery-20261115T190811Z/verify-after.json": "65b8b360155a9630764c6c4010fb9beb1209656b3fab65c5a4faa13688dc2a9b",
+    "artifacts/fresh-recovery-20261115T190811Z/recovery-proof.json": "6c540539fc159cf033bdfb08f38d179776034db5db8299af9434fa0a33dd2111",
+    "artifacts/fresh-recovery-20261115T190811Z/live-restored-midi-parity.json": "abaa6405d793b9223b34feb43f0fe57f4b2e02ce9934a9359898ee6dcafd0b01",
+    "artifacts/fresh-recovery-20261115T190811Z/archive.json": "d9063886618151b23348c64b7623578aa33ce88c6d868d4c7c8fa8f14947c15b",
+    "artifacts/fresh-recovery-20261115T190811Z/archive-verification.json": "e703596aaec1f83342750deca3e08cc80c3ef0dff23a086038fdef6997bdda8a",
+    "artifacts/fresh-recovery-20261115T190811Z/capture-duration.json": "423a125e0efaba2cc60cd0b3b7ebb7ad3b6c80ab4ac10bc223d3ef4769292106",
+    "artifacts/fresh-recovery-20261115T190811Z/capture-analysis.log": "0f53c397bceeee209f43e711389f69a7da2885ea78790724dfc94fb714a79d9b",
+    "artifacts/fresh-recovery-20261115T190811Z/before/sample-0000.json": "f81d05dea2b56a6939a1ef1bcb52749ddcb5e1faa6091ca2707b44db0122e2be",
+    "artifacts/fresh-recovery-20261115T190811Z/after/sample-0000.json": "e4df29f188a5f7881a09b66632f54012cea98e2f98ca41e877c081f77111c070"
+  },
+  "local_evidence": "/home/rakeshgangwar/Projects/generative-radio/artifacts/fresh-recovery-20261115T190811Z",
+  "limitations": [
+    "Archive and restored copy remain on this machine; host loss is not covered",
+    "Deployment secrets/configuration and SoundFont are outside this data bundle",
+    "Snapshot is a point-in-time queue recovery point, not exact on-air playback history; make a fresh one near migration",
+    "The restored copy is isolated and not selected by Compose or merged with the live queue",
+    "Separate six-hour observation is still in progress with retained planned maintenance; this is not its acceptance result"
+  ]
+}

@@ -1,6 +1,6 @@
 # Generative Radio — current handoff
 
-Updated 15 November 2026 (Asia/Kolkata). Read this snapshot first; detailed history
+Updated 16 November 2026 (Asia/Kolkata). Read this snapshot first; detailed history
 and measured iterations are in the [product journal](docs/product-journal.md).
 
 ## Goal and standing instructions
@@ -135,6 +135,21 @@ on-air profile setting; listening preference remains open. A repeatable offline
 `python -m radio.profile_audition --output PATH` now generates fresh pairs; its
 actual CLI preview is http://localhost:18096. No station roles were redeployed. See the
 [experiment guide](docs/resting-profile-experiment.md) and its source-linked receipt.
+
+Offline profile tooling is delivered in PR #35 (`e384215`) after four successful
+final-head/current-base jobs, including actual Firefox. The local
+`generative-radio:profile-lab` image contains the verified command; all six module
+hashes match acceptance. Live core/web aliases and all station roles are unchanged.
+See the [delivery receipt](docs/evidence/profile-audition-delivery-20261116.json).
+
+A fresh current-v2 data recovery point is verified: 43 jobs, 89 files, original
+sequence 799. An isolated restore preserved all saved seeds/analysis, cleared stale
+heartbeats, played restored job 789 and rendered new job 800 (seed 20261914). Its
+MIDI hash matched live job 800. A 60-second capture across backup creation had no
+−50 dB silence lasting two seconds; all five role lifecycle values were preserved.
+The private local 821 MB archive has a checksum and its 89 files were verified
+against the manifest. No upload or live migration occurred. See the
+[recovery checkpoint](docs/evidence/current-recovery-checkpoint-20261116.json).
 
 Source checkout is clean on main. Public decoded HTTPS monitoring remains an
 operator command, without an installed independent schedule or alert target.

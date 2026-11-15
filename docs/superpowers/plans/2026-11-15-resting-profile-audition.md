@@ -36,5 +36,7 @@
 
 ## Branch delivery
 
-- [ ] Run one fresh whole-branch review and one Important/Critical RED→GREEN fix pass if needed, record Minor costs, no rereview.
-- [ ] Publish scoped PR; require actual latest final-head/current-base four-job CI including Firefox before guarded merge. No live-role redeploy for an offline tool.
+- [x] Run one fresh whole-branch review and one Important/Critical RED→GREEN fix pass if needed, record Minor costs, no rereview.
+- [x] Publish scoped PR; require actual latest final-head/current-base four-job CI including Firefox before guarded merge. No live-role redeploy for an offline tool.
+
+Delivered as PR #35 (`e384215`) after all four jobs passed on `0f8c44e`, run 43748701299, including actual stock Firefox. The separate local lab image is built and source-checked; no live role rollout. Direct-SIGTERM reporting remains a deferred Minor as recorded in the delivery receipt.
