@@ -24,7 +24,7 @@ function initialize() {
   } catch { /* Storage is optional for listening. */ }
   const activeStates = new Set(['connecting', 'playing', 'buffering', 'retrying']);
   let active = false, gain = 1, requestedVolume = Number(volume.value) / 100;
-  let volumeSupported = true, player, playing = false;
+  let volumeSupported = true, volumeCapable = false, player, playing = false;
   const broadcastPanel = document.querySelector('#broadcast-context');
   const broadcastTitle = document.querySelector('#broadcast-context-title');
   const broadcast = createBroadcastContext({onChange(title) {
@@ -40,7 +40,12 @@ function initialize() {
   const timerStatus = document.querySelector('#timer-status');
   function applyVolume(force = false) {
     if (!player || (!volumeSupported && !force)) return;
-    volumeSupported = player.setVolume(requestedVolume * gain);
+    const target = requestedVolume * gain;
+    const previous = audio.volume;
+    const applied = player.setVolume(target);
+    // An unchanged matching value is not evidence that a device accepts writes.
+    if (applied && Math.abs(previous - target) >= .01) volumeCapable = true;
+    volumeSupported = volumeCapable && applied;
     document.querySelector('#volume-control').hidden = !volumeSupported;
     document.querySelector('#volume-note').hidden = volumeSupported;
   }
@@ -95,6 +100,8 @@ function initialize() {
     }
   }
   volume.addEventListener('input', () => setVolume(true));
+  // Establish capability while the enhanced audio is paused and source-free.
+  volumeCapable = player.setVolume(audio.volume > .5 ? .25 : .75);
   setVolume();
 
   if ('mediaSession' in navigator) {

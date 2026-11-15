@@ -28,8 +28,8 @@ Monitoring reports uncertainty when evidence is incomplete.
 
 The next comfort change is a browser-local volume-memory candidate. It restores
 an explicit choice after refresh, keeps play manual and resets the sleep timer.
-Local focused tests and Firefox refresh/playback checks pass; final review, CI and
-rollout are still pending. The live listener remains the PR #29 build. Musical
+Local tests and Firefox refresh/playback checks pass. The single review correction
+is verified; CI and rollout are still pending. The live listener remains the PR #29 build. Musical
 development remains the main product question: it should stay worth hearing over
 hours, with room to breathe.
 
@@ -1061,3 +1061,20 @@ wrapper/observer is alive by PID/start identity and reports healthy samples. The
 previous partial window is not combined into continuous six-hour acceptance; the
 exact external termination cause is unknown. The live listener remains PR #29.
 One fresh source review, actual CI and an annotated web-only rollout remain pending.
+
+
+The sole fresh review found one Important hardware fallback issue and one Minor
+coverage gap. A saved 100% could match an ignored setter's getter value 1 and wrongly show
+an ineffective slider. A real simulated-device regression failed before correction.
+The app now establishes distinguishable volume capability only while enhanced audio
+is paused/source-free, restores the requested value, and never saves the probe.
+Previously proven support still recovers after the existing mid-fade transient
+failure. The ignored-setter case keeps the device-button note and manual playback.
+
+Corrected source passes 46 Node tests, nine focused cases, all 31 Chromium scenarios,
+and refreshed standard/native/direct-memory Firefox checks with cleanup. The
+separate getItem-method-throw fixture remains a Minor deferred coverage item; the
+existing enclosing try catches that path. No rereview. PR #31 remains a candidate
+until actual final-head/current-base CI clears and a measured web-only rollout.
+The current visual proof uses a distinct corrected-run directory; one initial
+root screenshot filename was reused during rerun and its old bitmap is superseded.

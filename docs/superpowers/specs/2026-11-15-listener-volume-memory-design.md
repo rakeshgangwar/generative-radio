@@ -40,6 +40,20 @@ and hardware-volume behavior. Candidate remains isolated with explicit project
 labels; core/music stay version 2 TimGM. A web-only rollout needs real CI and measured
 core preservation, with maintenance annotated in the running six-hour observation.
 
+## Reviewed capability correction
+
+A saved maximum must not mistake an ignored setter/current getter of1 for working
+volume control. Before any enhanced playback, use a distinguishable property
+probe and restore the requested level without writing preferences. Retain evidence
+of a successful distinct write separately from the last write outcome, so existing
+transient mid-fade recovery still works. Matching an unchanged level alone cannot
+establish capability. Never perform a distinguishable probe on active audio; native
+ownership returns before this path. A failed initial probe at an unchanged maximum
+can conservatively retain device fallback until refresh or a proven distinct write.
+
+The sole review deferred a separate getItem-method-throws fixture as Minor. Its
+call is already inside the read try/catch; residual cost is absent direct coverage.
+
 ## Acceptance
 
 Real browser RED must show a chosen level resetting after reload, then GREEN with

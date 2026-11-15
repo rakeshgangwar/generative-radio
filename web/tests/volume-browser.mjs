@@ -7,7 +7,40 @@ async function chooseVolume(page,value) {
   assert.equal(await page.locator('#volume').inputValue(),String(value));
 }
 
+export async function checkIgnoredSavedMaximum(browser,base,results) {
+  const context=await browser.newContext();
+  try {
+    await context.addInitScript(key=>{
+      localStorage.setItem(key,'100');window.__preferenceWrites=0;window.__volumeAttempts=[];
+      const native=Storage.prototype.setItem;
+      Storage.prototype.setItem=function(name,value){if(name===key)window.__preferenceWrites++;return native.call(this,name,value);};
+      Object.defineProperty(HTMLMediaElement.prototype,'volume',{configurable:true,get(){return 1;},set(value){window.__volumeAttempts.push({value,paused:this.paused,hasSource:this.hasAttribute('src')});}});
+    },preferenceKey);
+    const page=await context.newPage(),errors=[];let requests=0;
+    page.on('pageerror',error=>errors.push(error.message));
+    page.on('request',request=>{if(new URL(request.url()).pathname==='/radio.mp3')requests++;});
+    await page.goto(base);
+    assert.equal(await page.locator('#volume-control').isVisible(),false,'saved maximum must not disguise an ignored volume setter');
+    assert.equal(await page.locator('#volume-note').isVisible(),true);
+    assert.equal(await page.evaluate(key=>localStorage.getItem(key),preferenceKey),'100');
+    assert.equal(await page.evaluate(()=>window.__preferenceWrites),0,'capability probing must not persist anything');
+    assert.equal(requests,0);
+    assert.ok(await page.evaluate(()=>window.__volumeAttempts.every(attempt=>attempt.paused&&!attempt.hasSource)),'initial capability work must precede playback');
+    await page.getByRole('button',{name:'Start listening',exact:true}).click();
+    await page.waitForFunction(()=>document.querySelector('#stream').currentTime>1,null,{timeout:25000});
+    assert.equal(requests,1);assert.deepEqual(errors,[]);
+    assert.equal(await page.locator('#volume-control').isVisible(),false);
+    assert.equal(await page.locator('#volume-note').isVisible(),true);
+    assert.equal(await page.evaluate(()=>window.__preferenceWrites),0);
+    assert.ok(await page.evaluate(()=>window.__volumeAttempts.filter(attempt=>attempt.value!==1).every(attempt=>attempt.paused&&!attempt.hasSource)),'never probe a different level during playback');
+    await page.getByRole('button',{name:'Pause',exact:true}).click();
+    assert.equal(await page.locator('#stream').getAttribute('src'),null);
+    results.push({test:'saved maximum with ignored volume writes keeps device fallback, no probe persistence/autoplay, and real manual playback',pass:true});
+  } finally {await context.close();}
+}
+
 export async function checkVolumeMemory(browser,base,artifacts,results) {
+  await checkIgnoredSavedMaximum(browser,base,results);
   const context=await browser.newContext({viewport:{width:320,height:640}});
   try {
     const page=await context.newPage(),requests=[];

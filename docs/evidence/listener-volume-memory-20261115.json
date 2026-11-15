@@ -1,6 +1,6 @@
 {
   "base_commit": "65180518bd9cf4b9849cab1f3d6896a1146e3d1c",
-  "status": "Locally verified candidate; one fresh final review, actual final-head/current-base CI and measured web-only rollout pending",
+  "status": "Important review correction locally verified; actual latest final-head/current-base CI and measured web-only rollout pending",
   "preference": {
     "key": "generative-radio.volume.v1",
     "canonical_range": [
@@ -12,7 +12,7 @@
     "scope": "Browser-local full player; no play/timer/account/history persistence or live cross-tab volume sync"
   },
   "served_asset_sha256": {
-    "app.js": "4b948b47461e9abfbabc5f755feb2e77ed3ac5f16982e3d476f32a6cb33f1551",
+    "app.js": "7ddc09f3c2c48c813a5b07e75aa8ae829961de726a7eb2041998537b0fed2547",
     "broadcast-context.js": "afafb4dbaed6ec78338c7affe13c1b46c5687a1c834c70a956a3f485b134b29f",
     "dial.svg": "066b109b2c0a13cba2c0b89381607df6253c23e0b540017e8c3ce0a974bbf0d1",
     "favicon.svg": "18868c09e40c51595e26d64d3cd2ff12f6ca33b26784ea64b8c56d7e3d010179",
@@ -26,6 +26,10 @@
   "chromium": {
     "version": "154.0.8037.92",
     "focused_scenarios": [
+      {
+        "test": "saved maximum with ignored volume writes keeps device fallback, no probe persistence/autoplay, and real manual playback",
+        "pass": true
+      },
       {
         "test": "chosen quiet volume survives refresh with matching audio/ARIA, no autoplay and reset timer",
         "pass": true
@@ -59,14 +63,14 @@
         "pass": true
       }
     ],
-    "full_scenarios": 30,
-    "full_result_sha256": "b7629e81408d6b4c88181763831b3775c831652ac3647ad4d6c3cfe11f4cd8fa",
-    "full_log_sha256": "b7629e81408d6b4c88181763831b3775c831652ac3647ad4d6c3cfe11f4cd8fa",
-    "focused_log_sha256": "b6f5de79fec3114bdd8eaba9003444ee0fb418bc14be670e79de2bf8c4d8bb4b",
+    "full_scenarios": 31,
+    "full_result_sha256": "e3ac04bea1b5e70c955159d6e4a66a1ace96d41f8aea369709cbe84a6f9adac1",
+    "full_log_sha256": "e3ac04bea1b5e70c955159d6e4a66a1ace96d41f8aea369709cbe84a6f9adac1",
+    "focused_log_sha256": "0d70e5c165b34e89b07d06452cb6e72a088f1ffc169381e3d4753d365aea6e38",
     "red_log_sha256": "5f27942f5ba6e7435b6e4b229e7681f9aa6f1d012e7c9ff773a1b3774062aef8",
-    "unit_log_sha256": "1ff2e73d78c4dcb6ea1a2e036054db24aa363533447fa4c7e6be0a708f3dcf96",
+    "unit_log_sha256": "da9c806aef016347370ac713556bf74c6ea39a14fe16aa860fcc9a4f509179e2",
     "test_source_sha256": {
-      "web/tests/volume-browser.mjs": "61f4903fe70be975d5b7cebc3f8b24fcc76aa95b7f4823156b622d56debbe586",
+      "web/tests/volume-browser.mjs": "1c6239fde7eb0c2c164f815f9bc17792ca288d8f05aa3498096fc9bee3c7b856",
       "web/tests/native-fallback-browser.mjs": "bb0672a634a47aef52f8a3b4deef080cf1bdffe390048e15572e3567b39283b5",
       "web/tests/browser.mjs": "b187e423259ac321d2fa5e73ebbe9a7b3db5c0d75954d2edffe18654a30d89d9"
     }
@@ -103,7 +107,7 @@
       "driver_reaped": true,
       "profiles_removed": true
     },
-    "result_sha256": "177242d7b6113877643dddc9542f357a5f4ab70515af0e18b598eb30324fcf3e"
+    "result_sha256": "8e742f9a7d988bbc7a0bb8970685144a4b9b115f500d1225a939b3b90e7e2340"
   },
   "firefox_native": {
     "scope": "Actual installed Firefox, JavaScript disabled, trusted keyboard native controls, candidate loopback URL",
@@ -122,17 +126,17 @@
     "media": {
       "error_code": null,
       "paused": false,
-      "ready": 4,
-      "time": 1.109433
+      "ready": 3,
+      "time": 1.03678
     },
     "source_sha256": {
-      "app.js": "4b948b47461e9abfbabc5f755feb2e77ed3ac5f16982e3d476f32a6cb33f1551",
+      "app.js": "7ddc09f3c2c48c813a5b07e75aa8ae829961de726a7eb2041998537b0fed2547",
       "index.html": "202e6e9d81550495f3e73b385c2fa0a090d76b2db192257855b3c1a5dbfa6a1d"
     },
     "driver_reaped": true,
     "private_profile_removed": true
   },
-  "firefox_native_proof_sha256": "b893c56e65b8124bebea7d4ccb29404f24e58110afb74dcc508592ae31d1bea0",
+  "firefox_native_proof_sha256": "6aee852754fd40537581444435663a91076db1e9b2a98318d55419578ca4875b",
   "firefox_volume_memory": {
     "scope": "Actual installed Firefox, full-player trusted volume keys, refresh persistence and manual playback",
     "pass": true,
@@ -167,21 +171,21 @@
     },
     "manual_playback": {
       "paused": false,
-      "time": 1.074421,
+      "time": 1.024603,
       "volume": 0.37
     },
     "source_sha256": {
-      "app.js": "4b948b47461e9abfbabc5f755feb2e77ed3ac5f16982e3d476f32a6cb33f1551",
+      "app.js": "7ddc09f3c2c48c813a5b07e75aa8ae829961de726a7eb2041998537b0fed2547",
       "index.html": "202e6e9d81550495f3e73b385c2fa0a090d76b2db192257855b3c1a5dbfa6a1d"
     },
     "driver_reaped": true,
     "private_profile_removed": true
   },
-  "firefox_volume_memory_proof_sha256": "b6c2b5388550be820c992eb9ee105d187f3759f0666350866265ee1875d15f66",
-  "visual_320_sha256": "0b9813d5de454857c137de14e8e2076ebc33861a9bced6fd13551eab6fdf50aa",
+  "firefox_volume_memory_proof_sha256": "4976408c21a7a86553c8ba9c03d5b838f4a53ecc79942f7b7070e8829a2d82da",
+  "visual_320_sha256": "e2188b4fd98c8a73c4bfc69ac15238cc3afd2b970b356dd39fd5c1cb85f7bb8b",
   "station_baseline": {
     "assessment": "healthy",
-    "observed_at": 1794754887.0330966,
+    "observed_at": 1794756107.0390644,
     "services": {
       "broadcaster": {
         "id": "abb87b80c56c007c8240d5df311c9a96af9f96824c423e5b34460a138fa171fc",
@@ -224,15 +228,17 @@
         "health": "healthy"
       }
     },
-    "sample_copy_sha256": "0c9255dc827e6110ff805c4a943132b63bf013beb45e8b5186d71dc35e04e086"
+    "sample_copy": "review-fix-station-baseline.json",
+    "sample_copy_sha256": "56c36818489a82fb9b8ff8a010e1f4457849145208acc11ad72111e82cfab0a9"
   },
   "resource_observation": {
     "original_attempt": "Interrupted, actual exec143 and owned PID missing;40healthy samples are partial, not six-hour acceptance",
     "interruption_proof_sha256": "60e9ae7ebece2f24e32c45f41fdd67d80e08bce0af1913bad5c45a816e453da2",
     "fresh_attempt": "Running under finite owned detached wrapper with PID/start identity verified; actual child-exit recording pending",
-    "checkpoint_sha256": "5062790753b98941c1007be762949d7163c2cea0b90306a881a4ed091fcc119b",
+    "checkpoint_sha256": "979d868dfd5ee91f99af0ed8e80478880fe29a13d9678a3530b13cf435d21306",
     "six_hour_acceptance": false,
-    "scope": "Host/service metrics and station-reported watchdog health, not independent six-hour audio recording"
+    "scope": "Host/service metrics and station-reported watchdog health, not independent six-hour audio recording",
+    "checkpoint_path": "review-fix-operator-checkpoint.json"
   },
   "raw_local_evidence": "/home/rakeshgangwar/Projects/generative-radio/artifacts/listener-volume-20261115",
   "limits": [
@@ -240,5 +246,21 @@
     "Storage denial/quota and hardware-volume fixtures are simulations, not all privacy/device configurations",
     "Native basic mode and unsupported hardware retain browser/device volume behavior",
     "Physical/Safari/assistive-technology, public/offhost and human musical acceptance remain open"
-  ]
+  ],
+  "visual_320_path": "review-fix-full-browser/restored-volume-320.png",
+  "prior_visual_proof": {
+    "sha256": "0b9813d5de454857c137de14e8e2076ebc33861a9bced6fd13551eab6fdf50aa",
+    "status": "Superseded: the initial root PNG filename was reused during the correction rerun; that exact bitmap is no longer retained. Earlier full-suite screenshots remain; current visual evidence uses a distinct correction directory."
+  },
+  "review": {
+    "range": "6518051..8e51f68",
+    "critical": 0,
+    "important": 1,
+    "minor_deferred": 1,
+    "important_fix": "Distinguishable capability probe before playback, restore requested level without persistence, retain proven support for transient recovery and never promote ignored matching writes",
+    "regression": "Saved100 and ignored setter/getter1: visible ineffective slider RED; device fallback/manual MP3/unchanged storage/no autoplay or active probe GREEN",
+    "regression_red_log_sha256": "e6f7ab25aa27af67b5aabe95e015d4a8f132692a09b954195fa5d99827922d55",
+    "rereview": false,
+    "deferred_minor": "No direct fixture for accessible Storage object whose getItem method throws; enclosing try covers it, but that boundary lacks dedicated regression protection"
+  }
 }

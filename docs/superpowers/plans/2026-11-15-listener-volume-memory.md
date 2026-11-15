@@ -37,5 +37,5 @@
 - [x] Add boundary cases for zero/quiet/maximum, invalid values, denied getter/quota write, fade preference, cross-tab noninterference and saved-data hardware fallback.
 - [x] Implement optional validated read/write boundary to GREEN; run Node and focused actual browser acceptance.
 - [x] Run full browser suite and stock/native Firefox; inspect 320px/readout; record exact asset/proof hashes. No core changes.
-- [ ] One fresh whole-branch review; one Important/Critical RED→GREEN correction pass if needed, Minor ledger costs, no rereview. Publish scoped PR.
+- [x] One fresh whole-branch review; one Important/Critical RED→GREEN correction pass if needed, Minor ledger costs, no rereview. Publish scoped PR.
 - [ ] Require four actual latest final-head/current-base CI jobs with actual Firefox success; guarded merge and measured web-only rollout. Annotate maintenance in running observation; publish truthful delivery/current direction later.
