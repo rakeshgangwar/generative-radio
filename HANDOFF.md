@@ -446,3 +446,38 @@ No new music, public deployment or off-host/device/human acceptance is claimed.
 Proposed next comfort idea: remember chosen full-player volume across refresh with
 no autoplay and no saved sleep timer. It is not implemented. Main current direction
 is summarized first in the product journal; historical candidate entries are kept.
+
+
+## Volume memory candidate — not deployed
+
+Branch feat/listener-volume-memory is based on main `6518051`. The local full-player
+candidate remembers canonical whole-percent preferences in browser storage, saves
+only explicit range input, and preserves manual play, reset timers, unfaded user
+level and ongoing-tab isolation. Storage errors remain optional; native sessions
+and device-button fallback retain their existing behavior.
+
+The original 37% → 65% refresh failure was reproduced before the implementation.
+Node 46 and eight focused actual Chromium scenarios pass. Firefox 157.0.1 passes the
+five-flow regression, native JS-off keyboard playback and a direct chosen 37% reload
+with manual playback/timer reset. Final full 30 passed with the strengthened changed-volume-during-fade case. Source review and actual latest
+four-job CI remain required, then an annotated measured web-only rollout. Current
+live web remains dcb1fdd5/e69 (PR29); candidate is isolated at 18094 with distinct
+project labels. The six-hour observer is running; no completed-window claim yet.
+
+
+The final volume-memory suite passed all 30 Chromium scenarios, including eight
+preference/error/fade/cross-tab cases plus the existing native, focus, legacy,
+recovery and timer flows. The stronger fade-input case saves 40% while audio is
+attenuated to 20%, then reloads at 40% with timer Off and manual play. The 46 Node
+tests, five standard Firefox flows, native Firefox JS-off playback and direct
+Firefox 37% refresh/manual-play check also passed. All eight asset hashes match
+the candidate source; the 320px volume/readout view fits. See the
+[local receipt](docs/evidence/listener-volume-memory-20261115.json).
+
+The first requested six-hour observation was interrupted after 40 healthy samples;
+its owned process was gone and the execution session exited143. Its raw running
+summary is preserved and is not completion evidence. A fresh finite detached
+wrapper/observer is alive by PID/start identity and reports healthy samples. The
+previous partial window is not combined into continuous six-hour acceptance; the
+exact external termination cause is unknown. The live listener remains PR #29.
+One fresh source review, actual CI and an annotated web-only rollout remain pending.

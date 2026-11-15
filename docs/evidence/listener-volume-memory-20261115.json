@@ -1,0 +1,244 @@
+{
+  "base_commit": "65180518bd9cf4b9849cab1f3d6896a1146e3d1c",
+  "status": "Locally verified candidate; one fresh final review, actual final-head/current-base CI and measured web-only rollout pending",
+  "preference": {
+    "key": "generative-radio.volume.v1",
+    "canonical_range": [
+      0,
+      100
+    ],
+    "max_characters": 3,
+    "writes": "Explicit requested unfaded range input only",
+    "scope": "Browser-local full player; no play/timer/account/history persistence or live cross-tab volume sync"
+  },
+  "served_asset_sha256": {
+    "app.js": "4b948b47461e9abfbabc5f755feb2e77ed3ac5f16982e3d476f32a6cb33f1551",
+    "broadcast-context.js": "afafb4dbaed6ec78338c7affe13c1b46c5687a1c834c70a956a3f485b134b29f",
+    "dial.svg": "066b109b2c0a13cba2c0b89381607df6253c23e0b540017e8c3ce0a974bbf0d1",
+    "favicon.svg": "18868c09e40c51595e26d64d3cd2ff12f6ca33b26784ea64b8c56d7e3d010179",
+    "index.html": "202e6e9d81550495f3e73b385c2fa0a090d76b2db192257855b3c1a5dbfa6a1d",
+    "player.js": "c13f200e1d71b75eb6e58449fc832f90fd54a66f8edc5400fdb367140607e00d",
+    "sleep-timer.js": "6b0d495a76ef37402e1924b2a512a8e12449116592eb077c3bfb1b435246e9a6",
+    "style.css": "6b17280fc0ae6cdc3b08969edb70bef600db908605c5d1557858d55c7fca58cb"
+  },
+  "served_assets_match_candidate": true,
+  "node_tests": 46,
+  "chromium": {
+    "version": "154.0.8037.92",
+    "focused_scenarios": [
+      {
+        "test": "chosen quiet volume survives refresh with matching audio/ARIA, no autoplay and reset timer",
+        "pass": true
+      },
+      {
+        "test": "saved volume boundary 0 restores audio/readout without autoplay",
+        "pass": true
+      },
+      {
+        "test": "saved volume boundary 100 restores audio/readout without autoplay",
+        "pass": true
+      },
+      {
+        "test": "twelve invalid/oversized/noncanonical preferences keep default without writes, errors or autoplay",
+        "pass": true
+      },
+      {
+        "test": "simulated storage getter failure preserves volume controls and manual listening",
+        "pass": true
+      },
+      {
+        "test": "simulated storage write failure preserves volume controls and manual listening",
+        "pass": true
+      },
+      {
+        "test": "reload during a real playing fade restores requested volume, not gain, without playback or timer persistence",
+        "pass": true
+      },
+      {
+        "test": "another tab changes future preference without jumping ongoing audio; refresh applies it without autoplay",
+        "pass": true
+      }
+    ],
+    "full_scenarios": 30,
+    "full_result_sha256": "b7629e81408d6b4c88181763831b3775c831652ac3647ad4d6c3cfe11f4cd8fa",
+    "full_log_sha256": "b7629e81408d6b4c88181763831b3775c831652ac3647ad4d6c3cfe11f4cd8fa",
+    "focused_log_sha256": "b6f5de79fec3114bdd8eaba9003444ee0fb418bc14be670e79de2bf8c4d8bb4b",
+    "red_log_sha256": "5f27942f5ba6e7435b6e4b229e7681f9aa6f1d012e7c9ff773a1b3774062aef8",
+    "unit_log_sha256": "1ff2e73d78c4dcb6ea1a2e036054db24aa363533447fa4c7e6be0a708f3dcf96",
+    "test_source_sha256": {
+      "web/tests/volume-browser.mjs": "61f4903fe70be975d5b7cebc3f8b24fcc76aa95b7f4823156b622d56debbe586",
+      "web/tests/native-fallback-browser.mjs": "bb0672a634a47aef52f8a3b4deef080cf1bdffe390048e15572e3567b39283b5",
+      "web/tests/browser.mjs": "b187e423259ac321d2fa5e73ebbe9a7b3db5c0d75954d2edffe18654a30d89d9"
+    }
+  },
+  "firefox_enhanced": {
+    "browser": {
+      "name": "firefox",
+      "platform": "linux",
+      "version": "157.0.1"
+    },
+    "checks": [
+      {
+        "name": "idle_without_source",
+        "pass": true
+      },
+      {
+        "name": "click_starts_advancing_mp3",
+        "pass": true
+      },
+      {
+        "name": "keyboard_changes_audio_volume",
+        "pass": true
+      },
+      {
+        "name": "pause_releases_source",
+        "pass": true
+      },
+      {
+        "name": "resume_advances_mp3",
+        "pass": true
+      }
+    ],
+    "cleanup": {
+      "driver_reaped": true,
+      "profiles_removed": true
+    },
+    "result_sha256": "177242d7b6113877643dddc9542f357a5f4ab70515af0e18b598eb30324fcf3e"
+  },
+  "firefox_native": {
+    "scope": "Actual installed Firefox, JavaScript disabled, trusted keyboard native controls, candidate loopback URL",
+    "pass": true,
+    "browser": {
+      "browserName": "firefox",
+      "browserVersion": "157.0.1",
+      "platformName": "linux"
+    },
+    "before": {
+      "enhanced": false,
+      "paused": true,
+      "time": 0,
+      "visible": true
+    },
+    "media": {
+      "error_code": null,
+      "paused": false,
+      "ready": 4,
+      "time": 1.109433
+    },
+    "source_sha256": {
+      "app.js": "4b948b47461e9abfbabc5f755feb2e77ed3ac5f16982e3d476f32a6cb33f1551",
+      "index.html": "202e6e9d81550495f3e73b385c2fa0a090d76b2db192257855b3c1a5dbfa6a1d"
+    },
+    "driver_reaped": true,
+    "private_profile_removed": true
+  },
+  "firefox_native_proof_sha256": "b893c56e65b8124bebea7d4ccb29404f24e58110afb74dcc508592ae31d1bea0",
+  "firefox_volume_memory": {
+    "scope": "Actual installed Firefox, full-player trusted volume keys, refresh persistence and manual playback",
+    "pass": true,
+    "browser": {
+      "browserName": "firefox",
+      "browserVersion": "157.0.1",
+      "platformName": "linux"
+    },
+    "before": {
+      "audio_volume": 0.65,
+      "percent": 65,
+      "saved": null,
+      "source": null,
+      "state": "idle",
+      "timer": "0"
+    },
+    "chosen": {
+      "audio_volume": 0.37,
+      "percent": 37,
+      "saved": "37",
+      "source": null,
+      "state": "idle",
+      "timer": "0"
+    },
+    "after_refresh": {
+      "audio_volume": 0.37,
+      "percent": 37,
+      "saved": "37",
+      "source": null,
+      "state": "idle",
+      "timer": "0"
+    },
+    "manual_playback": {
+      "paused": false,
+      "time": 1.074421,
+      "volume": 0.37
+    },
+    "source_sha256": {
+      "app.js": "4b948b47461e9abfbabc5f755feb2e77ed3ac5f16982e3d476f32a6cb33f1551",
+      "index.html": "202e6e9d81550495f3e73b385c2fa0a090d76b2db192257855b3c1a5dbfa6a1d"
+    },
+    "driver_reaped": true,
+    "private_profile_removed": true
+  },
+  "firefox_volume_memory_proof_sha256": "b6c2b5388550be820c992eb9ee105d187f3759f0666350866265ee1875d15f66",
+  "visual_320_sha256": "0b9813d5de454857c137de14e8e2076ebc33861a9bced6fd13551eab6fdf50aa",
+  "station_baseline": {
+    "assessment": "healthy",
+    "observed_at": 1794754887.0330966,
+    "services": {
+      "broadcaster": {
+        "id": "abb87b80c56c007c8240d5df311c9a96af9f96824c423e5b34460a138fa171fc",
+        "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+        "started": "2026-11-15T05:57:04.799911735Z",
+        "restarts": 0,
+        "oom": false,
+        "health": "healthy"
+      },
+      "composer": {
+        "id": "0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146",
+        "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+        "started": "2026-11-15T03:23:31.379138171Z",
+        "restarts": 0,
+        "oom": false,
+        "health": "healthy"
+      },
+      "icecast": {
+        "id": "78f7a60cd2c96ce90c32f4ee896bd67cfb02646ebd7529f26ca402798da3bd6d",
+        "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+        "started": "2026-11-15T05:56:38.273381611Z",
+        "restarts": 0,
+        "oom": false,
+        "health": "healthy"
+      },
+      "renderer": {
+        "id": "04a26abb33422649a11752d188ca9e2eb149fbe50c981fc3a2eced30a00805d4",
+        "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+        "started": "2026-11-15T03:23:31.259377863Z",
+        "restarts": 0,
+        "oom": false,
+        "health": "healthy"
+      },
+      "web": {
+        "id": "dcb1fdd578b4b750521fa5e1522ef01c3d7a57da09b1ecb082500fc97a0e5029",
+        "image": "sha256:e69f1155cbb8a16abe093dd1965b677c5a84b1485a9d8a60c518d0170919fca6",
+        "started": "2026-11-15T13:52:49.7273011Z",
+        "restarts": 0,
+        "oom": false,
+        "health": "healthy"
+      }
+    },
+    "sample_copy_sha256": "0c9255dc827e6110ff805c4a943132b63bf013beb45e8b5186d71dc35e04e086"
+  },
+  "resource_observation": {
+    "original_attempt": "Interrupted, actual exec143 and owned PID missing;40healthy samples are partial, not six-hour acceptance",
+    "interruption_proof_sha256": "60e9ae7ebece2f24e32c45f41fdd67d80e08bce0af1913bad5c45a816e453da2",
+    "fresh_attempt": "Running under finite owned detached wrapper with PID/start identity verified; actual child-exit recording pending",
+    "checkpoint_sha256": "5062790753b98941c1007be762949d7163c2cea0b90306a881a4ed091fcc119b",
+    "six_hour_acceptance": false,
+    "scope": "Host/service metrics and station-reported watchdog health, not independent six-hour audio recording"
+  },
+  "raw_local_evidence": "/home/rakeshgangwar/Projects/generative-radio/artifacts/listener-volume-20261115",
+  "limits": [
+    "Candidate only; no live deployment/core/music change",
+    "Storage denial/quota and hardware-volume fixtures are simulations, not all privacy/device configurations",
+    "Native basic mode and unsupported hardware retain browser/device volume behavior",
+    "Physical/Safari/assistive-technology, public/offhost and human musical acceptance remain open"
+  ]
+}

@@ -14,6 +14,14 @@ function initialize() {
   const live = document.querySelector('#live-label');
   const volume = document.querySelector('#volume');
   const volumeValue = document.querySelector('#volume-value');
+  const volumePreferenceKey = 'generative-radio.volume.v1';
+  try {
+    const saved = window.localStorage.getItem(volumePreferenceKey);
+    if (typeof saved === 'string' && saved.length <= 3) {
+      const value = Number(saved);
+      if (Number.isInteger(value) && value >= 0 && value <= 100 && String(value) === saved) volume.value = saved;
+    }
+  } catch { /* Storage is optional for listening. */ }
   const activeStates = new Set(['connecting', 'playing', 'buffering', 'retrying']);
   let active = false, gain = 1, requestedVolume = Number(volume.value) / 100;
   let volumeSupported = true, player, playing = false;
@@ -75,13 +83,18 @@ function initialize() {
     }
   });
   button.addEventListener('click', () => active ? player.pause() : player.start());
-  function setVolume() {
-    requestedVolume = Number(volume.value) / 100;
+  function setVolume(remember = false) {
+    const chosen = Number(volume.value);
+    requestedVolume = chosen / 100;
     applyVolume(true);
     volumeValue.textContent = `${volume.value}%`;
     volume.setAttribute('aria-valuetext', `${volume.value} percent`);
+    if (remember && Number.isInteger(chosen) && chosen >= 0 && chosen <= 100) {
+      try { window.localStorage.setItem(volumePreferenceKey, String(chosen)); }
+      catch { /* The current control still works when persistence is unavailable. */ }
+    }
   }
-  volume.addEventListener('input', setVolume);
+  volume.addEventListener('input', () => setVolume(true));
   setVolume();
 
   if ('mediaSession' in navigator) {

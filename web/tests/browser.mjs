@@ -1,5 +1,6 @@
 // Opt-in local browser QA. Uses a temporary isolated profile, never a user profile.
 import {chromium} from 'playwright-core';
+import {checkVolumeMemory} from './volume-browser.mjs';
 import {checkNativeFallback} from './native-fallback-browser.mjs';
 import {checkBroadcast} from './broadcast-browser.mjs';
 import {checkLongRecovery} from './recovery-browser.mjs';
@@ -11,6 +12,7 @@ await mkdir(artifacts,{recursive:true});
 const browser=await chromium.launch({executablePath:process.env.CHROME_BIN||'/opt/google/chrome/chrome',headless:true});
 const results=[];
 try {
+  await checkVolumeMemory(browser,base,artifacts,results);
   await checkNativeFallback(browser,base,artifacts,results);
   await checkLongRecovery(browser,base,artifacts,results);
   await checkBroadcast(browser,base,artifacts,results);
@@ -77,13 +79,17 @@ try {
   results.push({test:'one mid-fade setter failure recovers chosen volume for manual playback',pass:true});await transient.close();
 
   const device=await browser.newContext({viewport:{width:390,height:844}});
-  await device.addInitScript(() => Object.defineProperty(HTMLMediaElement.prototype, 'volume', {
-    configurable:true, get(){return 1;}, set(){throw new DOMException('Device controls volume','NotSupportedError');}
-  }));
+  await device.addInitScript(() => {
+    localStorage.setItem('generative-radio.volume.v1','37');
+    Object.defineProperty(HTMLMediaElement.prototype, 'volume', {
+      configurable:true, get(){return 1;}, set(){throw new DOMException('Device controls volume','NotSupportedError');}
+    });
+  });
   const devicePage=await device.newPage();await devicePage.clock.setFixedTime(new Date(timerEpoch));
   await devicePage.goto(base);
   assert.equal(await devicePage.locator('#volume-control').isVisible(),false);
   assert.equal(await devicePage.locator('#volume-note').isVisible(),true);
+  assert.equal(await devicePage.evaluate(()=>localStorage.getItem('generative-radio.volume.v1')),'37','hardware capability check must not overwrite preference');
   await devicePage.getByRole('button',{name:'Start listening',exact:true}).click();
   await devicePage.waitForFunction(()=>document.querySelector('#player').dataset.state==='playing');
   await devicePage.getByLabel('Sleep timer',{exact:true}).selectOption('15');
@@ -92,6 +98,7 @@ try {
   await devicePage.evaluate(()=>document.dispatchEvent(new Event('visibilitychange')));
   assert.equal(await devicePage.locator('#player').getAttribute('data-state'),'paused');
   assert.equal(await devicePage.locator('#stream').getAttribute('src'),null);
+  assert.equal(await devicePage.evaluate(()=>localStorage.getItem('generative-radio.volume.v1')),'37');
   results.push({test:'device-owned volume still expires and releases real audio',pass:true});await device.close();
 
   const timerRecovery=await browser.newContext();let timerRequests=0;

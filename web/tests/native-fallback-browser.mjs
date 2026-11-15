@@ -118,6 +118,7 @@ export async function checkNativeFallback(browser,base,artifacts,results) {
         await moduleGate;
         await route.fulfill({response,body:body+'\nwindow.__nativeScriptEvaluated=true;'});
       });
+      await page.addInitScript(()=>{const storage=window.localStorage;window.__volumeStorageAccesses=0;Object.defineProperty(window,'localStorage',{configurable:true,get(){window.__volumeStorageAccesses++;return storage;}});});
       if(phase==='pending') await page.route('**/radio.mp3',async route=>{signalAudioHeld();await audioGate;await route.continue();});
       await page.goto(base,{waitUntil:'commit'});
       await page.locator('#native-stream').waitFor({state:'visible'});
@@ -140,6 +141,7 @@ export async function checkNativeFallback(browser,base,artifacts,results) {
       releaseModule();
       await page.waitForFunction(()=>window.__nativeScriptEvaluated===true);
       assert.equal(await page.locator('#native-fallback').isVisible(),true);
+      assert.equal(await page.evaluate(()=>window.__volumeStorageAccesses),0,'started native session must return before preference access');
       assert.equal(await page.locator('#native-stream').evaluate(audio=>audio===document.activeElement),true,'started native session retains keyboard focus');
       assert.equal(await page.locator('#enhanced-controls').isVisible(),false);
       assert.equal(await page.locator('#native-stream').getAttribute('src'),source);
