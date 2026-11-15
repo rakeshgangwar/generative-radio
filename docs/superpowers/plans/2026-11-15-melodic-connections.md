@@ -37,7 +37,7 @@
 
 ### Task 2: Same-font offline audition and measured pair
 
-**Files:** Modify radio/render.py; create radio/melody_audition.py,tests/test_melody_audition.py,docs/melodic-connections.md; update docs/product-journal.md,HANDOFF.md and docs/evidence/melodic-connections-20261115.json.
+**Files:** Modify radio/render.py,.github/workflows/ci.yml; create web/tests/melody-audition.mjs; create radio/melody_audition.py,tests/test_melody_audition.py,docs/melodic-connections.md; update docs/product-journal.md,HANDOFF.md and docs/evidence/melodic-connections-20261115.json.
 
 **Interfaces:** render_notes(config,notes,seconds,stem,*,arrangement=None) preserves existing publication/analysis/cleanup; render default delegates without transform. CLI/report wraps base and connected note lists, using existing audition helpers.
 

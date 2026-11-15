@@ -646,9 +646,9 @@ tests pass, including 24 historical default/v1/v2 MIDI fingerprints and the exis
 render cleanup. Workers retain the original compose path; the experiment has not
 changed the station.
 
-The [comparison](http://localhost:18091) has two explicit players and time guides,
-starting near 2:20. Actual Chromium playback, same-phrase seeking, one-at-a-time
-controls and 320/390px/desktop layout pass. Testing caught an important delivery
+The [comparison](http://localhost:18091) has two explicit players and clickable
+phrase cues, starting near 2:20. Actual Chromium playback, cold-before-play cueing, same-phrase seeking,
+one-at-a-time controls, 44px targets, no-JS fallback and 320/390px/desktop layout pass. Testing caught an important delivery
 issue: the initial simple server ignored byte ranges, making seeking fail. We
 switched to an isolated read-only Caddy file server, verified 206 responses and
 repeated the same seek acceptance successfully. The initial failed browser proof
@@ -656,9 +656,11 @@ is retained alongside the corrected result. No main service was replaced.
 
 The [runbook](melodic-connections.md) and [evidence](evidence/melodic-connections-20261115.json)
 record source/font/MIDI fingerprints, additions, shortened tails and measured audio.
-One zero-addition copy issue was corrected so unchanged scores are honestly labeled;
-the existing seven-addition page stays byte-identical and musical/render-source
-hashes still match the completed audio. Independent whole-branch review and actual
+One zero-addition copy issue was corrected so unchanged scores are honestly labeled.
+Because these changes are sparse in a long sequence, the time guides now have
+explicit cue buttons: both players seek to the same lead-in and stay paused until
+you choose a version. Musical/render-source hashes still match the completed audio;
+only the offline presentation was regenerated. Independent whole-branch review and actual
 final-head CI remain ahead. The question to listening is simple: does the line feel
 more intentional, or do the small connections disturb its restfulness? Current
 version 2 remains on air while that preference is open.

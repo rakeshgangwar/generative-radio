@@ -8,8 +8,8 @@ unchanged. Workers do not call this transform; the station continues on version 
 SoundFont release/reverb can ring through a MIDI rest.
 
 The current local comparison is at http://localhost:18091. Pause other audio, play
-one version at a time and compare the same moment. Start near 2:20; the page lists
-all seven changed moments. Both 23m05s masters use TimGM and measure -22.07 LUFS.
+one version at a time and compare the same moment. Choose “Compare near 2:20”; both players cue three seconds before the note and
+stay paused until you press play. The page lists all seven changed moments. Both 23m05s masters use TimGM and measure -22.07 LUFS.
 This is deliberately a small audition, not a claim that more notes improve music.
 
 ## Generate a fresh comparison
@@ -61,8 +61,9 @@ docker run --rm --name radio-melody-preview \
   generative-radio-web:audition-preview caddy file-server --root /srv --listen :8080
 ```
 
-Open http://localhost:18091. Audio has native controls, no autoplay/preload and
-one-at-a-time playback. The server sees only the audition directory. Stop that
+Open http://localhost:18091. Audio has native controls, no audio fetch before interaction and
+one-at-a-time playback. Phrase buttons work before initial playback and pause both
+players when selecting a new point. The server sees only the audition directory. Stop that
 preview when finished; retain any comparison evidence you want to keep.
 
 ## What has been verified
@@ -73,3 +74,9 @@ lasting at least two seconds below -50 dB were checked independently. Chromium p
 and sought both tracks to the same phrase, paused the other track automatically,
 and fit 320/390px and desktop widths. This is not physical-device/Safari acceptance
 or a human musical preference. No on-air version change follows from the metrics.
+
+The repeatable browser acceptance is `web/tests/melody-audition.mjs`. Set
+`RADIO_MELODY_URL` and `RADIO_MELODY_ARTIFACTS` to a completed local pair and an
+output directory, then run it with the existing Playwright dependency. CI generates
+a shorter same-font pair, serves it in an isolated preview and runs the same cold
+phrase-cue/playback/seek/touch-target/no-JS checks, with always-run cleanup.

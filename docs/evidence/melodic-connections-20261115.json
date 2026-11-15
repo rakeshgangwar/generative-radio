@@ -1,6 +1,6 @@
 {
   "base_commit": "7e00548e615784ddcae50eafa747fc41a3252314",
-  "delivery": "offline candidate; live version2 station unchanged; review/CI pending",
+  "delivery": "offline candidate; local preview ready; live version2 unchanged; final independent review and real final-head CI pending",
   "comparison": {
     "seconds": 1385,
     "positions": [
@@ -102,12 +102,15 @@
     "explicit_native_playback": true,
     "no_idle_mp3": true,
     "seek_both_to_same_phrase": true,
+    "clickable_phrase_before_play": true,
+    "phrase_click_pauses_both": true,
     "one_at_a_time": true,
     "widths": [
       1280,
       390,
       320
     ],
+    "no_js_native_controls": true,
     "guide_moments": 7,
     "errors": []
   },
@@ -131,19 +134,19 @@
       "render.py": "b9843b7ac2f2c786cf82d76a7a338e5db639a6f7ef8186ec1ba9bd5f3f21af09"
     },
     "current_sources": {
-      "melody_audition.py": "b0c3cb2bb736fce8977fa1d001a8cc86773288ef71215e0b4cec1f104232b2e5",
+      "melody_audition.py": "7c30f88147a6a392acbcf139d48332901720921b770b259478ed2213e575eec2",
       "melodic_connections.py": "0a5532cdcb69a64e3151bbf4493bfd1062def50b15b8209a79811d8e4f640fc4",
       "audition.py": "2e0f4a1d72f35a834bd262848368f7f0dc432fd363de95d305326ae1edb48db0",
       "compose.py": "843b3c8dbdaa19db7c5e44e83841927aeb5d7fad41c86845d3229b7b4e5b885e",
       "arrangement.py": "fb1cd67ac84761d1062f1cebbc865e57493785bed07926776448ba83502b3423",
       "render.py": "b9843b7ac2f2c786cf82d76a7a338e5db639a6f7ef8186ec1ba9bd5f3f21af09"
     },
-    "post_render_change": "Only zero-addition HTML description corrected; all musical/render-helper hashes match and the seven-addition long HTML is byte-identical."
+    "post_render_change": "Presentation only: honest zero-addition wording and clickable phrase cues. Musical/render-helper source hashes match the rendered audio; only offline HTML was regenerated."
   },
   "tests": {
     "media": 160,
-    "media_log": "media-suite.log",
-    "seconds": 91.807,
+    "media_log": "guides-media-final.log",
+    "seconds": 89.606,
     "listener": 46,
     "legacy_midi_fingerprints": 24
   },
@@ -156,7 +159,14 @@
     "browser-final/320.png": "1555ac92548c1ce5a016a05803376e4bfc84f53b78ec05129bb81945b0ce3b48",
     "browser-final/desktop.png": "3865b76ddb87d3b8cd235829a8db7fa278a851a1de40cb4d364657f548677001",
     "browser-final.log": "acfdc4421012418f2dd602fda1641f02941b1c92607af1fd6983584545306bd6",
-    "browser/failure.json": "c33a03117303bb6fbd3288f0aa707985584f7ce7c34aac378b97fa6f92cbddec"
+    "browser/failure.json": "c33a03117303bb6fbd3288f0aa707985584f7ce7c34aac378b97fa6f92cbddec",
+    "browser-regression/result.json": "53ff1c0a9f1e3e8e69e9412570b67e50839e0889c9d8839d702d00273b0c4ead",
+    "browser-regression/320.png": "f467a611c56d7cdb5fd9bd6dd6c81728e8b7a34fc2e6375fb03630b7f9358eec",
+    "browser-regression/desktop.png": "48e02b34c13ea030f29ed53b6a245d3f267040c3d572cfe0aeaade5ea3a566dd",
+    "browser-regression.log": "acfdc4421012418f2dd602fda1641f02941b1c92607af1fd6983584545306bd6",
+    "browser-guides-red.log": "0796d9906769fddab3c7473ef35335d5ffb5d2a1ceed549cf89309aabe60fb6b",
+    "browser-guides-red.json": "532f716c5c9513e19baedcc9ec0f9fae0af426d7d298b5e4a17402df7bd1f6eb",
+    "long/index.html": "46b2bde53114e4080ed5310bc93de4daaad51bb26694f1147d230a4139ee4509"
   },
   "limits": [
     "No claim of improved musical quality or subjective preference.",
@@ -164,5 +174,7 @@
     "No public hosting or physical-device/Safari acceptance."
   ],
   "main_five_roles_unchanged": true,
-  "candidate_runtime_source_files_matched": 21
+  "candidate_runtime_source_files_matched": 21,
+  "repeatable_browser_test": "web/tests/melody-audition.mjs",
+  "ci_acceptance": "Generate120s same-font pair, isolated read-only Caddy preview, verify206 and run same browser acceptance with always-run cleanup."
 }

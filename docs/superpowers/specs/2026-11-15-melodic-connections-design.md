@@ -75,7 +75,10 @@ Atomic running/failed/complete report; failed work never pretends to be complete
 HTML uses existing quiet blue/system-body/Palatino style, two explicit audio controls,
 no autoplay/preload, one-at-a-time playback. Explain same font/matched level/different
 notes, pause other audio, compare same moment, and metrics do not decide quality.
-Report zero-addition comparisons honestly. No font binaries or large media in git.
+Report zero-addition comparisons honestly. Clickable phrase guides cue both players
+three seconds before the note without playback, including before metadata is loaded.
+Keep guides disabled with a readable no-JS fallback until script attaches. Native
+play remains explicit, and selecting a new cue pauses both. No font binaries or large media in git.
 
 ## Verification and delivery
 

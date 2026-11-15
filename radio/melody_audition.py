@@ -27,18 +27,18 @@ def report_html(report):
     moments=[]
     for item in report.get('changes',[]):
         seconds=int(item['sequence_seconds'])
-        moments.append(f'<li>{seconds//60}:{seconds%60:02d} — a connecting note in segment {item["position"]}</li>')
-    guide=('<h2>Places to compare</h2><p>Seek near these score-time guides in both versions. SoundFont release and MP3 timing can differ slightly.</p><ul>'+''.join(moments)+'</ul>') if moments else '<p>No eligible connections were added for these positions; this comparison does not claim a musical change.</p>'
+        moments.append(f'<li><button type="button" disabled data-seek="{max(0,item["sequence_seconds"]-3):.6f}">Compare near {seconds//60}:{seconds%60:02d}</button> — segment {item["position"]}</li>')
+    guide=('<h2>Places to compare</h2><p id="phrase-status" role="status">Choose a phrase, then press play on either version. Both players cue three seconds before the note. SoundFont release and MP3 timing can differ slightly.</p><noscript><p>Use the listed times with the native audio controls when JavaScript is off.</p></noscript><ul>'+''.join(moments)+'</ul>') if moments else '<p>No eligible connections were added for these positions; this comparison does not claim a musical change.</p>'
     font=html.escape(Path(report['font']['path']).name)
     comparison='The same SoundFont, different scores.' if report['added_notes'] else 'The same SoundFont, identical scores for these positions.'
     return ('<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">'
-            '<title>Melody audition — Generative Radio</title><style>body{font:18px/1.6 system-ui;max-width:800px;margin:3rem auto;padding:0 1rem;color:#17344b;background:#d8e3ed}h1,h2{font-family:Palatino,serif}section{border-top:1px solid #4a6275;padding:1rem 0}audio{max-width:100%}a{color:inherit}</style>'
+            '<title>Melody audition — Generative Radio</title><style>body{font:18px/1.6 system-ui;max-width:800px;margin:3rem auto;padding:0 1rem;color:#17344b;background:#d8e3ed}h1,h2{font-family:Palatino,serif}section{border-top:1px solid #4a6275;padding:1rem 0}audio{max-width:100%}a{color:inherit}button{font:inherit;color:inherit;background:none;border:0;padding:.2rem .15rem;min-height:44px;text-decoration:underline;cursor:pointer}button:focus-visible{outline:2px solid #17344b;outline-offset:3px}button:disabled{cursor:default;text-decoration:none}</style>'
             f'<h1>Two ways a melody can unfold.</h1><p>{comparison} Pause other audio first. '
             'Play one version at a time and compare the same moment. Levels are matched with attenuation only; metrics cannot decide which feels better.</p>'
             f'<p>Sound: {font}. Duration: {report["sequence_seconds"]:.1f} seconds. Shared level: {report["target_lufs"]:.2f} LUFS. '
             f'{report["added_notes"]} quiet connecting notes. This is an offline experiment; the station is unchanged.</p>'
             +''.join(sections)+guide+'<p><a href="report.json">Measurements, score changes and source fingerprints</a></p>'
-            '<script>const tracks=[...document.querySelectorAll("audio")];for(const track of tracks)track.addEventListener("play",()=>{for(const other of tracks)if(other!==track)other.pause();});</script></html>')
+            '<script>const tracks=[...document.querySelectorAll("audio")],targets=new Map();for(const track of tracks){track.addEventListener("play",()=>{for(const other of tracks)if(other!==track)other.pause();});track.addEventListener("loadedmetadata",()=>{if(targets.has(track))track.currentTime=targets.get(track);});}for(const button of document.querySelectorAll("[data-seek]")){button.disabled=false;button.addEventListener("click",()=>{const target=Number(button.dataset.seek);if(!Number.isFinite(target)||target<0)return;for(const track of tracks){track.pause();targets.set(track,target);if(track.readyState>=1)track.currentTime=target;else{track.preload="metadata";track.load();}}document.querySelector("#phrase-status").textContent="Both players are cued three seconds before this note. Press play on either version.";});}</script></html>')
 
 
 def audition_melody(output,soundfont,station_seed=42,positions=(1,2,3),seconds=120,bpm=60):
