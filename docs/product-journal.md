@@ -2,6 +2,32 @@
 
 A living record of what we are building, what we have learned, and what we may try next. Updated 15 November 2026, Asia/Kolkata.
 
+## Current direction — 15 November
+
+The local station at [localhost:8080](http://localhost:8080) is playing the existing
+version-2 music: recoverable musical chapters, phrase rests and TimGM sound.
+The listener has chapter labels, a personal sleep timer and bounded recovery
+through longer interruptions. Music is composed ahead of playback on the CPU.
+
+Changes through PR #25 have merged after actual final-head CI. The newest addition
+is the [host-side vitals recorder](station-observer.md), which records private,
+bounded evidence without controlling the station. PR #25 merged at 09:15 UTC as
+`4f3ef70`; all four jobs passed, including actual Docker-vitals, browser playback,
+and production TLS/recovery checks. No station role was replaced for this tool. Its completed half-hour observation
+has 60 healthy samples; the measured receipt is in the latest dated entry below.
+
+The next musical decision is still listening, not another automatic rollout. The
+[matched connecting-note comparison](http://localhost:18091) is available, starting
+near the 2:20 cue. It is an offline candidate; version 2 stays on air while the
+preference is open. The matched TimGM/FluidR3 sound comparison also remains open.
+
+The repository is public under MIT; the station itself remains local. Public
+operation needs a supplied host/domain and off-host backup/alert destinations,
+followed by actual deployment, reboot, independent probing and recovery evidence.
+Physical-device/Safari behavior and subjective long listening remain unverified.
+Those practical steps and musical feedback come before declaring this finished.
+The dated entries below preserve the experiments and decisions that led here.
+
 ## The starting idea
 
 An always-on station that composes its own ambient music. Press play and enter a continuous musical space: calm enough to work, read, rest or sleep with, but alive enough that an attentive listener hears development. The station should feel like a place worth returning to.
@@ -23,7 +49,7 @@ The listener also asked whether the music is generated live, wanted memory/syste
 - A render-ahead queue, independent fallback music, crossfades, retries, cleanup and bounded retained audio.
 - Decoded-audio supervision: it can detect persistent silent, missing or hung output and restart its owned Liquidsoap process within a rolling restart budget. Icecast outages allow native reconnection.
 - Actual failure drills, 30-minute and one-hour baselines, and a completed two-hour musical-memory recording. The latest run contains exactly 7,200 seconds with no detected silence at −50 dB lasting two seconds; all 226 watchdog observations were healthy.
-- Automated Python 3.11/3.14, rendering/streaming, browser and hardened HTTPS checks. PRs #1–#15 have merged after passing current-head CI.
+- Automated Python 3.11/3.14, rendering/streaming, browser and hardened HTTPS checks. Changes through PR #25 have merged after passing current-head CI.
 - A local listening page with bounded reconnection, native fallback and an optional personal sleep timer.
 - Recoverable musical chapters, verified backup/restore commands and an opt-in production deployment package.
 - An offline, matched-score SoundFont comparison bench and a read-only HTTPS monitor that decodes actual audio. The current TimGM sound stays on air.
@@ -639,7 +665,7 @@ There is at most one quiet stepwise connection per eligible phrase; arrival and
 release profiles stay unchanged. The current pair adds seven notes and shortens
 five tails. This remains a subtle audition, not a solution declared from a metric.
 
-Both masters measure -22.07 LUFS, with true peaks -8.35/-8.36 dBFS. Their61,078,500-frame
+Both masters measure -22.07 LUFS, with true peaks -8.35/-8.36 dBFS. Their 61,078,500-frame
 PCM files have exact 1385-second duration, and independent FFmpeg checks found no
 silence at least two seconds below -50 dB. All 161 real-media tests and 46 listener
 tests pass, including 24 historical default/v1/v2 MIDI fingerprints and the existing
@@ -684,12 +710,12 @@ rather than healthy. An opt-in real Docker regression now covers that boundary;
 the failed run is preserved. The corrected minute recording completed six healthy
 samples, retained exactly three rotating sample files and left all five service
 identities, start times, restart counts and OOM states unchanged. A second final-source
-10-second recording completed four healthy samples and retained two slots. All 16
-observer tests pass against the real local Docker project. The host suite passes
-177 tests with six media/opt-in skips; full media and final delivery checks remain
+10-second recording completed four healthy samples and retained two slots. At that stage, all 16
+observer tests passed against the real local Docker project. The host suite passed
+177 tests with six media/opt-in skips; full media and final delivery checks remained
 separate gates. Cancellation testing also caught and fixed the case where a child
 closed stdout before exiting: it now responds promptly instead of waiting five
-seconds. Final independent review and CI delivery remain ahead. The
+seconds. Final independent review and CI delivery were still ahead. The
 [evidence](evidence/station-observer-20261115.json) ties the observations to source hashes. This does not install an alert
 service or replace the remaining public-host and off-host recovery work.
 
@@ -710,3 +736,46 @@ again retained two slots with four healthy samples. Actual SIGTERM preserved a
 one-sample cancelled receipt and exited in under 0.01 seconds in the observed run.
 There were no Critical findings or deferred minors. These are robustness checks,
 not new memory thresholds or observer-side audio analysis.
+
+
+### 15 November: reusable vitals recorder delivered
+
+[PR #25](https://github.com/rakeshgangwar/generative-radio/pull/25) merged at
+09:15:30 UTC as `4f3ef70` after its final `a0ce9d0` head passed all four jobs in
+[CI run 43697320412](https://github.com/rakeshgangwar/generative-radio/actions/runs/43697320412).
+The new real-Docker recording step passed alongside browser playback, the offline
+melody audition and isolated production TLS/certificate recovery. Earlier cancelled
+runs were superseded and did not clear the merge. The guard verified the unchanged
+`7db3067` base and exact final head before the authorized merge.
+
+Local main is updated. A post-merge check retained the same five service IDs,
+start times, health, restart and OOM values, and the recorder source hashes match
+the already running finite observation. This is a host tool, so no station image
+or role was redeployed. The half-hour observation has now completed, with the
+checked result below.
+
+
+### 15 November: the reusable observer completes its half-hour
+
+The process exited 0 after 1800.000301 seconds. All 60 observations
+were healthy, with zero unknown or unhealthy samples. Each included all five Docker
+roles and a fresh existing decoded-audio watchdog report. IDs, start times,
+restart/OOM values and source hashes matched before/after; every retained sample
+agreed with the initial service identities. All 60 samples plus one summary remained
+within the configured 120-slot bound. The earlier six-sample/minute test separately
+exercised actual rotation through three slots.
+
+Broadcaster memory sampled 233.6–249.7 MiB. Quarter means were 236.56/236.49/236.28/236.60 MiB;
+no continuing rise is evident in this observed window. The
+[half-hour receipt](evidence/station-observer-half-hour-20261115.json) records all
+service ranges, observer-host RAM and report-filesystem capacity, actual process
+exit proof and SHA-256 hashes for the raw sources. The
+[delivery receipt](evidence/station-observer-delivery-20261115.json) ties this to
+the CI-cleared source and merge.
+
+This run recorded vitals and the station's existing decoded-audio reports; it did
+not create a new audio recording or independent listener probe. Sampled ranges do
+not establish unsampled resource peaks, indefinite leak absence, public capacity,
+off-host recovery or subjective listening quality. The original musical questions
+and real deployment/device checks remain open. Current version 2 stays on air;
+no audition was adopted or role replaced for this observation.

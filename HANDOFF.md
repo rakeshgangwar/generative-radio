@@ -44,7 +44,7 @@ sleep-timer rollout at 06:34 IST left all four music-service IDs/restarts unchan
 
 ## Delivery and operator tools
 
-PRs #1–#22 merged after current-head CI. PR #16 (`a00557d`) records the completed
+Changes through PR #25 merged after actual final-head/current-base CI. PR #16 (`a00557d`) records the completed
 two-hour acceptance and replaces the stale first-laptop handoff. Generation source
 is PR #17 (`d82bd17`), version-2 melodic phrasing. All four checks passed on final
 head `84c9d33`, run 43671299403. Its candidate image matches all 17 runtime source files at the reviewed commit. Composer/renderer now use it; broadcaster/Icecast/web stayed unchanged.
@@ -87,7 +87,8 @@ rendered buffer remains immutable. Retained streaming-role rollback images and a
 verified same-host pre-upgrade backup (43 jobs, 89 files) are under local artifact
 pointers. No off-host recovery or public deployment is implied.
 
-An offline melodic-connections audition is in development in an isolated branch.
+PR #24 merged the offline melodic-connections audition as `7db3067` after all
+four final-head CI jobs passed, including the actual audition render/browser step.
 The local comparison at http://localhost:18091 uses the same TimGM font and matched
 23m05s levels: current version 2 versus seven quiet connecting notes/five shortened
 tails. A bounded tail can retain at least half its original duration and half a
@@ -95,8 +96,9 @@ beat; original attacks/pitches/velocities, pads/bass and phrase rests remain fix
 The preview passed real Chromium playback/seeking/one-at-a-time controls and narrow
 layouts. A read-only Caddy audition-only server provides 206 byte ranges; the initial
 simple server failed seeking and was stopped. Main station containers/aliases are
-unchanged. Independent review is resolved (one phrase-boundary fix); real CI and subjective
-preference are pending. No default adoption.
+unchanged. Independent review is resolved (one phrase-boundary fix), and delivery
+is complete. Subjective preference and on-air adoption remain pending; the default
+music is unchanged.
 See the [audition runbook](docs/melodic-connections.md).
 
 Source checkout is clean on main. Public decoded HTTPS monitoring remains an
@@ -231,13 +233,39 @@ Original architecture conversation reference:
 https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
 
 
-## Station observer iteration (in progress)
+## Station observer delivered; half-hour observation complete
 
-PR #24 is merged at `7db3067`; the matched connecting-note candidate is available
-at http://localhost:18091 but has not been adopted on air. The next branch
-`feat/station-observer` adds a host-only bounded read-only vitals recorder; see
-`docs/station-observer.md` and the 2026-11-15 spec/plan. Actual local 60-second recording passed six healthy samples with three retained
-slots and unchanged service identities/state; a final-source 10-second recording
-also passed. Independent review and final-head/current-base CI remain before merge. Main station
-services are not redeployed for this tool. Local ignored evidence is under
-`artifacts/station-observer-20261115/`; failed first template runs are retained.
+PR #25 merged at 09:15:30 UTC as `4f3ef70` after final head `a0ce9d0` passed all four
+jobs in CI run 43697320412 on unchanged base `7db3067`. Local main is clean and
+fast-forwarded. The real Docker-vitals step passed, as did browser playback and
+production TLS/certificate recovery. There were two Important review findings;
+both were reproduced and fixed in one pass. No Critical findings, deferred minors
+or declined behaviors. Final full media suite: 179 tests pass, one explicit live
+opt-in skipped; all 18 observer tests pass with that opt-in against Docker.
+
+The host-only [recorder](docs/station-observer.md) was run without replacing any
+station role. The one-minute recording passed six healthy samples/three retained
+slots with unchanged five-service IDs/state; a corrected-source short recording
+passed four healthy samples/two retained slots. Actual SIGTERM retained a cancelled
+partial receipt. Failed initial template runs are preserved.
+
+The finite observation completed: session 84456 is terminal exit 0, never restart
+or repoll it. The checked run lasted 1800.000301 seconds with 60 healthy
+samples and zero unknown/unhealthy observations. Source hashes matched in the
+before/after snapshots. Every retained sample matched the initial five-service
+identities, start times and restart/OOM state; the final snapshot matched too. All
+60 watchdog-report observations were healthy with restart count 0. Broadcaster
+RAM sampled 233.6–249.7 MiB, quarter means 236.56/236.49/236.28/236.60 MiB. This is sampled vitals plus
+existing watchdog reports, not a new audio capture or independent listener probe.
+
+The [half-hour receipt](docs/evidence/station-observer-half-hour-20261115.json)
+contains raw SHA-256 fingerprints, ranges and process exit proof; the
+[delivery receipt](docs/evidence/station-observer-delivery-20261115.json) records
+exact-head/current-base CI and the merge. Raw local evidence remains ignored under
+`artifacts/station-observer-20261115/`. The completed feature workflow is archived
+in its `workflow-final` directory. Do not infer indefinite stability or public
+capacity from this local observation.
+
+PR #24's matched connecting-note candidate remains at http://localhost:18091 with
+no on-air adoption. Public target/off-host recovery and human/device acceptance
+remain open.
