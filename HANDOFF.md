@@ -44,7 +44,17 @@ sleep-timer rollout at 06:34 IST left all four music-service IDs/restarts unchan
 
 ## Delivery and operator tools
 
-Changes through PR #25 merged after actual final-head/current-base CI. PR #16 (`a00557d`) records the completed
+Latest local listener delivery is PR #29 (`de1c460`): native-first fallback,
+visible keyboard focus handoff and clearer basic-mode help are live. All four
+final-head/current-base jobs passed on `1c0e79b`, run43719973080. Only web changed;
+all four core identities/start/restart/OOM values were preserved. An existing
+listener recovered without another gesture,60seconds of direct core audio decoded,
+and fresh liveFirefox/all-eight-asset checks passed. The confirmation bound includes
+health waiting; physical audibility and public access are not established.
+See the [current delivery receipt](docs/evidence/native-listener-polish-delivery-20261115.json).
+Detailed paragraphs below retain historical rollout scope.
+
+Application changes through PR #29 merged after actual final-head/current-base CI. PR #16 (`a00557d`) records the completed
 two-hour acceptance and replaces the stale first-laptop handoff. Generation source
 is PR #17 (`d82bd17`), version-2 melodic phrasing. All four checks passed on final
 head `84c9d33`, run 43671299403. Its candidate image matches all 17 runtime source files at the reviewed commit. Composer/renderer now use it; broadcaster/Icecast/web stayed unchanged.
@@ -419,3 +429,20 @@ Node tests and diff checks, matched asset/proof hashes, and inspected the record
 actual browser/Firefox evidence and320px screenshots. No correction pass or
 rereview is needed. PR #29 is locally verified; final-head/current-base CI and a
 separate measured web-only rollout remain required.
+
+
+## Latest verified local rollout — PR #29
+
+Merge de1c460, final head1c0e79b/base41d2456, CI43719973080 allfour jobs success.
+New web ID dcb1fdd578b4, image e69f1155cbb8, started13:52:49.727UTC. Core IDs/images/
+start/restart/OOM unchanged. Existing-listener confirmation within27.629seconds
+includes health waiting; two requests, no second gesture. Direct core PCM60.000s,
+no -50dBFS silence of two seconds, RMS-24.5 and peak-10.4dBFS. LiveFirefox5flows,
+cleanup and all8asset fingerprints pass. Owned polish preview removed; melody
+preview18091 remains available (root page200 rechecked). Raw evidence is under
+artifacts/native-polish-20261115; tracked proof links are in the delivery receipt.
+No new music, public deployment or off-host/device/human acceptance is claimed.
+
+Proposed next comfort idea: remember chosen full-player volume across refresh with
+no autoplay and no saved sleep timer. It is not implemented. Main current direction
+is summarized first in the product journal; historical candidate entries are kept.

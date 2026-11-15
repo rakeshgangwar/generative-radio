@@ -4,29 +4,38 @@ A living record of what we are building, what we have learned, and what we may t
 
 ## Current direction — 15 November
 
-The local station at [localhost:8080](http://localhost:8080) is playing the existing
-version-2 music: recoverable musical chapters, phrase rests and TimGM sound.
-The listener has chapter labels, a personal sleep timer and bounded recovery
-through longer interruptions. Music is composed ahead of playback on the CPU.
+The local station at [localhost:8080](http://localhost:8080) is playing version-2
+music: recoverable musical chapters, phrase rests and TimGM sound. The CPU composes
+and renders ahead into a buffer; you join the continuous broadcast when you play.
+The next musical decision is listening to the
+[matched connecting-note comparison](http://localhost:18091), starting near the
+2:20 cue, and the TimGM/FluidR3 comparison. Both remain candidates; the listening-preference questions are open.
 
-Changes through PR #25 have merged after actual final-head CI. The newest addition
-is the [host-side vitals recorder](station-observer.md), which records private,
-bounded evidence without controlling the station. PR #25 merged at 09:15 UTC as
-`4f3ef70`; all four jobs passed, including actual Docker-vitals, browser playback,
-and production TLS/recovery checks. No station role was replaced for this tool. Its completed half-hour observation
-has 60 healthy samples; the measured receipt is in the latest dated entry below.
+The latest listener work is deployed through PR #29. The full player has chapter
+labels, a personal sleep timer and bounded reconnection. Native controls remain
+usable when scripts fail; late scripts preserve listening already started there.
+An idle native control hands keyboard focus to visible full-player controls, and
+the fallback explains its feature limits and reloading. Actual Chromium and stock
+Firefox playback passed. The last web-only rollout preserved all four core roles
+and recovered an existing listener without another click. Its
+[measured delivery receipt](evidence/native-listener-polish-delivery-20261115.json)
+records the exact scope; this is local evidence, not public or physical-device
+acceptance.
 
-The next musical decision is still listening, not another automatic rollout. The
-[matched connecting-note comparison](http://localhost:18091) is available, starting
-near the 2:20 cue. It is an offline candidate; version 2 stays on air while the
-preference is open. The matched TimGM/FluidR3 sound comparison also remains open.
+The [host-side vitals recorder](station-observer.md) is also shipped. Its completed
+half-hour observation retained 60 healthy samples, without controlling services.
+Monitoring reports uncertainty when evidence is incomplete.
+
+One small comfort idea worth trying next is remembering the listener's chosen
+volume across page refreshes, while still requiring play and resetting the sleep
+timer. This is proposed, not implemented. Musical development remains the main
+product question: it should stay worth hearing over hours, with room to breathe.
 
 The repository is public under MIT; the station itself remains local. Public
 operation needs a supplied host/domain and off-host backup/alert destinations,
-followed by actual deployment, reboot, independent probing and recovery evidence.
-Physical-device/Safari behavior and subjective long listening remain unverified.
-Those practical steps and musical feedback come before declaring this finished.
-The dated entries below preserve the experiments and decisions that led here.
+then real deployment, reboot, independent probing and recovery evidence. Physical
+devices, Safari, assistive-technology combinations and human long listening remain
+open. The dated entries below preserve experiments, candidate states and decisions.
 
 ## The starting idea
 
@@ -48,8 +57,8 @@ The listener also asked whether the music is generated live, wanted memory/syste
 - Original seeded arrangements with several harmonic paths, variable chord holds, developed melodic phrases, changing texture and quieter openings/releases.
 - A render-ahead queue, independent fallback music, crossfades, retries, cleanup and bounded retained audio.
 - Decoded-audio supervision: it can detect persistent silent, missing or hung output and restart its owned Liquidsoap process within a rolling restart budget. Icecast outages allow native reconnection.
-- Actual failure drills, 30-minute and one-hour baselines, and a completed two-hour musical-memory recording. The latest run contains exactly 7,200 seconds with no detected silence at −50 dB lasting two seconds; all 226 watchdog observations were healthy.
-- Automated Python 3.11/3.14, rendering/streaming, browser and hardened HTTPS checks. Changes through PR #25 have merged after passing current-head CI.
+- Actual failure drills, 30-minute and one-hour baselines, and a completed two-hour musical-memory recording. That two-hour recording contains exactly 7,200 seconds with no detected silence at −50 dB lasting two seconds; all 226 watchdog observations were healthy.
+- Automated Python 3.11/3.14, rendering/streaming, browser and hardened HTTPS checks. Application changes through PR #29 have merged after passing final-head/current-base CI. Stock Firefox basic flows and the broader Chromium suite both run in integration.
 - A local listening page with bounded reconnection, native fallback and an optional personal sleep timer.
 - Recoverable musical chapters, verified backup/restore commands and an opt-in production deployment package.
 - An offline, matched-score SoundFont comparison bench and a read-only HTTPS monitor that decodes actual audio. The current TimGM sound stays on air.
@@ -975,3 +984,26 @@ Node tests and diff checks, matched asset/proof hashes, and inspected the record
 actual browser/Firefox evidence and320px screenshots. No correction pass or
 rereview is needed. PR #29 is locally verified; final-head/current-base CI and a
 separate measured web-only rollout remain required.
+
+
+### 15 November: focus and help ship; refresh the journal's front page
+
+PR #29 merged as de1c460 after all four jobs in run43719973080 passed on1c0e79b
+against main41d2456. The clean fresh review found no Critical, Important or Minor
+issues. The deployed listener now transfers idle-native keyboard focus to visible
+play controls, preserves unrelated/started-native focus, and explains native-mode
+limits and reload. Its eight assets match the reviewed candidate.
+
+Only web was recreated. All four core IDs, images, start times, restart counts and
+OOM values stayed unchanged. An existing Chromium page recovered with no second
+gesture and two stream requests; playback was confirmed within27.629seconds of
+restart, including health waiting. This is not exact audible interruption timing.
+A direct core recording produced decoded bytes before restart and completed60.000
+seconds, with no silence at -50dBFS lasting two seconds, RMS-24.5dBFS and peak-10.4
+dBFS. Fresh liveFirefox passed five flows and cleanup. The owned candidate preview
+was removed. See the [delivery receipt](evidence/native-listener-polish-delivery-20261115.json).
+
+The opening summary now leads with the shipped local state instead of the older
+PR25 milestone. Proposed volume memory is an idea for a later iteration; no such
+setting has been added. Public/independent-host/device and human musical acceptance
+remain open. Version2 TimGM stays on air while musical preference is undecided.

@@ -1,0 +1,179 @@
+{
+  "pr": 29,
+  "url": "https://github.com/rakeshgangwar/generative-radio/pull/29",
+  "head_commit": "1c0e79b7685f6ddbc031dec1b90555719ebbad0b",
+  "merge_commit": "de1c460d577a265ba3f645b141318bd321b78541",
+  "merged_at": "2026-11-15T13:52:17Z",
+  "ci_run": {
+    "id": 43719973080,
+    "head_sha": "1c0e79b7685f6ddbc031dec1b90555719ebbad0b",
+    "status": "completed",
+    "conclusion": "success",
+    "run_number": 89,
+    "workflow_id": 418602628,
+    "updated_at": "2026-11-15T13:51:17Z",
+    "html_url": "https://github.com/rakeshgangwar/generative-radio/actions/runs/43719973080"
+  },
+  "status": "Merged and deployed locally; focus/help now live with core audio roles preserved",
+  "before_services": {
+    "broadcaster": {
+      "id": "abb87b80c56c007c8240d5df311c9a96af9f96824c423e5b34460a138fa171fc",
+      "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+      "started": "2026-11-15T05:57:04.799911735Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "composer": {
+      "id": "0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started": "2026-11-15T03:23:31.379138171Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "icecast": {
+      "id": "78f7a60cd2c96ce90c32f4ee896bd67cfb02646ebd7529f26ca402798da3bd6d",
+      "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+      "started": "2026-11-15T05:56:38.273381611Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "renderer": {
+      "id": "04a26abb33422649a11752d188ca9e2eb149fbe50c981fc3a2eced30a00805d4",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started": "2026-11-15T03:23:31.259377863Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "web": {
+      "id": "ffea2149cfa76b57d0fbeb69be2acf99d411cc4dfae68d8f70937ad8b1e85a7c",
+      "image": "sha256:de4f71cf8ac17e62579bbfb7e4e3b657104bbb7b3a969c04e1bc47414a59d667",
+      "started": "2026-11-15T13:14:15.812235799Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    }
+  },
+  "after_services": {
+    "broadcaster": {
+      "id": "abb87b80c56c007c8240d5df311c9a96af9f96824c423e5b34460a138fa171fc",
+      "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+      "started": "2026-11-15T05:57:04.799911735Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "composer": {
+      "id": "0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started": "2026-11-15T03:23:31.379138171Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "icecast": {
+      "id": "78f7a60cd2c96ce90c32f4ee896bd67cfb02646ebd7529f26ca402798da3bd6d",
+      "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+      "started": "2026-11-15T05:56:38.273381611Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "renderer": {
+      "id": "04a26abb33422649a11752d188ca9e2eb149fbe50c981fc3a2eced30a00805d4",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started": "2026-11-15T03:23:31.259377863Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    },
+    "web": {
+      "id": "dcb1fdd578b4b750521fa5e1522ef01c3d7a57da09b1ecb082500fc97a0e5029",
+      "image": "sha256:e69f1155cbb8a16abe093dd1965b677c5a84b1485a9d8a60c518d0170919fca6",
+      "started": "2026-11-15T13:52:49.7273011Z",
+      "restarts": 0,
+      "oom": false,
+      "health": "healthy"
+    }
+  },
+  "core_identities_preserved": true,
+  "existing_listener": {
+    "recovered_without_second_gesture": true,
+    "confirmed_within_seconds": 27.629,
+    "requests": 2,
+    "final": {
+      "state": "playing",
+      "time": 44.679851
+    },
+    "scope": "One existing Chromium listener across web recreation. Bound includes Compose health waiting, not an exact audible interruption duration or gapless-update claim."
+  },
+  "core_capture": {
+    "duration_seconds": 60,
+    "mean_dbfs": -24.5,
+    "peak_dbfs": -10.4,
+    "no_silence_at_minus50dbfs_for_two_seconds": true,
+    "analysis_sha256": "b348435b6682d0f1a25bb4886e4afb06287dd3f79e5d5d5c5dcd2117f6ec2140",
+    "decoded_bytes_present_before_web_restart": true,
+    "wav_sha256": "360ab94628fa972733b13072ef7cbfd17451938122bb79a689e2b1e65853f270",
+    "scope": "60-second direct loopback Icecast recording, not independent-host or human listening evidence"
+  },
+  "served_asset_sha256": {
+    "app.js": "8da780d35d74981e47d6cd55543d42e10ec8871064a2506f0b985b47afe76213",
+    "broadcast-context.js": "afafb4dbaed6ec78338c7affe13c1b46c5687a1c834c70a956a3f485b134b29f",
+    "dial.svg": "066b109b2c0a13cba2c0b89381607df6253c23e0b540017e8c3ce0a974bbf0d1",
+    "favicon.svg": "18868c09e40c51595e26d64d3cd2ff12f6ca33b26784ea64b8c56d7e3d010179",
+    "index.html": "202e6e9d81550495f3e73b385c2fa0a090d76b2db192257855b3c1a5dbfa6a1d",
+    "player.js": "c13f200e1d71b75eb6e58449fc832f90fd54a66f8edc5400fdb367140607e00d",
+    "sleep-timer.js": "6b0d495a76ef37402e1924b2a512a8e12449116592eb077c3bfb1b435246e9a6",
+    "style.css": "6b17280fc0ae6cdc3b08969edb70bef600db908605c5d1557858d55c7fca58cb"
+  },
+  "live_firefox": {
+    "browser": {
+      "name": "firefox",
+      "platform": "linux",
+      "version": "157.0.1"
+    },
+    "checks": [
+      {
+        "name": "idle_without_source",
+        "pass": true
+      },
+      {
+        "name": "click_starts_advancing_mp3",
+        "pass": true
+      },
+      {
+        "name": "keyboard_changes_audio_volume",
+        "pass": true
+      },
+      {
+        "name": "pause_releases_source",
+        "pass": true
+      },
+      {
+        "name": "resume_advances_mp3",
+        "pass": true
+      }
+    ],
+    "cleanup": {
+      "driver_reaped": true,
+      "profiles_removed": true
+    },
+    "served_assets_match": true
+  },
+  "raw_proof_sha256": {
+    "rollout/result.json": "5b45748521fd74c125ba50bf4a92e6fecd4d7e0462f6018022d5ef52935ef3c1",
+    "live-firefox-enhanced/result.json": "8a5f6b4c6c36878afadd0373c65c49299c435c460c40cf69a97ad1bdc14aa1b2",
+    "pr-delivery/ci-receipt.json": "8f94e43dbc7c7bd3beef30fba8133547e3d65cf9d7e42a91cc1814ccf1dc05d4",
+    "pr-delivery/merge-receipt.json": "02b90e7ad470a34a45f55f97b1e3b5a5b1f7fb9b2f549d92c91872c9b4fffceb"
+  },
+  "local_evidence": "/home/rakeshgangwar/Projects/generative-radio/artifacts/native-polish-20261115",
+  "remaining": [
+    "Physical-device/Safari/assistive-technology combinations remain unverified",
+    "Native mode uses browser-managed playback without custom timer/chapter/app retries; native pause can retain source/buffering",
+    "Public hosting, off-host recovery, independent monitoring/alerts and human musical acceptance remain open"
+  ]
+}

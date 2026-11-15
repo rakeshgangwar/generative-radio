@@ -39,5 +39,7 @@
   record exact asset/proof hashes and truthful scope. No core service changes.
 - [x] One fresh final review, one Important/Critical correction pass with RED→GREEN;
   Minor ledger costs; run final relevant checks and publish scoped PR.
-- [ ] Require all four latest final-head/current-base CI jobs and actualFirefoxstep
+- [x] Require all four latest final-head/current-base CI jobs and actualFirefoxstep
   success, merge only on clearance. Verify measured web-only rollout and journal.
+
+Delivery: PR29 merged de1c460 after actual4jobCI43719973080 on1c0e79b/base41d2456. Measuredweb-only rollout,existinglistenerrecovery,60sdecodedcoreaudio,4coreidentitypreservation,andfreshliveFirefox/all8assets passed. See docs/evidence/native-listener-polish-delivery-20261115.json.
