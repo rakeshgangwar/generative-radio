@@ -1,8 +1,8 @@
 # Generative Radio — product journal
 
-A living record of what we are building, what we have learned, and what we may try next. Updated 15 November 2026, Asia/Kolkata.
+A living record of what we are building, what we have learned, and what we may try next. Updated 16 November 2026, Asia/Kolkata.
 
-## Current direction — 15 November
+## Current direction — 16 November
 
 The local station at [localhost:8080](http://localhost:8080) is playing version-2
 music: recoverable musical chapters, phrase rests and TimGM sound. The CPU composes
@@ -45,8 +45,8 @@ not a change to the current broadcast or a substitute for listening feedback.
 An offline [resting-profile comparison](resting-profile-experiment.md) is now
 available at [localhost:18095](http://localhost:18095): the same three chapters
 with a slower pulse, spare lead density and a fixed warm palette. Both 23m05s
-versions have matched levels. It is a local prototype for listening, not an
-on-air change or a supported profile command.
+versions have matched levels. It now has a repeatable offline command and a fresh
+[command-generated comparison](http://localhost:18096). The broadcast stays unchanged.
 
 The repository is public under MIT; the station itself remains local. Public
 operation needs a supplied host/domain and off-host backup/alert destinations,
@@ -1185,3 +1185,31 @@ shipped profile CLI or time-of-day mode. Listening should decide whether to purs
 it as a reusable audition command and eventually a gradual energy choice. The
 existing sound/connecting-note questions and public/off-host/device gates remain
 open; the separate six-hour vitals attempt is still incomplete.
+
+## 16 November: make the resting comparison repeatable
+
+The previous prototype is now a bounded-input offline command:
+`python -m radio.profile_audition --output PATH`. It generates the reference
+version-2 score at 60 BPM and a resting candidate at 52 BPM with spare lead
+density and a warm palette. It checks the intended MIDI against the renderer,
+verifies one unchanged SoundFont, then
+stitches and matches levels with attenuation only. It refuses existing outputs
+and station-data trees, records failed/cancelled runs, and publishes a page only
+after successful validation. It adds no running station mode or automatic schedule.
+
+A fresh default run produced two 23m05s masters at −22.13 LUFS. All 24 MIDI hashes
+matched the retained prototype. Actual playback, seeking, mutual exclusion,
+320/390px layouts, byte ranges and JavaScript-disabled native playback passed at
+[localhost:18096](http://localhost:18096); the original 18095 comparison remains
+available. The full real-tool Python suite passed 201 tests with only the existing
+live-observer opt-in skipped; all 46 listener tests passed. A real three-second gap
+was rejected even though its fractional quiet time would otherwise pass.
+
+The first full-suite container used a noexec temporary mount, preventing trusted
+Firefox test fixtures from starting. A direct mount probe isolated that harness
+error; the corrected full suite passed without changing Firefox code. The failed
+run and controlled silence-gate failure are retained separately from passing
+evidence. See the [command receipt](evidence/profile-audition-20261116.json) and
+[usage guide](resting-profile-experiment.md). Musical preference and device/public/
+off-host acceptance remain open; the separate six-hour observation remains in
+progress with its recorded maintenance interruption.

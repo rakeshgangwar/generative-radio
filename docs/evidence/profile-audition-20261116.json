@@ -1,0 +1,224 @@
+{
+  "base_commit": "ab85ec8707f789aa31fb05064828c1270259bee9",
+  "status": "Offline command locally verified; branch review and repository CI are separate delivery gates",
+  "command": "python -m radio.profile_audition --output PATH",
+  "scope": "Reference v2 at60 BPM versus resting 52 BPM/spare profile/fixed warm palette; no on-air default or station-role change",
+  "sequence_seconds": 1385,
+  "font": {
+    "path": "/usr/share/sounds/sf2/TimGM6mb.sf2",
+    "size_bytes": 5969788,
+    "sha256": "c5378b62028c920cb11e4803327983fee2f2cdff5dc89c708e39da417e51c854"
+  },
+  "source_sha256": {
+    "profile_audition.py": "d16e4208fd60480e7cfe2bd319f7c6df5455f939ffba51f99407398846e175b8",
+    "compose.py": "843b3c8dbdaa19db7c5e44e83841927aeb5d7fad41c86845d3229b7b4e5b885e",
+    "arrangement.py": "fb1cd67ac84761d1062f1cebbc865e57493785bed07926776448ba83502b3423",
+    "render.py": "b9843b7ac2f2c786cf82d76a7a338e5db639a6f7ef8186ec1ba9bd5f3f21af09",
+    "config.py": "e974f04a38b464969900b628a9fe39127cdc8c87bf401b6871d9f84ef785ca14",
+    "audition.py": "a26ed7038bda49be477fe0f924b8235b16e84646c2da62a31961a027a0827c4c"
+  },
+  "variants": {
+    "current": {
+      "bpm": 60,
+      "gain_db": 0.0,
+      "final_analysis": {
+        "duration": 1385.0,
+        "peak": 0.38043212890625,
+        "rms_dbfs": -24.34537376488273,
+        "quiet_fraction": 0.0002888086642599278
+      },
+      "final_loudness": {
+        "integrated_lufs": -22.13,
+        "true_peak_dbfs": -8.39
+      },
+      "no_silence_at_minus50dbfs_for_two_seconds": true,
+      "wav_sha256": "30f8b5463ecca72c42a5f0aa719aab593ab258df56c48307b54d2a8c1aee6937",
+      "mp3_sha256": "4f934ef44e4196984bc3476da7fae3b16196fe7ef082833d52e266d2fc1006a1",
+      "segment_midi_sha256": {
+        "1": "af828fa210c2457ce0b5f7d98e26cd38cfdf91a5a7f8324798c7cc860b88ec9a",
+        "2": "553af3aaf2fe6f58ce89e93359b0aa27a7937cc5cf282e1dd7ecb55d2d53fab0",
+        "3": "7fa6adbaee898d0d15135dd60733108f57539b7616bd966b25df88772dec742d",
+        "4": "8efcf18906fcb59dc428a001fa11bcc08c45051ac6be17329de27db19061f389",
+        "5": "f35f0889a7f3939c108efbfd529db1bbd833be764f327c6db4b16d0600925070",
+        "6": "0afe2094d9664a7b0192620f9ca5c12514a7d79324be49a71547396836812d12",
+        "7": "d610ed5972ddc42d6ab00d5383693759f355d8109f0e8fba293f3f686e495775",
+        "8": "41279926fddf1565c53558b8abcc8d761228e9ca181fda52055220267d9df214",
+        "9": "f3efe5de081e54269ba8bd196e896ef32f84cfab46b046f41f52913284d480a8",
+        "10": "7ddf33eacdc54474ff60170b6a6347cdbdf4b1d5e603a7061f7b9cea28e87944",
+        "11": "fc5bab48942cde087fd28b2f9c4d5a29b0cb914b3fbe63e13af3ecd57c3a9d9e",
+        "12": "ae23317dc553c00509216d77ee5efba6c9ebd375d1f8462f87233e6ca70a1a0d"
+      }
+    },
+    "resting": {
+      "bpm": 52,
+      "gain_db": -0.019999999999999574,
+      "final_analysis": {
+        "duration": 1385.0,
+        "peak": 0.37579345703125,
+        "rms_dbfs": -24.306405011296736,
+        "quiet_fraction": 0.0002888086642599278
+      },
+      "final_loudness": {
+        "integrated_lufs": -22.13,
+        "true_peak_dbfs": -8.5
+      },
+      "no_silence_at_minus50dbfs_for_two_seconds": true,
+      "wav_sha256": "78128b9bae47da2e671d4545411b8035271afa06b027be90db6cd9e012526faa",
+      "mp3_sha256": "6a35883ca39a73ade35bb7104e7c984879b2ec1d349a4f275ea501ea3b7b7d3a",
+      "segment_midi_sha256": {
+        "1": "e1eed3721de92febdcf01498e8a50463d1ce491aa717a5e1bd32fe1951ba0747",
+        "2": "96dc24ced8929ccf05983526890ac864ac313d1e166b00c8ad821ec2bbfb389e",
+        "3": "e57a2db462482457b63579db093eb03cbada7db8b3c11b941500e19654f57df0",
+        "4": "03589e7ae27fc68248f59b337982c2357315275be2304a079e73d8c3c1d40e61",
+        "5": "db0478953056c2ffa5ec4866395042a7e2606992d3d97c873bd4ae3dc085b368",
+        "6": "c14fc93492f556bfd2e7a94fcc8f9aefae04c33cc62e278e49986efb126e5174",
+        "7": "f5f39486769879884dd5abc442ee3cdd7c2b14dbbefd702ee30da565d081cb7a",
+        "8": "e32defa39fac5dc63c08056ddae9b6d80461e4c849f2d4ba75012dd0293fd4f6",
+        "9": "8ea3ad29ad9de87d9bb042442ac3c5a67d4bc3407971e985a927507e296ed11a",
+        "10": "2b8f7b98b3f57f6c1874046b50465d1d43de7d34146e5876fead9a708fea70d3",
+        "11": "3f820d61e90bb44e7b40b37775d2961143d8391db6e4f21cad8fcb716c51c30f",
+        "12": "a2fbc55534db834e55b1a0c9ec7255ad1a3322cad1923bec373f8a5fb0723118"
+      }
+    }
+  },
+  "prototype_score_parity": "All 24 MIDI hashes match retained prototype; not a promise of bit-identical audio across engine versions",
+  "browser": {
+    "pass": true,
+    "scope": "Actual isolated Chromium preview playback, seek, mutual exclusion, narrow layout and native JS-off playback; not physical/human musical acceptance",
+    "current_playback_seek_and_one_at_a_time": true,
+    "narrow_layouts": [
+      390,
+      320
+    ],
+    "native_media": {
+      "time": 1.050554,
+      "paused": false,
+      "error": null
+    },
+    "native_nojs_resting_playback": true,
+    "http_range_206": true,
+    "browser_closed": true
+  },
+  "preview_url": "http://localhost:18096",
+  "all_five_role_identity_image_start_restart_oom_values_preserved": true,
+  "station_after": {
+    "assessment": "healthy",
+    "audio_report": {
+      "consecutive_failures": 0,
+      "healthy": true,
+      "kind": "healthy",
+      "restart_count": 0,
+      "rms_dbfs": -25.47396945915386,
+      "updated_at": 1794767475.5249283
+    },
+    "elapsed_seconds": 2.0961900529946433,
+    "errors": [],
+    "finished_at": 1794767481.388527,
+    "host": {
+      "cpu_count": 20,
+      "disk_free_bytes": 585596997632,
+      "disk_total_bytes": 1023116574720,
+      "load": [
+        0.8095703125,
+        1.2265625,
+        1.22021484375
+      ],
+      "memory_bytes": {
+        "MemAvailable": 22482530304,
+        "MemTotal": 33297633280,
+        "SwapFree": 4294815744,
+        "SwapTotal": 4294963200
+      },
+      "scope": "observer-host"
+    },
+    "missing_services": [],
+    "sequence": 0,
+    "services": {
+      "broadcaster": {
+        "cpu_percent": 14.68,
+        "health": "healthy",
+        "id": "abb87b80c56c007c8240d5df311c9a96af9f96824c423e5b34460a138fa171fc",
+        "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+        "memory_bytes": 312580506,
+        "oom": false,
+        "pids": 13,
+        "restarts": 0,
+        "started": "2026-11-15T05:57:04.799911735Z",
+        "state": "running"
+      },
+      "composer": {
+        "cpu_percent": 0.08,
+        "health": "healthy",
+        "id": "0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146",
+        "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+        "memory_bytes": 16661873,
+        "oom": false,
+        "pids": 2,
+        "restarts": 0,
+        "started": "2026-11-15T03:23:31.379138171Z",
+        "state": "running"
+      },
+      "icecast": {
+        "cpu_percent": 0.23,
+        "health": "healthy",
+        "id": "78f7a60cd2c96ce90c32f4ee896bd67cfb02646ebd7529f26ca402798da3bd6d",
+        "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+        "memory_bytes": 10432283,
+        "oom": false,
+        "pids": 6,
+        "restarts": 0,
+        "started": "2026-11-15T05:56:38.273381611Z",
+        "state": "running"
+      },
+      "renderer": {
+        "cpu_percent": 0.08,
+        "health": "healthy",
+        "id": "04a26abb33422649a11752d188ca9e2eb149fbe50c981fc3a2eced30a00805d4",
+        "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+        "memory_bytes": 27504148,
+        "oom": false,
+        "pids": 2,
+        "restarts": 0,
+        "started": "2026-11-15T03:23:31.259377863Z",
+        "state": "running"
+      },
+      "web": {
+        "cpu_percent": 0.07,
+        "health": "healthy",
+        "id": "7e1f7d622adf91baa05701f0ad603fd81418dacb7cca6a3bd549f8898578e46b",
+        "image": "sha256:fb8404f39fb902ebfd56528c75d7c5dc70c51cd7bacd933868506ab5d4a07ccc",
+        "memory_bytes": 19713229,
+        "oom": false,
+        "pids": 19,
+        "restarts": 0,
+        "started": "2026-11-15T15:43:00.527941831Z",
+        "state": "running"
+      }
+    },
+    "started_at": 1794767479.292646
+  },
+  "tests": {
+    "real_python_suite": 201,
+    "python_skips": 1,
+    "skip_scope": "Existing live-observer opt-in; new media tests executed",
+    "node": 46,
+    "cli_red": "Absent command returned1, assertion expected0",
+    "silence_control_red": "With matcher disabled, actual3second gap produced AssertionError ValueError not raised; unmodified full suite rejected it",
+    "initial_harness_failure": "10Firefox assertions and3errors due noexec/tmp; direct executable probeFalse then execTrue; corrected suite passed, no Firefox code change"
+  },
+  "raw_proof_sha256": {
+    "artifacts/profile-cli-acceptance-20261115T182250Z/long/report.json": "2e5faef0468a6ec6160ac64c93466d2f40a728d8765bba9c491ea3c8585f306f",
+    "artifacts/profile-cli-acceptance-20261115T182250Z/launch.json": "a3f1730db2ea0a5d36184d19853a030d989572895b165fd39940de05db04a100",
+    "artifacts/profile-cli-acceptance-20261115T182250Z/preview-launch.json": "c73e7626abf726f1cfbd105ffd3db38fb89d0048db0866052773658319365845",
+    "artifacts/profile-cli-acceptance-20261115T182250Z/cli-preview-browser.json": "5b9914de24c237bfd3f68e03ef6b0cd983c84fdca59c7927deb03ac1952ac29d",
+    "artifacts/profile-cli-acceptance-20261115T182250Z/browser-check.mjs": "2637262ba7e29b57d0a0400272fd13d433a0fc137f84be4c1a0bb58698a1331d",
+    "artifacts/profile-cli-acceptance-20261115T182250Z/station-after/sample-0000.json": "1888322b3b209538e09717224e3edf84d526eda52a28dd88f1f652003761717d"
+  },
+  "local_evidence": "/home/rakeshgangwar/Projects/generative-radio/artifacts/profile-cli-acceptance-20261115T182250Z",
+  "limitations": [
+    "Human musical preference is unresolved; no automatic adoption",
+    "Physical/Safari/assistive/public/offhost gates remain open",
+    "Separate six-hour observation remains incomplete with retained maintenance sample",
+    "Nominal audio duration bound is not an overall wall-clock deadline; external commands have their existing timeouts"
+  ]
+}
