@@ -20,7 +20,47 @@ async function startNative(page) {
   assert.fail(`native keyboard playback did not advance: ${JSON.stringify(media)}`);
 }
 
+export async function checkNativeFocus(browser,base,artifacts,results) {
+  for(const focused of ['#native-stream','.wordmark']) {
+    const context=await browser.newContext({viewport:{width:320,height:640}});
+    let release;
+    const gate=new Promise(resolve=>release=resolve);
+    try {
+      const page=await context.newPage(),requests=[];
+      page.on('request',request=>{if(new URL(request.url()).pathname==='/radio.mp3')requests.push(request.url());});
+      await page.route('**/app.js',async route=>{
+        const response=await route.fetch(),body=await response.text();
+        await gate;
+        await route.fulfill({response,body:body+'\nwindow.__nativeScriptEvaluated=true;'});
+      });
+      await page.goto(base,{waitUntil:'commit'});
+      await page.locator('#native-stream').waitFor({state:'visible'});
+      await page.locator(focused).focus();
+      assert.equal(await page.locator(focused).evaluate(element=>element===document.activeElement),true);
+      release();
+      await page.waitForFunction(()=>window.__nativeScriptEvaluated===true);
+      assert.equal(await page.locator('#enhanced-controls').isVisible(),true);
+      assert.equal(await page.locator('#native-fallback').isVisible(),false);
+      const expected=focused==='#native-stream'?'#toggle':focused;
+      assert.equal(await page.locator(expected).evaluate(element=>element===document.activeElement),true,'late enhancement must keep keyboard focus on a visible intended control');
+      assert.equal(await page.locator('#native-stream').getAttribute('src'),null);
+      assert.equal(requests.length,0,'focus transfer must not autoplay');
+      assert.equal(await page.evaluate(()=>document.documentElement.scrollWidth<=innerWidth),true);
+      if(focused==='#native-stream') {
+        await page.screenshot({path:`${artifacts}/enhanced-focus-320.png`,fullPage:true});
+        await page.keyboard.press('Space');
+        await page.waitForFunction(()=>document.querySelector('#stream').currentTime>1,null,{timeout:25000});
+        assert.equal(requests.length,1,'keyboard play after handoff opens one real stream');
+        await page.keyboard.press('Space');
+        assert.equal(await page.locator('#stream').getAttribute('src'),null);
+      }
+      results.push({test:focused==='#native-stream'?'late enhancement transfers native focus to visible play; Space starts/releases real audio':'late enhancement preserves unrelated link focus without autoplay',pass:true});
+    } finally {release();await context.close();}
+  }
+}
+
 export async function checkNativeFallback(browser,base,artifacts,results) {
+  await checkNativeFocus(browser,base,artifacts,results);
   const legacy=await browser.newContext();
   try {
     const page=await legacy.newPage(),errors=[],requests=[];
@@ -100,6 +140,7 @@ export async function checkNativeFallback(browser,base,artifacts,results) {
       releaseModule();
       await page.waitForFunction(()=>window.__nativeScriptEvaluated===true);
       assert.equal(await page.locator('#native-fallback').isVisible(),true);
+      assert.equal(await page.locator('#native-stream').evaluate(audio=>audio===document.activeElement),true,'started native session retains keyboard focus');
       assert.equal(await page.locator('#enhanced-controls').isVisible(),false);
       assert.equal(await page.locator('#native-stream').getAttribute('src'),source);
       assert.equal(await page.locator('#stream').getAttribute('src'),null);

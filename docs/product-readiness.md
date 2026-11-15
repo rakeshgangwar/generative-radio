@@ -22,7 +22,7 @@ latest dated receipt and [current handoff](../HANDOFF.md) for present state.
 | Audible public listening path | Authenticated HTTPS fetch, bounded decode and audibility check on an independent host | Read-only command and local TLS rehearsal passed; independent deployment pending |
 | Backup and recovery | Consistent queue/audio backup and tested restore on isolated data | Repeatable create/verify/restore commands and off-host runbook validated locally; target-host/off-host exercise pending |
 | Operator documentation | Install, upgrade, monitor, recover, back up and roll back commands | Local recovery/backup runbook implemented; production deployment runbook added; target-host exercise pending |
-| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | Changes through PR #27 merged after final-head/current-base CI; native-first fallback is a locally verified candidate pending review/CI/rollout; recent work includes audible chapter context, deployed listener recovery, an offline melody audition and host-side vitals recording |
+| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | Changes through PR #28 merged after final-head/current-base CI; native-first fallback is deployed locally with preserved core identities and live Firefox/decoded-audio proof; focus/help polish is a locally verified candidate pending review/CI/rollout; recent work includes audible chapter context, deployed listener recovery, an offline melody audition and host-side vitals recording |
 
 These are release readiness gates, not an exhaustive definition of the evolving
 product goal. The [product journal](product-journal.md) records that direction.

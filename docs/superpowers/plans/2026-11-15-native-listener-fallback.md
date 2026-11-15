@@ -52,6 +52,8 @@ or native.played.length>0. Commit fallback release/hide only at successful end.
 - [x] Document measured source/assets, candidate/local-only status, limitations and
   PR27 delivery receipt. One final fresh review; Important/Critical one RED→GREEN
   correction pass; Minor defer. Run relevant final checks after corrections.
-- [ ] Open scoped PR, require four actual latest final-head/current-base CI jobs
+- [x] Open scoped PR, require four actual latest final-head/current-base CI jobs
   including Firefox step success, merge only after clearance. Verify web-only
   rollout separately with preserved core identities and decoded stream evidence.
+
+Delivery: PR #28 merged as41d2456 after CI43716620329 passed allfour jobs on31d9fb8/base5ab28f9. Measured web-only rollout passed existing-listener recovery,60s decodedcore audio,all4core identity preservation and liveFirefox5flows/all8asset match. See docs/evidence/native-listener-delivery-20261115.json.

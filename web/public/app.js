@@ -97,11 +97,14 @@ function initialize() {
   window.addEventListener('pagehide', () => { player.pause(); timer.setMinutes(0); broadcast.setEnabled(false); });
 
   // Keep the independent native player available until all setup has succeeded.
+  const fallback = document.querySelector('#native-fallback');
+  const moveFocus = fallback?.contains(document.activeElement);
   if (native) {
     native.removeAttribute('src');
     native.load();
-    document.querySelector('#native-fallback').hidden = true;
+    fallback.hidden = true;
   }
   document.querySelector('#enhanced-controls').hidden = false;
+  if (moveFocus) button.focus({preventScroll: true});
 }
 initialize();
