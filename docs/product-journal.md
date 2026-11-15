@@ -779,3 +779,92 @@ not establish unsampled resource peaks, indefinite leak absence, public capacity
 off-host recovery or subjective listening quality. The original musical questions
 and real deployment/device checks remain open. Current version 2 stays on air;
 no audition was adopted or role replaced for this observation.
+
+
+### 15 November: repeatable stock Firefox playback acceptance
+
+The current listener is exercised heavily in Chromium, but another engine should
+have actual playback evidence too. An exploratory private-profile run in installed
+Firefox 157.0.1 passed idle-without-source, manual start/advancing MP3, keyboard
+volume, pause/source release and resume. All eight delivered public assets matched
+the current main checkout; the temporary driver listener closed after cleanup.
+
+The repeatable version uses Mozilla GeckoDriver's W3C interface and Python's
+standard library, so it tests the installed branded Firefox without another client
+package or a Playwright browser download. It constrains the target to loopback,
+owns a new profile and driver group, caps responses and has a browser/network
+POSIX deadline, followed by cleanup. Protocol fixtures cover malformed/oversized data, unknown error
+text, redirects before clicks, stalled/dripping HTTP and SIGTERM cleanup. The first
+tracked actual Firefox run passed all five flows in about 4.4 seconds, including
+cleanup. Before the later origin regression, the host suite passed 186 tests with six
+media/explicit opt-in skips.
+
+The new actual-Firefox step is wired into the existing integration job, preserving
+all four required job names and the Chromium suite. The complete real-media suite
+passes 187 tests (one explicit live-project opt-in skip), and all 46 listener tests
+pass. Merging this change requires one fresh final review and all four actual
+final-head/current-base CI jobs, including the new Firefox step. There is no music or
+service rollout here. This basic Linux check does not establish Safari/physical
+devices, Firefox's long-outage/timer behavior or subjective musical quality.
+
+
+The [local evidence](evidence/firefox-check-20261115.json) ties the actual result,
+screenshot and eight served-asset fingerprints to the source. A real short deadline
+reaped its observed driver process; a separate real SIGTERM probe observed seven
+owned processes, including Firefox descendants spawned by driver worker threads,
+and left none active. The private profile was removed in both cases. Five station
+service identities/start/restart/OOM values still match the earlier completed
+observer snapshot. This is not a before/after claim about unobserved source hashes
+or an independent audio-quality verdict. Cleanup follows the browser/network
+deadline; elapsed time includes shutdown waits and profile deletion.
+
+
+The final author audit found that checking origin only after navigation was not
+enough: a protocol regression reproduced a redirect between idle and the first
+click. Every control lookup now checks origin again. The regression failed before
+the guard and passed afterward; eight focused tests pass. Before the independent review, the guarded tool was
+rerun on actual Firefox for success, SIGTERM and deadline. It observed 24/7/23 owned
+processes respectively, with none active afterward and private profiles removed.
+The deadline run retained one completed check but correctly failed; partial work
+was not reported as a pass. The final whole-suite gate for this fix passed all 187 tests with one explicit
+live-project opt-in skip; actual playback was tested separately on the host.
+
+
+The sole fresh review found one Important ownership race: a signal could arrive
+after an OS child started but before its Python handle was assigned. A deterministic
+trace delivered actual SIGTERM, SIGINT and SIGALRM at that boundary; all three
+regressions initially left the child running despite a true cleanup flag. The fix
+defers raising those signals only until the handle is registered, then immediately
+honors pending cancellation/deadline and reaps the owned group. It does not block
+signals inherited by the browser. Nine focused tests pass. Fresh actual runs of
+the corrected source passed success/cancel/deadline with 23/7/21 observed owned
+processes and none active afterward; profiles were removed. The final whole suite
+for this correction passed all 188 tests with one explicit observer live-project
+opt-in skip. No second review is requested.
+
+
+### 15 November: Firefox CI correction, still awaiting acceptance
+
+PR #27 remains draft: runner 43708794835 failed during Firefox launch; three
+other jobs passed and later integration steps were skipped. A CI-only virtual
+audio sink is an investigated fixture, not a proven fix. No station rollout.
+A valid 16-second session response exposed a hidden 15-second socket cutoff.
+Session creation now uses the declared overall budget; the global deadline stays.
+Only bounded numeric/enum diagnostics are retained from existing polls. A native
+play-promise observer returns the original promise and records rejection before
+application recovery clears the source. A private 404 drill retained
+NotSupportedError/code 4 after the current error became null.
+Latest source passed 11 focused tests and 190 real-media tests (one explicit live
+observer skip). Actual Firefox passed all five playback flows; success/cancel/
+deadline observed 26/9/25 owned processes, none active afterward, profiles removed.
+The receipt links exact source hashes and raw proofs. These local results do not
+establish CI acceptance: all four final-head/current-base jobs, including the
+actual Firefox step, must pass before merging. No second review is requested.
+
+
+CI run 43712569677 on 670beb7 passed the actual stock Firefox playback step
+(12:17:33–12:17:49 UTC). The configured-budget correction and bounded diagnostics
+have now reached the runner successfully. This is not proof of the earlier media
+stall's root cause; physical sound remains unverified. Broader integration was
+still running when recorded. This evidence/documentation update still needs all
+four final-head/current-base checks before PR #27 can merge.

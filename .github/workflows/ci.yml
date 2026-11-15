@@ -142,6 +142,79 @@ jobs:
             -i http://web:8080/radio.mp3 -t 5 -c:a pcm_s16le /tmp/ci-web.wav
           docker compose -p "$RADIO_CI_PROJECT" exec -T broadcaster python -c \
             'from pathlib import Path; from radio.render import analyze; result=analyze(Path("/tmp/ci-web.wav")); assert abs(result["duration"]-5)<.1, result; print(result)'
+      - name: Prepare audio backend for headless Firefox and host probes
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ffmpeg pulseaudio
+          if ! pactl info >/dev/null 2>&1; then
+            echo "Starting an audio server on this ephemeral runner."
+            pulseaudio --start --exit-idle-time=-1
+            echo "RADIO_CI_PULSE_STARTED=1" >> "$GITHUB_ENV"
+          fi
+          module_id="$(pactl load-module module-null-sink sink_name=radio_ci)"
+          echo "RADIO_CI_PULSE_MODULE=$module_id" >> "$GITHUB_ENV"
+          echo "PULSE_SINK=radio_ci" >> "$GITHUB_ENV"
+          pactl set-default-sink radio_ci
+          pactl list short sinks
+      - name: Check stock Firefox playback
+        id: firefox_playback
+        run: |
+          mkdir -p artifacts
+          python3 - <<'PYFIREFOX'
+          import json, shutil, subprocess, sys
+          from pathlib import Path
+          result_path = Path('artifacts/firefox-browser/result.json')
+          completed = subprocess.run([
+              sys.executable, '-m', 'radio.firefox_smoke',
+              '--driver', shutil.which('geckodriver') or '',
+              '--firefox', shutil.which('firefox') or '',
+              '--output', str(result_path.parent),
+          ])
+          if result_path.exists():
+              result = json.loads(result_path.read_text())
+              print({key: result.get(key) for key in ('state', 'pass', 'browser', 'checks', 'failure', 'media', 'cleanup')}, flush=True)
+              if completed.returncode == 0:
+                  assert result['state'] == 'complete' and result['pass'] is True
+                  assert len(result['checks']) == 5 and all(c['pass'] is True for c in result['checks'])
+                  assert all(result['cleanup'].values())
+          else:
+              print({'result_report': 'unavailable'}, flush=True)
+              assert completed.returncode != 0, 'A successful check must publish its result'
+          raise SystemExit(completed.returncode)
+          PYFIREFOX
+      - name: Diagnose Firefox startup after a failed check
+        if: failure() && steps.firefox_playback.outcome == 'failure'
+        run: |
+          python3 - <<'PYFIREFOXSTART'
+          import shutil, subprocess, tempfile
+          from pathlib import Path
+          from radio.watchdog import terminate_process
+          driver, firefox = shutil.which('geckodriver'), shutil.which('firefox')
+          for name, binary in [('driver', driver), ('firefox', firefox)]:
+              if not binary:
+                  print({'binary': name, 'available': False}, flush=True)
+                  continue
+              try:
+                  version = subprocess.run([binary, '--version'], capture_output=True, text=True, timeout=10)
+                  print({'binary': name, 'path': str(Path(binary).resolve()), 'version': version.stdout.splitlines()[:1], 'exit': version.returncode}, flush=True)
+              except subprocess.TimeoutExpired:
+                  print({'binary': name, 'version_query': 'timeout'}, flush=True)
+          if firefox:
+              with tempfile.TemporaryDirectory(prefix='firefox-startup-', dir='artifacts') as directory:
+                  root = Path(directory).resolve()
+                  profile = root/'profile'
+                  profile.mkdir(mode=0o700)
+                  process = subprocess.Popen([firefox, '--headless', '--no-remote', '--profile', str(profile), '--screenshot', str(root/'blank.png'), 'about:blank'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
+                  try:
+                      try:
+                          stdout, stderr = process.communicate(timeout=25)
+                      except subprocess.TimeoutExpired:
+                          terminate_process(process, .3)
+                          stdout, stderr = process.communicate(timeout=2)
+                      print({'blank_page_exit': process.returncode, 'png_created': (root/'blank.png').is_file(), 'startup_stderr_tail': stderr.decode(errors='replace')[-4000:]}, flush=True)
+                  finally:
+                      terminate_process(process, .3)
+          PYFIREFOXSTART
       - name: Browser-test the listener against the actual live stream
         run: |
           npm --prefix web ci --ignore-scripts
@@ -178,14 +251,19 @@ jobs:
             RADIO_MELODY_URL=http://127.0.0.1:18091 \
             RADIO_MELODY_ARTIFACTS="$PWD/artifacts/melody-browser/browser" \
             node web/tests/melody-audition.mjs
-      - name: Install decoder for the host-side public listener probe
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends ffmpeg
       - name: Exercise isolated production TLS, hardening and certificate recovery
         run: >-
           python3 scripts/production-smoke.py
           --project "radio-smoke-${{ github.run_id }}-${{ github.run_attempt }}"
+      - name: Remove only this run's virtual audio fixture
+        if: always()
+        run: |
+          if [ -n "${RADIO_CI_PULSE_MODULE:-}" ]; then
+            pactl unload-module "$RADIO_CI_PULSE_MODULE" || true
+          fi
+          if [ "${RADIO_CI_PULSE_STARTED:-}" = "1" ]; then
+            pulseaudio --kill || true
+          fi
       - name: Show final service logs
         if: always()
         run: docker compose -p "$RADIO_CI_PROJECT" logs --no-color --tail 100

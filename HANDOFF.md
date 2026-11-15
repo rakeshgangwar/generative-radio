@@ -269,3 +269,61 @@ capacity from this local observation.
 PR #24's matched connecting-note candidate remains at http://localhost:18091 with
 no on-air adoption. Public target/off-host recovery and human/device acceptance
 remain open.
+
+
+## Stock Firefox acceptance tool
+
+PR #26 merged the completed observer/journal receipt as `2195b7a` after all four
+checks passed. The source now makes the successful five-flow stock-Firefox probe
+repeatable with `python -m radio.firefox_smoke`;
+see [operator instructions](docs/firefox-check.md). It owns a private profile and
+loopback driver process, enforces a wall-clock deadline, saves sanitized partial
+reports and never controls station processes or existing browser sessions.
+
+Actual installed Firefox 157.0.1
+passed all five basic flows with cleanup. Raw evidence remains ignored under
+`artifacts/firefox-check-20261115/`; the earlier exploratory probe is separately
+in `artifacts/firefox-20261115/`. The full real-media suite passes 188 tests with one explicit live opt-in skip;
+all 46 listener tests pass. The delivery gate is one fresh final review plus all
+four actual final-head/current-base CI jobs. The new CI Firefox step must actually
+pass, with no skipped-check clearance. Current music and audition adoption stay
+unchanged. Physical/Safari/public-host/off-host and human acceptance remain open.
+
+
+The sole fresh review found one Important acquisition/cancellation race. A real
+SIGTERM/SIGINT/SIGALRM regression at Popen return failed for all three signals
+before the fix. Signals now defer raising only until the owned process handle is
+registered, then are honored immediately without changing the child's signal mask.
+All nine focused tests and 188 real-media tests pass (one explicit observer
+live-project skip). New actual success/cancel/deadline probes observed 23/7/21 owned
+processes, none active afterward, with profiles removed. No Critical findings or
+minors; no rereview. The [receipt](docs/evidence/firefox-check-20261115.json) links
+these exact source hashes and raw proofs. OS process acquisition and filesystem
+cleanup can extend elapsed time; the tool requires trusted installed binaries.
+
+
+### 15 November: Firefox CI correction, still awaiting acceptance
+
+PR #27 remains draft: runner 43708794835 failed during Firefox launch; three
+other jobs passed and later integration steps were skipped. A CI-only virtual
+audio sink is an investigated fixture, not a proven fix. No station rollout.
+A valid 16-second session response exposed a hidden 15-second socket cutoff.
+Session creation now uses the declared overall budget; the global deadline stays.
+Only bounded numeric/enum diagnostics are retained from existing polls. A native
+play-promise observer returns the original promise and records rejection before
+application recovery clears the source. A private 404 drill retained
+NotSupportedError/code 4 after the current error became null.
+Latest source passed 11 focused tests and 190 real-media tests (one explicit live
+observer skip). Actual Firefox passed all five playback flows; success/cancel/
+deadline observed 26/9/25 owned processes, none active afterward, profiles removed.
+The receipt links exact source hashes and raw proofs. These local results do not
+establish CI acceptance: all four final-head/current-base jobs, including the
+actual Firefox step, must pass before merging. No second review is requested.
+
+
+CI run 43712569677 on 670beb7 passed the actual stock Firefox playback step
+(12:17:33–12:17:49 UTC). The configured-budget correction and bounded diagnostics
+have now reached the runner successfully. This is not proof of the earlier media
+stall's root cause; physical sound remains unverified. Broader integration was
+still running when recorded. This evidence/documentation update still needs all
+four final-head/current-base checks before PR #27 can merge.

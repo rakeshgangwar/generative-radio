@@ -1,0 +1,124 @@
+{
+  "base_commit": "2195b7ae4ec201b07c9bd520173265f52de9729e",
+  "browser": {
+    "name": "firefox",
+    "platform": "linux",
+    "version": "157.0.1"
+  },
+  "checks": [
+    {
+      "name": "idle_without_source",
+      "pass": true
+    },
+    {
+      "name": "click_starts_advancing_mp3",
+      "pass": true
+    },
+    {
+      "name": "keyboard_changes_audio_volume",
+      "pass": true
+    },
+    {
+      "name": "pause_releases_source",
+      "pass": true
+    },
+    {
+      "name": "resume_advances_mp3",
+      "pass": true
+    }
+  ],
+  "elapsed_seconds": 4.619861049010069,
+  "cleanup": {
+    "driver_reaped": true,
+    "profiles_removed": true
+  },
+  "served_asset_sha256": {
+    "app.js": "5c68eb6b73d83bb117b45dab2d3e3842d77893648dfa5c48521cb92730c41062",
+    "broadcast-context.js": "afafb4dbaed6ec78338c7affe13c1b46c5687a1c834c70a956a3f485b134b29f",
+    "dial.svg": "066b109b2c0a13cba2c0b89381607df6253c23e0b540017e8c3ce0a974bbf0d1",
+    "favicon.svg": "18868c09e40c51595e26d64d3cd2ff12f6ca33b26784ea64b8c56d7e3d010179",
+    "index.html": "a8b2706a36323952e7b2dcf92114bf0967d68dcf871a3fb25f869a52eaffd941",
+    "player.js": "c13f200e1d71b75eb6e58449fc832f90fd54a66f8edc5400fdb367140607e00d",
+    "sleep-timer.js": "6b0d495a76ef37402e1924b2a512a8e12449116592eb077c3bfb1b435246e9a6",
+    "style.css": "6b17280fc0ae6cdc3b08969edb70bef600db908605c5d1557858d55c7fca58cb"
+  },
+  "served_assets_match_base_checkout": true,
+  "tool_source_sha256": "404b82fac5a504a1854cb0eda06afd82dc5633eaddbe8774617364d1c519e739",
+  "result_sha256": "e766e2170d6f7b56985f36c098fad881826014d6634c9b0c6c887c87e3505ef9",
+  "screenshot_sha256": "6977ad3f18c9c25060e35186beecd14cf24e44820109ad87019bf70dc7aaa5a9",
+  "actual_failure_cleanup": {
+    "cancel": {
+      "exit_code": 130,
+      "observed_owned_processes": 9,
+      "active_owned_after": [],
+      "profiles_removed": true
+    },
+    "deadline": {
+      "exit_code": 1,
+      "observed_owned_processes": 25,
+      "active_owned_after": [],
+      "profiles_removed": true
+    }
+  },
+  "raw_cleanup_proof_sha256": {
+    "promise-final-success-proof.json": "73c1c23c414ec4949772d85baf914f994f96d57570a0f3d22f68ad8dbf09a094",
+    "promise-final-cancel-proof.json": "5129dd3f943d30e061a41e0ca1e9a1e23769a9c2786c65ce8d24cf9d7bc6aea9",
+    "promise-final-deadline-proof.json": "4c0409cae61dd00bcd9589d7b4034a551b9d37c7278270a3753d37827880857b"
+  },
+  "local_evidence": "/home/rakeshgangwar/Projects/generative-radio/artifacts/firefox-check-20261115",
+  "limitations": [
+    "Basic Linux headless flows only",
+    "No Firefox long-outage or sleep-timer acceptance",
+    "No Safari, physical device, public deployment or subjective musical acceptance",
+    "Timeout triggers cleanup; elapsed time includes shutdown and profile removal",
+    "Signals during trusted process acquisition are honored immediately after the owned handle is registered"
+  ],
+  "verification": {
+    "focused_tests": 11,
+    "real_media_tests": 190,
+    "real_media_skips": 1,
+    "skip_scope": "Explicit live-project observer opt-in, tested separately in PR25",
+    "listener_tests": 46,
+    "real_media_log_sha256": "afb9a3c65767a1214b68b1702a7658dff0ad590cada66656fb089a68cd54aca8",
+    "real_media_log": "promise-final-media.log"
+  },
+  "review": {
+    "critical": 0,
+    "important": 1,
+    "minor": 0,
+    "fix": "Defer signal exceptions until the newly created process handle is registered, then honor pending cancellation/deadline immediately",
+    "regression": "Real SIGTERM/SIGINT/SIGALRM at Popen return: three failures before the fix, all pass after",
+    "rereview": false
+  },
+  "historical_station_identity_observation": {
+    "five_service_identities_start_restart_oom_states_match_observer_end": true,
+    "service_baseline_observed_at": 1794735161.4347672,
+    "post_check_observed_at": 1794738266.1338785
+  },
+  "native_error_drill": {
+    "expected_failure_exit": 1,
+    "native_failure_retained_before_recovery_clears_source": true,
+    "last_known_media": {
+      "audio_volume": 0.65,
+      "current_time": 0,
+      "error_code": null,
+      "last_error_code": 4,
+      "network_state": 0,
+      "paused": true,
+      "play_error_name": "NotSupportedError",
+      "player_state": "retrying",
+      "ready_state": 0,
+      "volume_value": 65
+    },
+    "proof_sha256": "e00a7b05ba3bce8faa44e6f16043e4e236bf31b25ecf01955cf2a3f8f9ead726"
+  },
+  "ci_status": "Run 43712569677 on 670beb7 passed actual stock Firefox playback; broader integration was still running when recorded. Final-head/current-base CI remains required.",
+  "ci_firefox_step": {
+    "run": 43712569677,
+    "head": "670beb744d2749d3104d3e4b1d99f2f304ff6804",
+    "job": 132807179555,
+    "conclusion": "success",
+    "started_at": "2026-11-15T12:17:33Z",
+    "completed_at": "2026-11-15T12:17:49Z"
+  }
+}
