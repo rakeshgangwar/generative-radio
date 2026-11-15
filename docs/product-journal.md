@@ -868,3 +868,44 @@ have now reached the runner successfully. This is not proof of the earlier media
 stall's root cause; physical sound remains unverified. Broader integration was
 still running when recorded. This evidence/documentation update still needs all
 four final-head/current-base checks before PR #27 can merge.
+
+
+### 15 November: Firefox verification ships; keep listening when scripts fail
+
+PR #27 merged as 5ab28f9 after all four jobs in run 43713365978 passed on
+27f70c6 against main 2195b7a. Actual stock Firefox playback, Chromium recovery and
+timer scenarios, melody audition, and isolated TLS/certificate recovery passed.
+The local checkout is updated; no live role changed for the host-side tool.
+
+The next listener improvement is in progress: today a module-load failure with
+JavaScript enabled leaves no on-page controls because the native player lives
+inside noscript. Ordinary HTML will provide native controls until enhancement
+succeeds. If someone starts listening before a delayed module arrives, keep that
+native session and its controls for the visit. This favors uninterrupted listening;
+native mode has browser controls without the custom timer, chapters or app retries.
+This is planned behavior, not yet implemented or deployed. The existing static
+stack and current version-2 music stay in place.
+
+
+The native-first candidate now passes actual keyboard playback when app.js or an
+imported sleep-timer module is blocked. Both cases keep audio idle until play and
+open one stream after the gesture; the 320px layout fits. All 46 unit tests pass.
+Delayed-script ownership, initialization exceptions, Firefox native playback and
+full regression/review gates are still pending. Candidate assets are served only
+in an isolated loopback preview on port 18092; the live listener is unchanged.
+
+
+The candidate now also preserves active, paused and pending native sessions when
+the delayed app arrives. Initialization-failure and JavaScript-disabled Chromium
+cases play real audio too, for eight focused scenarios in total. The JS-off test
+initially used page-side animation polling, which cannot run with scripts disabled;
+direct driver observations proved audio was advancing, so the fixture now polls
+from the driver instead. Firefox157.0.1 passes both enhanced flows and actual
+native keyboard playback with scripts disabled, with temporary-profile cleanup.
+Full regression and delivery gates remain pending; no candidate rollout yet.
+
+The complete local browser run passed all19 scenarios, including the eight new
+fallback paths and existing reconnection/timer/volume/layout behavior. Both Firefox
+checks and46Node tests also passed. A source-linked receipt fingerprints the eight
+served assets and raw results. The station baseline remains healthy. The candidate
+now goes to one fresh final review, then real CI before any web-only rollout.

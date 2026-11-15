@@ -28,6 +28,11 @@
         <div class="dial-center"><span></span></div>
       </figure>
       <section class="player" id="player" aria-label="Live radio player" data-state="idle">
+        <div id="native-fallback">
+          <p>Listen using your browser’s audio controls.</p>
+          <audio id="native-stream" controls preload="none" src="/radio.mp3" aria-label="Live radio stream">Open <a href="/radio.mp3">the audio stream</a>.</audio>
+          <p>Basic player. <a href="/radio.mp3">Open the audio stream</a> in your preferred player.</p>
+        </div>
         <audio id="stream" preload="none" aria-hidden="true"></audio>
         <div id="enhanced-controls" hidden>
         <div class="play-row">
@@ -59,7 +64,6 @@
         </div>
         <p class="timer-status" id="timer-status" role="status" aria-live="polite">Stops playback on this device. Keep this page open.</p>
         </div>
-        <noscript><p>Use the audio player below to join the station.</p><audio controls preload="none" src="/radio.mp3">Open <a href="/radio.mp3">the audio stream</a>.</audio></noscript>
       </section>
     </section>
     <section class="about" id="about" aria-labelledby="about-title">
