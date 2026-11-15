@@ -2,8 +2,8 @@
 x-production: &production
   user: "10001:10001"
   read_only: true
-  cap_drop: [ALL]
-  security_opt: [no-new-privileges:true]
+  cap_drop: !override [ALL]
+  security_opt: !override [no-new-privileges:true]
   tmpfs:
     - /tmp:rw,noexec,nosuid,size=64m,mode=1777
 
