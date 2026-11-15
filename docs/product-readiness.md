@@ -22,7 +22,7 @@ latest dated receipt and [current handoff](../HANDOFF.md) for present state.
 | Audible public listening path | Authenticated HTTPS fetch, bounded decode and audibility check on an independent host | Read-only command and local TLS rehearsal passed; independent deployment pending |
 | Backup and recovery | Consistent queue/audio backup and tested restore on isolated data | Repeatable create/verify/restore commands and off-host runbook validated locally; target-host/off-host exercise pending |
 | Operator documentation | Install, upgrade, monitor, recover, back up and roll back commands | Local recovery/backup runbook implemented; production deployment runbook added; target-host exercise pending |
-| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | Changes through PR #29 merged after final-head/current-base CI; native-first fallback and focus/help polish are deployed locally with preserved core identities and live Firefox/decoded-audio proof; recent work includes audible chapter context, deployed listener recovery, an offline melody audition and host-side vitals recording |
+| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | Changes through PR #31 merged after final-head/current-base CI; volume memory, native fallback and focus/help polish are deployed locally with preserved core identities and live Firefox/decoded-audio proof; recent work includes audible chapter context, deployed listener recovery, an offline melody audition and host-side vitals recording |
 
 These are release readiness gates, not an exhaustive definition of the evolving
 product goal. The [product journal](product-journal.md) records that direction.
@@ -355,3 +355,14 @@ exact CI run, head/base and merge. This observes existing station decoded-audio
 reports, not a new audio capture or independent probe. It does not establish
 unsampled peaks, indefinite stability, subjective listening, physical devices,
 public-target capacity or off-host recovery. Those release gates remain open.
+
+## Volume-memory delivery — 15 November 2026
+
+PR #31 is merged and deployed locally after all four current-head/current-base CI
+jobs passed, including actual stock Firefox. The [delivery receipt](evidence/listener-volume-memory-delivery-20261115.json)
+retains exact base/head/merge/run, per-job conclusions, live asset hashes, preserved
+core identities, 60-second decoded audio and live Firefox preference/playback proof.
+The separate six-hour metrics observation remains incomplete and includes an
+annotated unhealthy web-maintenance sample; the earlier interrupted 40-minute
+attempt is never combined into a continuous result. This delivery does not close
+public-host, physical-device, off-host recovery or human musical acceptance gates.
