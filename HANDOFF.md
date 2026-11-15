@@ -271,20 +271,20 @@ no on-air adoption. Public target/off-host recovery and human/device acceptance
 remain open.
 
 
-## Stock Firefox acceptance check (in progress)
+## Stock Firefox acceptance tool
 
 PR #26 merged the completed observer/journal receipt as `2195b7a` after all four
-checks passed. The next branch `feat/firefox-playback-check` makes the successful
-five-flow stock-Firefox probe repeatable with `python -m radio.firefox_smoke`;
+checks passed. The source now makes the successful five-flow stock-Firefox probe
+repeatable with `python -m radio.firefox_smoke`;
 see [operator instructions](docs/firefox-check.md). It owns a private profile and
 loopback driver process, enforces a wall-clock deadline, saves sanitized partial
 reports and never controls station processes or existing browser sessions.
 
-Host tests pass (186, six media/opt-in skips); actual installed Firefox157.0.1
+Actual installed Firefox 157.0.1
 passed all five basic flows with cleanup. Raw evidence remains ignored under
 `artifacts/firefox-check-20261115/`; the earlier exploratory probe is separately
-in `artifacts/firefox-20261115/`. The full real-media suite passes 186 tests with one explicit live opt-in skip;
-all 46 listener tests pass. One fresh final review and exact
-final-head/current-base CI remain required. The new CI Firefox step must actually
+in `artifacts/firefox-20261115/`. The full real-media suite passes 187 tests with one explicit live opt-in skip;
+all 46 listener tests pass. The delivery gate is one fresh final review plus all
+four actual final-head/current-base CI jobs. The new CI Firefox step must actually
 pass, with no skipped-check clearance. Current music and audition adoption stay
 unchanged. Physical/Safari/public-host/off-host and human acceptance remain open.

@@ -74,5 +74,13 @@
     "No Firefox long-outage or sleep-timer acceptance",
     "No Safari, physical device, public deployment or subjective musical acceptance",
     "Timeout triggers cleanup; elapsed time includes shutdown and profile removal"
-  ]
+  ],
+  "verification": {
+    "focused_tests": 8,
+    "real_media_tests": 187,
+    "real_media_skips": 1,
+    "skip_scope": "Explicit live-project observer opt-in, tested separately in PR25",
+    "listener_tests": 46,
+    "real_media_log_sha256": "1083b246ce39a48881d23e54951f3b9be8604c77d48e3ba104dcae7ae5f3e883"
+  }
 }

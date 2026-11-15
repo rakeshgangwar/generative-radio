@@ -781,7 +781,7 @@ and real deployment/device checks remain open. Current version 2 stays on air;
 no audition was adopted or role replaced for this observation.
 
 
-### 15 November: check the player in stock Firefox — in progress
+### 15 November: repeatable stock Firefox playback acceptance
 
 The current listener is exercised heavily in Chromium, but another engine should
 have actual playback evidence too. An exploratory private-profile run in installed
@@ -796,12 +796,14 @@ owns a new profile and driver group, caps responses and has a browser/network
 POSIX deadline, followed by cleanup. Protocol fixtures cover malformed/oversized data, unknown error
 text, redirects before clicks, stalled/dripping HTTP and SIGTERM cleanup. The first
 tracked actual Firefox run passed all five flows in about 4.4 seconds, including
-cleanup. The host suite passes 186 tests with six media/explicit opt-in skips.
+cleanup. Before the later origin regression, the host suite passed 186 tests with six
+media/explicit opt-in skips.
 
 The new actual-Firefox step is wired into the existing integration job, preserving
 all four required job names and the Chromium suite. The complete real-media suite
-passes 186 tests (one explicit live-project opt-in skip), and all 46 listener tests
-pass. Independent final review and final-head CI remain ahead. There is no music or
+passes 187 tests (one explicit live-project opt-in skip), and all 46 listener tests
+pass. Merging this change requires one fresh final review and all four actual
+final-head/current-base CI jobs, including the new Firefox step. There is no music or
 service rollout here. This basic Linux check does not establish Safari/physical
 devices, Firefox's long-outage/timer behavior or subjective musical quality.
 
@@ -824,4 +826,5 @@ the guard and passed afterward; eight focused tests pass. The guarded tool was
 rerun on actual Firefox for success, SIGTERM and deadline. It observed 24/7/23 owned
 processes respectively, with none active afterward and private profiles removed.
 The deadline run retained one completed check but correctly failed; partial work
-was not reported as a pass. The final whole-suite gate for this fix remains ahead.
+was not reported as a pass. The final whole-suite gate for this fix passed all 187 tests with one explicit
+live-project opt-in skip; actual playback was tested separately on the host.
