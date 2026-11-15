@@ -152,3 +152,37 @@ These numbers describe the score. They do not establish that it feels less repet
 Actual FluidSynth/FFmpeg validation rendered all 15 palette/stage combinations at 20 seconds, plus twelve two-minute segments each for the baseline and candidate. Planned two-minute renders took 3.65–3.82 seconds here. Both 23m05s crossfade rehearsals have no detected -50 dB silence lasting two seconds; planned RMS was -24.30 dBFS and peak -7.78 dBFS, close to the comparison's listening level. An actual worker test preserved two saved job origins while its environment used a different station seed, and verified the legacy toggle.
 
 The candidate has 74 backend tests, including bounded/out-of-order planning, no-repeat boundaries, safe notes/programs, legacy MIDI compatibility, preview validation and saved-job routing. Independent review found no defects, reran all 74 tests, confirmed 300 legacy MIDI comparisons against the base and checked 1,200 planned compositions across seeds/ages/durations/tempos. Current-head CI and a measured worker rollout come next. The live stream still contains the existing immutable buffer; no promise of improved listening quality is made before listening. Public HTTPS/target VPS work remains open.
+
+
+### 15 November: musical chapters are on air; prepare a real deployment
+
+PR #11 merged after all four current-head CI checks passed. Only the composer and
+renderer were replaced at 04:54 IST; all eleven ready tracks kept their original
+hashes. The broadcaster, Icecast and listener gateway stayed in place. Liquidsoap
+actually crossed into the first planned segment (job182) at 05:19:43 IST. This is
+on-air transition evidence, distinct from queue dispatch. A two-hour recording
+and resource monitor are still running; their final result is not yet known.
+
+The next product iteration packages a safe production installation: private
+random credentials, resolved configuration checks, non-root/read-only services,
+a persistent HTTPS gateway and an operator path for upgrades and recovery. It
+uses the existing stack rather than adding a cloud dependency or control panel.
+An isolated rehearsal is testing the actual five-container profile with local
+certificates; no public deployment or host trust change is being made.
+
+The rehearsal work also exposed a real transport defect: this FFmpeg build
+accepted untrusted and wrong-host HTTPS certificates. The capture helper now
+uses curl for CA/hostname authentication before decoding audio. Both rejection
+cases and a trusted certificate pass in the real media image. Public DNS/ACME,
+target-host reboot/capacity, off-host recovery and human listening remain open.
+
+
+The production rehearsal completed successfully: all five services healthy under
+UID10001/read-only/cap-drop/no-new-privileges, trusted HTTPS page and MP3, untrusted
+CA rejection, canonical HTTP redirect, private routes returning404, a complete
+five-second decoded TLS capture and the same CA after gateway replacement. Only
+the disposable loopback project and its volumes were removed. Independent review
+found two preflight bypasses via Compose configs/secrets mounts and alternate
+networks; both now have failing-before/passing-after regressions and were rejected
+through real Compose resolution. The actual media image passes94 Python tests;
+listener tests pass19. This validates the package locally, not public deployment.

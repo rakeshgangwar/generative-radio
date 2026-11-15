@@ -1,0 +1,19 @@
+{
+	admin off
+	persist_config off
+	http_port 8080
+	https_port 8443
+	skip_install_trust
+	servers {
+		protocols h1 h2
+	}
+}
+import /etc/caddy/site.caddy
+{$RADIO_DOMAIN} {
+	import station
+	header Strict-Transport-Security "max-age=86400"
+}
+http://:8081 {
+	respond /healthz "ok" 200
+	respond 404
+}

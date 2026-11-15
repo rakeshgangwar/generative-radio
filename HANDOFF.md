@@ -18,17 +18,19 @@ and asked to publish this work to a private GitHub repository.
 Architecture source conversation:
 https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
 
-## Current musical-memory iteration
+## Current musical-memory and production iteration
 
-PR #10 has merged the completed-watchdog evidence/journal after CI. The musical
-candidate is implemented in an isolated worktree: versioned plans from saved
-seed/ID, balanced nonrepeating harmonic paths, 3–5 segment chapter themes, stage
-changes, three GM palettes, strict MUSICAL_MEMORY 0/1 rollback and explicit planned
-preview flags. No schema migration or new runtime dependency. 74 backend/19 JS tests
-pass; actual 39 renders and paired 23m05s crossfade rehearsals pass quality/gap
-checks. Actual worker tests preserve saved job origins and verify legacy rollback.
-No live worker rollout yet; preserve ready files/data/Icecast/broadcaster. Final
-review/CI and listening remain pending; see journal/readiness for measured facts.
+PR #11 merged after all four CI checks. Workers rolled out at04:54 IST; eleven
+ready audio hashes stayed unchanged, with no broadcaster/Icecast/web replacement.
+Liquidsoap crossed into planned job182 at05:19:43 IST. Two-hour capture21660 and
+monitor84280 remain running; preserve primary capture.sh until they terminate.
+Evidence: artifacts/musical-memory-20261115/ and
+artifacts/musical-memory-rollout-20261115/. Musical listening acceptance is pending.
+
+Production package is in an isolated feat/production-deployment worktree:
+private credential generation, strict resolved policy, hardened five-service TLS
+profile, operator runbook and an isolated full-stack rehearsal. No target host or
+domain is available; no public deployment has occurred. See docs/deployment.md.
 
 ## Latest verified state — 15 November 2026
 
@@ -42,9 +44,8 @@ Broadcaster memory240.3–263.4 MiB with stable quarter averages; SQLite integri
 11 ready, work empty,907 MB data. Capture73227 and monitor15955 are terminal exit 0;
 do not restart or repoll them. Evidence: `artifacts/watchdog-soak-20261115/`.
 
-Next work: musical memory/chapters. A 256-seed score baseline had 54/255 repeated
-adjacent four-chord openings and 198/256 first melody notes on A. No new planner is
-on air yet. Preserve live playback while testing the iteration in an isolated
+Completed next iteration: musical memory/chapters. A 256-seed score baseline had 54/255 repeated
+adjacent four-chord openings and 198/256 first melody notes on A. The new planner is now on air after the preserved buffer drained. Preserve live playback while testing the iteration in an isolated
 worktree. Target VPS/domain, actual off-host recovery, physical-device/public
 HTTPS validation and musical listening acceptance remain open.
 

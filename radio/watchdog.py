@@ -45,16 +45,17 @@ class Options:
             raise ValueError("watchdog timeout must exceed probe duration")
 
     @classmethod
-    def load(cls):
-        values = {"data": Path(os.getenv("RADIO_DATA", "/data")),
-                  "stream_url": os.getenv("RADIO_STREAM_URL", cls.stream_url),
-                  "status_url": os.getenv("RADIO_STATUS_URL", cls.status_url)}
+    def load(cls, env=None):
+        env = os.environ if env is None else env
+        values = {"data": Path(env.get("RADIO_DATA", "/data")),
+                  "stream_url": env.get("RADIO_STREAM_URL", cls.stream_url),
+                  "status_url": env.get("RADIO_STATUS_URL", cls.status_url)}
         names = {"grace": "GRACE_SECONDS", "probe_seconds": "PROBE_SECONDS",
                  "interval": "INTERVAL_SECONDS", "timeout": "TIMEOUT_SECONDS",
                  "failures": "FAILURES", "restart_limit": "RESTART_LIMIT",
                  "restart_window": "RESTART_WINDOW_SECONDS"}
         for name, suffix in names.items():
-            raw = os.getenv(f"WATCHDOG_{suffix}")
+            raw = env.get(f"WATCHDOG_{suffix}")
             if raw is not None:
                 values[name] = int(raw) if name in {"failures", "restart_limit"} else float(raw)
         return cls(**values)
