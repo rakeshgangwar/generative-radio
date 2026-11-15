@@ -263,3 +263,6 @@ open; a frozen/suspended browser cannot execute its deadline.
 Compare instrument libraries using identical, matched-level music: [sound auditions](docs/sound-auditions.md).
 
 Verify decoded audible output from a separate machine: [public listening checks](docs/public-monitoring.md).
+
+For repeatable RAM, CPU, service-health and decoded-audio-report receipts, use the
+[bounded host-side station observer](docs/station-observer.md). It does not change playback.
