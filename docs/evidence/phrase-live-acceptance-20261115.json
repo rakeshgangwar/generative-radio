@@ -1,0 +1,274 @@
+{
+  "summary": {
+    "local_rollout_capture_passed": true,
+    "scope": "30-minute mixed version1-buffer to version2 transition capture; intentional worker maintenance recorded; not a full version2-only soak or subjective acceptance",
+    "issues": [],
+    "run": {
+      "started_at": "2026-11-15T03:21:05.089167+00:00",
+      "updated_at": "2026-11-15T03:52:10.406400+00:00",
+      "supervisor_pid": 596862,
+      "children": {
+        "capture": {
+          "pid": 596863,
+          "returncode": 0
+        },
+        "monitor": {
+          "pid": 596864,
+          "returncode": 0
+        }
+      }
+    },
+    "duration_seconds": 1800.0,
+    "pcm_frames": 79380000,
+    "silences_ge2s_at_minus50dB": 0,
+    "peak_dbfs": -8.067364,
+    "rms_dbfs": -24.540843,
+    "monitor_samples": 59,
+    "first": "2026-11-15T03:21:05.114980+00:00",
+    "last": "2026-11-15T03:52:05.115084+00:00",
+    "healthy_watchdog_samples": 59,
+    "watchdog_restart_counts": [
+      0
+    ],
+    "intentional_maintenance_observations": [
+      {
+        "at": "2026-11-15T03:21:38.981389+00:00",
+        "role": "composer",
+        "state": "exited",
+        "health": "unhealthy",
+        "reason": "aborted snapshot original-worker stop"
+      },
+      {
+        "at": "2026-11-15T03:21:38.981389+00:00",
+        "role": "renderer",
+        "state": "exited",
+        "health": "unhealthy",
+        "reason": "aborted snapshot original-worker stop"
+      },
+      {
+        "at": "2026-11-15T03:23:48.860593+00:00",
+        "role": "composer",
+        "state": "running",
+        "health": "starting",
+        "reason": "planned replacement warmup"
+      }
+    ],
+    "observation_errors": [],
+    "ready_min": 10,
+    "ready_max": 11,
+    "version2_ready_first": 0,
+    "version2_ready_last": 11,
+    "version2_ids_observed": [
+      306,
+      307,
+      308,
+      309,
+      310,
+      311,
+      312,
+      313,
+      314,
+      315,
+      316,
+      317,
+      318,
+      319,
+      320
+    ],
+    "failed_job_ids": [],
+    "source_role_identity_counts": {
+      "broadcaster": 1,
+      "icecast": 1,
+      "web": 1
+    },
+    "version2_prepared_crossfades_in_nominal_capture_window": [
+      {
+        "id": 306,
+        "at": "2026-11-15T03:47:28+00:00",
+        "crossfade_logged": true
+      },
+      {
+        "id": 307,
+        "at": "2026-11-15T03:49:23+00:00",
+        "crossfade_logged": true
+      }
+    ],
+    "transition_scope": "Broadcaster evidence, not confirmed individual listener playback or sample-accurate MP3 alignment",
+    "memory_mib": {
+      "web": {
+        "samples": 59,
+        "min": 18.48,
+        "max": 26.88,
+        "mean": 18.801525423728812,
+        "first": 18.48,
+        "last": 19.12,
+        "quarter_means": [
+          18.625714285714285,
+          18.614,
+          19.22,
+          18.734666666666666
+        ]
+      },
+      "renderer": {
+        "samples": 59,
+        "min": 14.85,
+        "max": 71.65,
+        "mean": 17.60677966101695,
+        "first": 19.34,
+        "last": 15.79,
+        "quarter_means": [
+          15.731428571428571,
+          19.158666666666665,
+          15.752666666666666,
+          19.659333333333333
+        ]
+      },
+      "composer": {
+        "samples": 59,
+        "min": 14.5,
+        "max": 28.51,
+        "mean": 15.090169491525423,
+        "first": 16.74,
+        "last": 14.53,
+        "quarter_means": [
+          14.877142857142857,
+          15.262666666666666,
+          14.634666666666666,
+          15.572
+        ]
+      },
+      "broadcaster": {
+        "samples": 59,
+        "min": 247.1,
+        "max": 262.8,
+        "mean": 249.85762711864407,
+        "first": 247.3,
+        "last": 247.9,
+        "quarter_means": [
+          249.1,
+          249.16,
+          250.94666666666666,
+          250.17333333333335
+        ]
+      },
+      "icecast": {
+        "samples": 59,
+        "min": 4.973,
+        "max": 14.91,
+        "mean": 5.863779661016949,
+        "first": 5.234,
+        "last": 5.535,
+        "quarter_means": [
+          6.1885,
+          5.5312,
+          5.508333333333334,
+          6.248733333333333
+        ]
+      }
+    },
+    "sampled_cpu_percent": {
+      "web": {
+        "samples": 59,
+        "min": 0.0,
+        "max": 2.87,
+        "mean": 0.18203389830508473,
+        "first": 0.0,
+        "last": 0.0,
+        "quarter_means": [
+          0.005714285714285714,
+          0.19866666666666669,
+          0.33999999999999997,
+          0.172
+        ]
+      },
+      "renderer": {
+        "samples": 59,
+        "min": 0.0,
+        "max": 98.95,
+        "mean": 6.618983050847458,
+        "first": 0.0,
+        "last": 0.1,
+        "quarter_means": [
+          3.248571428571428,
+          11.483333333333333,
+          2.1413333333333333,
+          9.378
+        ]
+      },
+      "composer": {
+        "samples": 59,
+        "min": 0.0,
+        "max": 21.91,
+        "mean": 1.3057627118644068,
+        "first": 0.14,
+        "last": 0.09,
+        "quarter_means": [
+          0.05,
+          1.6353333333333333,
+          1.31,
+          2.144
+        ]
+      },
+      "broadcaster": {
+        "samples": 59,
+        "min": 2.42,
+        "max": 31.61,
+        "mean": 10.394745762711864,
+        "first": 10.82,
+        "last": 8.99,
+        "quarter_means": [
+          11.92142857142857,
+          9.222,
+          11.498,
+          9.039333333333333
+        ]
+      },
+      "icecast": {
+        "samples": 59,
+        "min": 0.14,
+        "max": 3.96,
+        "mean": 0.6076271186440678,
+        "first": 0.24,
+        "last": 0.22,
+        "quarter_means": [
+          0.34,
+          0.24866666666666667,
+          0.9133333333333333,
+          0.9106666666666666
+        ]
+      }
+    },
+    "host_available_gib_min": 21.454055786132812,
+    "disk_free_gib_min": 550.6264266967773,
+    "retention_after": {
+      "at": "2026-11-15T03:54:13.335107+00:00",
+      "quick_check": "ok",
+      "jobs": 42,
+      "statuses": {
+        "ready": 11,
+        "served": 31
+      },
+      "id_min": 280,
+      "id_max": 321,
+      "errors": [],
+      "expired_terminal_ids": [],
+      "missing_referenced_audio": [],
+      "work_files": [],
+      "file_count": 92,
+      "data_bytes": 907408579
+    }
+  },
+  "source_sha256": {
+    "capture.sh": "9ed2403fe4b29ee4a42699f27688cc45b43e59eb34ed9af67cf6afc1676612a4",
+    "monitor.py": "5eeff3a2fff01745587b58ffb121e6ebc8cdde1105232697f0a2c8dbadbecdd4",
+    "supervisor.py": "af171b9b2c9122f343a0b5c6c5a620fa650d5b0c344777c0582d5f6a741e7147",
+    "run.json": "93fb9fb931e49ee648f8b3a3558451195003e3d2a66cacacf48ab1e687eab725",
+    "vitals.jsonl": "5f795f4351ccc34ad68bd7fc7c8faf9cc8dc849889cdc24cd590a30cbca59059",
+    "artifacts/broadcast.wav": "c18fe18c883d4fee4db7ff12b8ceec583eb22b60d0c0bd83434534fe059a6917",
+    "artifacts/analysis.log": "a2ce0f5657a71e9b166a01c8e18da4eb1a17f92a7204fd58c8b517caee9aae6d",
+    "retention-after.json": "15c7b44e8c53d0366eeb997f70cfb59b924a3385007d48d5f63e6e26fabf48ad",
+    "first-version2-transition.json": "3d5d1e533a853d76b321a0b7241cd48aa0f57e52b2a2d12b84d2bf1f3b9df984",
+    "broadcaster-so-far.log": "bd700716fc2d5441c29a18982c3366bc926bfc02f50589356237e373f9839ee6"
+  },
+  "process_terminal_verification": "Capture596863 exited with receipt0 and absent /proc at03:51:38UTC; supervisor596862/monitor596864 absent host /proc at03:54:13UTC after receipt0; do not restart"
+}

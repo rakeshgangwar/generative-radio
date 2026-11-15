@@ -448,3 +448,32 @@ deferred first-read failure; that diagnostic path was reproduced and fixed too.
 All 136 real-media Python and 30 listener tests pass. Independent whole-branch
 review and final-head CI precede merge. This backup-only CLI change does not
 require replacing music workers or interrupting the active live capture.
+
+
+### 15 November: the preserved buffer reaches the new phrasing
+
+The broadcaster crossed into version-2 job 306 at 09:17:28 IST, then job 307 at
+09:19:23. The new thirty-minute recording completed with exactly 1,800 seconds,
+no detected −50 dB silence lasting two seconds, peak −8.07 dBFS and RMS −24.54 dBFS.
+All 59 audio-watchdog observations were healthy with zero recovery restarts.
+The source/gateway container identities stayed unchanged; the deliberate worker
+exits and warmup during deployment remain recorded, not hidden by restart counters.
+
+The ready buffer stayed at 10–11 tracks and ended entirely on version 2. Broadcaster
+memory stayed around 250 MiB; post-run SQLite/retention checks passed at about
+907 MB. This capture follows old queued audio into new phrasing; only its final
+few minutes contain the new version. It is not a full thirty-minute version-2 soak
+or proof that an individual listener heard a particular job. The
+[receipt](evidence/phrase-live-acceptance-20261115.json) includes exact measurements,
+maintenance exceptions and raw-source hashes.
+
+PR #19 also merged the offline backup fix after all four checks passed on its final
+head. The merged CLI image is available locally; all five running container IDs,
+images and start times stayed unchanged while making it available. It needs no
+music-service deployment. See the [delivery receipt](evidence/offline-backup-delivery-20261115.json).
+
+The next product judgment remains listening: does the station sustain interest,
+do the new rests feel natural, and which matched SoundFont is preferable? Current
+TimGM remains on air. Public server/domain and off-host backup destinations have
+been requested; none is assumed. Local evidence supports continuing development,
+not a claim that the public product or its musical acceptance is finished.

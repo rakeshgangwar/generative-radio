@@ -1,6 +1,6 @@
 # Offline backup recovery implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Back up a stopped WAL station from a read-only mount without losing committed frames or modifying its source.
 
@@ -51,4 +51,4 @@
 ## Delivery gates
 
 - [x] One fresh independent whole-branch review; one verified Important/Critical fix pass if needed.
-- [ ] Scoped PR with all four actual final-head/current-base checks passing before merge; main fast-forward and honest journal update. CLI is on demand; no worker rollout is needed for this backup-only change.
+- [x] Scoped PR with all four actual final-head/current-base checks passing before merge; main fast-forward and honest journal update. CLI is on demand; no worker rollout is needed for this backup-only change.

@@ -1,0 +1,47 @@
+{
+  "at": "2026-11-15T04:00:18.138122+00:00",
+  "merge": {
+    "mergeCommit": {
+      "oid": "4714d1c013417f5409f9bc6384ad13f58e22525f"
+    },
+    "mergedAt": "2026-11-15T04:00:14Z",
+    "state": "MERGED",
+    "url": "https://github.com/rakeshgangwar/generative-radio/pull/19"
+  },
+  "image_id": "sha256:6a9e90bd515e624d7fc342fe2d59c845291c39760271161db2d81582fb75d632",
+  "aliases": [
+    "generative-radio:offline-backup-4714d1c",
+    "generative-radio:local"
+  ],
+  "runtime_source_files_verified": 17,
+  "all_five_container_ids_images_start_times_unchanged": true,
+  "containers": {
+    "composer": {
+      "id": "0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started_at": "2026-11-15T03:23:31.379138171Z"
+    },
+    "renderer": {
+      "id": "04a26abb33422649a11752d188ca9e2eb149fbe50c981fc3a2eced30a00805d4",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started_at": "2026-11-15T03:23:31.259377863Z"
+    },
+    "broadcaster": {
+      "id": "ad6ff03d355acdd629bd2d9ae8eff4dd3b71dc986d2a03f142a6980de6f68eef",
+      "image": "sha256:2cf53adee8f52164ab55bb5fef40c7a90c46e310cf15d22834b180a9f4ff5255",
+      "started_at": "2026-11-14T21:28:48.804473224Z"
+    },
+    "icecast": {
+      "id": "25674fa891c1e05b47298b51369c6ab18df94cd8c62a668bd4ea3a6010bb8a12",
+      "image": "sha256:fc9b8902fe77092c22c24209e39f3d56e5ef50d14c6608da2849f3a10a206fc0",
+      "started_at": "2026-11-14T18:52:48.528054741Z"
+    },
+    "web": {
+      "id": "f49f4bb6a31ae18dd405cdfedddc1c826b7549bb763852d581b86794c82bd194",
+      "image": "sha256:82423412f306cbbaa00bd61802bdf7509a4978f50596343018d7683d9f258818",
+      "started_at": "2026-11-15T01:04:23.024559949Z"
+    }
+  },
+  "cli_offline_help_verified": true,
+  "scope": "Local on-demand CLI image aliases; no service recreated or restarted"
+}
