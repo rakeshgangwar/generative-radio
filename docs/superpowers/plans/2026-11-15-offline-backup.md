@@ -50,5 +50,5 @@
 
 ## Delivery gates
 
-- [ ] One fresh independent whole-branch review; one verified Important/Critical fix pass if needed.
+- [x] One fresh independent whole-branch review; one verified Important/Critical fix pass if needed.
 - [ ] Scoped PR with all four actual final-head/current-base checks passing before merge; main fast-forward and honest journal update. CLI is on demand; no worker rollout is needed for this backup-only change.
