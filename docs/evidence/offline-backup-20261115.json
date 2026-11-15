@@ -1,0 +1,252 @@
+{
+  "scope": "Isolated non-root read-only-source backup validation; no live station volume mounted or services changed",
+  "python_real_media_tests": 136,
+  "listener_tests": 30,
+  "offline_regressions": 9,
+  "source_module_sha256": "5e43b4fd5340fa8344c05259d28e77a74770742d486e78ffbdfe5097f44d47dc",
+  "mount_fixtures": {
+    "closed": {
+      "online": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "create: Cannot open source read-only; if every writer is stopped, use create --offline for private WAL recovery\n"
+      },
+      "offline_manifest": {
+        "version": 1,
+        "created_at": 1794714249.0813637,
+        "jobs": 2,
+        "files": {
+          "radio.sqlite": {
+            "size": 20480,
+            "sha256": "94631e5fbb5b0bcf86a07bb784801cfc3b7562ce3ace66bca62b7f7be0fc3d4a"
+          },
+          "audio/fallback.wav": {
+            "size": 23,
+            "sha256": "d01f6a9950a64033c136699caa90ff7341941fe0a031d18950bd7a160c262ee3"
+          }
+        }
+      },
+      "verify_exit": 0,
+      "restore_exit": 0,
+      "restored_rows": [
+        [
+          1,
+          91
+        ],
+        [
+          2,
+          92
+        ]
+      ],
+      "source_sha256_before": {
+        "radio.sqlite": "b583859e0733ac26127feab8fe921e9e1b2b0b56e4e607f6eea7a2d68b1ad0d3",
+        "audio/fallback.wav": "d01f6a9950a64033c136699caa90ff7341941fe0a031d18950bd7a160c262ee3"
+      },
+      "source_sha256_after": {
+        "radio.sqlite": "b583859e0733ac26127feab8fe921e9e1b2b0b56e4e607f6eea7a2d68b1ad0d3",
+        "audio/fallback.wav": "d01f6a9950a64033c136699caa90ff7341941fe0a031d18950bd7a160c262ee3"
+      },
+      "source_unchanged": true,
+      "source_shm_created": false,
+      "container_user": "1000:1000",
+      "source_mount": "read-only",
+      "image": "generative-radio:offline-backup-test"
+    },
+    "crashed": {
+      "online": {
+        "exit": 1,
+        "stdout": "",
+        "stderr": "create: Cannot open source read-only; if every writer is stopped, use create --offline for private WAL recovery\n"
+      },
+      "offline_manifest": {
+        "version": 1,
+        "created_at": 1794714250.7958465,
+        "jobs": 3,
+        "files": {
+          "radio.sqlite": {
+            "size": 20480,
+            "sha256": "6370d80d281f87378abc345689ed5f44e680b1d8a0bea9a75abbef6df7dd3be3"
+          },
+          "audio/fallback.wav": {
+            "size": 23,
+            "sha256": "d01f6a9950a64033c136699caa90ff7341941fe0a031d18950bd7a160c262ee3"
+          }
+        }
+      },
+      "verify_exit": 0,
+      "restore_exit": 0,
+      "restored_rows": [
+        [
+          1,
+          91
+        ],
+        [
+          2,
+          123456
+        ],
+        [
+          3,
+          777
+        ]
+      ],
+      "source_sha256_before": {
+        "radio.sqlite": "7de6cd85fe1fa6a9f49ddfe3e6f4420324effcbca6724ac87e8956bc35ed5e9e",
+        "radio.sqlite-wal": "190981e493b0dadf2405a259501ec9b0ae4731da47e7c308f3b010dc397d6b76",
+        "audio/fallback.wav": "d01f6a9950a64033c136699caa90ff7341941fe0a031d18950bd7a160c262ee3"
+      },
+      "source_sha256_after": {
+        "radio.sqlite": "7de6cd85fe1fa6a9f49ddfe3e6f4420324effcbca6724ac87e8956bc35ed5e9e",
+        "radio.sqlite-wal": "190981e493b0dadf2405a259501ec9b0ae4731da47e7c308f3b010dc397d6b76",
+        "audio/fallback.wav": "d01f6a9950a64033c136699caa90ff7341941fe0a031d18950bd7a160c262ee3"
+      },
+      "source_unchanged": true,
+      "source_shm_created": false,
+      "container_user": "1000:1000",
+      "source_mount": "read-only",
+      "image": "generative-radio:offline-backup-test"
+    }
+  },
+  "real_media": {
+    "at": "2026-11-15T03:45:42.073033+00:00",
+    "scope": "Isolated actual station-schema/rendered-audio offline backup; no live volume mounted",
+    "image": "generative-radio:offline-backup-test",
+    "volumes": {
+      "source": "generative-radio-offline-backup-media-source-20261115",
+      "bundle": "generative-radio-offline-backup-media-bundle-20261115",
+      "restore": "generative-radio-offline-backup-media-restore-20261115"
+    },
+    "source_before": {
+      "jobs": 3,
+      "database_header_rw_versions": [
+        2,
+        2
+      ],
+      "files": {
+        "radio.sqlite": "92f5f90257636827a812c3c84c519ffbfc7c1c3afb61770d3105f3f86cdc4363",
+        "midi/fallback.mid": "423c2a1a680a2fd2f11e2326a94cfe2ebbdbba72f4f16a2ba47ffb85560f13e4",
+        "midi/1.mid": "c57ee102527788369b0a4635275801d108341c01ba3b5f20a772c246395c3b68",
+        "midi/2.mid": "2d2e97805e46970ab1d1e5230f0eefa65f19b0dca29213adca77b9d6de13b945",
+        "audio/fallback.wav": "04160cf3a444f9c44fb6a064b0c69d2151dc136c320254baf02e9f9d9ce72151",
+        "audio/1.wav": "f00b4d39a1186c5c68084b015f479be5fc7e8565917f0c15ea1933276540e0b9",
+        "audio/2.wav": "4ce258e53e61278a3964dab447cd062c1fb66fad52998ed334b51aa635bbb4b7"
+      }
+    },
+    "source_sha256_after": {
+      "radio.sqlite": "92f5f90257636827a812c3c84c519ffbfc7c1c3afb61770d3105f3f86cdc4363",
+      "midi/fallback.mid": "423c2a1a680a2fd2f11e2326a94cfe2ebbdbba72f4f16a2ba47ffb85560f13e4",
+      "midi/1.mid": "c57ee102527788369b0a4635275801d108341c01ba3b5f20a772c246395c3b68",
+      "midi/2.mid": "2d2e97805e46970ab1d1e5230f0eefa65f19b0dca29213adca77b9d6de13b945",
+      "audio/fallback.wav": "04160cf3a444f9c44fb6a064b0c69d2151dc136c320254baf02e9f9d9ce72151",
+      "audio/1.wav": "f00b4d39a1186c5c68084b015f479be5fc7e8565917f0c15ea1933276540e0b9",
+      "audio/2.wav": "4ce258e53e61278a3964dab447cd062c1fb66fad52998ed334b51aa635bbb4b7"
+    },
+    "source_unchanged": true,
+    "create_manifest": {
+      "version": 1,
+      "created_at": 1794714339.5802236,
+      "jobs": 3,
+      "files": {
+        "radio.sqlite": {
+          "size": 20480,
+          "sha256": "6ead1f1984a20c4e49882811c6c26ec66790fc9541c5415e8a301a79c5b90600"
+        },
+        "audio/1.wav": {
+          "size": 3528078,
+          "sha256": "f00b4d39a1186c5c68084b015f479be5fc7e8565917f0c15ea1933276540e0b9"
+        },
+        "audio/2.wav": {
+          "size": 3528078,
+          "sha256": "4ce258e53e61278a3964dab447cd062c1fb66fad52998ed334b51aa635bbb4b7"
+        },
+        "audio/fallback.wav": {
+          "size": 10584078,
+          "sha256": "04160cf3a444f9c44fb6a064b0c69d2151dc136c320254baf02e9f9d9ce72151"
+        },
+        "midi/1.mid": {
+          "size": 209,
+          "sha256": "c57ee102527788369b0a4635275801d108341c01ba3b5f20a772c246395c3b68"
+        },
+        "midi/2.mid": {
+          "size": 227,
+          "sha256": "2d2e97805e46970ab1d1e5230f0eefa65f19b0dca29213adca77b9d6de13b945"
+        },
+        "midi/fallback.mid": {
+          "size": 491,
+          "sha256": "423c2a1a680a2fd2f11e2326a94cfe2ebbdbba72f4f16a2ba47ffb85560f13e4"
+        }
+      }
+    },
+    "verify_equal": true,
+    "restore": {
+      "jobs": 3,
+      "data": "/data",
+      "verified_files": 7
+    },
+    "round_trip": {
+      "dispatched_restored_track": 2,
+      "restored_audio": {
+        "duration": 20.0,
+        "peak": 0.255523681640625,
+        "rms_dbfs": -25.570860806572803,
+        "quiet_fraction": 0.025
+      },
+      "next_allocated_id": 4,
+      "rendered_pending_id": 3,
+      "new_render": {
+        "duration": 20.0,
+        "peak": 0.310699462890625,
+        "rms_dbfs": -25.112591702873285,
+        "quiet_fraction": 0.025,
+        "arrangement": {
+          "position": 3,
+          "chapter": 1,
+          "chapter_segment": 3,
+          "chapter_segments": 5,
+          "stage": "bloom",
+          "progression": [
+            "Am",
+            "C",
+            "G",
+            "Dm",
+            "F",
+            "Em"
+          ],
+          "holds": [
+            3,
+            4,
+            2,
+            4
+          ],
+          "motif": [
+            0,
+            1,
+            2,
+            0
+          ],
+          "profile": 2,
+          "register": 64,
+          "programs": [
+            94,
+            32,
+            4
+          ],
+          "rhythm_order": [
+            2,
+            1,
+            3,
+            0
+          ],
+          "phrase_gap": 3,
+          "version": 2,
+          "phrase_bars": 6
+        }
+      },
+      "errors": []
+    },
+    "source_and_restore_never_mounted_together": true
+  },
+  "raw_source_sha256": {
+    "mount-fixtures.json": "9108a385f1f4d9184178b39f8eb43ba676b3bf6facba07510f4fc6b6421c7bf7",
+    "real-media-round-trip.json": "d5eb6c0480dedcaca43ec92ede9dce0513026d5b53a0c5ffe9e0aadf81450d42"
+  }
+}

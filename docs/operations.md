@@ -24,13 +24,45 @@ The image's non-root UID 10001 owns `/data`, including a newly initialized named
 
 Verify checks all SHA-256 hashes/sizes, file paths, absence of symlinks/unlisted files, SQLite integrity/schema/job sequence and audio required by the snapshot queue. It returns nonzero on a damaged/incomplete bundle. Never schedule deletion of older verified copies merely because a new backup directory exists.
 
-On a Python host with access to an offline data directory, the same interface is:
+On a Python host with access to the station directory, the same interface is:
 
 ```sh
 python -m radio.backup create /backups/unique-name --data /path/to/station
 python -m radio.backup verify /backups/unique-name
 python -m radio.backup restore /backups/unique-name --data /path/to/empty-station
 ```
+
+## Back up an already stopped station
+
+Use `create --offline` only when **all database writers are stopped**, including
+composer, renderer and broadcaster. The broadcaster writes dispatch state even
+when music generation workers are stopped. This flag does not stop services or
+establish that the source is offline. Prefer the default online mode for normal
+uninterrupted backups.
+
+A closed WAL database can have no sidecars while retaining WAL mode in its header.
+Opening it on a fully read-only mount may fail when SQLite tries to initialize
+sidecars. Offline mode recovers a private copy of the database and any WAL/rollback
+journal, then creates the same verified bundle. It preserves committed WAL frames
+and leaves original filenames/bytes unchanged. Source SHM is not copied or created.
+Observed source changes abort copying; file stats are a safeguard, not a lock or
+proof that writers have stopped. Never bypass recovery with `immutable=1`.
+
+For an already stopped source volume, use a fresh backup name and the same mounts:
+
+```sh
+docker run --rm --network none \
+  --mount type=volume,source=generative-radio_radio-data,target=/source,readonly \
+  --mount type=volume,source=radio-backups,target=/data \
+  generative-radio:local python -m radio.backup create \
+  "/data/$RADIO_SNAPSHOT" --data /source --offline
+```
+
+Verify and restore use the same commands as online-created bundles. On a Python
+host with already stopped data, use
+`python -m radio.backup create /backups/unique-name --data /path/to/station --offline`.
+The flag is accepted only by create. Default online failures stay nonzero and
+suggest this mode; there is no automatic offline/immutable fallback.
 
 ## Keep a copy off-host
 

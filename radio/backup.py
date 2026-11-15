@@ -1,6 +1,6 @@
 """Verified directory backups for one local-disk station; restore only while offline."""
 import argparse
-from contextlib import closing
+from contextlib import ExitStack, closing
 import hashlib
 import json
 import math
@@ -124,21 +124,63 @@ def verify_backup(backup: Path) -> dict:
     return manifest
 
 
-def _snapshot(data, staging):
+def _offline_source_state(data):
+    state = {}
+    for name in ['radio.sqlite', 'radio.sqlite-wal', 'radio.sqlite-journal']:
+        path = data / name
+        if not path.exists() and not path.is_symlink():
+            if name == 'radio.sqlite':
+                raise ValueError('Offline source changed: database disappeared')
+            continue
+        try:
+            path = _regular(data, name)
+            info = path.stat()
+        except FileNotFoundError as exc:
+            raise ValueError('Offline source changed or is not a regular file') from exc
+        state[name] = (info.st_dev, info.st_ino, info.st_size, info.st_mtime_ns)
+    return state
+
+
+def _copy_offline_database(data, private):
+    # The caller must stop every writer. Stats detect observed changes, not locks.
+    before = _offline_source_state(data)
+    try:
+        for name in before:
+            _copy(_regular(data, name), private / name)
+    except FileNotFoundError as exc:
+        raise ValueError('Offline source changed during copying') from exc
+    if _offline_source_state(data) != before:
+        raise ValueError('Offline source changed during copying')
+
+
+def _snapshot(data, staging, *, offline=False):
     source = _regular(data, 'radio.sqlite')
     destination = staging / 'radio.sqlite'
     deadline = time.monotonic() + 30
     def progress(*_):
         if time.monotonic() > deadline:
             raise TimeoutError('SQLite backup exceeded 30 seconds')
-    db = _read_db(source)
-    target = sqlite3.connect(destination)
-    try:
+    with ExitStack() as stack:
+        if offline:
+            private = Path(stack.enter_context(tempfile.TemporaryDirectory(
+                prefix='.offline-recovery-', dir=staging)))
+            _copy_offline_database(data, private)
+            db = stack.enter_context(closing(sqlite3.connect(private / 'radio.sqlite')))
+            db.execute('PRAGMA trusted_schema=OFF')
+            # Trigger hot-journal/WAL recovery in the writable private copy.
+            db.execute('SELECT name FROM sqlite_master LIMIT 1').fetchall()
+        else:
+            try:
+                db = stack.enter_context(closing(_read_db(source)))
+                # WAL sidecar failures may be deferred until the first real read.
+                db.execute('SELECT name FROM sqlite_master LIMIT 1').fetchall()
+            except sqlite3.OperationalError as exc:
+                raise ValueError('Cannot open source read-only; if every writer is stopped, '
+                                 'use create --offline for private WAL recovery') from exc
+        target = stack.enter_context(closing(sqlite3.connect(destination)))
         db.backup(target, pages=256, progress=progress, sleep=.05)
         target.execute('PRAGMA journal_mode=DELETE')
-    finally:
-        db.close()
-        target.close()
+    # Private recovery files are gone before manifest enumeration.
     destination.chmod(0o600)
     rows = _jobs(destination)
     required, optional = _names(rows)
@@ -160,8 +202,10 @@ def _snapshot(data, staging):
     return manifest
 
 
-def create_backup(data: Path, destination: Path) -> dict:
-    """Read a live WAL database; never overwrite an existing destination."""
+def create_backup(data: Path, destination: Path, *, offline: bool = False) -> dict:
+    """Back up online, or recover a private copy after the caller stops all writers."""
+    if type(offline) is not bool:
+        raise ValueError('offline must be a boolean')
     data, destination = Path(data).absolute(), Path(destination).absolute()
     if destination.resolve().is_relative_to(data.resolve()):
         raise ValueError('Backup destination must be outside station data')
@@ -172,7 +216,7 @@ def create_backup(data: Path, destination: Path) -> dict:
             with tempfile.TemporaryDirectory(prefix='.snapshot-', dir=destination) as temp:
                 staging = Path(temp)
                 try:
-                    manifest = _snapshot(data, staging)
+                    manifest = _snapshot(data, staging, offline=offline)
                 except FileNotFoundError:
                     if attempt == 2:
                         raise
@@ -251,10 +295,15 @@ def main():
         child.add_argument('backup', type=Path)
         if command != 'verify':
             child.add_argument('--data', type=Path, default=Path(os.getenv('RADIO_DATA', '/data')))
+        if command == 'create':
+            child.add_argument('--offline', action='store_true',
+                               help='All database writers must be stopped, including '
+                                    'composer, renderer and broadcaster; recover a private '
+                                    'copy without writing the source')
     args = parser.parse_args()
     try:
         if args.command == 'create':
-            result = create_backup(args.data, args.backup)
+            result = create_backup(args.data, args.backup, offline=args.offline)
         elif args.command == 'restore':
             result = restore_backup(args.backup, args.data)
         else:
