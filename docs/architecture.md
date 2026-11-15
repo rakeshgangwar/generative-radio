@@ -20,6 +20,9 @@ restarts in the data volume.
 Musical context is reconstructed in the renderer from each saved job's seed and
 queue ID. Bounded shuffled schedules avoid equal harmonic paths at consecutive
 positions; three-to-five-segment chapters share a motif, register and palette.
+Version-2 plans also share a 6/8/10-bar melodic phrase length within each chapter.
+The final bar of each phrase has no new melody attacks or held MIDI notes,
+while sustained harmony continues. SoundFont releases/reverb can ring through it. Version-1 plans and unplanned legacy MIDI remain unchanged.
 The versioned arrangement is saved in render analysis. This requires no history
 database/migration; legacy composition remains available through MUSICAL_MEMORY=0.
 The schedule describes queue order. Skipped jobs can skip chapter stages.

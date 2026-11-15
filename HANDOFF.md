@@ -27,6 +27,10 @@ Do not invent a target, provision paid infrastructure or publish this machine.
   balancing harmonic paths and developing a motif/register/palette. Ready audio
   remains immutable; skipped queue jobs can skip chapter stages. A served record
   means dispatched/prefetched, not exact on-air history.
+- Version-2 source plans add chapter-shared 6/8/10-bar melodic phrases with a
+  one-bar rest over sustained harmony. The currently deployed workers still use
+  version 1; do not confuse an offline candidate with a live rollout. Explicit
+  version-1/unplanned MIDI remains unchanged.
 - TimGM remains the default sound. Paired TimGM/FluidR3 previews are available in
   the audition artifacts; the asynchronous listening-preference question is open.
 - The listener has explicit play/pause, bounded reconnection, native fallback and
@@ -39,7 +43,9 @@ sleep-timer rollout at 06:34 IST left all four music-service IDs/restarts unchan
 
 ## Delivery and operator tools
 
-PRs #1–#15 merged after current-head CI. Latest code delivery is PR #15, merge
+PRs #1–#16 merged after current-head CI. PR #16 (`a00557d`) records the completed
+two-hour acceptance and replaces the stale first-laptop handoff. Latest runtime
+code delivery before the phrase-breathing iteration is PR #15, merge
 `ddaa4c7`: authenticated public-listener verification now decodes/audits a bounded
 MP3 prefix instead of trusting MIME/byte count. Its final code has 121 real-media
 and 30 listener tests; CI also passes actual browser and hardened TLS rehearsals.
