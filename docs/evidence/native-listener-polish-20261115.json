@@ -1,6 +1,6 @@
 {
   "base_commit": "41d245676f675df0fb3b6bf4079d2e902b9ce0ff",
-  "status": "Local acceptance complete; one fresh review, actual final-head/current-base CI and web-only rollout pending",
+  "status": "Local acceptance and one fresh clean review complete; actual final-head/current-base CI and web-only rollout pending",
   "served_asset_sha256": {
     "app.js": "8da780d35d74981e47d6cd55543d42e10ec8871064a2506f0b985b47afe76213",
     "broadcast-context.js": "afafb4dbaed6ec78338c7affe13c1b46c5687a1c834c70a956a3f485b134b29f",
@@ -161,5 +161,19 @@
     "Native mode keeps browser-managed playback without custom timer/chapter/app retries",
     "No candidate deployment or music/core role change",
     "Public hosting, off-host recovery and human musical acceptance remain open"
-  ]
+  ],
+  "review": {
+    "range": "41d2456..7d9d648",
+    "critical": 0,
+    "important": 0,
+    "minor": 0,
+    "fresh_checks": [
+      "46 Node tests pass",
+      "git diff --check passes",
+      "eight served assets and recorded proof hashes match"
+    ],
+    "browser_scope": "Reviewed recorded actual playback evidence and screenshots; browser suites not rerun by reviewer",
+    "correction_pass_needed": false,
+    "rereview": false
+  }
 }

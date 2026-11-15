@@ -37,7 +37,7 @@
   and focused actual browser tests to GREEN, preserving zero pre-play requests.
 - [x] Run full browser acceptance and actual Firefox; inspect320px help/focus visual;
   record exact asset/proof hashes and truthful scope. No core service changes.
-- [ ] One fresh final review, one Important/Critical correction pass with RED→GREEN;
+- [x] One fresh final review, one Important/Critical correction pass with RED→GREEN;
   Minor ledger costs; run final relevant checks and publish scoped PR.
 - [ ] Require all four latest final-head/current-base CI jobs and actualFirefoxstep
   success, merge only on clearance. Verify measured web-only rollout and journal.
