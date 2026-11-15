@@ -1,4 +1,7 @@
 import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+// Exact HTML shipped before native fallback (main5ab28f9), with candidate scripts.
+const legacyHTML=readFileSync(new URL('./fixtures/listener-before-native.html',import.meta.url),'utf8');
 
 // Use native controls through a trusted keyboard action, not an injected play().
 async function startNative(page) {
@@ -18,6 +21,25 @@ async function startNative(page) {
 }
 
 export async function checkNativeFallback(browser,base,artifacts,results) {
+  const legacy=await browser.newContext();
+  try {
+    const page=await legacy.newPage(),errors=[],requests=[];
+    page.on('pageerror',error=>errors.push(error.message));
+    page.on('request',request=>{if(new URL(request.url()).pathname==='/radio.mp3')requests.push(request.url());});
+    await page.route(new URL('/',base).href,route=>route.fulfill({status:200,contentType:'text/html',body:legacyHTML}));
+    await page.goto(base);
+    assert.equal(await page.locator('#native-stream').count(),0,'fixture must use actual predeployment HTML');
+    assert.equal(await page.locator('#enhanced-controls').isVisible(),true,'previous HTML with new app must retain a usable player');
+    assert.deepEqual(errors,[]);
+    assert.equal(requests.length,0);
+    await page.getByRole('button',{name:'Start listening',exact:true}).click();
+    await page.waitForFunction(()=>document.querySelector('#stream').currentTime>1,null,{timeout:25000});
+    assert.equal(requests.length,1);
+    await page.getByRole('button',{name:'Pause',exact:true}).click();
+    assert.equal(await page.locator('#stream').getAttribute('src'),null);
+    results.push({test:'previous deployed HTML with candidate scripts starts and releases real MP3',pass:true});
+  } finally {await legacy.close();}
+
   for(const failed of ['app.js','sleep-timer.js','javascript-off','initialization']) {
     const context=await browser.newContext({viewport:{width:320,height:640},javaScriptEnabled:failed!=='javascript-off'});
     try {

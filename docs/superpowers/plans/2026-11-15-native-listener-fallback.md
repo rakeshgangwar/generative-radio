@@ -25,7 +25,7 @@
 
 - Late script delivery while native play is pending must not create a second stream.
 - Previously played then paused native audio must retain its controls and source.
-- Initialization exception must not remove fallback before custom controls work.
+- Initialization exceptions must leave fallback available; previous HTML with new scripts must still initialize usable enhanced controls.
 - Module failures and JS-off playback must remain keyboard accessible at 320px.
 - Normal enhancement must not leave an unused hidden connection or alter pause/retry.
 
@@ -49,7 +49,7 @@ or native.played.length>0. Commit fallback release/hide only at successful end.
   native playback, normal no-preload/one-source behavior, keyboard and 320px layout.
 - [x] Run existing complete browser suite and stock Firefox check against isolated
   candidate web assets, then actual Firefox native controls. Never replace live core.
-- [ ] Document measured source/assets, candidate/local-only status, limitations and
+- [x] Document measured source/assets, candidate/local-only status, limitations and
   PR27 delivery receipt. One final fresh review; Important/Critical one RED→GREEN
   correction pass; Minor defer. Run relevant final checks after corrections.
 - [ ] Open scoped PR, require four actual latest final-head/current-base CI jobs

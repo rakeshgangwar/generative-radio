@@ -41,6 +41,20 @@ sleep timer, chapter polling or app reconnection. Explain that honestly in the p
 - No external assets, accounts, storage or new runtime dependencies.
 - No station role replacement until verified web-only rollout with identity receipts.
 
+## Mixed-version compatibility and review decisions
+
+The actual previous deployed HTML (main5ab28f9) has no native-stream element.
+The new app must initialize its enhanced player on that HTML without dereferencing
+missing native markup; guard both ownership checking and native cleanup. The
+regression fixture is byte-identical to the previous index.html and must exercise
+real playback and pause/source release with candidate scripts.
+
+The sole fresh review deferred two Minor items: moving keyboard focus from an idle
+native element when it becomes hidden, and fuller on-page explanation of native
+limitations/reload. Tab currently reaches enhanced play; README explains native
+limitations. Costs: one interrupted keyboard interaction and reduced discoverability.
+These are explicit deferred improvements, including the design-copy shortfall.
+
 ## Acceptance and limits
 
 Real Chromium blocked-app and blocked-import flows must play advancing MP3 through

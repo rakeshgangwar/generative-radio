@@ -1,8 +1,8 @@
 {
   "base_commit": "5ab28f9aa6ed337017fabc9618a5c3fa8f612afe",
-  "status": "Candidate local acceptance complete; fresh review, actual final-head/current-base CI and web-only rollout pending",
+  "status": "Important review correction locally verified; final-head/current-base CI and measured web-only rollout pending",
   "served_asset_sha256": {
-    "app.js": "768b3da4f57f0e52f85b5237a388d92263004abbb0a11cef780f56043078b92c",
+    "app.js": "32ea209d3a05525afd9c081bfd56c81565610bfe35de4c861cb889baaa452dad",
     "broadcast-context.js": "afafb4dbaed6ec78338c7affe13c1b46c5687a1c834c70a956a3f485b134b29f",
     "dial.svg": "066b109b2c0a13cba2c0b89381607df6253c23e0b540017e8c3ce0a974bbf0d1",
     "favicon.svg": "18868c09e40c51595e26d64d3cd2ff12f6ca33b26784ea64b8c56d7e3d010179",
@@ -16,6 +16,10 @@
   "chromium": {
     "version": "154.0.8037.92",
     "focused": [
+      {
+        "test": "previous deployed HTML with candidate scripts starts and releases real MP3",
+        "pass": true
+      },
       {
         "test": "native keyboard playback after app.js failure at320px",
         "pass": true
@@ -49,11 +53,11 @@
         "pass": true
       }
     ],
-    "full_scenarios": 19,
-    "full_result_sha256": "8e5f37a3afbaeea1a2aaa5b4af39951a828d68b524c73ab148b9d91b577f75c0",
-    "full_log_sha256": "8e5f37a3afbaeea1a2aaa5b4af39951a828d68b524c73ab148b9d91b577f75c0",
-    "focused_log_sha256": "d0f45bb2c764e069f8a57e2e72add73d54dac5d4494d4e108272b4a2bdf15bbc",
-    "unit_log_sha256": "cafda289bb781e2de737fd9be92d781908374dc2f064cd1a9d15656cdbd74162"
+    "full_scenarios": 20,
+    "full_result_sha256": "1be43468203fa43dd1696e30d88d6bf14b52918369688c98ba1d26328a8db3cf",
+    "full_log_sha256": "1be43468203fa43dd1696e30d88d6bf14b52918369688c98ba1d26328a8db3cf",
+    "focused_log_sha256": "eeafb59a92285ac03ea820a8f037819d1a47666c90f691cfd8b96f2bdc9194d7",
+    "unit_log_sha256": "1de34173dabf9a8f4af3dd60800a0652971867e84a8bc7de03d6c12df028752c"
   },
   "firefox_enhanced": {
     "browser": {
@@ -87,7 +91,7 @@
       "driver_reaped": true,
       "profiles_removed": true
     },
-    "result_sha256": "599673ceeeeec9f905782ee486261302932ed8aae269adfac1ca763a3e774db6"
+    "result_sha256": "296ef8e991881b9b5a2b4bc0910317009078937ffd24d0110aef1d66c4f64779"
   },
   "firefox_native": {
     "scope": "Actual installed Firefox, JavaScript disabled, trusted keyboard native controls, candidate loopback URL",
@@ -107,16 +111,16 @@
       "error_code": null,
       "paused": false,
       "ready": 3,
-      "time": 1.050136
+      "time": 1.076598
     },
     "source_sha256": {
-      "app.js": "768b3da4f57f0e52f85b5237a388d92263004abbb0a11cef780f56043078b92c",
+      "app.js": "32ea209d3a05525afd9c081bfd56c81565610bfe35de4c861cb889baaa452dad",
       "index.html": "01fa3f18338286aecafdb921096519200c83386c7f9d87a0e4e608d13d9618e1"
     },
     "driver_reaped": true,
     "private_profile_removed": true
   },
-  "firefox_native_proof_sha256": "f7c76e6772ee93097be30e2f3e8299af8e8a8a194c9bb5103aaf190a50520883",
+  "firefox_native_proof_sha256": "5605de1b2c88977ce8eee9a12af9d339ddf6180a91cc234d3f2af92a6509ef90",
   "station_baseline": {
     "assessment": "healthy",
     "observed_at": 1794746898.4292855,
@@ -171,5 +175,26 @@
     "Native mode has browser controls without custom sleep timer, chapter display or app retries",
     "Started native sessions stay native for the visit; reload retries enhancement",
     "Local preview only; no candidate deployment or public/off-host acceptance"
-  ]
+  ],
+  "review": {
+    "range": "5ab28f9..852da4b",
+    "critical": 0,
+    "important": 1,
+    "minor_deferred": 2,
+    "important_fix": "Guard native ownership and handoff when previous HTML has no native markup; initialize the legacy enhanced player",
+    "regression": "Actual previous deployed HTML with candidate scripts: unusable controls RED, corrected real start/pause/source release GREEN",
+    "legacy_fixture_sha256": "a8b2706a36323952e7b2dcf92114bf0967d68dcf871a3fb25f869a52eaffd941",
+    "legacy_red_log_sha256": "fdcd2044f573f0b4037bfbdadff1d194eef653598e4a9e1b40665aa9cf8e217d",
+    "rereview": false,
+    "deferred": [
+      {
+        "item": "Move focus from native audio when idle enhancement hides it",
+        "cost": "One interrupted keyboard interaction and invisible focus until Tab reaches enhanced play"
+      },
+      {
+        "item": "Explain native limitations and reload enhancement on the page",
+        "cost": "Reduced discoverability; README explains limits and reload"
+      }
+    ]
+  }
 }

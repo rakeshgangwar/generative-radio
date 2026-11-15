@@ -353,3 +353,15 @@ The candidate's full Chromium run now passed all19 scenarios (eight newfallback
 flows), along with46Node tests and bothFirefox checks. The source-linked receipt
 is docs/evidence/native-listener-fallback-20261115.json. Fresh observer baseline
 reports all5healthy, no errors; review/CI/rollout gates still open.
+
+The sole fresh review found0Critical/1Important/2Minor. The Important mixed-version
+startup bug is fixed: an exact copy of previously deployed HTML (5ab28f9) with new
+scripts first reproduced hidden/unusable controls, then passed real start and
+pause/source release after guarding absent native markup. Corrected source passes
+46Node tests, all20 Chromium scenarios (nine focused fallback/compatibility flows),
+and refreshed enhanced/native Firefox checks with cleanup. Two Minor improvements
+are deferred: move focus when an idle native control becomes hidden (Tab currently
+recovers), and explain native limitations/reload more clearly on the page (README
+already does). Their costs are a recoverable keyboard interruption and reduced
+discoverability. No rereview. PR #28 still needs final-head/current-base CI and a
+measured web-only rollout; no live role changed.

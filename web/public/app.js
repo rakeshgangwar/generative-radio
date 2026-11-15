@@ -5,7 +5,7 @@ import { createBroadcastContext } from './broadcast-context.js';
 // A late module must not replace listening already started with native controls.
 function initialize() {
   const native = document.querySelector('#native-stream');
-  if (!native.paused || native.played.length > 0) return;
+  if (native && (!native.paused || native.played.length > 0)) return;
   const audio = document.querySelector('#stream');
   const button = document.querySelector('#toggle');
   const label = document.querySelector('#toggle-label');
@@ -97,9 +97,11 @@ function initialize() {
   window.addEventListener('pagehide', () => { player.pause(); timer.setMinutes(0); broadcast.setEnabled(false); });
 
   // Keep the independent native player available until all setup has succeeded.
-  native.removeAttribute('src');
-  native.load();
-  document.querySelector('#native-fallback').hidden = true;
+  if (native) {
+    native.removeAttribute('src');
+    native.load();
+    document.querySelector('#native-fallback').hidden = true;
+  }
   document.querySelector('#enhanced-controls').hidden = false;
 }
 initialize();
