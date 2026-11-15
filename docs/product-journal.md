@@ -593,3 +593,37 @@ preserved as partial evidence, not counted as clean completion. An explicit wrap
 repeat recorded Node exit0. This separates assertion success from process cleanup.
 Final independent review and actual final-head CI remain the delivery gates. The
 six-retry policy is not yet deployed to the main gateway.
+
+### 15 November: recovery is deployed; next audition asks for purposeful melody
+
+PR #22 merged after all four actual checks passed on its final head. Only the local
+web gateway was replaced. All four music roles kept their IDs, images and start
+times. The already-connected browser recovered through this swap; a fresh page
+loaded the exact six-retry code, played real audio, showed chapter 99 in bloom with
+Soft bells and released the stream on pause. The pre-upgrade same-host snapshot
+was independently verified: 43 jobs and 89 files. This is [local delivery evidence](evidence/listener-recovery-delivery-20261115.json),
+not public hosting or off-host recovery.
+
+The independent review found no blocking issue. One minor diagnostic suggestion
+is deferred: retain timestamped state checkpoints in the controlled HTTP-fault
+helper, which currently saves final state and timestamped requests. Both the actual
+disposable replacement drill and this live rollout retained sampled state telemetry.
+We added the disposable drill because the earlier failed maintenance observer had
+lost those samples; we did not substitute a request mock for actual replacement.
+CI clearance and live health were checked separately, and physical-device/Safari,
+public deployment and human musical acceptance remain open.
+
+The next musical question is whether the melody develops enough between rests.
+A CPU-only score audit composed 1,024 two-minute segments per version across four
+station seeds. Version 2 produced 32,291 melody attacks versus 36,998 for version 1,
+about 12.7% fewer. Repeated successive pitches were 45.9% versus 46.2%. The [audit](evidence/melodic-motion-score-audit-20261115.json)
+counts only within-segment pitch intervals; it is not rendered listening evidence,
+and repeated notes can be exactly right for ambient music.
+
+One candidate audition would keep strong-beat anchors and the existing breaths,
+while allowing occasional short, resolved passing notes where the phrase has room.
+The aim is a line that feels intentional, not novelty or a lower repetition score.
+First compare matched long previews with the current version 2, retain exact legacy
+version 1/2 behavior, and reject the idea if it becomes busy or less restful. This
+is a proposed experiment, not implemented generation or an on-air change. TimGM
+remains the station sound while the matched SoundFont preference is unanswered.

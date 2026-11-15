@@ -44,7 +44,7 @@ sleep-timer rollout at 06:34 IST left all four music-service IDs/restarts unchan
 
 ## Delivery and operator tools
 
-PRs #1–#21 merged after current-head CI. PR #16 (`a00557d`) records the completed
+PRs #1–#22 merged after current-head CI. PR #16 (`a00557d`) records the completed
 two-hour acceptance and replaces the stale first-laptop handoff. Generation source
 is PR #17 (`d82bd17`), version-2 melodic phrasing. All four checks passed on final
 head `84c9d33`, run 43671299403. Its candidate image matches all 17 runtime source files at the reviewed commit. Composer/renderer now use it; broadcaster/Icecast/web stayed unchanged.
@@ -62,25 +62,29 @@ All four latest final-head checks passed on `8482583`, run 43682302746. Only
 broadcaster, Icecast and web were replaced at 11:26–11:28 IST. Composer/renderer
 kept their IDs/images/start times; all 11 ready-file hashes and the cached fallback
 were preserved. Five services are healthy with no restarts/OOM, and ten seconds
-of proxied MP3 decoded. At 11:29:24 IST the public chapter94 bloom label matched
+of proxied MP3 decoded. At 11:29:24 IST the public chapter 94 bloom label matched
 actual Icecast output metadata. Fresh Chromium playback/context/pause also passed.
 
 An already-connected maintenance browser failed to return to playing after the
 upgrade; its failed observer did not save state samples, so its exact final state
 was not established. Separately, a controlled thirty-second request-failure test
-reproduced the current three-retry budget exhausting at roughly twelve seconds.
-A new isolated recovery branch extends the fixed schedule to six retries (1/3/8/
-15/15/15 seconds), preserving finite exhaustion and cancellation. Its 46 listener
-tests and eleven actual-browser scenarios pass. A disposable three-role replacement
-also recovered the same connected browser without another gesture; decoded audio
-advanced and the sleep timer stayed armed. Independent review/CI are pending. This
-recovery change has not replaced the live gateway. Refreshing the local page loads
-the deployed chapter UI; an exhausted old listener requires Try again.
+reproduced the old three-retry budget exhausting at roughly twelve seconds.
+PR #22 (`1c903de`) extends the fixed schedule to six retries (1/3/8/15/15/15
+seconds), preserving finite exhaustion and cancellation. Its 46 listener tests,
+eleven actual-browser scenarios and connected-listener three-role replacement
+passed. All four final-head CI checks passed on `7001e09`, run 43685359464.
+The new policy is deployed to the local gateway. Only web changed; all four music
+roles retained their IDs/images/start times. The connected old page recovered, and
+a fresh Chromium page loaded the exact policy, played audio, showed context and
+released the stream on pause. Refresh once to load the new code on an existing page.
+See the [delivery receipt](docs/evidence/listener-recovery-delivery-20261115.json).
+One minor remains deferred: timestamped state snapshots in the controlled HTTP-fault
+helper. Actual replacement and live rollout telemetry retained sampled states.
 
-The main local core tag now contains PR21, including the offline backup CLI.
-Both music workers intentionally retain the version2 image from PR17; their
+The main local core tag now contains PR #21, including the offline backup CLI.
+Both music workers intentionally retain the version 2 image from PR #17; their
 rendered buffer remains immutable. Retained streaming-role rollback images and a
-verified same-host pre-upgrade backup (42 jobs,87 files) are under local artifact
+verified same-host pre-upgrade backup (43 jobs, 89 files) are under local artifact
 pointers. No off-host recovery or public deployment is implied.
 
 Source checkout is clean on main. Public decoded HTTPS monitoring remains an
