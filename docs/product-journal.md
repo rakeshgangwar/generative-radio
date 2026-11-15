@@ -860,3 +860,11 @@ deadline observed 26/9/25 owned processes, none active afterward, profiles remov
 The receipt links exact source hashes and raw proofs. These local results do not
 establish CI acceptance: all four final-head/current-base jobs, including the
 actual Firefox step, must pass before merging. No second review is requested.
+
+
+CI run 43712569677 on 670beb7 passed the actual stock Firefox playback step
+(12:17:33–12:17:49 UTC). The configured-budget correction and bounded diagnostics
+have now reached the runner successfully. This is not proof of the earlier media
+stall's root cause; physical sound remains unverified. Broader integration was
+still running when recorded. This evidence/documentation update still needs all
+four final-head/current-base checks before PR #27 can merge.

@@ -112,5 +112,13 @@
     },
     "proof_sha256": "e00a7b05ba3bce8faa44e6f16043e4e236bf31b25ecf01955cf2a3f8f9ead726"
   },
-  "ci_status": "Draft: published 2c086d3 failed integration run 43708794835; corrected source cf69f1c requires actual CI acceptance."
+  "ci_status": "Run 43712569677 on 670beb7 passed actual stock Firefox playback; broader integration was still running when recorded. Final-head/current-base CI remains required.",
+  "ci_firefox_step": {
+    "run": 43712569677,
+    "head": "670beb744d2749d3104d3e4b1d99f2f304ff6804",
+    "job": 132807179555,
+    "conclusion": "success",
+    "started_at": "2026-11-15T12:17:33Z",
+    "completed_at": "2026-11-15T12:17:49Z"
+  }
 }

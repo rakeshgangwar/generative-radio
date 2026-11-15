@@ -28,8 +28,9 @@ compare them to a checkout separately before claiming that checkout was served.
 Browser name/version/platform are recorded; raw capabilities, browser logs and
 remote error messages are discarded. Failure reports retain fixed kinds/stages and
 only allowlisted last-known media state: readiness/network codes, paused/time,
-volume values and numeric media errors. An error listener records the numeric code
-before normal recovery clears the source. There are no diagnostic requests after
+volume values, numeric media errors and allowlisted native play-rejection names.
+An observer of the native play promise and an error listener retain the failure
+before normal recovery clears the source; the original play promise is returned. There are no diagnostic requests after
 the deadline; these fields come from already completed polls.
 
 Output must be a new private directory (0700) with an existing parent, outside
