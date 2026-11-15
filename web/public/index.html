@@ -43,6 +43,17 @@
           <output id="volume-value" for="volume">65%</output>
         </div>
         <p class="volume-note" id="volume-note" hidden>Use your device’s volume buttons to adjust the sound.</p>
+        <div class="timer-row">
+          <label for="sleep-timer">Sleep timer</label>
+          <select id="sleep-timer" aria-describedby="timer-status">
+            <option value="0">Off</option>
+            <option value="15">15 minutes</option>
+            <option value="30">30 minutes</option>
+            <option value="60">60 minutes</option>
+          </select>
+          <span id="timer-remaining" aria-live="off" hidden></span>
+        </div>
+        <p class="timer-status" id="timer-status" role="status" aria-live="polite">Stops playback on this device. Keep this page open.</p>
         </div>
         <noscript><p>Use the audio player below to join the station.</p><audio controls preload="none" src="/radio.mp3">Open <a href="/radio.mp3">the audio stream</a>.</audio></noscript>
       </section>

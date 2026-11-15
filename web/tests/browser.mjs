@@ -8,6 +8,101 @@ await mkdir(artifacts,{recursive:true});
 const browser=await chromium.launch({executablePath:process.env.CHROME_BIN||'/opt/google/chrome/chrome',headless:true});
 const results=[];
 try {
+  const sleeping=await browser.newContext();
+  const rest=await sleeping.newPage();
+  const timerEpoch = Date.parse('2026-11-15T06:00:00Z');
+  await rest.clock.setFixedTime(new Date(timerEpoch));
+  async function timerTime(milliseconds) {
+    await rest.clock.setFixedTime(new Date(timerEpoch + milliseconds));
+    await rest.evaluate(() => document.dispatchEvent(new Event('visibilitychange')));
+  }
+  await rest.goto(base);
+  assert.equal(await rest.locator('#sleep-timer').count(),1,'sleep timer control must exist');
+  await rest.getByLabel('Sleep timer',{exact:true}).selectOption('15');
+  assert.equal(await rest.locator('#stream').getAttribute('src'),null,'arming must not autoplay');
+  await rest.getByRole('button',{name:'Start listening',exact:true}).click();
+  await rest.waitForFunction(()=>document.querySelector('#player').dataset.state==='playing',null,{timeout:25000});
+  await timerTime(890000);
+  assert.ok(await rest.locator('#stream').evaluate(a=>a.volume>.28&&a.volume<.36),'last ten seconds attenuate volume');
+  await rest.locator('#volume').evaluate(el=>{el.value=40;el.dispatchEvent(new Event('input',{bubbles:true}));});
+  assert.ok(await rest.locator('#stream').evaluate(a=>a.volume>.16&&a.volume<.24),'user volume retains fade gain');
+  await timerTime(901000);
+  assert.equal(await rest.locator('#player').getAttribute('data-state'),'paused');
+  assert.equal(await rest.locator('#stream').getAttribute('src'),null);
+  assert.equal(await rest.locator('#sleep-timer').inputValue(),'0');
+  assert.match(await rest.locator('#timer-status').textContent(),/Timer ended/);
+  await rest.getByRole('button',{name:'Resume listening',exact:true}).click();
+  await rest.waitForFunction(()=>document.querySelector('#player').dataset.state==='playing');
+  assert.ok(await rest.locator('#stream').evaluate(a=>Math.abs(a.volume-.4)<.001),'explicit resume restores chosen volume');
+  await rest.getByLabel('Sleep timer',{exact:true}).selectOption('15');
+  await timerTime(1791000);
+  await rest.getByLabel('Sleep timer',{exact:true}).selectOption('0');
+  assert.ok(await rest.locator('#stream').evaluate(a=>Math.abs(a.volume-.4)<.001),'Off restores chosen volume');
+  await rest.getByRole('button',{name:'Pause',exact:true}).click();
+  results.push({test:'real MP3 timer arming, fade/user volume, expiry/release and explicit resume',pass:true});
+  await sleeping.close();
+
+  const transient=await browser.newContext();const recoveringVolume=await transient.newPage();
+  await recoveringVolume.clock.setFixedTime(new Date(timerEpoch));await recoveringVolume.goto(base);
+  await recoveringVolume.getByRole('button',{name:'Start listening',exact:true}).click();
+  await recoveringVolume.waitForFunction(()=>document.querySelector('#player').dataset.state==='playing');
+  await recoveringVolume.getByLabel('Sleep timer',{exact:true}).selectOption('15');
+  async function volumeTime(milliseconds) {
+    await recoveringVolume.clock.setFixedTime(new Date(timerEpoch+milliseconds));
+    await recoveringVolume.evaluate(()=>document.dispatchEvent(new Event('visibilitychange')));
+  }
+  await volumeTime(890000);
+  assert.ok(await recoveringVolume.locator('#stream').evaluate(a=>Math.abs(a.volume-.325)<.001));
+  await recoveringVolume.locator('#stream').evaluate(audio=>{
+    const native=Object.getOwnPropertyDescriptor(HTMLMediaElement.prototype,'volume');let failed=false;
+    Object.defineProperty(audio,'volume',{configurable:true,get(){return native.get.call(this);},set(value){
+      if(!failed&&value<.325){failed=true;throw new DOMException('Transient volume failure','NotSupportedError');}
+      native.set.call(this,value);
+    }});
+  });
+  await volumeTime(891000);await volumeTime(901000);
+  assert.ok(await recoveringVolume.locator('#stream').evaluate(a=>Math.abs(a.volume-.65)<.001),'expiry restores after one transient mid-fade setter failure');
+  assert.equal(await recoveringVolume.locator('#volume-control').isVisible(),true);
+  await recoveringVolume.evaluate(()=>document.dispatchEvent(new Event('visibilitychange')));
+  assert.match(await recoveringVolume.locator('#timer-status').textContent(),/Timer ended/);
+  await recoveringVolume.getByRole('button',{name:'Resume listening',exact:true}).click();
+  await recoveringVolume.waitForFunction(()=>document.querySelector('#player').dataset.state==='playing');
+  assert.ok(await recoveringVolume.locator('#stream').evaluate(a=>Math.abs(a.volume-.65)<.001));
+  results.push({test:'one mid-fade setter failure recovers chosen volume for manual playback',pass:true});await transient.close();
+
+  const device=await browser.newContext({viewport:{width:390,height:844}});
+  await device.addInitScript(() => Object.defineProperty(HTMLMediaElement.prototype, 'volume', {
+    configurable:true, get(){return 1;}, set(){throw new DOMException('Device controls volume','NotSupportedError');}
+  }));
+  const devicePage=await device.newPage();await devicePage.clock.setFixedTime(new Date(timerEpoch));
+  await devicePage.goto(base);
+  assert.equal(await devicePage.locator('#volume-control').isVisible(),false);
+  assert.equal(await devicePage.locator('#volume-note').isVisible(),true);
+  await devicePage.getByRole('button',{name:'Start listening',exact:true}).click();
+  await devicePage.waitForFunction(()=>document.querySelector('#player').dataset.state==='playing');
+  await devicePage.getByLabel('Sleep timer',{exact:true}).selectOption('15');
+  await devicePage.screenshot({path:`${artifacts}/device-timer.png`,fullPage:true});
+  await devicePage.clock.setFixedTime(new Date(timerEpoch+901000));
+  await devicePage.evaluate(()=>document.dispatchEvent(new Event('visibilitychange')));
+  assert.equal(await devicePage.locator('#player').getAttribute('data-state'),'paused');
+  assert.equal(await devicePage.locator('#stream').getAttribute('src'),null);
+  results.push({test:'device-owned volume still expires and releases real audio',pass:true});await device.close();
+
+  const timerRecovery=await browser.newContext();let timerRequests=0;
+  await timerRecovery.route('**/radio.mp3?*',route=>{timerRequests++;return route.abort('failed');});
+  const stopped=await timerRecovery.newPage();await stopped.clock.setFixedTime(new Date(timerEpoch));
+  await stopped.goto(base);await stopped.getByRole('button',{name:'Start listening',exact:true}).click();
+  await stopped.waitForFunction(()=>document.querySelector('#player').dataset.state==='retrying');
+  await stopped.getByLabel('Sleep timer',{exact:true}).selectOption('15');
+  await stopped.clock.setFixedTime(new Date(timerEpoch+901000));
+  await stopped.evaluate(()=>document.dispatchEvent(new Event('visibilitychange')));
+  const requestsAtExpiry=timerRequests;
+  await stopped.waitForTimeout(1200);
+  assert.equal(await stopped.locator('#player').getAttribute('data-state'),'paused');
+  assert.equal(await stopped.locator('#stream').getAttribute('src'),null);
+  assert.equal(timerRequests,requestsAtExpiry,'expired timer must cancel queued reconnection');
+  results.push({test:'timer expiry cancels real failed-request retry',pass:true});await timerRecovery.close();
+
   const context=await browser.newContext({viewport:{width:1440,height:1000}});
   const page=await context.newPage(),errors=[],requests=[];
   page.on('pageerror',e=>errors.push(e.message));page.on('request',r=>requests.push(r.url()));
