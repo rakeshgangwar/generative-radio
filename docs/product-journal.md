@@ -1125,8 +1125,9 @@ gone. This is a technical check of the current broadcast, not a human listening
 verdict, independent public-host test, or proof that fallback never played.
 
 Stock Firefox 157.0.1 also completed a real 15-minute sleep timer without replacing
-the page clock. Audio stayed at the requested 37% before the final fade; 29 samples
-showed lower audio volume during the fade while the stored preference stayed 37%.
+the page clock. Audio stayed at the requested 37% before the final fade; 39 samples
+showed audio volume below the requested 37% during the fade while the stored
+preference stayed 37%.
 Expiry was confirmed within 900.424 seconds including polling/WebDriver overhead:
 playback paused and the stream source was released. Refresh returned to idle with
 the timer off and the preference still 37%. The owned browser/driver are gone and
