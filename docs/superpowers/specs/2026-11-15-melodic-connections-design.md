@@ -8,7 +8,7 @@ This is an audition experiment; the live version2 station stays unchanged.
 The score audit over1,024 segments/version found about46% repeated adjacent melody
 pitches despite the new rests. This is a prompt for listening, not a defect threshold.
 Test occasional quiet, stepwise connections between existing anchors. Keep every
-original note, phrase breath and harmonic foundation. Do not optimize a repetition
+original attack/pitch, phrase breath and harmonic foundation. Do not optimize a repetition
 number or make the station busier by default.
 
 ## Pure connector
@@ -19,16 +19,19 @@ Accept a list/tuple of at most4096 Note objects, finite numeric seconds20..1800,
 integer BPM40..90, and a version2 Arrangement with phrase_bars6/8/10 and profile0/1/2.
 Reject bools/nonfinite/range-invalid note fields: start>=0, duration>0, end<=seconds,
 integer pitch0..127, velocity1..127 and channel0..2. Empty input returns empty.
-Never mutate input or original Note values. Return originals in original order,
-followed by inserted notes; midi() already orders events. Defaults compose/midi and
+Never mutate input or original Note objects. Preserve their starts/pitches/velocities/
+channels; copy only a selected predecessor when its tail must be shortened. Return
+base notes in original order, followed by insertions; midi() already orders events. Defaults compose/midi and
 arrangement planning remain untouched. Profile0 returns originals only.
 
 Sort original channel2 notes by start and examine consecutive pairs. An insertion
 requires absolute pitch distance3 or4 semitones and the unique intermediate A-minor
 scale pitch (pitch-class0/2/4/5/7/9/11), within two semitones of both anchors. Preserve
-original anchors, including intentional repeats; do not replace or shorten them.
+original anchors, including intentional repeats; do not move or repitch them.
 Set insertion start=target.start-.75 beat, duration=.5 beat, velocity=max(1,target.velocity-5),channel2.
-Require start >= previous.end+.1 beat, end <= target.start-.1 beat, and the insertion
+If the gap is too small, the predecessor may end at insertion.start-.1 beat only
+when it retains at least max(.5 beat,half its original duration). Otherwise skip.
+Never change pad/bass duration. Require end <= target.start-.1 beat, and the insertion
 and target to fall within the middle20..80% of the segment. Require its fractional
 beat to be between.2 and.8 (away from strong integer beats).
 
@@ -77,7 +80,7 @@ Report zero-addition comparisons honestly. No font binaries or large media in gi
 ## Verification and delivery
 
 Pure tests cover a known clear gap, both directions, profile sparsity, unchanged
-anchors/pad/bass, repeat/no-space/large-leap/harmony-change rejection, rests and phrase
+anchor attacks/pitches/pad/bass and bounded predecessor-tail changes, repeat/no-space/large-leap/harmony-change rejection, rests and phrase
 cap, bounded invalid inputs and deterministic score matrix. Baseline golden MIDI
 fingerprints are captured from merged main before editing render. Prove extraction
 preserves default v1/v2/unplanned MIDI and existing cleanup with real render tools.

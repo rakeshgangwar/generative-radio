@@ -1,0 +1,168 @@
+{
+  "base_commit": "7e00548e615784ddcae50eafa747fc41a3252314",
+  "delivery": "offline candidate; live version2 station unchanged; review/CI pending",
+  "comparison": {
+    "seconds": 1385,
+    "positions": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12
+    ],
+    "station_seed": 20261114,
+    "font_sha256": "c5378b62028c920cb11e4803327983fee2f2cdff5dc89c708e39da417e51c854",
+    "added_notes": 7,
+    "shortened_tails": 5,
+    "target_lufs": -22.07,
+    "variants": {
+      "baseline": {
+        "analysis": {
+          "duration": 1385.0,
+          "peak": 0.38250732421875,
+          "rms_dbfs": -24.28697493309343,
+          "quiet_fraction": 0.00036101083032490973
+        },
+        "loudness": {
+          "integrated_lufs": -22.07,
+          "true_peak_dbfs": -8.35
+        },
+        "gain_db": 0.0,
+        "segment_midi_sha256": [
+          "15dfe57932b2882ca458a7209b7a738d389eeaae502d5266d764c2d6624f1a28",
+          "e945287e47a1a88d9fef28d58c1dd827ca3370ff19bd6ca1911753ae64167e80",
+          "39b68d588f544b29e8fba6e7a692968ebf630f80a2a6884d810673ccf02869c6",
+          "cab3c5e030ce3e6a3db1b12fb7e4b32f82a3abd471737181de0d0ceda687936c",
+          "cb58365a1e0a1a5aca7521224a4827abee2ef8476ce0fb72747b1581c49ec67d",
+          "d8e30e4b0691d92f325a5dbc2943c67ca89ddfe281f76919a07e43cd77d9cf61",
+          "5c206317515b44f2b79e9a643af4f8a8e9763e1b322dfb8d5da641d8a19add0d",
+          "1b6f33e651783659f3166a2330cd85560a247b4af583afa251486da59342038e",
+          "d165e4f514fbc2ef7938bef1ab2f0e216ed4492bf6a7ff01454b86d1c9beec12",
+          "3ba1f0902d81e6b700bb90ce434f829a59c28782d28d78251ab3ea715e2f1f6d",
+          "b75e69ec6581c06242f58d64e569b9b01658655fe467f9a445cd0f0ec9aa579e",
+          "7cb395ceafb2c32ec21a5218597077de29287a905dda4ab13b5d85bcc94fe963"
+        ]
+      },
+      "connections": {
+        "analysis": {
+          "duration": 1385.0,
+          "peak": 0.381988525390625,
+          "rms_dbfs": -24.286842486582376,
+          "quiet_fraction": 0.00036101083032490973
+        },
+        "loudness": {
+          "integrated_lufs": -22.07,
+          "true_peak_dbfs": -8.36
+        },
+        "gain_db": 0.0,
+        "segment_midi_sha256": [
+          "15dfe57932b2882ca458a7209b7a738d389eeaae502d5266d764c2d6624f1a28",
+          "39d30de4de120dc0e88d461f394af65e8b9dcad9d5b4c298112c60d85b273299",
+          "39b68d588f544b29e8fba6e7a692968ebf630f80a2a6884d810673ccf02869c6",
+          "cab3c5e030ce3e6a3db1b12fb7e4b32f82a3abd471737181de0d0ceda687936c",
+          "cb58365a1e0a1a5aca7521224a4827abee2ef8476ce0fb72747b1581c49ec67d",
+          "2958c4196988a4d1c08c8e7925311e338fa3ba61ae03aa49265bb56150376d5c",
+          "5c206317515b44f2b79e9a643af4f8a8e9763e1b322dfb8d5da641d8a19add0d",
+          "1b6f33e651783659f3166a2330cd85560a247b4af583afa251486da59342038e",
+          "d165e4f514fbc2ef7938bef1ab2f0e216ed4492bf6a7ff01454b86d1c9beec12",
+          "25e73650580ee9a764fecfad75b687b6f2577b37e1f07fc797dee73554df576a",
+          "54b41624e86f7b751e82cdf8f81f1cfb4b10965cfde13911017c8606ec04937c",
+          "7cb395ceafb2c32ec21a5218597077de29287a905dda4ab13b5d85bcc94fe963"
+        ]
+      }
+    }
+  },
+  "audio_frames": {
+    "baseline": {
+      "frames": 61078500,
+      "rate": 44100,
+      "channels": 2,
+      "sample_bytes": 2,
+      "seconds": 1385.0,
+      "silence_at_least_2s_at_minus50db": false
+    },
+    "connections": {
+      "frames": 61078500,
+      "rate": 44100,
+      "channels": 2,
+      "sample_bytes": 2,
+      "seconds": 1385.0,
+      "silence_at_least_2s_at_minus50db": false
+    }
+  },
+  "browser": {
+    "pass": true,
+    "explicit_native_playback": true,
+    "no_idle_mp3": true,
+    "seek_both_to_same_phrase": true,
+    "one_at_a_time": true,
+    "widths": [
+      1280,
+      390,
+      320
+    ],
+    "guide_moments": 7,
+    "errors": []
+  },
+  "preview": {
+    "url": "http://localhost:18091",
+    "container": "radio-melodic-audition-preview",
+    "loopback_only": true,
+    "readonly_audition_mount": true,
+    "range_status": 206,
+    "range_bytes": 16,
+    "initial_python_server": "ignored ranges; seeking failed; intentionally stopped",
+    "container_id": "925cd220f5c85f13bcfd836d2eea0764b3a69c4001f8fa722f980815b6e63271"
+  },
+  "source_provenance": {
+    "audio_render_sources": {
+      "melody_audition.py": "f78a9322a71c310c1bcaa9435e7821eb7d2dfc6cb1e3576b7f933d3ffb6d8629",
+      "melodic_connections.py": "0a5532cdcb69a64e3151bbf4493bfd1062def50b15b8209a79811d8e4f640fc4",
+      "audition.py": "2e0f4a1d72f35a834bd262848368f7f0dc432fd363de95d305326ae1edb48db0",
+      "compose.py": "843b3c8dbdaa19db7c5e44e83841927aeb5d7fad41c86845d3229b7b4e5b885e",
+      "arrangement.py": "fb1cd67ac84761d1062f1cebbc865e57493785bed07926776448ba83502b3423",
+      "render.py": "b9843b7ac2f2c786cf82d76a7a338e5db639a6f7ef8186ec1ba9bd5f3f21af09"
+    },
+    "current_sources": {
+      "melody_audition.py": "b0c3cb2bb736fce8977fa1d001a8cc86773288ef71215e0b4cec1f104232b2e5",
+      "melodic_connections.py": "0a5532cdcb69a64e3151bbf4493bfd1062def50b15b8209a79811d8e4f640fc4",
+      "audition.py": "2e0f4a1d72f35a834bd262848368f7f0dc432fd363de95d305326ae1edb48db0",
+      "compose.py": "843b3c8dbdaa19db7c5e44e83841927aeb5d7fad41c86845d3229b7b4e5b885e",
+      "arrangement.py": "fb1cd67ac84761d1062f1cebbc865e57493785bed07926776448ba83502b3423",
+      "render.py": "b9843b7ac2f2c786cf82d76a7a338e5db639a6f7ef8186ec1ba9bd5f3f21af09"
+    },
+    "post_render_change": "Only zero-addition HTML description corrected; all musical/render-helper hashes match and the seven-addition long HTML is byte-identical."
+  },
+  "tests": {
+    "media": 160,
+    "media_log": "media-suite.log",
+    "seconds": 91.807,
+    "listener": 46,
+    "legacy_midi_fingerprints": 24
+  },
+  "artifact_sha256": {
+    "long/report.json": "fe8ff47b7fa10b219c2f78ea2eebbd571cf41c2b3b52811a805291867c20ce4d",
+    "audio-verification.json": "2b508b4c4a09ab4359a0ada231e2ac5448995bdb671e4d5ab68c70a398a728f8",
+    "baseline-silence.log": "86915ab76407b1ae6cf2b659f2df91d8e5d23e9cf5fcf87c592f705e3f45d0a9",
+    "connections-silence.log": "1fef1212bb39f00e3bb076a167aed0d917ab87d58c34de6627aaf812240a4914",
+    "browser-final/result.json": "7606cb4a545ba3acfb04ecf1177ff692e1d76deb4480510da4a2efbe66e11ead",
+    "browser-final/320.png": "1555ac92548c1ce5a016a05803376e4bfc84f53b78ec05129bb81945b0ce3b48",
+    "browser-final/desktop.png": "3865b76ddb87d3b8cd235829a8db7fa278a851a1de40cb4d364657f548677001",
+    "browser-final.log": "acfdc4421012418f2dd602fda1641f02941b1c92607af1fd6983584545306bd6",
+    "browser/failure.json": "c33a03117303bb6fbd3288f0aa707985584f7ce7c34aac378b97fa6f92cbddec"
+  },
+  "limits": [
+    "No claim of improved musical quality or subjective preference.",
+    "No station data mounted or station configuration/image aliases changed.",
+    "No public hosting or physical-device/Safari acceptance."
+  ],
+  "main_five_roles_unchanged": true,
+  "candidate_runtime_source_files_matched": 21
+}

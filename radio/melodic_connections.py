@@ -1,5 +1,6 @@
-"""Audition-only stepwise connections; preserve every original score note."""
+"""Audition-only stepwise connections; preserve score anchors and phrase rests."""
 import math
+from dataclasses import replace
 
 from .arrangement import Arrangement
 from .compose import Note
@@ -25,7 +26,8 @@ def connect_melody(notes, seconds, bpm, arrangement) -> list[Note]:
             raise ValueError('Invalid score note')
     if arrangement.profile == 0:
         return original
-    melody=sorted((n for n in original if n.channel==2),key=lambda n:n.start)
+    melody = sorted(((index, note) for index, note in enumerate(original) if note.channel == 2),
+                    key=lambda item: item[1].start)
     pads=[n for n in original if n.channel==0]
     def field(at):
         return {n.pitch%12 for n in pads if n.start<=at<n.start+n.duration}
@@ -34,7 +36,7 @@ def connect_melody(notes, seconds, bpm, arrangement) -> list[Note]:
     phrase_bars = arrangement.phrase_bars
     added = []
     used = set()
-    for previous,target in zip(melody,melody[1:]):
+    for (previous_index, previous), (_, target) in zip(melody, melody[1:]):
         if abs(target.pitch-previous.pitch) not in (3, 4):
             continue
         pitches=[p for p in range(min(previous.pitch,target.pitch)+1,max(previous.pitch,target.pitch)) if p%12 in {0,2,4,5,7,9,11}]
@@ -42,7 +44,9 @@ def connect_melody(notes, seconds, bpm, arrangement) -> list[Note]:
             continue
         at = target.start - .75 * beat
         duration = .5 * beat
-        if (at<previous.start+previous.duration+.1*beat-1e-9
+        shortened = min(previous.duration, at - .1 * beat - previous.start)
+        if ((shortened < previous.duration and shortened < max(.5 * beat, previous.duration * .5) - 1e-9)
+                or shortened <= 0
                 or at+duration>target.start-.1*beat+1e-9
                 or at<seconds*.2 or target.start>seconds*.8
                 or not .2<=(at/beat)%1<=.8):
@@ -58,6 +62,8 @@ def connect_melody(notes, seconds, bpm, arrangement) -> list[Note]:
         active=field(at)
         if len(active)<3 or active!=field(target.start) or not {previous.pitch%12,target.pitch%12}<=active:
             continue
+        if shortened < previous.duration:
+            original[previous_index] = replace(previous, duration=shortened)
         added.append(Note(at,duration,pitches[0],max(1,target.velocity-5),2))
         used.add(group)
     return original+added

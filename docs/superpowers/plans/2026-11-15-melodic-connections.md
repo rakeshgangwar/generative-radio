@@ -13,14 +13,14 @@
 ## Global constraints
 
 - Audition-only; no live config/images/queue/SQLite changes. Compose/midi/arrangement defaults unchanged; golden legacy MIDI bytes preserved.
-- <=4096 valid notes,seconds20..1800,BPM40..90,v2phrase6/8/10/profile0..2. Preserve originals exactly; profile0 no additions.
-- Stepwise intermediate diatonic pitch only for3/4-semitone anchors. Add at target-.75beat for.5beat, velocitytarget-5 minimum1, clear.1beat gaps, middle20..80%, weak beat only. Same >=3-class held-pad field containing both anchors; no rests/cross-phrase additions; one per phrase, profile1 even phrases.
+- <=4096 valid notes,seconds20..1800,BPM40..90,v2phrase6/8/10/profile0..2. Preserve starts/pitches/velocities/channels; profile0 unchanged.
+- Stepwise intermediate diatonic pitch only for3/4-semitone anchors. Add at target-.75beat for.5beat, velocitytarget-5 minimum1, clear.1beat gaps (predecessor may retain at least max(.5beat,half original duration)), middle20..80%, weak beat only. Same >=3-class held-pad field containing both anchors; no rests/cross-phrase additions; one per phrase, profile1 even phrases.
 - Exclusive output outside station data; same font/seed/plan, no font changes, <=24unique positions/1800nominal seconds. Existing5s crossfades and attenuation-only level checks:duration within.1s, shared loudness within.2LUFS, truepeak<=-2.9dBFS, gain<=0.
 - Separate score/engineering evidence from subjective musical acceptance; no default adoption without the audition judgment.
 
 ## Review focus
 
-- Added notes must not violate original note identity, explicit rests, held-note gaps, pitch/velocity/channel bounds or harmonic/phrase boundaries.
+- Added notes must not violate original attack/pitch identity and bounded predecessor tails, explicit rests, held-note gaps, pitch/velocity/channel bounds or harmonic/phrase boundaries.
 - Renderer extraction must preserve legacy MIDI bytes, render flags, atomic publication and failure cleanup; normal workers must not invoke the transform.
 - Offline output refusal/validation must precede side effects, never touch live database/data and never mislabel partial work as complete or unchanged scores as improved.
 - Same-font/source hashes, duration/loudness matching and actual additions must support the listening comparison; no claim of perceptual improvement from score metrics.
@@ -29,7 +29,7 @@
 
 **Files:** Create radio/melodic_connections.py, tests/test_melodic_connections.py; capture tests/fixtures/melody-baseline-midi.json from unchanged merged main.
 
-**Interfaces:** connect_melody(notes,seconds,bpm,arrangement)->list[Note]; originals retained, additions appended; only trusted score input from compose in later bench.
+**Interfaces:** connect_melody(notes,seconds,bpm,arrangement)->list[Note]; original anchors retained, bounded predecessor-tail copies allowed, additions appended; only trusted score input from compose in later bench.
 
 - [x] Capture baseline MIDI hashes from main for unplanned/v1/v2 cases before renderer edits. Write pure connector tests and run RED. Expected: missing connector; synthetic clear-gap fixture explicitly insertsF betweenE/G over stableC field.
 - [x] Implement exact spec validation/selection; run focused tests and bounded score matrix. Expected: at least one real-score addition, all originals preserved, no overlaps/rest breaches, deterministic results, no additions for profile0 or ineligible gaps.

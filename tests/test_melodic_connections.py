@@ -33,7 +33,7 @@ class MelodicConnectionsTests(unittest.TestCase):
         for left,right in [(64,64),(64,65),(60,67)]:
             notes=fixture(left=left,right=right)
             self.assertEqual(connect_melody(notes,20,60,plan()),notes)
-        notes=fixture();notes[-2]=replace(notes[-2],duration=4)
+        notes=fixture();notes[-2]=replace(notes[-2],start=8,duration=1.4)
         self.assertEqual(connect_melody(notes,20,60,plan()),notes)
 
     def test_sparse_profile_quiet_edges_and_phrase_cap(self):
@@ -67,6 +67,16 @@ class MelodicConnectionsTests(unittest.TestCase):
         with self.assertRaises(ValueError):connect_melody(iter(notes),20,60,plan())
         self.assertEqual(connect_melody([],20,60,plan()),[])
 
+    def test_bounded_tail_trim_makes_room_without_moving_anchors(self):
+        original=fixture();original[-2]=replace(original[-2],duration=4)
+        before=list(original);result=connect_melody(original,20,60,plan())
+        self.assertEqual(original,before)
+        self.assertEqual(len(result),len(original)+1)
+        self.assertAlmostEqual(result[-3].duration,3.65)
+        self.assertEqual(result[-1],Note(8.75,.5,65,35,2))
+        self.assertEqual((result[-3].start,result[-3].pitch,result[-3].velocity),(5,64,40))
+        self.assertEqual(result[-2],original[-1])
+
     def test_existing_default_and_explicit_legacy_midi_hashes_are_unchanged(self):
         data=json.loads((Path(__file__).parent/'fixtures/melody-baseline-midi.json').read_text())
         self.assertEqual(len(data['cases']),24)
@@ -84,7 +94,12 @@ class MelodicConnectionsTests(unittest.TestCase):
                     a=arrangement_for(seed,position);original=compose(seed+position,seconds,bpm,a)
                     result=connect_melody(original,seconds,bpm,a)
                     self.assertEqual(result,connect_melody(original,seconds,bpm,a))
-                    self.assertEqual(result[:len(original)],original)
+                    for before,after in zip(original,result[:len(original)]):
+                        self.assertEqual((after.start,after.pitch,after.velocity,after.channel),(before.start,before.pitch,before.velocity,before.channel))
+                        self.assertLessEqual(after.duration,before.duration)
+                        if before.duration!=after.duration:
+                            self.assertEqual(after.channel,2)
+                            self.assertGreaterEqual(after.duration,max(.5*60/bpm,before.duration*.5)-1e-8)
                     extra=result[len(original):];total+=len(extra)
                     self.assertFalse(extra if a.profile==0 else False)
                     groups=Counter()

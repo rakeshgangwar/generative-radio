@@ -87,6 +87,17 @@ rendered buffer remains immutable. Retained streaming-role rollback images and a
 verified same-host pre-upgrade backup (43 jobs, 89 files) are under local artifact
 pointers. No off-host recovery or public deployment is implied.
 
+An offline melodic-connections audition is in development in an isolated branch.
+The local comparison at http://localhost:18091 uses the same TimGM font and matched
+23m05s levels: current version 2 versus seven quiet connecting notes/five shortened
+tails. A bounded tail can retain at least half its original duration and half a
+beat; original attacks/pitches/velocities, pads/bass and phrase rests remain fixed.
+The preview passed real Chromium playback/seeking/one-at-a-time controls and narrow
+layouts. A read-only Caddy audition-only server provides 206 byte ranges; the initial
+simple server failed seeking and was stopped. Main station containers/aliases are
+unchanged. Review/CI and subjective preference are pending; no default adoption.
+See the [audition runbook](docs/melodic-connections.md).
+
 Source checkout is clean on main. Public decoded HTTPS monitoring remains an
 operator command, without an installed independent schedule or alert target.
 

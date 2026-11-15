@@ -43,13 +43,18 @@ def analyze(path: Path):
 
 
 def render(config, seed, seconds, stem, *, arrangement=None):
+    notes = compose(seed, seconds, config.bpm, arrangement=arrangement)
+    return render_notes(config, notes, seconds, stem, arrangement=arrangement)
+
+
+def render_notes(config, notes, seconds, stem, *, arrangement=None):
+    """Render a supplied score with the same station audio gates and cleanup."""
     for directory in ["midi", "audio", "work"]:
         (config.data / directory).mkdir(exist_ok=True)
     mid = config.data / "midi" / f"{stem}.mid"
     raw = config.data / "work" / f"{stem}.raw.wav"
     temporary = config.data / "work" / f"{stem}.wav"
     final = config.data / "audio" / f"{stem}.wav"
-    notes = compose(seed, seconds, config.bpm, arrangement=arrangement)
     programs = arrangement.programs if arrangement else None
     mid.write_bytes(midi(notes, seconds, config.bpm, programs=programs))
     try:
