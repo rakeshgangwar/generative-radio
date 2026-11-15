@@ -252,3 +252,5 @@ The timer belongs to this page and is not saved across reloads. Keep the page
 open; a frozen/suspended browser cannot execute its deadline.
 
 Compare instrument libraries using identical, matched-level music: [sound auditions](docs/sound-auditions.md).
+
+Verify decoded audible output from a separate machine: [public listening checks](docs/public-monitoring.md).

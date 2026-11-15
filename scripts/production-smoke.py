@@ -72,6 +72,8 @@ def main():
             else:
                 raise AssertionError('Untrusted local CA was accepted')
             verified = probe_https(origin, ca)
+            assert verified['healthy'] and abs(verified['decoded_seconds'] - 3) < .1
+            assert verified['rms_dbfs'] >= -50
             curl = ['curl', '--disable', '--silent', '--show-error', '--noproxy', '*', '--max-time', '10']
             redirect = run(curl + ['-I', '-H', 'Host: localhost', 'http://127.0.0.1:18082/'])
             assert 'location: https://localhost/' in redirect.lower(), redirect

@@ -10,10 +10,10 @@ import stat
 import subprocess
 import tempfile
 import time
-from urllib.parse import urlsplit
 
 from .config import Config
 from .watchdog import Options
+from .listener_health import probe as probe_listener, ListenerHealthError
 
 REPO = Path(__file__).resolve().parents[1]
 ROLES = {'composer', 'renderer', 'broadcaster', 'icecast', 'web'}
@@ -263,32 +263,10 @@ def preflight(env_file, repo=REPO, project=None, overrides=()):
 
 
 def probe_https(base_url, ca_file=None):
-    parsed = urlsplit(base_url)
-    if (parsed.scheme != 'https' or not parsed.hostname or parsed.username or parsed.password
-            or parsed.path not in {'', '/'} or parsed.query or parsed.fragment):
-        raise ProductionError('HTTPS probe needs a plain HTTPS origin.')
-    base_url = base_url.rstrip('/')
-    with tempfile.TemporaryDirectory() as temp:
-        page = Path(temp) / 'page.html'
-        def fetch(path, destination, seconds, allowed):
-            command = ['curl', '--disable', '--silent', '--show-error', '--fail', '--noproxy', '*',
-                       '--proto', '=https', '--connect-timeout', '5', '--max-time', str(seconds),
-                       '--max-filesize', '1048576', '--output', str(destination),
-                       '--write-out', '%{http_code}\n%{content_type}\n%{size_download}']
-            if ca_file is not None:
-                command += ['--cacert', str(ca_file)]
-            try:
-                status, content_type, size = _run(command + [base_url + path], timeout=seconds + 2, allowed=allowed).splitlines()
-                return int(status), content_type.split(';')[0].lower(), int(float(size))
-            except (ValueError, TypeError):
-                raise ProductionError('HTTPS probe returned invalid response metadata.') from None
-        status, kind, _ = fetch('/', page, 10, (0,))
-        if status != 200 or kind != 'text/html' or b'Generative Radio' not in page.read_bytes():
-            raise ProductionError('HTTPS origin did not serve the station page.')
-        status, kind, size = fetch('/radio.mp3', os.devnull, 3, (0, 28))
-        if status != 200 or kind != 'audio/mpeg' or size < 4096:
-            raise ProductionError('HTTPS stream was unavailable or incomplete.')
-    return {'url': base_url, 'page_verified': True, 'stream_verified': True}
+    try:
+        return probe_listener(base_url, ca_file)
+    except ListenerHealthError as error:
+        raise ProductionError(str(error)) from None
 
 
 def start(env_file, repo=REPO, project=None, build=True, overrides=()):

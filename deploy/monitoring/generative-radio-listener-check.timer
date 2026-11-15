@@ -1,0 +1,11 @@
+[Unit]
+Description=Periodically verify the public radio listener
+
+[Timer]
+OnBootSec=1min
+OnUnitActiveSec=1min
+AccuracySec=1s
+Unit=generative-radio-listener-check.service
+
+[Install]
+WantedBy=timers.target
