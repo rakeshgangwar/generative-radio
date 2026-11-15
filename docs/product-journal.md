@@ -23,7 +23,9 @@ The listener also asked whether the music is generated live, wanted memory/syste
 - A render-ahead queue, independent fallback music, crossfades, retries, cleanup and bounded retained audio.
 - Decoded-audio supervision: it can detect persistent silent, missing or hung output and restart its owned Liquidsoap process within a rolling restart budget. Icecast outages allow native reconnection.
 - Actual failure drills, a completed 30-minute test and a separate one-hour variety baseline. The hour contained 3,600 seconds of audio with no detected silence at −50 dB lasting at least two seconds; all 64 monitoring samples were healthy.
-- Automated Python 3.11/3.14 checks plus real rendering and four-service streaming CI. PRs #1–#6 have merged after passing CI; the watchdog is deployed locally.
+- Automated Python 3.11/3.14, rendering/streaming, browser and hardened HTTPS checks. PRs #1–#13 have merged after passing current-head CI.
+- A local listening page with bounded reconnection, native fallback and an optional personal sleep timer.
+- Recoverable musical chapters, verified backup/restore commands and an opt-in production deployment package.
 - A public repository under the MIT software license. Bundled/installed third-party tools and the SoundFont retain their own licenses; attribution is in the README.
 
 The stream is locally accessible, not a deployed public service. Objective audio analysis does not establish that the music is emotionally satisfying. Listening acceptance of the variety update is still open.
@@ -233,3 +235,44 @@ No station process was restarted to replace the recorder. Its final result is
 pending; source-stream continuity and recording-process lifetime are separate.
 
 ![The personal sleep timer, armed before listening](images/listener-timer.png)
+
+
+### 15 November: the timer ships; compare the sound itself
+
+PR #13 merged after all four current-head checks passed. The optional 15/30/60-minute
+timer is deployed at the local listener. Only the gateway changed; all four music
+service IDs/restart counts stayed unchanged. An actual browser decoded audio from
+localhost:8080, armed without autoplay and cancelled/released correctly on pause.
+Independent review's transient-volume and expiry-message regressions are fixed.
+
+The next experiment isolates timbre from composition. A new offline listening
+bench renders identical planned MIDI with several local SoundFonts, checks score
+identity and generates a portable comparison page with MP3/WAV and measurements.
+The final level matching only attenuates: a louder candidate cannot win by gain.
+Outputs must be fresh and outside station data. Nothing changes the live sound.
+
+The first real comparison is TimGM against FluidR3. FluidR3's upstream/debian
+provenance identifies the font as MIT-licensed; its package and attribution stay
+separate from our software license. The optional lab adds it only to an isolated
+image. Its 148 MB file is much larger than TimGM's 6 MB, so render/memory cost matters.
+
+Both libraries passed a 15-case palette/stage matrix and the same three-chapter
+23m05s rehearsal. Both long masters measure −22.10 LUFS and have no detected silence
+at −50 dB lasting two seconds. True peaks are −7.79 dBTP (TimGM) and −5.23 dBTP (FluidR3).
+Single 120s render trials took 3.90/4.29 seconds, with kernel container-memory peaks
+of 108.8/195.8 MiB under two-CPU/512 MiB limits. The larger library is computationally
+feasible here; that does not establish that its tone is preferable or that a
+small VPS can run the whole station with it. We now have concrete paired previews
+to hear, not just a proposal to use a bigger asset.
+
+The full new two-hour capture remains running under its bounded supervisor.
+The earlier monitor completed normally; its interrupted recording is still only
+90-minute partial evidence. New bench code has passed real-media identity/quality
+checks; independent review and exact-head CI come next. The [audition runbook](sound-auditions.md)
+explains reproduction, outputs, provenance and measured limits.
+
+Independent review found no blocking findings in the listening bench. All106
+Python/media tests and30 listener tests pass. The exported page played the actual
+MP3s in isolated Chrome, loaded no remote assets, stayed within390px and paused
+the other variant when switching. The documented stopped-container export was
+also exercised. Current-head CI and the PR merge are the remaining delivery steps.

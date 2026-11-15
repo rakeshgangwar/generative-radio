@@ -31,4 +31,6 @@ review and CI-cleared PR merge under standing authorization.
 - [x] Write tests for defaults/invalid/arming, active deadline/duration reset, delayed tick, pause/Off/dispose cancellation/stale callback, retry/noreset and20sec fade; observe missing controller RED.
 - [x] Implement controller to GREEN, integrate into existing app without changing player retry policy; add native select/countdown/status and minimal styles. Unit suite passes.
 - [x] Add actual-browser regression; first observe missing UI/behavior RED against prior image, then candidate real-audio fade/expiry/retry-cancel/resume GREEN. Verify existing desktop/mobile/native tests/screenshots.
-- [ ] Update docs/journal with measured evidence/limits, one independent review and regressions for important findings; verify full suites and CI, merge PR, deploy only web and verify core IDs/audio unchanged.
+- [x] Update docs/journal with measured evidence/limits, one independent review and regressions for important findings; verify full suites and CI, merge PR, deploy only web and verify core IDs/audio unchanged.
+
+Receipt: PR13 merged2932dc1 after allfour exact-head6a06da6 CI checks. Web-only rollout01:04:38UTC; coreIDs/restarts unchanged; actual8080 browser delivery passed. Fullnew2h acceptance remains pending.

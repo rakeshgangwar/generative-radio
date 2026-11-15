@@ -18,7 +18,7 @@ multiple genres or external composition API is required for this release.
 | Safe operation on the target VPS | HTTPS, non-default credentials, restricted administration, startup/reboot verification | Target host/domain not yet provided; production package under isolated validation |
 | Backup and recovery | Consistent queue/audio backup and tested restore on isolated data | Repeatable create/verify/restore commands and off-host runbook validated locally; target-host/off-host exercise pending |
 | Operator documentation | Install, upgrade, monitor, recover, back up and roll back commands | Local recovery/backup runbook implemented; production deployment runbook added; target-host exercise pending |
-| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | PRs #1–#11 merged after CI; production packaging is the current iteration |
+| Reviewed delivery | Scoped PRs with measured validation and resolved release findings | PRs #1–#13 merged after CI; production packaging and the personal timer are implemented |
 
 These are release readiness gates, not an exhaustive definition of the evolving
 product goal. The [product journal](product-journal.md) records that direction.

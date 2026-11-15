@@ -18,25 +18,32 @@ and asked to publish this work to a private GitHub repository.
 Architecture source conversation:
 https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
 
-## Current personal listening timer iteration
+## Current sound comparison and live acceptance
 
-Production PR #12 merged at41dd48f after all four current-head CI checks. The next
-isolated feature adds an opt-in sleep timer to the listener only. No live services
-have changed.30 listener tests and9 real-browser groups pass; independent review
-findings are fixed. Current-head CI/merge and listener-only deployment remain.
-Capture21660 is terminal143 after90min, preserved and analyzed as partial. New
-full2h detached acceptance started00:49:46 UTC in
-artifacts/musical-memory-acceptance-20261115-004946, supervisor456169,
-capture456184, monitor456185. Inspect run.json and matching live /proc identity;
-do not restart on timeouts. Old monitor84280 was still live at last poll. Primary
-now41dd48f; new recorder uses a script snapshot, so checkout updates are safe.
+PR13 merged2932dc1 after all four CI checks and deployed only web01:04:38UTC.
+Four core IDs/restarts unchanged; actual8080 browser decoded audio and verified
+arming/noautoplay/pause release.30 listener tests/9browser groups passed. Rollback
+image generative-radio-web:before-sleep-timer; receipts artifacts/sleep-timer-rollout-20261115.
+
+The new isolated sound-auditions feature compares identical MIDI across fonts,
+levels masters with attenuation only and records a portable HTML/JSON listening
+bench. Actual TimGM/FluidR3 matrix15cases and paired23m05s masters passed; see
+docs/sound-auditions.md. No live SoundFont change. Review/CI/PR remain pending.
+
+Original capture21660 is terminal143 at90min, preserved/partial only. Old monitor84280
+completed exit0; never repoll/restart those handles. New full2h acceptance started
+00:49:46UTC in artifacts/musical-memory-acceptance-20261115-004946. Supervisor456169,
+capture456184, monitor456185; inspect run.json plus matching live/proc identity.
+Do not restart on observation timeouts. Expected recorder end~02:49UTC, monitor
+~02:50UTC. Its script is an immutable snapshot; source checkout updates are safe.
+The web ID replacement at01:04UTC is intentional; all music core IDs stayed fixed.
 
 ## Current musical-memory and production iteration
 
 PR #11 merged after all four CI checks. Workers rolled out at04:54 IST; eleven
 ready audio hashes stayed unchanged, with no broadcaster/Icecast/web replacement.
 Liquidsoap crossed into planned job182 at05:19:43 IST. The original capture21660 terminated143; its90-minute partial recording is preserved.
-The fresh full2h run above is pending, and old monitor84280 remains separate.
+The fresh full2h run above is pending, and old monitor84280 completed exit0.
 Evidence: artifacts/musical-memory-20261115/ and
 artifacts/musical-memory-rollout-20261115/. Musical listening acceptance is pending.
 
