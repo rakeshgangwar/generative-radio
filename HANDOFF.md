@@ -44,7 +44,7 @@ sleep-timer rollout at 06:34 IST left all four music-service IDs/restarts unchan
 
 ## Delivery and operator tools
 
-PRs #1–#20 merged after current-head CI. PR #16 (`a00557d`) records the completed
+PRs #1–#21 merged after current-head CI. PR #16 (`a00557d`) records the completed
 two-hour acceptance and replaces the stale first-laptop handoff. Generation source
 is PR #17 (`d82bd17`), version-2 melodic phrasing. All four checks passed on final
 head `84c9d33`, run 43671299403. Its candidate image matches all 17 runtime source files at the reviewed commit. Composer/renderer now use it; broadcaster/Icecast/web stayed unchanged.
@@ -57,13 +57,31 @@ of decoded audio, no silence at least two seconds, 59 healthy watchdog observati
 and zero supervisor restarts. Only the final few minutes include version-2 output;
 it is not a full 30-minute version-2-only audition or human musical acceptance.
 
-A separate broadcast-context feature branch has backend and browser code: bounded
-public metadata and a chapter sentence during visible playback. It passed isolated browser/TLS validation and independent review (one runtime
-fallback-coverage correction, verified with a corrupt-title failure and full
-145-test pass). PR #21 awaits final-head CI. It is not deployed to the main
-local station. Deploying it later requires a measured broadcaster/Icecast/gateway
-maintenance step, preserving queue audio and checking reconnection. Do not blanket
-recreate the five running services just to match a common image tag.
+PR #21 (`ab7b601`) adds broadcast chapter context and is deployed locally.
+All four latest final-head checks passed on `8482583`, run 43682302746. Only
+broadcaster, Icecast and web were replaced at 11:26–11:28 IST. Composer/renderer
+kept their IDs/images/start times; all 11 ready-file hashes and the cached fallback
+were preserved. Five services are healthy with no restarts/OOM, and ten seconds
+of proxied MP3 decoded. At 11:29:24 IST the public chapter94 bloom label matched
+actual Icecast output metadata. Fresh Chromium playback/context/pause also passed.
+
+An already-connected maintenance browser failed to return to playing after the
+upgrade; its failed observer did not save state samples, so its exact final state
+was not established. Separately, a controlled thirty-second request-failure test
+reproduced the current three-retry budget exhausting at roughly twelve seconds.
+A new isolated recovery branch extends the fixed schedule to six retries (1/3/8/
+15/15/15 seconds), preserving finite exhaustion and cancellation. Its 46 listener
+tests and eleven actual-browser scenarios pass. A disposable three-role replacement
+also recovered the same connected browser without another gesture; decoded audio
+advanced and the sleep timer stayed armed. Independent review/CI are pending. This
+recovery change has not replaced the live gateway. Refreshing the local page loads
+the deployed chapter UI; an exhausted old listener requires Try again.
+
+The main local core tag now contains PR21, including the offline backup CLI.
+Both music workers intentionally retain the version2 image from PR17; their
+rendered buffer remains immutable. Retained streaming-role rollback images and a
+verified same-host pre-upgrade backup (42 jobs,87 files) are under local artifact
+pointers. No off-host recovery or public deployment is implied.
 
 Source checkout is clean on main. Public decoded HTTPS monitoring remains an
 operator command, without an installed independent schedule or alert target.

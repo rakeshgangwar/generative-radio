@@ -27,7 +27,7 @@ function fixture() {
     }
     time = end;
   };
-  return {audio, player, tick, jobs, states, state: () => states.at(-1)};
+  return {audio, player, tick, jobs, states, now: () => time, state: () => states.at(-1)};
 }
 const settle = async () => { await Promise.resolve(); await Promise.resolve(); };
 
@@ -62,19 +62,19 @@ test('old play promise cannot fail a newer connection', async () => {
   reject(new Error('old source')); await settle();
   assert.equal(f.state().state,'playing');
 });
-test('connection deadline and three recovery attempts are bounded', () => {
-  const f=fixture(); f.player.start(); f.tick(15000);
-  assert.equal(f.state().state,'retrying'); assert.equal(f.state().attempt,1);
-  f.tick(1000); assert.equal(f.state().state,'connecting');
-  f.tick(15000); assert.equal(f.state().attempt,2);
-  f.tick(3000+15000); assert.equal(f.state().attempt,3);
-  f.tick(8000+15000); assert.equal(f.state().state,'error');
-  assert.equal(f.jobs.size,0); assert.equal(f.audio.src,'');
-  f.player.start(); assert.equal(f.state().attempt,0);
+test('connection deadlines and six recovery attempts remain finite', () => {
+  const f=fixture();f.player.start();f.tick(15000);
+  assert.equal(f.state().state,'retrying');assert.equal(f.state().attempt,1);
+  f.tick(1000);assert.equal(f.state().state,'connecting');
+  f.tick(180000);
+  assert.equal(f.state().state,'error');assert.equal(f.state().attempt,6);
+  assert.equal(f.states.filter(s=>s.state==='connecting').length,7);
+  assert.equal(f.jobs.size,0);assert.equal(f.audio.src,'');
+  f.player.start();assert.equal(f.state().attempt,0);
 });
 test('short playing/drop loops do not reset the restart budget', () => {
   const f=fixture(); f.player.start();
-  for(const delay of [1000,3000,8000]) {
+  for(const delay of [1000,3000,8000,15000,15000,15000]) {
     f.audio.emit('playing'); f.tick(100); f.audio.emit('ended');
     assert.equal(f.state().state,'retrying'); f.tick(delay);
   }
@@ -138,4 +138,33 @@ test('stale pause events cannot cancel a newer unpaused connection',()=>{
   const f=fixture();f.player.start();f.audio.dispatchEvent(new Event('pause'));
   assert.equal(f.state().state,'connecting');f.audio.emit('playing');f.audio.dispatchEvent(new Event('pause'));
   assert.equal(f.state().state,'playing');
+});
+
+
+test('thirty-second immediate-failure outage recovers without another start', () => {
+  const f=fixture();
+  f.audio.play=()=>{
+    f.audio.paused=false;
+    f.audio.emit(f.now()<30000?'error':'playing');
+    return Promise.resolve();
+  };
+  f.player.start();f.tick(30000);
+  assert.notEqual(f.state().state,'error','recovery budget must cover thirty seconds');
+  f.tick(15000);
+  assert.equal(f.state().state,'playing');
+  assert.equal(f.audio.paused,false);
+  f.player.pause();f.tick(180000);
+  assert.equal(f.jobs.size,0);assert.equal(f.audio.src,'');
+});
+
+
+test('pause during the sixth retry cancels the extended recovery window', () => {
+  const f=fixture();f.player.start();
+  for(const delay of [1000,3000,8000,15000,15000]) {
+    f.audio.emit('error');f.tick(delay);
+  }
+  f.audio.emit('error');assert.equal(f.state().attempt,6);
+  f.player.pause();const loads=f.audio.loads;f.tick(180000);
+  assert.equal(f.state().state,'paused');assert.equal(f.jobs.size,0);
+  assert.equal(f.audio.loads,loads);assert.equal(f.audio.src,'');
 });

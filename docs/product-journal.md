@@ -549,3 +549,47 @@ fails the final interlude assertion after both chapter transitions; restoring th
 correct mapping passes all 145 media tests. All 44 listener tests still pass.
 No production-code defect or deferred minor was found. Final-head CI remains the
 merge gate.
+
+### 15 November: chapter context is on air, and maintenance exposed a recovery gap
+
+PR #21 merged after the four actual checks on its final head passed. A measured
+local rollout replaced broadcaster, Icecast and gateway while leaving both music
+workers running. All eleven ready WAV hashes and the cached fallback survived.
+Fresh decoded-audio health and a ten-second public stream capture passed; the
+public sentence first truthfully described the startup interlude, then chapter94
+in bloom with Halo keys. Its title matched the output server's metadata. A fresh
+Chromium page played audio, showed context and released both on pause.
+
+The rollout was not seamless. The already-connected browser observer did not
+return to playing within its acceptance window. It failed to retain state samples,
+so that particular client's precise final state is unknown. The source was absent
+for about thirty seconds; code inspection showed only three automatic backoffs
+of one, three and eight seconds. A separate actual-browser fault experiment now
+reproduces that boundary: failures at approximately0/1/4/12 seconds leave the page
+in error at fifteen seconds, before a thirty-second outage can end.
+
+The next candidate extends the same controller to six finite retries, with a
+fifteen-second maximum backoff. It should wait through this short maintenance
+without a second click, while retaining an explicit retry after exhaustion.
+Permission rejection still needs a gesture, and pause/sleep-timer expiry must
+cancel every retry. No new service, setting or background availability poll is
+needed. Forty-six deterministic listener tests pass, including the reproduced
+thirty-second outage, finite hanging/drop-loop exhaustion and cancellation during
+the sixth retry. Actual browser validation, independent review and final-head CI
+are next. The main station continues on the merged chapter release during this work.
+
+The candidate now passes all eleven Chromium scenarios with a clean process exit.
+In the controlled thirty-second request failure, the successful forward request
+started at42.1 seconds; real audio advanced and the timer kept counting. A separate
+fully disposable station then replaced broadcaster, Icecast and web with an already
+connected browser. That same client recovered without another play gesture, audio
+advanced, and its timer remained armed. Both musical-worker IDs stayed fixed. This
+actual replacement drill exited cleanly and removed its own containers/data; it
+never changed the main station. The [recovery evidence](evidence/listener-recovery-20261115.json)
+retains the failed old policy, clean candidate results and scoped rollout facts.
+
+One earlier full-browser attempt wrote eleven passing cases but exited143; it is
+preserved as partial evidence, not counted as clean completion. An explicit wrapper
+repeat recorded Node exit0. This separates assertion success from process cleanup.
+Final independent review and actual final-head CI remain the delivery gates. The
+six-retry policy is not yet deployed to the main gateway.
