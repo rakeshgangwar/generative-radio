@@ -1,6 +1,6 @@
 # Broadcast chapter context implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** Show a truthful musical chapter sentence from actual broadcast metadata without changing the music or exposing private status.
 
@@ -60,5 +60,5 @@
 
 ## Delivery gates
 
-- [ ] One fresh independent whole-branch review; one reproduced/verified Important/Critical fix pass; full green required checks.
+- [x] One fresh independent whole-branch review; one reproduced/verified Important/Critical fix pass; full green required checks.
 - [ ] Scoped PR and all four actual final-head/current-base CI checks before merge; primary fast-forward and honest source-vs-live delivery state.

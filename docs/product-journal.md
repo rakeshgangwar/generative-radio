@@ -541,3 +541,11 @@ musical experiment should earn its place through matched listening, rather than
 adding another variation knob. TimGM remains on air while the matched SoundFont
 preference is unanswered. Public hosting and real off-host recovery still need
 actual destinations. These are open parts of the product, not implied successes.
+
+Independent review identified one coverage gap: the transition fixture used an
+annotated fallback URI while the deployed script maps metadata over its cached
+file. The fixture now consumes that production mapping. Corrupting its title
+fails the final interlude assertion after both chapter transitions; restoring the
+correct mapping passes all 145 media tests. All 44 listener tests still pass.
+No production-code defect or deferred minor was found. Final-head CI remains the
+merge gate.

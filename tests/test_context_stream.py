@@ -90,14 +90,19 @@ class ContextStreamTests(unittest.TestCase):
             try:
                 start(['icecast2','-c',str(root/'icecast.xml')],'icecast.log')
                 absent=until(lambda p:p=={'version':1,'available':False,'title':''})
-                fallback='annotate:title="A quiet interlude.",artist="Generative Radio":'+str(data/'audio/fallback.wav')
-                script='log.file.set(false)\nlog.stdout.set(true)\nm=playlist(mode="normal",reload_mode="never",loop=false,prefetch=2,'+json.dumps(str(playlist))+')\nf=single('+json.dumps(fallback)+')\ns=mksafe(crossfade(duration=5.,fallback(track_sensitive=true,[m,f])))\n'+output('s','/radio.mp3')
+                # Exercise the actual deployed fallback mapping, not a look-alike URI.
+                production=(ROOT/'deploy/radio.liq').read_text()
+                security=production[production.index('security ='):production.index('# Finish the current fallback')]
+                security=security.replace('/data/audio/fallback.wav',str(data/'audio/fallback.wav'))
+                script='log.file.set(false)\nlog.stdout.set(true)\nm=playlist(mode="normal",reload_mode="never",loop=false,prefetch=2,'+json.dumps(str(playlist))+')\n'+security+'\ns=mksafe(crossfade(duration=5.,fallback(track_sensitive=true,[m,security])))\n'+output('s','/radio.mp3')
                 (root/'source.liq').write_text(script);source=start(['liquidsoap',str(root/'source.liq')],'source.log')
-                first=until(lambda p:'Chapter 17' in p.get('title',''),15)
+                # The infallible cached file can start before playlist prefetch; finish its 20s first.
+                first=until(lambda p:'Chapter 17' in p.get('title',''),35)
                 self.assertEqual(set(first),{'version','available','title'});self.assertTrue(first['available'])
                 with sqlite3.connect(data/'radio.sqlite') as db:self.assertEqual(db.execute("SELECT count(*) FROM jobs WHERE status='served'").fetchone()[0],2)
                 second=until(lambda p:'Chapter 29' in p.get('title',''),25)
                 interlude=until(lambda p:'A quiet interlude.' in p.get('title',''),25)
+                self.assertEqual(interlude['title'],'Generative Radio - A quiet interlude.')
                 poison='quote " backslash \\ tab\t line\n return\r snow ☃ <img src=x onerror=alert(1)> '+('z'*200)
                 query=urllib.parse.urlencode({'mode':'updinfo','mount':'/radio.mp3','song':poison,'charset':'UTF-8'})
                 req=urllib.request.Request(f'http://127.0.0.1:{port}/admin/metadata?'+query,headers={'Authorization':'Basic '+base64.b64encode(b'admin:probe-admin').decode()})

@@ -58,7 +58,9 @@ and zero supervisor restarts. Only the final few minutes include version-2 outpu
 it is not a full 30-minute version-2-only audition or human musical acceptance.
 
 A separate broadcast-context feature branch has backend and browser code: bounded
-public metadata and a chapter sentence during visible playback. It passed isolated browser/TLS validation and is awaiting final review/CI. It is not deployed to the main
+public metadata and a chapter sentence during visible playback. It passed isolated browser/TLS validation and independent review (one runtime
+fallback-coverage correction, verified with a corrupt-title failure and full
+145-test pass). PR #21 awaits final-head CI. It is not deployed to the main
 local station. Deploying it later requires a measured broadcaster/Icecast/gateway
 maintenance step, preserving queue audio and checking reconnection. Do not blanket
 recreate the five running services just to match a common image tag.
