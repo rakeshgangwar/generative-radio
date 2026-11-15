@@ -126,6 +126,14 @@ is complete. Subjective preference and on-air adoption remain pending; the defau
 music is unchanged.
 See the [audition runbook](docs/melodic-connections.md).
 
+A local resting-profile prototype is available at http://localhost:18095. Both
+versions cover the same three chapters for 23m05s at matched −22.13 LUFS. The
+candidate uses 52 BPM, spare density and a fixed warm palette; timing differs, so
+it is a mood comparison. Browser playback/seek/narrow/native and measured audio
+checks passed. No station role, default or on-air music changed. This is not a
+supported profile CLI; listening preference remains open. See the
+[experiment guide](docs/resting-profile-experiment.md) and its source-linked receipt.
+
 Source checkout is clean on main. Public decoded HTTPS monitoring remains an
 operator command, without an installed independent schedule or alert target.
 
