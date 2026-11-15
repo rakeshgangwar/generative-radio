@@ -366,3 +366,19 @@ The separate six-hour metrics observation remains incomplete and includes an
 annotated unhealthy web-maintenance sample; the earlier interrupted 40-minute
 attempt is never combined into a continuous result. This delivery does not close
 public-host, physical-device, off-host recovery or human musical acceptance gates.
+
+## Current broadcast and Firefox acceptance — 15 November 2026
+
+A fresh 1,800-second direct local MP3 recording completed with no silence at −50 dB
+lasting two seconds, RMS −24.62 dBFS and peak −7.95 dBFS. All five services were
+healthy before and after with matching identities/images/start/restart/OOM values.
+Separate stock Firefox checks passed a real 15-minute sleep-timer fade, expiry and
+refresh, plus a controlled 30-second outage with automatic recovery and explicit
+pause cancellation. All owned test processes/profiles/proxy were cleaned up.
+See the [combined receipt](evidence/current-listening-acceptance-20261115.json).
+
+This closes those local technical checks only. The separate six-hour metrics
+attempt is still in progress with annotated maintenance; neither earlier partial
+attempts nor this audio recording establish an uninterrupted healthy six-hour
+result. Public/off-host/physical-device and human musical acceptance gates remain
+open. No application change or deployment is part of this documentation update.

@@ -1,0 +1,200 @@
+{
+  "verified_at": 1794759528.866754,
+  "served_asset_sha256": {
+    "index.html": "202e6e9d81550495f3e73b385c2fa0a090d76b2db192257855b3c1a5dbfa6a1d",
+    "app.js": "7ddc09f3c2c48c813a5b07e75aa8ae829961de726a7eb2041998537b0fed2547",
+    "player.js": "c13f200e1d71b75eb6e58449fc832f90fd54a66f8edc5400fdb367140607e00d",
+    "sleep-timer.js": "6b0d495a76ef37402e1924b2a512a8e12449116592eb077c3bfb1b435246e9a6",
+    "broadcast-context.js": "afafb4dbaed6ec78338c7affe13c1b46c5687a1c834c70a956a3f485b134b29f",
+    "style.css": "6b17280fc0ae6cdc3b08969edb70bef600db908605c5d1557858d55c7fca58cb",
+    "dial.svg": "066b109b2c0a13cba2c0b89381607df6253c23e0b540017e8c3ce0a974bbf0d1",
+    "favicon.svg": "18868c09e40c51595e26d64d3cd2ff12f6ca33b26784ea64b8c56d7e3d010179"
+  },
+  "status": "Current local broadcast capture and separate stock Firefox checks completed; not human taste or public/physical acceptance",
+  "capture": {
+    "duration_seconds": 1800.0,
+    "rms_dbfs": -24.623119,
+    "peak_dbfs": -7.953368,
+    "no_silence_at_minus50dbfs_for_two_seconds": true,
+    "all_five_identities_preserved": true,
+    "source_commit": "9318741eab42f3724f2ec06706dbdb983304cdee",
+    "wav_sha256": "1d619d707177a35b78979a514c154d981be100cfcd0e3d6041707701e6d1fa1c",
+    "before_services": {
+      "broadcaster": {
+        "cpu_percent": 9.62,
+        "health": "healthy",
+        "id": "abb87b80c56c007c8240d5df311c9a96af9f96824c423e5b34460a138fa171fc",
+        "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+        "memory_bytes": 295593574,
+        "oom": false,
+        "pids": 13,
+        "restarts": 0,
+        "started": "2026-11-15T05:57:04.799911735Z",
+        "state": "running"
+      },
+      "composer": {
+        "cpu_percent": 0.0,
+        "health": "healthy",
+        "id": "0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146",
+        "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+        "memory_bytes": 16682844,
+        "oom": false,
+        "pids": 2,
+        "restarts": 0,
+        "started": "2026-11-15T03:23:31.379138171Z",
+        "state": "running"
+      },
+      "icecast": {
+        "cpu_percent": 3.68,
+        "health": "healthy",
+        "id": "78f7a60cd2c96ce90c32f4ee896bd67cfb02646ebd7529f26ca402798da3bd6d",
+        "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+        "memory_bytes": 10768876,
+        "oom": false,
+        "pids": 6,
+        "restarts": 0,
+        "started": "2026-11-15T05:56:38.273381611Z",
+        "state": "running"
+      },
+      "renderer": {
+        "cpu_percent": 0.1,
+        "health": "healthy",
+        "id": "04a26abb33422649a11752d188ca9e2eb149fbe50c981fc3a2eced30a00805d4",
+        "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+        "memory_bytes": 27357348,
+        "oom": false,
+        "pids": 2,
+        "restarts": 0,
+        "started": "2026-11-15T03:23:31.259377863Z",
+        "state": "running"
+      },
+      "web": {
+        "cpu_percent": 0.24,
+        "health": "healthy",
+        "id": "7e1f7d622adf91baa05701f0ad603fd81418dacb7cca6a3bd549f8898578e46b",
+        "image": "sha256:fb8404f39fb902ebfd56528c75d7c5dc70c51cd7bacd933868506ab5d4a07ccc",
+        "memory_bytes": 19860029,
+        "oom": false,
+        "pids": 19,
+        "restarts": 0,
+        "started": "2026-11-15T15:43:00.527941831Z",
+        "state": "running"
+      }
+    },
+    "after_services": {
+      "broadcaster": {
+        "cpu_percent": 8.88,
+        "health": "healthy",
+        "id": "abb87b80c56c007c8240d5df311c9a96af9f96824c423e5b34460a138fa171fc",
+        "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+        "memory_bytes": 294125568,
+        "oom": false,
+        "pids": 12,
+        "restarts": 0,
+        "started": "2026-11-15T05:57:04.799911735Z",
+        "state": "running"
+      },
+      "composer": {
+        "cpu_percent": 0.0,
+        "health": "healthy",
+        "id": "0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146",
+        "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+        "memory_bytes": 16661873,
+        "oom": false,
+        "pids": 2,
+        "restarts": 0,
+        "started": "2026-11-15T03:23:31.379138171Z",
+        "state": "running"
+      },
+      "icecast": {
+        "cpu_percent": 0.22,
+        "health": "healthy",
+        "id": "78f7a60cd2c96ce90c32f4ee896bd67cfb02646ebd7529f26ca402798da3bd6d",
+        "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+        "memory_bytes": 11345592,
+        "oom": false,
+        "pids": 6,
+        "restarts": 0,
+        "started": "2026-11-15T05:56:38.273381611Z",
+        "state": "running"
+      },
+      "renderer": {
+        "cpu_percent": 0.13,
+        "health": "healthy",
+        "id": "04a26abb33422649a11752d188ca9e2eb149fbe50c981fc3a2eced30a00805d4",
+        "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+        "memory_bytes": 27420262,
+        "oom": false,
+        "pids": 2,
+        "restarts": 0,
+        "started": "2026-11-15T03:23:31.259377863Z",
+        "state": "running"
+      },
+      "web": {
+        "cpu_percent": 0.2,
+        "health": "healthy",
+        "id": "7e1f7d622adf91baa05701f0ad603fd81418dacb7cca6a3bd549f8898578e46b",
+        "image": "sha256:fb8404f39fb902ebfd56528c75d7c5dc70c51cd7bacd933868506ab5d4a07ccc",
+        "memory_bytes": 21181235,
+        "oom": false,
+        "pids": 19,
+        "restarts": 0,
+        "started": "2026-11-15T15:43:00.527941831Z",
+        "state": "running"
+      }
+    },
+    "local_evidence": "/home/rakeshgangwar/Projects/generative-radio/artifacts/current-broadcast-30min-20261115T154815Z",
+    "scope": "Direct local MP3 recording of the current broadcast; not an individual browser, independent public host, human listening verdict or proof that fallback never played"
+  },
+  "firefox_real_timer": {
+    "browser_version": "157.0.1",
+    "wall_clock_seconds": 900.4237938799924,
+    "actual_fade_observed": true,
+    "preference_stayed_requested_37": true,
+    "expiry_paused_and_released_source": true,
+    "refresh_idle_timer_off_preference_37": true,
+    "driver_reaped": true,
+    "profile_removed": true,
+    "local_evidence": "/home/rakeshgangwar/Projects/generative-radio/artifacts/firefox-wall-timer-20261115T155444Z",
+    "timing_scope": "Expiry was confirmed by polling within the reported wall-clock duration, including WebDriver/polling overhead; this is not exact audible stop latency. No clock replacement."
+  },
+  "firefox_outage": {
+    "browser_version": "157.0.1",
+    "scope": "Owned stock Firefox against loopback fault proxy and current real MP3; 30-second outage recovery and cancellation; no live service mutation",
+    "recovery_seconds": 33.884,
+    "recovered_without_second_gesture": true,
+    "pause_cancelled_retries_through_outage_end": true,
+    "driver_reaped": true,
+    "private_profile_removed": true,
+    "proxy_closed": true
+  },
+  "source_sha256": {
+    "index.html": "202e6e9d81550495f3e73b385c2fa0a090d76b2db192257855b3c1a5dbfa6a1d",
+    "app.js": "7ddc09f3c2c48c813a5b07e75aa8ae829961de726a7eb2041998537b0fed2547",
+    "player.js": "c13f200e1d71b75eb6e58449fc832f90fd54a66f8edc5400fdb367140607e00d",
+    "sleep-timer.js": "6b0d495a76ef37402e1924b2a512a8e12449116592eb077c3bfb1b435246e9a6",
+    "broadcast-context.js": "afafb4dbaed6ec78338c7affe13c1b46c5687a1c834c70a956a3f485b134b29f",
+    "style.css": "6b17280fc0ae6cdc3b08969edb70bef600db908605c5d1557858d55c7fca58cb",
+    "dial.svg": "066b109b2c0a13cba2c0b89381607df6253c23e0b540017e8c3ce0a974bbf0d1",
+    "favicon.svg": "18868c09e40c51595e26d64d3cd2ff12f6ca33b26784ea64b8c56d7e3d010179"
+  },
+  "raw_proof_sha256": {
+    "artifacts/current-broadcast-30min-20261115T154815Z/run.json": "848b02a2c97fb170fc0512c55ae52f0795cbb480fbe3e85e5093669c1c897901",
+    "artifacts/current-broadcast-30min-20261115T154815Z/launch.json": "10c1867d3f45fbdccdbf2487c8cc9e1059087b6b73b0a69860fd0864276cda5f",
+    "artifacts/current-broadcast-30min-20261115T154815Z/artifacts/analysis.log": "fc17600114110cc16534823fff327a51f0a512a67801530b26e5f0f6e3164662",
+    "artifacts/current-broadcast-30min-20261115T154815Z/before/sample-0000.json": "07d65b0cf3e6c15791128c66c0cd5a1a9f1012f08328ceb18f42bcbf96c0fcc3",
+    "artifacts/current-broadcast-30min-20261115T154815Z/after/sample-0000.json": "cdf071e85bd9c30265689527e9aa830699eb3d8e61ce08633f7fb55f4491c381",
+    "artifacts/firefox-wall-timer-20261115T155444Z/result.json": "11ddc06eb3d48b0885c1b0189f41460197209606df7608fd10a638c132bd1616",
+    "artifacts/firefox-wall-timer-20261115T155444Z/operator-check.py": "d0e0f39c8f5893835a031dfbbaace672bae1556e99464349bec1d6a06d3a65c2",
+    "artifacts/firefox-outage-20261115/result.json": "ec45368128e270a9ec8b63d25308bea17d51cec4e7018cc753e11aeb37241d67",
+    "artifacts/firefox-outage-20261115/operator-check.py": "b90d02ba896dcdef4befc46430fa163ca9f4a67091f6d48d056b590626fc7e6f"
+  },
+  "remaining": [
+    "Human musical preference and long-listening acceptance",
+    "Physical-device, Safari and assistive-technology combinations",
+    "Supplied public host/domain, independent external monitoring and off-host recovery",
+    "Separate six-hour vitals attempt is not established by these checks and includes annotated web maintenance"
+  ],
+  "raw_receipt_sha256": "df49095ab52830a0a58d3023c16762e768fb71e2e4ca8b91c729de15e89828e0",
+  "raw_receipt": "/home/rakeshgangwar/Projects/generative-radio/artifacts/current-listening-receipt-20261115.json"
+}

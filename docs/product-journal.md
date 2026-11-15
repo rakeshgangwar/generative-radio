@@ -28,6 +28,13 @@ now running; the earlier attempt stopped after about 40 minutes and is retained
 separately. The fresh attempt includes an annotated web-maintenance interruption,
 with its unhealthy sample preserved. It is not a completed uninterrupted soak.
 
+A fresh current-broadcast check has now completed: 30 minutes of decoded audio,
+with all five service identities preserved before and after. Separate stock
+Firefox tests passed a real 15-minute timer fade/expiry and a controlled
+30-second outage with automatic recovery and pause cancellation. The
+[current listening receipt](evidence/current-listening-acceptance-20261115.json)
+records these technical checks. Human musical acceptance remains open.
+
 Musical development remains the main product question: it should stay worth
 hearing over hours, with room to breathe. The next listening decision remains the
 matched connecting-note and SoundFont comparisons above. A possible later
@@ -1106,3 +1113,35 @@ or presented as continuous healthy acceptance. The earlier interrupted attempt i
 not added to the fresh run. Neither run is an independent long audio recording.
 Physical devices, Safari, assistive technology, off-host recovery, public deployment
 and human long-listening acceptance remain open.
+
+## Completed: current-broadcast and Firefox acceptance — 15 November 2026
+
+The fresh recording ran from approximately 15:48 to 16:18 UTC against the local
+MP3 mount. It decoded exactly 1,800 seconds, with RMS −24.62 dBFS, peak −7.95 dBFS
+and no silence at −50 dB lasting two seconds. All five services were healthy
+before and after; their identities, images, start times, restart counts and OOM
+values matched. The recording wrapper and its capture process finished and are
+gone. This is a technical check of the current broadcast, not a human listening
+verdict, independent public-host test, or proof that fallback never played.
+
+Stock Firefox 157.0.1 also completed a real 15-minute sleep timer without replacing
+the page clock. Audio stayed at the requested 37% before the final fade; 29 samples
+showed lower audio volume during the fade while the stored preference stayed 37%.
+Expiry was confirmed within 900.424 seconds including polling/WebDriver overhead:
+playback paused and the stream source was released. Refresh returned to idle with
+the timer off and the preference still 37%. The owned browser/driver are gone and
+the private profile was removed.
+
+In a separate Firefox check, a loopback proxy interrupted real audio for 30 seconds.
+The player reconnected without another gesture, confirmed after 33.884 seconds.
+During a second outage, pause cancelled retries and kept the source released
+through the outage's end. That browser, profile and proxy were cleaned up. These
+checks exercised the existing player; they did not change live station services.
+
+The [combined receipt](evidence/current-listening-acceptance-20261115.json) retains
+exact assets, source/raw-proof hashes and the individual evidence scopes. The
+separate six-hour vitals attempt remains incomplete and includes its annotated web
+maintenance; it must not be presented as an uninterrupted all-healthy soak.
+Musical preference, physical devices, Safari, assistive technology, public hosting,
+independent external monitoring and off-host recovery remain open. The current
+v2 TimGM music remains on air while the matched listening comparisons await feedback.
