@@ -102,7 +102,10 @@ phrase families and changing pad/bass/keys texture. With `MUSICAL_MEMORY=1`
 segment chapters share a motif, register and sound palette, with a spare arrival,
 a more active middle and a release. Palettes vary warm/halo pads and electric
 piano/vibraphone over acoustic bass. At the default two-minute length a chapter
-spans roughly six to ten minutes.
+spans roughly six to ten minutes. Version-2 plans share a 6/8/10-bar phrase
+length within the chapter: the melody rests for the final bar while pads and bass
+continue. This adds breathing room to the middle stages as well as the edges.
+Explicit version-1 plans and legacy composition retain their previous MIDI.
 
 Plans are reconstructed from each saved job's seed and ID, so cleanup, restart,
 restore or later station-seed changes do not shift existing queued jobs. Versioned

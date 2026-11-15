@@ -32,12 +32,12 @@
 
 **Interfaces:** Existing `arrangement_for(station_seed: int, position: int) -> Arrangement`, `compose(seed, seconds, bpm=60, arrangement=None) -> list[Note]` and `midi(...) -> bytes` stay callable. Arrangement appends `phrase_bars`; new plans report version 2.
 
-- [ ] Add failing planner tests: lengths in {6,8,10}, chapter sharing/balanced blocks, huge/out-of-order determinism, existing non-phrasing plan fields unchanged against version-1 fixtures.
-- [ ] Add failing compose tests: for each complete phrase interval, no channel-2 note intersects its final bar (including 0.1 beat release); pads overlap the rest. Cover all stages, BPM 40/60/90 and seconds 20/120/600; require positive bounded finite notes and existing pitch/velocity safety.
-- [ ] Pin old explicit-plan MIDI using preserved baseline SHA-256s, and old unplanned MIDI from the unchanged base; invalid version-2 lengths (0, negative, bool, float, unknown length) and unsupported versions raise ValueError.
-- [ ] Run `python3 -m unittest discover -s tests -p 'test_phrase_breathing.py' -v`; confirm behavioral failures before implementation.
-- [ ] Append metadata, choose new chapter label with existing scheduler, and implement last-bar omission/release clipping only for validated version-2 plans. Preserve version-1 and unplanned code paths.
-- [ ] Run focused tests and full Python suite; investigate actual failures. Commit passing code/tests.
+- [x] Add failing planner tests: lengths in {6,8,10}, chapter sharing/balanced blocks, huge/out-of-order determinism, existing non-phrasing plan fields unchanged against version-1 fixtures.
+- [x] Add failing compose tests: for each complete phrase interval, no channel-2 note intersects its final bar (including 0.1 beat release); pads overlap the rest. Cover all stages, BPM 40/60/90 and seconds 20/120/600; require positive bounded finite notes and existing pitch/velocity safety.
+- [x] Pin old explicit-plan MIDI using preserved baseline SHA-256s, and old unplanned MIDI from the unchanged base; invalid version-2 lengths (0, negative, bool, float, unknown length) and unsupported versions raise ValueError.
+- [x] Run `python3 -m unittest discover -s tests -p 'test_phrase_breathing.py' -v`; confirm behavioral failures before implementation.
+- [x] Append metadata, choose new chapter label with existing scheduler, and implement last-bar omission/release clipping only for validated version-2 plans. Preserve version-1 and unplanned code paths.
+- [x] Run focused tests and full Python suite; investigate actual failures. Commit passing code/tests.
 
 ### Task 2: Paired audio, measured journal and delivery
 
@@ -45,8 +45,8 @@
 
 **Interfaces:** Existing renderer/audition metadata must carry phrase_bars/version without new CLI/config. Existing quality gates remain authoritative.
 
-- [ ] Build isolated candidate image; run full real-media Python and listener unit suites. Use isolated data, never live volume writes.
-- [ ] Render every palette/stage case and a 12-position 120-second sequence; compare identical seeds against current image. Existing duration, audibility, peak/headroom and no-silence gates must pass. Export paired MP3s, report source/version provenance and render/resource measurements.
-- [ ] Recompute the 256-position rest/density comparison; confirm complete phrase rests in middle stages while notes remain present. Record results without claiming subjective improvement.
+- [x] Build isolated candidate image; run full real-media Python and listener unit suites. Use isolated data, never live volume writes.
+- [x] Render every palette/stage case and a 12-position 120-second sequence; compare identical seeds against current image. Existing duration, audibility, peak/headroom and no-silence gates must pass. Export paired MP3s, report source/version provenance and render/resource measurements.
+- [x] Recompute the 256-position rest/density comparison; confirm complete phrase rests in middle stages while notes remain present. Record results without claiming subjective improvement.
 - [ ] Record concrete previews and measured decisions in journal; preserve current TimGM. One independent final review; fix/reproduce Important/Critical findings, then run required full checks.
 - [ ] Open scoped PR. Require all four real checks on the actual final head and current base before merge. After merge, any worker-only rollout must preserve ready hashes and other service identities, retain rollback image, and verify actual decoded audio; document delivered vs merely compared status.

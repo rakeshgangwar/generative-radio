@@ -1,0 +1,154 @@
+{
+  "scope": "Offline same-seed TimGM comparison, not deployed or subjectively accepted",
+  "artifact_directory": "artifacts/phrase-breathing-20261115",
+  "listening_pair": {
+    "matched_target_lufs": -22.08,
+    "variants": {
+      "baseline": {
+        "level": {
+          "integrated_lufs": -22.08,
+          "true_peak_dbfs": -7.77
+        },
+        "analysis": {
+          "duration": 1385.0,
+          "peak": 0.408538818359375,
+          "rms_dbfs": -24.302338393725687,
+          "quiet_fraction": 0.00036101083032490973
+        },
+        "mp3_bytes": 22161075,
+        "sha256": "8ea41380e9da21b0f15dcc583741c09b4a3198889410d86f55c7995484d8d250"
+      },
+      "candidate": {
+        "level": {
+          "integrated_lufs": -22.08,
+          "true_peak_dbfs": -8.36
+        },
+        "analysis": {
+          "duration": 1385.0,
+          "peak": 0.382080078125,
+          "rms_dbfs": -24.296975773495774,
+          "quiet_fraction": 0.00036101083032490973
+        },
+        "mp3_bytes": 22161075,
+        "sha256": "a8938227482a1dad729217cc3e4c1308e11c9ac6ae386e71fdb9edae99d8c98c"
+      }
+    }
+  },
+  "score_256_positions": {
+    "arrival": {
+      "baseline": {
+        "segments": 64,
+        "mean_middle_melody_attacks": 22.96875,
+        "full_bar_rest_count": 105
+      },
+      "candidate": {
+        "segments": 64,
+        "mean_middle_melody_attacks": 19.546875,
+        "full_bar_rest_count": 177
+      }
+    },
+    "bloom": {
+      "baseline": {
+        "segments": 64,
+        "mean_middle_melody_attacks": 40.53125,
+        "full_bar_rest_count": 0
+      },
+      "candidate": {
+        "segments": 64,
+        "mean_middle_melody_attacks": 34.59375,
+        "full_bar_rest_count": 128
+      }
+    },
+    "release": {
+      "baseline": {
+        "segments": 64,
+        "mean_middle_melody_attacks": 23.8125,
+        "full_bar_rest_count": 117
+      },
+      "candidate": {
+        "segments": 64,
+        "mean_middle_melody_attacks": 19.84375,
+        "full_bar_rest_count": 188
+      }
+    },
+    "unfold": {
+      "baseline": {
+        "segments": 43,
+        "mean_middle_melody_attacks": 35.72093023255814,
+        "full_bar_rest_count": 0
+      },
+      "candidate": {
+        "segments": 43,
+        "mean_middle_melody_attacks": 30.441860465116278,
+        "full_bar_rest_count": 86
+      }
+    },
+    "settle": {
+      "baseline": {
+        "segments": 21,
+        "mean_middle_melody_attacks": 36.57142857142857,
+        "full_bar_rest_count": 0
+      },
+      "candidate": {
+        "segments": 21,
+        "mean_middle_melody_attacks": 30.904761904761905,
+        "full_bar_rest_count": 42
+      }
+    }
+  },
+  "matrix_60_seconds": {
+    "cases": 15,
+    "max_quiet_fraction": 0.008333333333333333,
+    "max_peak": 0.381744384765625
+  },
+  "render_trials": {
+    "baseline": {
+      "segments": 12,
+      "seconds_each": 120,
+      "elapsed_min": 3.7679371839985834,
+      "elapsed_max": 4.110267134004971,
+      "source_sha256": {
+        "arrangement.py": "7fe8b441fbf7fa483725c50aa995392ed914677fc30df1210f43bdc28bf8186b",
+        "compose.py": "9313ca3039c782f03dddcfcf4513e41bf217a73624998acc77df55eff5ba7dea",
+        "render.py": "7060df68aedd64ca09e03e7998aec39878b5a93acf228b5db5bbbf803c196012"
+      },
+      "font_sha256": "c5378b62028c920cb11e4803327983fee2f2cdff5dc89c708e39da417e51c854",
+      "engine_versions": {
+        "fluidsynth": "FluidSynth runtime version 2.3.1\nCopyright (C) 2000-2022 Peter Hanappe and others.\nDistributed under the LGPL license.\nSoundFont(R) is a registered trademark of Creative Technology Ltd.\n\nFluidSynth executable version 2.3.1\nSample type=double\n",
+        "ffmpeg": "ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\nbuilt with gcc 12 (Debian 12.2.0-14+deb12u1)\nconfiguration: --prefix=/usr --extra-version=0+deb12u1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librist --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libtheora --enable-libtwolame --enable-libvidstab --"
+      }
+    },
+    "candidate": {
+      "segments": 12,
+      "seconds_each": 120,
+      "elapsed_min": 3.8190209949971177,
+      "elapsed_max": 4.484330208004394,
+      "source_sha256": {
+        "arrangement.py": "fb1cd67ac84761d1062f1cebbc865e57493785bed07926776448ba83502b3423",
+        "compose.py": "843b3c8dbdaa19db7c5e44e83841927aeb5d7fad41c86845d3229b7b4e5b885e",
+        "render.py": "7060df68aedd64ca09e03e7998aec39878b5a93acf228b5db5bbbf803c196012"
+      },
+      "font_sha256": "c5378b62028c920cb11e4803327983fee2f2cdff5dc89c708e39da417e51c854",
+      "engine_versions": {
+        "fluidsynth": "FluidSynth runtime version 2.3.1\nCopyright (C) 2000-2022 Peter Hanappe and others.\nDistributed under the LGPL license.\nSoundFont(R) is a registered trademark of Creative Technology Ltd.\n\nFluidSynth executable version 2.3.1\nSample type=double\n",
+        "ffmpeg": "ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\nbuilt with gcc 12 (Debian 12.2.0-14+deb12u1)\nconfiguration: --prefix=/usr --extra-version=0+deb12u1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librist --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libtheora --enable-libtwolame --enable-libvidstab --"
+      }
+    }
+  },
+  "container_limits": {
+    "cpus": 2,
+    "memory_mib": 768,
+    "network": "none",
+    "live_data_mounted": false
+  },
+  "raw_source_sha256": {
+    "baseline.json": "d10c7d08429252e70f09388f757a639e76bac1416d994a3ae35e2dab6524bb17",
+    "candidate-score.json": "2e4462fd5ceef926d6fc0c5ea5e340dd992abf96146a349b81b2392a41496ec1",
+    "baseline/report.json": "1608031b9c84bf165772fa57e1b1877e28f07ef753a2f426eea6e61665383acb",
+    "candidate/report.json": "88d7bb2d6d6efa802ceef7c5645c0a255120466333bd63ad66ad4fc7ce40452d",
+    "matrix-60/report.json": "95a876078b0c9fe17a86a3f710e221f7120cec33d1b807d7afe78131a7988891",
+    "listening-pair.json": "e2e836a246fb57722cff1f3ea5cb53642d46602f2c063600ef0288999caa9304",
+    "baseline/silence.log": "fa7e40fd40d4917b447f841ec9fc7a177094069427eb249e0ea2365b670b2d3d",
+    "candidate/silence.log": "161148c7f6e5fe119c388b7a52f34d5f15799cb1296fb098b04f552b2c487ac0"
+  }
+}

@@ -352,3 +352,40 @@ movement and more deliberate arrivals/rests within a chapter, measured against
 the existing same-seed recordings. These are ideas, not shipped behavior or an
 assumption that listening acceptance has passed. Public deployment and off-host
 recovery also need their real destinations before they can be exercised.
+
+
+### 15 November: let the melodic line finish a thought
+
+After the two-hour receipt merged in PR #16, the next experiment returned to the
+listener's repetition complaint. In the same 256-position score sample, unfold,
+bloom and settle had no complete bar of melodic rest within their central 72
+seconds. Bloom averaged 40.53 attacks there. Changing harmony alone had left the
+foreground line almost continuously speaking.
+
+The candidate uses chapter-shared six/eight/ten-bar phrases. Melody leaves the
+last bar empty, including note-release tails; pads and bass sustain underneath.
+No key modulation, extra instrument or new SoundFont is added. Version-2 plans
+carry the phrase length in their metadata. Explicit version-1 and independent
+legacy MIDI remain byte-identical, verified against preserved fixtures.
+
+Middle-stage attacks average 30.44 (unfold), 34.59 (bloom) and 30.90 (settle), down
+from 35.72, 40.53 and 36.57. Each sampled middle-stage segment now has two complete
+melodic rests in that window. This proves space in the score, not better music.
+
+Both actual three-chapter rehearsals contain 23m05s. The matched masters measure
+−22.08 LUFS, with true peaks −7.77 dBTP (current) and −8.36 dBTP (candidate); neither
+sequence has detected −50 dB silence lasting two seconds. All 15 palette/stage
+60-second candidate renders pass quality gates (maximum quiet fraction 0.00834).
+The longer cases matter: a 20-second clip can finish before its first phrase rest.
+Candidate two-minute renders took 3.82–4.48 seconds under two-CPU/768 MiB limits,
+versus 3.77–4.11 seconds for current music. This is local cost evidence, not target
+VPS capacity. The font, engine versions and render-processing source match.
+
+Concrete paired previews are at
+`artifacts/phrase-breathing-20261115/baseline/listen.mp3` and
+`artifacts/phrase-breathing-20261115/candidate/listen.mp3`.
+The [tracked comparison receipt](evidence/phrase-breathing-20261115.json) includes
+source and MP3 hashes. All 127 real-media Python and 30 listener tests pass. The
+running station still uses the previous composition; final independent review
+and current-head CI must clear before shipping this source iteration. Actual
+listening preference and any worker-only rollout remain separate decisions.
