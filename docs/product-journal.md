@@ -509,3 +509,35 @@ cannot restore stale details after pause. Existing audio controls, sleep timer
 and MediaSession remain independent. All 44 listener tests pass, including 14 new
 context lifecycle cases. Actual browser/layout/TLS verification is next; this
 candidate has not replaced the main listener or source services.
+
+### 15 November: chapter context reaches the browser — candidate verified locally
+
+The sentence now appears beneath the listening status, with a small reminder that
+buffered audio can be behind the broadcast. It uses the existing quiet palette
+and typography; it adds no screen-reader announcement or playback control. Actual
+Chromium screenshots at 320/390 pixels and desktop were inspected for readable
+wrapping and overflow. The browser exercised real MP3 playback while context was
+replaced with unsafe text or a server failure: text stayed literal, audio kept
+moving, and the sleep timer remained armed. Idle, pause and hidden states stop
+metadata work; active requests are cancelled when the page hides.
+
+The isolated production rehearsal passed with five non-root/read-only services.
+Verified HTTPS carried only the three public context fields; admin/status/raw XSL,
+database and private data paths returned 404. The existing decoded-audio probe,
+five-second capture, rejection of an untrusted CA and persisted certificate trust
+also passed. This is loopback infrastructure with a local CA, not a public launch.
+The main five containers retained their identities, images and start times.
+
+The next delivery steps are independent review, final-head CI and a scoped PR.
+This source change requires later measured maintenance of broadcaster, Icecast
+and gateway to reach the current listener; development has not replaced them.
+The [candidate evidence](evidence/broadcast-context-20261115.json) separates tests
+from live delivery. Neither labels nor dispatch counts establish sample alignment
+or confirmed listening history.
+
+The musical direction remains a station with a recognizable voice and room to
+breathe. We have chapter development and deliberate melodic rests; the next
+musical experiment should earn its place through matched listening, rather than
+adding another variation knob. TimGM remains on air while the matched SoundFont
+preference is unanswered. Public hosting and real off-host recovery still need
+actual destinations. These are open parts of the product, not implied successes.

@@ -44,7 +44,7 @@ sleep-timer rollout at 06:34 IST left all four music-service IDs/restarts unchan
 
 ## Delivery and operator tools
 
-PRs #1–#19 merged after current-head CI. PR #16 (`a00557d`) records the completed
+PRs #1–#20 merged after current-head CI. PR #16 (`a00557d`) records the completed
 two-hour acceptance and replaces the stale first-laptop handoff. Generation source
 is PR #17 (`d82bd17`), version-2 melodic phrasing. All four checks passed on final
 head `84c9d33`, run 43671299403. Its candidate image matches all 17 runtime source files at the reviewed commit. Composer/renderer now use it; broadcaster/Icecast/web stayed unchanged.
@@ -52,6 +52,17 @@ PR #19 adds explicit offline backup recovery, with 136 real-media Python and 30
 listener tests passing. The merged source is available in the local on-demand
 CLI image; all five running containers kept their IDs/images/start times. Their
 images need not be replaced for this backup-only tool.
+PR #20 records the completed mixed 30-minute rollout capture: exactly 1800 seconds
+of decoded audio, no silence at least two seconds, 59 healthy watchdog observations
+and zero supervisor restarts. Only the final few minutes include version-2 output;
+it is not a full 30-minute version-2-only audition or human musical acceptance.
+
+A separate broadcast-context feature branch has backend and browser code: bounded
+public metadata and a chapter sentence during visible playback. It passed isolated browser/TLS validation and is awaiting final review/CI. It is not deployed to the main
+local station. Deploying it later requires a measured broadcaster/Icecast/gateway
+maintenance step, preserving queue audio and checking reconnection. Do not blanket
+recreate the five running services just to match a common image tag.
+
 Source checkout is clean on main. Public decoded HTTPS monitoring remains an
 operator command, without an installed independent schedule or alert target.
 

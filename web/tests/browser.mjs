@@ -1,5 +1,6 @@
 // Opt-in local browser QA. Uses a temporary isolated profile, never a user profile.
 import {chromium} from 'playwright-core';
+import {checkBroadcast} from './broadcast-browser.mjs';
 import assert from 'node:assert/strict';
 import {mkdir,writeFile} from 'node:fs/promises';
 const base=process.env.RADIO_WEB_URL||'http://127.0.0.1:8080';
@@ -8,6 +9,7 @@ await mkdir(artifacts,{recursive:true});
 const browser=await chromium.launch({executablePath:process.env.CHROME_BIN||'/opt/google/chrome/chrome',headless:true});
 const results=[];
 try {
+  await checkBroadcast(browser,base,artifacts,results);
   const sleeping=await browser.newContext();
   const rest=await sleeping.newPage();
   const timerEpoch = Date.parse('2026-11-15T06:00:00Z');

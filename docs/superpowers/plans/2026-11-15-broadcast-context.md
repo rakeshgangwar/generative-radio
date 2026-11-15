@@ -1,6 +1,6 @@
 # Broadcast chapter context implementation plan
 
-> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
+> **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [x]`) syntax for tracking.
 
 **Goal:** Show a truthful musical chapter sentence from actual broadcast metadata without changing the music or exposing private status.
 
@@ -53,10 +53,10 @@
 
 **Interfaces:** Existing private CI project and isolated TLS smoke. New exact proxy route must return only selected context while admin/status/data/raw-XSL paths remain unavailable publicly.
 
-- [ ] Extend actual stack tests to fetch context through Caddy/TLS, compare label transitions with Liquidsoap output rather than queue rows, and validate restricted routes. Exercise full five-role secure profile, no private data mounts.
-- [ ] Browser-test actual label, pause/hidden cancellation, failed/malicious metadata while audio/timer keep working,320/390px and desktop, no-JS/reduced-motion. Capture and visually inspect actual screenshots.
-- [ ] Build isolated backend/web candidate images; run full real-media/listener/browser and hardened TLS checks. Record concrete timing/privacy/behavior evidence and scope, with no listening/sample-alignment claims.
-- [ ] Update journal/current-state docs and commit the verified candidate. Keep current main stream intact; any later source/Icecast/gateway maintenance rollout gets its own preservation/reconnect evidence.
+- [x] Extend actual stack tests to fetch context through Caddy/TLS, compare label transitions with Liquidsoap output rather than queue rows, and validate restricted routes. Exercise full five-role secure profile, no private data mounts.
+- [x] Browser-test actual label, pause/hidden cancellation, failed/malicious metadata while audio/timer keep working,320/390px and desktop, no-JS/reduced-motion. Capture and visually inspect actual screenshots.
+- [x] Build isolated backend/web candidate images; run full real-media/listener/browser and hardened TLS checks. Record concrete timing/privacy/behavior evidence and scope, with no listening/sample-alignment claims.
+- [x] Update journal/current-state docs and commit the verified candidate. Keep current main stream intact; any later source/Icecast/gateway maintenance rollout gets its own preservation/reconnect evidence.
 
 ## Delivery gates
 

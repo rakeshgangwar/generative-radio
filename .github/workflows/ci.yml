@@ -77,7 +77,7 @@ jobs:
               cp /data/audio/preview.wav /data/audio/fallback.wav
               liquidsoap --check /app/deploy/radio.liq
             '
-      - name: Start all four services and require healthy status
+      - name: Start all five services and require healthy status
         env:
           SEGMENT_SECONDS: '20'
           BUFFER_SECONDS: '20'
@@ -100,12 +100,19 @@ jobs:
       - name: Validate the listener page, restricted routes and proxied audio
         run: |
           python3 - <<'PY'
-          import urllib.request, urllib.error
+          import json, urllib.request, urllib.error
           with urllib.request.urlopen('http://127.0.0.1:8080/', timeout=5) as response:
               assert response.status == 200
               assert b'Start listening' in response.read()
               assert "default-src 'self'" in response.headers['Content-Security-Policy']
-          for path in ['/admin/', '/status-json.xsl', '/radio.sqlite']:
+          with urllib.request.urlopen('http://127.0.0.1:8080/broadcast.json', timeout=5) as response:
+              assert response.headers.get_content_type() == 'application/json'
+              assert response.headers['Cache-Control'] == 'no-store'
+              context = json.load(response)
+              assert sorted(context) == ['available', 'title', 'version'], context
+              assert context['version'] == 1 and context['available'] is True, context
+              assert isinstance(context['title'], str) and 0 < len(context['title']) <= 160, context
+          for path in ['/admin/', '/status-json.xsl', '/broadcast-context-json.xsl', '/radio.sqlite', '/data/', '/audio/']:
               try:
                   urllib.request.urlopen('http://127.0.0.1:8080'+path, timeout=5)
               except urllib.error.HTTPError as error:
