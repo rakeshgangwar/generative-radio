@@ -32,7 +32,11 @@ Perform five actual flows: fresh idle with no stream source; trusted button clic
 leading to playing and MP3 currentTime >1; keyboard slider adjustment changes the
 native audio volume; pause releases src and pauses audio; resume plays and advances.
 Record only known check names and selected browser version/platform, not raw
-capabilities, protocol error text, DOM content or browser logs. Capture one bounded
+capabilities, protocol error text, DOM content or browser logs. On failure permit
+allowlisted last-known media state/readiness/volume/time and numeric error codes
+collected during polling; capture numeric errors before normal recovery clears src.
+Do not issue diagnostic requests after the deadline. Session creation may use the
+configured overall budget instead of an independent short transport cutoff. Capture one bounded
 PNG during playback and SHA256 of the eight known served public assets. These hashes
 identify tested bytes; do not claim they match a checkout unless checked separately.
 

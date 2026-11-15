@@ -16,7 +16,7 @@
 - Timeout 1..300 seconds, HTTP response <=1 MiB, asset <=256 KiB, JSON report <=32 KiB.
 - Fresh owned profile and process group; no existing user session or station mutation.
 - Actual five flows required for pass; selected error codes only; cancellation/timeout keep partial evidence.
-- No dependencies/downloads; same four required CI job names; one native implementer and one fresh final reviewer, one Important/Critical correction pass, minors deferred.
+- No extra Python packages or helper driver/browser downloads; CI prepares its headless audio/decoder fixture; same four required CI job names; one native implementer and one fresh final reviewer, one Important/Critical correction pass, minors deferred.
 
 ## Review Focus
 

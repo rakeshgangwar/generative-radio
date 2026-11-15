@@ -92,8 +92,8 @@ def publish(output, report):
             temporary.unlink(missing_ok=True)
 
 
-def fetch(host, port, method, path, payload=None, limit=1024*1024):
-    connection = http.client.HTTPConnection(host, port, timeout=15)
+def fetch(host, port, method, path, payload=None, limit=1024*1024, timeout=15):
+    connection = http.client.HTTPConnection(host, port, timeout=timeout)
     try:
         body = None if payload is None else json.dumps(payload).encode()
         connection.request(method, path, body=body, headers={'Content-Type': 'application/json'})
@@ -110,15 +110,43 @@ def fetch(host, port, method, path, payload=None, limit=1024*1024):
         connection.close()
 
 
+def media_snapshot(value):
+    """Keep bounded numeric/enum diagnostics, never arbitrary DOM or error text."""
+    if type(value) is not dict:
+        return {}
+    result = {}
+    state = value.get('player_state')
+    if type(state) is str and state in {'idle', 'connecting', 'playing', 'paused', 'retrying', 'error'}:
+        result['player_state'] = state
+    for key, maximum in (('current_time', 86400), ('audio_volume', 1), ('volume_value', 100)):
+        number = value.get(key)
+        if type(number) in (int, float) and 0 <= number <= maximum and math.isfinite(number):
+            result[key] = number
+    for key, maximum in (('ready_state', 4), ('network_state', 3)):
+        number = value.get(key)
+        if type(number) is int and 0 <= number <= maximum:
+            result[key] = number
+    if type(value.get('paused')) is bool:
+        result['paused'] = value['paused']
+    name = value.get('play_error_name')
+    if type(name) is str and name in {'NotAllowedError', 'NotSupportedError', 'AbortError', 'InvalidStateError', 'SecurityError', 'NetworkError'}:
+        result['play_error_name'] = name
+    for key in ('error_code', 'last_error_code'):
+        if key in value and (value[key] is None or type(value[key]) is int and 1 <= value[key] <= 4):
+            result[key] = value[key]
+    return result
+
+
 class Client:
     def __init__(self, port, expected_origin):
         self.port = port
         self.session = None
         self.expected_origin = expected_origin
+        self.last_media = None
 
-    def request(self, method, path, payload=None):
+    def request(self, method, path, payload=None, timeout=15):
         try:
-            value = json.loads(fetch('127.0.0.1', self.port, method, path, payload))['value']
+            value = json.loads(fetch('127.0.0.1', self.port, method, path, payload, timeout=timeout))['value']
             if type(value) is dict and 'error' in value:
                 raise Problem('webdriver_error')
             return value
@@ -132,7 +160,20 @@ class Client:
         return self.command('POST', '/execute/sync', {'script': script, 'args': []})
 
     def until(self, script):
-        while self.script(script) is not True:
+        wrapped = ("const a=document.querySelector('#stream'), p=document.querySelector('#player'), v=document.querySelector('#volume');"
+                   "return {ready:(()=>{"+script+";})(),player_state:p?.dataset.state??null,"
+                   "current_time:a?.currentTime??null,ready_state:a?.readyState??null,"
+                   "network_state:a?.networkState??null,paused:a?.paused??null,"
+                   "error_code:a?.error?.code??null,last_error_code:window.__radioSmokeMediaError??null,"
+                   "play_error_name:window.__radioSmokePlayError??null,"
+                   "audio_volume:a?.volume??null,volume_value:v?.valueAsNumber??null};")
+        while True:
+            value = self.script(wrapped)
+            if type(value) is not dict or type(value.get('ready')) is not bool:
+                raise Problem('protocol_error')
+            self.last_media = media_snapshot(value)
+            if value['ready']:
+                return
             time.sleep(.1)
 
     def check_origin(self):
@@ -169,6 +210,7 @@ def run(options):
     publish(options.output, report)
     started = time.monotonic()
     process = None
+    client = None
     stage = 'driver'
     old_handlers = {}
     acquiring = False
@@ -219,7 +261,7 @@ def run(options):
         stage = 'launch'
         session = client.request('POST', '/session', {'capabilities': {'alwaysMatch': {
             'browserName': 'firefox', 'acceptInsecureCerts': False,
-            'moz:firefoxOptions': {'binary': str(options.firefox), 'args': ['-headless']}}}})
+            'moz:firefoxOptions': {'binary': str(options.firefox), 'args': ['-headless']}}}}, timeout=options.timeout)
         try:
             ident, caps = session['sessionId'], session['capabilities']
             if type(ident) is not str or not re.fullmatch(r'[A-Za-z0-9_-]{1,128}', ident):
@@ -239,6 +281,24 @@ def run(options):
         stage = 'idle'
         client.until("return document.querySelector('#player')?.dataset.state==='idle' && document.querySelector('#stream').paused && document.querySelector('#stream').getAttribute('src')===null")
         report['checks'].append({'name': 'idle_without_source', 'pass': True})
+        client.script("""
+            const a=document.querySelector('#stream'), nativePlay=a.play;
+            window.__radioSmokeMediaError=null; window.__radioSmokePlayError=null;
+            const remember=error=>{
+                const code=a.error?.code;
+                if(code>=1&&code<=4) window.__radioSmokeMediaError=code;
+                const name=error?.name;
+                if(['NotAllowedError','NotSupportedError','AbortError','InvalidStateError','SecurityError','NetworkError'].includes(name)) window.__radioSmokePlayError=name;
+            };
+            a.play=function(...args){
+                let result;
+                try { result=Reflect.apply(nativePlay,this,args); }
+                catch(error){ remember(error); throw error; }
+                if(result&&typeof result.catch==='function') result.catch(remember);
+                return result;
+            };
+            a.addEventListener('error',()=>remember(null),true);
+        """)
         stage = 'start'
         playing = "return document.querySelector('#player').dataset.state==='playing' && document.querySelector('#stream').currentTime>1"
         client.click('#toggle')
@@ -297,6 +357,8 @@ def run(options):
         finally:
             for sig, handler in old_handlers.items():
                 signal.signal(sig, handler)
+            if report['state'] != 'complete' and client is not None and client.last_media:
+                report['media'] = client.last_media
             report.update(finished_at=time.time(), elapsed_seconds=time.monotonic()-started)
             publish(options.output, report)
     return 130 if report['state'] == 'cancelled' else 0 if report['pass'] else 1

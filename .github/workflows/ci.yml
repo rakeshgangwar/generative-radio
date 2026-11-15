@@ -172,7 +172,7 @@ jobs:
           ])
           if result_path.exists():
               result = json.loads(result_path.read_text())
-              print({key: result.get(key) for key in ('state', 'pass', 'browser', 'checks', 'failure', 'cleanup')}, flush=True)
+              print({key: result.get(key) for key in ('state', 'pass', 'browser', 'checks', 'failure', 'media', 'cleanup')}, flush=True)
               if completed.returncode == 0:
                   assert result['state'] == 'complete' and result['pass'] is True
                   assert len(result['checks']) == 5 and all(c['pass'] is True for c in result['checks'])

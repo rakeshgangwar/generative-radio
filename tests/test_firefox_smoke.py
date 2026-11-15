@@ -26,7 +26,7 @@ class Handler(BaseHTTPRequestHandler):
         global url_reads
         if self.path.endswith('/url'):
             url_reads+=1
-            value='http://example.com/' if mode=='redirect' or (mode=='redirect_late' and url_reads>1) else 'http://127.0.0.1:8080/'
+            value='http://example.com/' if mode in ('redirect','redirect_slow') or (mode=='redirect_late' and url_reads>1) else 'http://127.0.0.1:8080/'
         else:value={'ready':True}
         body=json.dumps({'value':value}).encode()
         self.send_response(200);self.end_headers();self.wfile.write(body)
@@ -34,13 +34,14 @@ class Handler(BaseHTTPRequestHandler):
         self.rfile.read(int(self.headers.get('Content-Length','0')))
         Path(os.environ['RADIO_TEST_DRIVER_PHASE']).write_text('request')
         if mode=='stall':time.sleep(30)
+        if mode=='redirect_slow' and self.path=='/session':time.sleep(16)
         if mode=='drip':
             self.send_response(200);self.send_header('Content-Length','2000');self.end_headers()
             for _ in range(2000):self.wfile.write(b' ');self.wfile.flush();time.sleep(.1)
             return
-        if mode in ('redirect','redirect_late'):
+        if mode in ('redirect','redirect_late','redirect_slow'):
             if self.path=='/session':value={'sessionId':'fixture','capabilities':{'browserName':'firefox','platformName':'linux','browserVersion':'157'}}
-            elif self.path.endswith('/execute/sync'):value=True
+            elif self.path.endswith('/execute/sync'):value={'ready':True,'player_state':'idle','current_time':0,'ready_state':0,'network_state':0,'paused':True,'error_code':None}
             elif self.path.endswith('/element'):value={'element-6066-11e4-a52e-4f735466cecf':'button'}
             elif self.path.endswith('/click'):
                 Path(os.environ['RADIO_TEST_DRIVER_PHASE']+'.clicked').write_text('clicked after redirect')
@@ -139,6 +140,14 @@ class OwnedProtocolTests(unittest.TestCase):
                 result=self.assert_receipt(mode,out)
                 self.assertEqual(result['failure']['kind'],'deadline')
 
+    def test_startup_response_inside_whole_budget_is_not_cut_at_fifteen_seconds(self):
+        args,env,out=self.command('redirect_slow');args[-1]='22'
+        p=subprocess.run(args,env=env,capture_output=True,text=True,timeout=27)
+        self.assertEqual(p.returncode,1,p.stderr)
+        result=self.assert_receipt('redirect_slow',out)
+        self.assertEqual(result.get('browser',{}).get('name'),'firefox')
+        self.assertEqual(result['failure']['stage'],'navigate')
+
     def test_sigterm_cancels_http_and_reaps_owned_driver(self):
         args,env,out=self.command('stall');args[-1]='60'
         p=subprocess.Popen(args,env=env,stdout=subprocess.PIPE,stderr=subprocess.PIPE,text=True)
@@ -184,3 +193,15 @@ class AcquisitionSignalTests(unittest.TestCase):
                 finally:
                     sys.settrace(original_trace)
                     for process in created:terminate_process(process,.1)
+
+
+class MediaDiagnosticTests(unittest.TestCase):
+    def test_snapshot_keeps_only_known_bounded_media_fields(self):
+        from radio import firefox_smoke as smoke
+        value=dict(player_state='playing',current_time=2.5,ready_state=4,network_state=2,paused=False,error_code=None,last_error_code=4,play_error_name='NotSupportedError',url=SECRET,message=SECRET,html=SECRET)
+        expected=dict(player_state='playing',current_time=2.5,ready_state=4,network_state=2,paused=False,error_code=None,last_error_code=4,play_error_name='NotSupportedError')
+        self.assertEqual(smoke.media_snapshot(value),expected)
+        for bad in [float('nan'),float('inf'),10**400,-1]:
+            self.assertNotIn('current_time',smoke.media_snapshot({**value,'current_time':bad}))
+        unknown=smoke.media_snapshot(dict(player_state=SECRET,ready_state=900,network_state=-1,paused=SECRET,error_code=SECRET,play_error_name=SECRET))
+        self.assertNotIn(SECRET,json.dumps(unknown));self.assertEqual(unknown,{})
