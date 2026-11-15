@@ -1,5 +1,6 @@
 import json
 import os
+import signal
 from pathlib import Path
 import subprocess
 import sys
@@ -7,7 +8,8 @@ import tempfile
 import time
 import unittest
 
-from radio.firefox_smoke import Options
+from radio.firefox_smoke import Options, run
+from radio.watchdog import terminate_process
 
 SECRET = "private-protocol-error-canary"
 DRIVER = r'''#!/usr/bin/env python3
@@ -150,3 +152,35 @@ class OwnedProtocolTests(unittest.TestCase):
             self.assert_receipt('stall',out,'cancelled')
         finally:
             if p.poll() is None:p.kill();p.communicate()
+
+
+class AcquisitionSignalTests(unittest.TestCase):
+    def test_signal_at_popen_return_cannot_escape_owned_cleanup(self):
+        for signum,expected in [(signal.SIGTERM,130),(signal.SIGINT,130),(signal.SIGALRM,1)]:
+            with self.subTest(signal=signum),tempfile.TemporaryDirectory() as directory:
+                root=Path(directory)
+                driver=root/'sleeping-driver'
+                driver.write_text('#!'+sys.executable+'\nimport time; time.sleep(30)\n');driver.chmod(0o755)
+                options=Options(driver=driver,firefox=Path(sys.executable),output=root/'result',timeout=60)
+                created=[]
+                original_trace=sys.gettrace()
+                def trace(frame,event,arg):
+                    if event=='return' and frame.f_code is subprocess.Popen.__init__.__code__ and not created:
+                        created.append(frame.f_locals['self'])
+                        os.kill(os.getpid(),signum)
+                    return trace
+                try:
+                    try:
+                        sys.settrace(trace)
+                        code=run(options)
+                    finally:
+                        sys.settrace(original_trace)
+                    self.assertEqual(code,expected)
+                    report=json.loads((options.output/'result.json').read_text())
+                    self.assertFalse(report['pass']);self.assertTrue(report['cleanup']['driver_reaped'])
+                    self.assertTrue(report['cleanup']['profiles_removed'])
+                    self.assertEqual(len(created),1)
+                    with self.assertRaises(ProcessLookupError):os.kill(created[0].pid,0)
+                finally:
+                    sys.settrace(original_trace)
+                    for process in created:terminate_process(process,.1)

@@ -27,7 +27,7 @@
       "pass": true
     }
   ],
-  "elapsed_seconds": 4.441750485995726,
+  "elapsed_seconds": 4.497636895001051,
   "cleanup": {
     "driver_reaped": true,
     "profiles_removed": true
@@ -43,9 +43,9 @@
     "style.css": "6b17280fc0ae6cdc3b08969edb70bef600db908605c5d1557858d55c7fca58cb"
   },
   "served_assets_match_base_checkout": true,
-  "tool_source_sha256": "7c3b7600da7c10b7a2b4c4be2455b74f6e20769b8d398b4eebf6ebc013fe4971",
-  "result_sha256": "f3a195a0e4e250800de63f3b5e09665150ece539cee5418b4725650c3ac0d433",
-  "screenshot_sha256": "a80fa3d030e506db6e2c3becbbd14e29d515b8db5dcecbcfc6a0d90880dbffd4",
+  "tool_source_sha256": "d40adb04cc7a6f9aea71d20bd0f37fb3228a1195a3e3fe81b803063fc1117728",
+  "result_sha256": "edf703393017e3ad580cf5d1c4136a7d8422bd3bb271268867ce0bdd1b717ffd",
+  "screenshot_sha256": "ad5f2df6757dcdbd5ddfc2e007372a3983cb0d91f6c80f02248530fa965f7970",
   "actual_failure_cleanup": {
     "cancel": {
       "exit_code": 130,
@@ -55,15 +55,15 @@
     },
     "deadline": {
       "exit_code": 1,
-      "observed_owned_processes": 23,
+      "observed_owned_processes": 21,
       "active_owned_after": [],
       "profiles_removed": true
     }
   },
   "raw_cleanup_proof_sha256": {
-    "guarded-success-proof.json": "ac3ce8c021fb72e556fdf743d00a69d41f3eeb76438778d57c1de4130b7b0990",
-    "guarded-cancel-proof.json": "1c2d5a6e3979cc570ea729cc5847f6867aade4c30b2687e632199d78b13bfd03",
-    "guarded-deadline-proof.json": "811428592849848997acae0686d32c3744c5aec216841ead58b8a1f3f89a4523"
+    "reviewed-success-proof.json": "4f7032943738f094bb7ad8267930fe448f2ac18afbd746c8cdac7e6c9be20b76",
+    "reviewed-cancel-proof.json": "768d86852b3bf9ee7e93ae9e6da38e52c231e69ffc3129855ff28e7f3afec0bd",
+    "reviewed-deadline-proof.json": "283adc372b751511b29b5f7b13d1ecc73a87d56ed67099994ca3f228c7773555"
   },
   "five_service_identities_start_restart_oom_states_match_observer_end": true,
   "service_baseline_observed_at": 1794735161.4347672,
@@ -73,14 +73,24 @@
     "Basic Linux headless flows only",
     "No Firefox long-outage or sleep-timer acceptance",
     "No Safari, physical device, public deployment or subjective musical acceptance",
-    "Timeout triggers cleanup; elapsed time includes shutdown and profile removal"
+    "Timeout triggers cleanup; elapsed time includes shutdown and profile removal",
+    "Signals during trusted process acquisition are honored immediately after the owned handle is registered"
   ],
   "verification": {
-    "focused_tests": 8,
-    "real_media_tests": 187,
+    "focused_tests": 9,
+    "real_media_tests": 188,
     "real_media_skips": 1,
     "skip_scope": "Explicit live-project observer opt-in, tested separately in PR25",
     "listener_tests": 46,
-    "real_media_log_sha256": "1083b246ce39a48881d23e54951f3b9be8604c77d48e3ba104dcae7ae5f3e883"
+    "real_media_log_sha256": "0a7f99af389a9010bbfc0184421b7025915f73887034e9dc6fd261f53e9a71a5",
+    "real_media_log": "reviewed-media.log"
+  },
+  "review": {
+    "critical": 0,
+    "important": 1,
+    "minor": 0,
+    "fix": "Defer signal exceptions until the newly created process handle is registered, then honor pending cancellation/deadline immediately",
+    "regression": "Real SIGTERM/SIGINT/SIGALRM at Popen return: three failures before the fix, all pass after",
+    "rereview": false
   }
 }

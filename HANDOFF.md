@@ -283,8 +283,20 @@ reports and never controls station processes or existing browser sessions.
 Actual installed Firefox 157.0.1
 passed all five basic flows with cleanup. Raw evidence remains ignored under
 `artifacts/firefox-check-20261115/`; the earlier exploratory probe is separately
-in `artifacts/firefox-20261115/`. The full real-media suite passes 187 tests with one explicit live opt-in skip;
+in `artifacts/firefox-20261115/`. The full real-media suite passes 188 tests with one explicit live opt-in skip;
 all 46 listener tests pass. The delivery gate is one fresh final review plus all
 four actual final-head/current-base CI jobs. The new CI Firefox step must actually
 pass, with no skipped-check clearance. Current music and audition adoption stay
 unchanged. Physical/Safari/public-host/off-host and human acceptance remain open.
+
+
+The sole fresh review found one Important acquisition/cancellation race. A real
+SIGTERM/SIGINT/SIGALRM regression at Popen return failed for all three signals
+before the fix. Signals now defer raising only until the owned process handle is
+registered, then are honored immediately without changing the child's signal mask.
+All nine focused tests and 188 real-media tests pass (one explicit observer
+live-project skip). New actual success/cancel/deadline probes observed 23/7/21 owned
+processes, none active afterward, with profiles removed. No Critical findings or
+minors; no rereview. The [receipt](docs/evidence/firefox-check-20261115.json) links
+these exact source hashes and raw proofs. OS process acquisition and filesystem
+cleanup can extend elapsed time; the tool requires trusted installed binaries.

@@ -822,9 +822,22 @@ deadline; elapsed time includes shutdown waits and profile deletion.
 The final author audit found that checking origin only after navigation was not
 enough: a protocol regression reproduced a redirect between idle and the first
 click. Every control lookup now checks origin again. The regression failed before
-the guard and passed afterward; eight focused tests pass. The guarded tool was
+the guard and passed afterward; eight focused tests pass. Before the independent review, the guarded tool was
 rerun on actual Firefox for success, SIGTERM and deadline. It observed 24/7/23 owned
 processes respectively, with none active afterward and private profiles removed.
 The deadline run retained one completed check but correctly failed; partial work
 was not reported as a pass. The final whole-suite gate for this fix passed all 187 tests with one explicit
 live-project opt-in skip; actual playback was tested separately on the host.
+
+
+The sole fresh review found one Important ownership race: a signal could arrive
+after an OS child started but before its Python handle was assigned. A deterministic
+trace delivered actual SIGTERM, SIGINT and SIGALRM at that boundary; all three
+regressions initially left the child running despite a true cleanup flag. The fix
+defers raising those signals only until the handle is registered, then immediately
+honors pending cancellation/deadline and reaps the owned group. It does not block
+signals inherited by the browser. Nine focused tests pass. Fresh actual runs of
+the corrected source passed success/cancel/deadline with 23/7/21 observed owned
+processes and none active afterward; profiles were removed. The final whole suite
+for this correction passed all 188 tests with one explicit observer live-project
+opt-in skip. No second review is requested.

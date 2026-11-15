@@ -171,9 +171,17 @@ def run(options):
     process = None
     stage = 'driver'
     old_handlers = {}
+    acquiring = False
+    pending = {'cancelled': False, 'deadline': False}
     def expired(*_):
+        if acquiring:
+            pending['deadline'] = True
+            return
         raise Problem('deadline')
     def cancelled(*_):
+        if acquiring:
+            pending['cancelled'] = True
+            return
         raise Cancelled()
     for sig, handler in ((signal.SIGALRM, expired), (signal.SIGTERM, cancelled), (signal.SIGINT, cancelled)):
         old_handlers[sig] = signal.signal(sig, handler)
@@ -183,9 +191,19 @@ def run(options):
             reserved.bind(('127.0.0.1', 0))
             port = reserved.getsockname()[1]
         report['webdriver_port'] = port
-        process = subprocess.Popen([str(options.driver), '--host', '127.0.0.1', '--port', str(port),
-                                    '--profile-root', str(profiles), '--log', 'error'],
-                                   stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
+        # Signals must not unwind between OS child creation and storing its handle.
+        # Defer raising (not OS delivery), so the child inherits no blocked mask.
+        acquiring = True
+        try:
+            process = subprocess.Popen([str(options.driver), '--host', '127.0.0.1', '--port', str(port),
+                                        '--profile-root', str(profiles), '--log', 'error'],
+                                       stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
+        finally:
+            acquiring = False
+            if pending['cancelled']:
+                raise Cancelled()
+            if pending['deadline']:
+                raise Problem('deadline')
         client = Client(port, origin(options.url))
         while True:
             if process.poll() is not None:

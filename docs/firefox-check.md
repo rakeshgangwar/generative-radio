@@ -35,7 +35,9 @@ stalled/dripping responses; response bodies are capped at 1 MiB and asset bodies
 at 256 KiB. The JSON report is capped at 32 KiB. SIGINT/SIGTERM preserve a cancelled
 receipt, terminate/reap the owned driver process group and remove its private
 profile root. Existing profiles and station processes are never controlled. Shutdown waits and
-profile deletion follow the deadline, so elapsed time includes cleanup.
+profile deletion follow the deadline, so elapsed time includes cleanup. Signals
+received during driver acquisition are honored as soon as its process handle is
+registered, ensuring cancellation cannot lose ownership of an already started child.
 Hard process/host termination cannot provide a graceful receipt; a `running`
 result by itself proves no liveness.
 
