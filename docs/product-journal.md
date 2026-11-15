@@ -320,3 +320,34 @@ After the review fixes, all 121 Python/media tests and 30 listener tests pass. T
 standalone command's malformed-argument errors are JSON-safe, and normal help
 still works. Current-head CI and merge are the remaining delivery steps; these
 checks are not a claim of public deployment or a completed two-hour recording.
+
+
+### 15 November: two hours of musical memory, measured end to end
+
+The fresh long run completed: exactly two hours of decoded stereo audio, with no
+−50 dB silence lasting two seconds and comfortable peak headroom (−6.82 dBFS).
+All 226 audio-watchdog observations were healthy. No music-container restarts,
+recovery restarts or OOM events occurred; the sleep-timer gateway deployment is
+recorded separately. The planned ready queue stayed at 10–11 tracks. Broadcaster
+quarter memory means stayed around 250 MiB; post-run SQLite and retention checks
+passed with about 907 MB of data and no temporary render files.
+
+The [readiness receipt](product-readiness.md#completed-two-hour-musical-memory-acceptance--15-november-2026)
+records exact measurements and limitations. The earlier interrupted 90-minute
+recording is still partial evidence, not silently relabelled as a success. The
+current handoff now describes the running product rather than the first laptop's
+unbuilt prototype.
+
+PR #15 also shipped after all four current-head checks passed. We can now verify
+that authenticated HTTPS delivers audible decoded music, rather than trusting a
+successful HTTP response. This remains an operator command until an independent
+monitoring host is chosen.
+
+The next product decision is musical: hear whether the longer chapters actually
+feel less repetitive, and compare the matched TimGM/FluidR3 previews. More notes
+or a larger SoundFont alone do not establish a better station. TimGM stays on air
+while that preference is open. Potential next experiments are broader harmonic
+movement and more deliberate arrivals/rests within a chapter, measured against
+the existing same-seed recordings. These are ideas, not shipped behavior or an
+assumption that listening acceptance has passed. Public deployment and off-host
+recovery also need their real destinations before they can be exercised.
