@@ -229,3 +229,15 @@ chosen destination. Public/physical-device listening remains unverified.
 
 Original architecture conversation reference:
 https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
+
+
+## Station observer iteration (in progress)
+
+PR #24 is merged at `7db3067`; the matched connecting-note candidate is available
+at http://localhost:18091 but has not been adopted on air. The next branch
+`feat/station-observer` adds a host-only bounded read-only vitals recorder; see
+`docs/station-observer.md` and the 2026-11-15 spec/plan. Actual local 60-second recording passed six healthy samples with three retained
+slots and unchanged service identities/state; a final-source 10-second recording
+also passed. Independent review and final-head/current-base CI remain before merge. Main station
+services are not redeployed for this tool. Local ignored evidence is under
+`artifacts/station-observer-20261115/`; failed first template runs are retained.

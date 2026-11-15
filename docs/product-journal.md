@@ -664,6 +664,35 @@ unchanged synthesis and SoundFont provenance keep the measured audio valid. Inde
 an anchor from the previous phrase even after clearing its rest. All three notes
 now must share a phrase. Synthetic and real-score regressions failed before the
 fix and pass afterward; the final full suite has 161 tests. No minors were deferred.
-Actual final-head CI remains ahead. The question to listening is simple: does the line feel
+PR #24 subsequently passed all four final-head CI jobs, including the actual rendered audition/browser step, and merged as `7db3067`. The question to listening is simple: does the line feel
 more intentional, or do the small connections disturb its restfulness? Current
 version 2 remains on air while that preference is open.
+
+
+### 15 November: make overnight vitals repeatable — local acceptance complete
+
+The station can play for hours, but our detailed memory and health records have
+relied on temporary scripts. The next operational iteration is a finite host-side
+recorder: private rotating JSON samples, cumulative failure counts and explicit
+unknown states when evidence is missing. It reads only the selected Compose
+project and reports observer-host RAM/load/disk separately, because Docker may
+point at another host. It never controls services or opens the station database.
+
+The first live check caught a missing JSON delimiter in a selected-field Docker
+template, despite fixture tests passing. The recorder correctly saved unknown
+rather than healthy. An opt-in real Docker regression now covers that boundary;
+the failed run is preserved. The corrected minute recording completed six healthy
+samples, retained exactly three rotating sample files and left all five service
+identities, start times, restart counts and OOM states unchanged. A second final-source
+10-second recording completed four healthy samples and retained two slots. All 16
+observer tests pass against the real local Docker project. The host suite passes
+177 tests with six media/opt-in skips; full media and final delivery checks remain
+separate gates. Cancellation testing also caught and fixed the case where a child
+closed stdout before exiting: it now responds promptly instead of waiting five
+seconds. Final independent review and CI delivery remain ahead. The
+[evidence](evidence/station-observer-20261115.json) ties the observations to source hashes. This does not install an alert
+service or replace the remaining public-host and off-host recovery work.
+
+The connecting-note audition stays at localhost:18091 while the current version 2
+continues on air. Musical preference and physical-device listening remain open;
+there is no automatic adoption based on an unanswered comparison.

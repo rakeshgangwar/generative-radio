@@ -97,6 +97,23 @@ jobs:
         run: |
           docker compose -p "$RADIO_CI_PROJECT" exec -T broadcaster python -c \
             'from dataclasses import replace; from threading import Event; from radio.watchdog import Options, probe_stream; result=probe_stream(replace(Options.load(),probe_seconds=1,timeout=8),Event()); assert result.kind=="healthy", result; print(result)'
+      - name: Record and validate real host-side station vitals
+        run: |
+          RADIO_OBSERVER_LIVE_PROJECT="$RADIO_CI_PROJECT" \
+            python3 -m unittest discover -s tests -p test_observer.py -k selected_docker_templates -v
+          mkdir -p artifacts
+          python3 -m radio.observer --project "$RADIO_CI_PROJECT" --expect-web \
+            --duration 10 --interval 3 --max-samples 2 --output artifacts/station-vitals
+          python3 - <<'PYVITALS'
+          import json
+          from pathlib import Path
+          root = Path('artifacts/station-vitals')
+          summary = json.loads((root/'summary.json').read_text())
+          assert summary['state'] == 'complete' and summary['samples'] >= 2, summary
+          assert summary['healthy'] == summary['samples'] and summary['retained'] == 2, summary
+          assert len(list(root.glob('sample-*.json'))) == 2
+          print(summary)
+          PYVITALS
       - name: Validate the listener page, restricted routes and proxied audio
         run: |
           python3 - <<'PY'

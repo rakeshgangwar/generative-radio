@@ -1,0 +1,62 @@
+{
+  "kind": "read-only local observer acceptance",
+  "date": "2026-11-15",
+  "base_commit": "7db306715b5a38bbc541f08801c0cb8d1eb5f8be",
+  "minute": {
+    "identities_and_state_unchanged": true,
+    "summary": {
+      "elapsed_seconds": 60.000173704996996,
+      "finished_at": 1794732764.6729248,
+      "healthy": 6,
+      "interval_seconds": 10.0,
+      "max_samples": 3,
+      "not_healthy": 0,
+      "project": "generative-radio",
+      "requested_seconds": 60.0,
+      "retained": 3,
+      "samples": 6,
+      "started_at": 1794732704.6727529,
+      "state": "complete",
+      "unknown": 0
+    },
+    "files": [
+      "sample-0000.json",
+      "sample-0001.json",
+      "sample-0002.json",
+      "summary.json"
+    ]
+  },
+  "final_source": {
+    "summary": {
+      "elapsed_seconds": 11.078865581999708,
+      "finished_at": 1794732836.858642,
+      "healthy": 4,
+      "interval_seconds": 3.0,
+      "max_samples": 2,
+      "not_healthy": 0,
+      "project": "generative-radio",
+      "requested_seconds": 10.0,
+      "retained": 2,
+      "samples": 4,
+      "started_at": 1794732825.7797775,
+      "state": "complete",
+      "unknown": 0
+    },
+    "source_sha256": {
+      "radio/station_vitals.py": "33ed92f3692e94b7efcfc4cd63e9d9e5ccc8da1cb9a9fb2c5533b9c3fc358a4f",
+      "radio/observer.py": "71299f5249882c5ea3b175f647ce79df7c2d57f7d13568062cae59fafcda3370",
+      "tests/test_observer.py": "8794bcedd7b940609b9c77b1f03647ee5183d8167aa85c168df47be6b7fe71fe"
+    }
+  },
+  "limitations": [
+    "Sequential samples, not an atomic snapshot",
+    "Observer-host memory may differ from Docker context host",
+    "Station-provided decoded-audio report, not an independent probe",
+    "No alert installation, public-host capacity, physical-device or human music acceptance"
+  ],
+  "local_evidence": "/home/rakeshgangwar/Projects/generative-radio/artifacts/station-observer-20261115",
+  "failed_initial_runs_retained": [
+    "snapshot",
+    "minute"
+  ]
+}
