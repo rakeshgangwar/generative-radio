@@ -1,5 +1,6 @@
 import { createPlayer } from './player.js';
 import { createSleepTimer } from './sleep-timer.js';
+import { createBroadcastContext } from './broadcast-context.js';
 
 const audio = document.querySelector('#stream');
 const button = document.querySelector('#toggle');
@@ -11,7 +12,17 @@ const volume = document.querySelector('#volume');
 const volumeValue = document.querySelector('#volume-value');
 const activeStates = new Set(['connecting', 'playing', 'buffering', 'retrying']);
 let active = false, gain = 1, requestedVolume = Number(volume.value) / 100;
-let volumeSupported = true, player;
+let volumeSupported = true, player, playing = false;
+const broadcastPanel = document.querySelector('#broadcast-context');
+const broadcastTitle = document.querySelector('#broadcast-context-title');
+const broadcast = createBroadcastContext({onChange(title) {
+  if (!broadcastPanel || !broadcastTitle) return;
+  broadcastTitle.textContent = title || '';
+  broadcastPanel.hidden = title === null;
+}});
+function syncBroadcast() {
+  broadcast.setEnabled(playing && !document.hidden && Boolean(broadcastPanel && broadcastTitle));
+}
 const timerSelect = document.querySelector('#sleep-timer');
 const timerRemaining = document.querySelector('#timer-remaining');
 const timerStatus = document.querySelector('#timer-status');
@@ -41,11 +52,13 @@ const timer = createSleepTimer({
   }
 });
 timerSelect.addEventListener('change', () => timer.setMinutes(Number(timerSelect.value)));
-document.addEventListener('visibilitychange', () => timer.refresh());
+document.addEventListener('visibilitychange', () => { timer.refresh(); syncBroadcast(); });
 
 player = createPlayer(audio, {
   onChange(value) {
     active = activeStates.has(value.state);
+    playing = value.state === 'playing';
+    syncBroadcast();
     timer.setActive(active);
     panel.dataset.state = value.state;
     document.body.dataset.playing = String(value.state === 'playing');
@@ -78,4 +91,4 @@ if ('mediaSession' in navigator) {
     try { navigator.mediaSession.setActionHandler(action, handler); } catch { /* Optional platform capability. */ }
   }
 }
-window.addEventListener('pagehide', () => { player.pause(); timer.setMinutes(0); });
+window.addEventListener('pagehide', () => { player.pause(); timer.setMinutes(0); broadcast.setEnabled(false); });

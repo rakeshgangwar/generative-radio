@@ -494,9 +494,18 @@ marked served while the first label is still on air, then observes the second
 label and the fallback interlude. JSON escaping, title length and exclusion of
 other mounts are exercised against the installed server.
 
-Testing also caught that an annotated single URI is fallible in Liquidsoap2.1.
+Testing also caught that an annotated single URI is fallible in Liquidsoap 2.1.
 The cached fallback therefore keeps its original file source and receives its
 fixed label through native metadata mapping. Its infallibility now has a direct
 regression check. All 145 real-media Python tests pass; the listener display,
 full browser/TLS rehearsal and independent final review are still ahead. The
 current main station has not been changed for this development work.
+
+
+The optional browser controller is now wired in the candidate. It reads a bounded
+response only during visible playback, cancels on pause/hidden/error, limits starts
+to one per ten seconds and has a three-second overall deadline. Late responses
+cannot restore stale details after pause. Existing audio controls, sleep timer
+and MediaSession remain independent. All 44 listener tests pass, including 14 new
+context lifecycle cases. Actual browser/layout/TLS verification is next; this
+candidate has not replaced the main listener or source services.

@@ -43,9 +43,9 @@
 
 **Interfaces:** createBroadcastContext({fetcher,now,schedule,cancel,onChange})->{setEnabled,dispose}; onChange receives string|null, URL fixed /broadcast.json.
 
-- [ ] Write failing deterministic tests using fake clock/Response streams for no idle requests, playing/visible enable, cooldown across pause/resume,3s timeout,4KiB limit, schema/Unicode bounds, unavailable/error hide,15s stale resume, abort cleanup and late-response generation guard.
-- [ ] Run RED tests; implement controller with one owned request/timer, bounded reader and exact prefix stripping. No audio/MediaSession actions. Disable on pagehide with resumable BFCache behavior.
-- [ ] Integrate hidden paragraph/title/note with textContent; preserve accessible focus and current palette/body type, no extra announcements/cards/animation. Run all listener tests and commit.
+- [x] Write failing deterministic tests using fake clock/Response streams for no idle requests, playing/visible enable, cooldown across pause/resume,3s timeout,4KiB limit, schema/Unicode bounds, unavailable/error hide,15s stale resume, abort cleanup and late-response generation guard.
+- [x] Run RED tests; implement controller with one owned request/timer, bounded reader and exact prefix stripping. No audio/MediaSession actions. Disable on pagehide with resumable BFCache behavior.
+- [x] Integrate hidden paragraph/title/note with textContent; preserve accessible focus and current palette/body type, no extra announcements/cards/animation. Run all listener tests and commit.
 
 ### Task 3: Full-stack experience and measured journal
 
