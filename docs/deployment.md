@@ -32,7 +32,7 @@ validates the actual Compose configuration, including shell environment override
 without starting services or printing secrets.
 
 `up` builds, starts the five services, waits for container health, then checks the
-public HTTPS page and MP3 stream with normal CA/hostname validation. Successful
+public HTTPS page and decoded audible MP3 with normal CA/hostname validation. Successful
 container health alone does not establish public reachability. Failed verification
 leaves services and volumes available for diagnosis. Check DNS, firewall, ACME
 rate limits and Caddy logs before retrying. Never bypass TLS verification.
@@ -135,3 +135,5 @@ certificate persistence, then removes only its disposable project/volumes.
 It changes no host trust store and performs no public deployment. Public DNS,
 ACME issuance, target reboot and off-host restore must be exercised on the actual
 target before claiming production acceptance.
+
+For independent, read-only checks of the public listening path, use the [public monitoring command and timer examples](public-monitoring.md).

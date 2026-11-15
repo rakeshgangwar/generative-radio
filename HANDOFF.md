@@ -18,6 +18,16 @@ and asked to publish this work to a private GitHub repository.
 Architecture source conversation:
 https://chatgpt.com/share/6af89399-506c-83ee-a3cd-66072b4e141b
 
+## Current public-listener verification iteration
+
+PR14 merged e406426; main is clean. Sound bench and actual matched previews are
+available, but default TimGM and live core services are unchanged. Independent
+public audio health is now being implemented in an isolated worktree. Real TLS
+regressions caught junk/silence false positives and curl-version byte-limit gaps.
+The new standalone probe is reused by production startup; no schedule, restart,
+notification or public deployment is installed. See docs/public-monitoring.md.
+Final review/CI/merge remain pending for this iteration.
+
 ## Current sound comparison and live acceptance
 
 PR13 merged2932dc1 after all four CI checks and deployed only web01:04:38UTC.

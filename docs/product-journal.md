@@ -272,7 +272,51 @@ checks; independent review and exact-head CI come next. The [audition runbook](s
 explains reproduction, outputs, provenance and measured limits.
 
 Independent review found no blocking findings in the listening bench. All106
-Python/media tests and30 listener tests pass. The exported page played the actual
+Python/media tests and 30 listener tests pass. The exported page played the actual
 MP3s in isolated Chrome, loaded no remote assets, stayed within390px and paused
 the other variant when switching. The documented stopped-container export was
 also exercised. Current-head CI and the PR merge are the remaining delivery steps.
+
+
+### 15 November: verify what reaches the listener
+
+PR #14 merged the sound comparison bench after all four current-head checks.
+Matched 23-minute TimGM/FluidR3 previews are ready; listening preference remains
+open and the current TimGM sound stays on air.
+
+The next operational iteration closes a real verification gap. The public startup
+probe accepted arbitrary bytes labelled audio/mpeg, including an encoded silent
+MP3. Controlled private-TLS tests reproduced both false positives while valid
+audio and certificate rejection controls behaved correctly.
+
+The new read-only listener check fetches through authenticated HTTPS, bounds its
+prefix/header storage, decodes locally and applies the watchdog's audibility
+policy. Production startup reuses it. It can also run on a separate host and
+report JSON/exit status without credentials, Docker access, restarting anything
+or sending notifications. No monitoring host or destination is invented.
+
+Testing exposed another boundary: old curl versions do not enforce max-filesize
+on unknown-length streams. The actual station-image curl wrote 647,168 bytes during
+a 262,144-byte-budget regression. A bounded application reader now enforces the
+prefix limit and stops its owned downloader regardless of curl version. It also
+handles the intentional end of a live sample instead of racing curl's time limit.
+
+Header, body, local decode and cleanup remain bounded. Embedded playlists cannot
+cause remote decoder fetches. The new full two-hour recording remains untouched;
+public target/independent-host deployment still needs real destinations. Final
+whole-branch review and current-head CI precede delivery of this iteration.
+
+
+The full hardened local rehearsal passed the new audible check: three decoded
+seconds at about −22.6 dBFS, with TLS trust, restricted routes and certificate
+persistence still verified. Review caught a CLI argument-error path that bypassed
+JSON and echoed input; it now returns bounded configuration JSON. A repeated
+cancellation test exposed a process-startup race, addressed with cooperative
+signal cancellation. Eight targeted cancellation runs passed after that fix.
+The same live recorder has now passed its earlier 90-minute interruption point;
+its full two-hour result is still pending.
+
+After the review fixes, all 121 Python/media tests and 30 listener tests pass. The
+standalone command's malformed-argument errors are JSON-safe, and normal help
+still works. Current-head CI and merge are the remaining delivery steps; these
+checks are not a claim of public deployment or a completed two-hour recording.

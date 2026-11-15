@@ -1,0 +1,19 @@
+[Unit]
+Description=Verify the public Generative Radio listening path
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+Type=oneshot
+User=radio-monitor
+WorkingDirectory=/opt/generative-radio
+Environment=PYTHONDONTWRITEBYTECODE=1
+ExecStart=/usr/bin/python3 -m radio.listener_health --url https://radio.example.com --timeout 20
+TimeoutStartSec=25s
+TimeoutStopSec=2s
+KillMode=control-group
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+UMask=0077
