@@ -143,6 +143,7 @@ jobs:
           docker compose -p "$RADIO_CI_PROJECT" exec -T broadcaster python -c \
             'from pathlib import Path; from radio.render import analyze; result=analyze(Path("/tmp/ci-web.wav")); assert abs(result["duration"]-5)<.1, result; print(result)'
       - name: Check stock Firefox playback
+        id: firefox_playback
         run: |
           mkdir -p artifacts
           python3 - <<'PYFIREFOX'
@@ -167,6 +168,39 @@ jobs:
               assert completed.returncode != 0, 'A successful check must publish its result'
           raise SystemExit(completed.returncode)
           PYFIREFOX
+      - name: Diagnose Firefox startup after a failed check
+        if: failure() && steps.firefox_playback.outcome == 'failure'
+        run: |
+          python3 - <<'PYFIREFOXSTART'
+          import shutil, subprocess, tempfile
+          from pathlib import Path
+          from radio.watchdog import terminate_process
+          driver, firefox = shutil.which('geckodriver'), shutil.which('firefox')
+          for name, binary in [('driver', driver), ('firefox', firefox)]:
+              if not binary:
+                  print({'binary': name, 'available': False}, flush=True)
+                  continue
+              try:
+                  version = subprocess.run([binary, '--version'], capture_output=True, text=True, timeout=10)
+                  print({'binary': name, 'path': str(Path(binary).resolve()), 'version': version.stdout.splitlines()[:1], 'exit': version.returncode}, flush=True)
+              except subprocess.TimeoutExpired:
+                  print({'binary': name, 'version_query': 'timeout'}, flush=True)
+          if firefox:
+              with tempfile.TemporaryDirectory(prefix='firefox-startup-', dir='artifacts') as directory:
+                  root = Path(directory).resolve()
+                  profile = root/'profile'
+                  profile.mkdir(mode=0o700)
+                  process = subprocess.Popen([firefox, '--headless', '--no-remote', '--profile', str(profile), '--screenshot', str(root/'blank.png'), 'about:blank'], stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
+                  try:
+                      try:
+                          stdout, stderr = process.communicate(timeout=25)
+                      except subprocess.TimeoutExpired:
+                          terminate_process(process, .3)
+                          stdout, stderr = process.communicate(timeout=2)
+                      print({'blank_page_exit': process.returncode, 'png_created': (root/'blank.png').is_file(), 'startup_stderr_tail': stderr.decode(errors='replace')[-4000:]}, flush=True)
+                  finally:
+                      terminate_process(process, .3)
+          PYFIREFOXSTART
       - name: Browser-test the listener against the actual live stream
         run: |
           npm --prefix web ci --ignore-scripts
