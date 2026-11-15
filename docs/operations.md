@@ -138,3 +138,21 @@ docker compose -f compose.yaml -f /tmp/radio-restored.compose.yaml \
 Expect listeners to reconnect. Check every service's health, `python -m radio status`, the broadcaster health report, logs and a fresh decoded recording. Keep using the override in subsequent commands; otherwise Compose targets the original volume again. Store the chosen override alongside deployment configuration when making it permanent. Never run `down -v` as a recovery step: it can remove the data you need for rollback.
 
 For rollback, stop services using the restore override, then start with the original Compose configuration and the preserved old volume/image. Image upgrades and public VPS/HTTPS deployment will have a separate runbook; no target host has yet been selected.
+
+## Current local recovery checkpoint — 16 November 2026
+
+The [checkpoint receipt](evidence/current-recovery-checkpoint-20261116.json) records
+a fresh online backup of 43 version-2 jobs and 89 verified files, about 921 MB. An
+isolated fresh-volume restore preserved all saved seed/analysis fields and the
+allocation sequence, decoded an existing 120-second track, then allocated and
+rendered job 800. Its MIDI matched live job 800 exactly. All five live roles were
+preserved, with a healthy before/after sample and a 60-second direct recording
+across backup creation.
+
+The verified data remains in `radio-current-backup-20261115t190811z`; the isolated
+copy is `radio-current-restore-20261115t190811z`. Neither is selected as a replacement
+for the live data volume. The local evidence directory contains `snapshot.tar.gz`
+and its SHA-256 sidecar; every archived file and size was checked against the
+verified manifest. This is local preparation for a future transfer, not off-host
+disaster recovery. Secrets/configuration and the SoundFont remain separate, and
+a fresh snapshot is needed near an actual cutover.

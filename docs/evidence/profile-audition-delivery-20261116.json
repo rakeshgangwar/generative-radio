@@ -1,0 +1,74 @@
+{
+  "pr": 35,
+  "url": "https://github.com/rakeshgangwar/generative-radio/pull/35",
+  "base_commit": "ab85ec8707f789aa31fb05064828c1270259bee9",
+  "head_commit": "0f8c44e438564b9c5a76733c103118c0a8149fa4",
+  "merge_commit": "e384215d4cb3fbed98405d9eaf748f11ba897278",
+  "merged_at": "2026-11-15T19:10:44Z",
+  "ci_run": {
+    "id": 43748701299,
+    "head_sha": "0f8c44e438564b9c5a76733c103118c0a8149fa4",
+    "status": "completed",
+    "conclusion": "success",
+    "run_number": 106,
+    "workflow_id": 418602628,
+    "updated_at": "2026-11-15T19:00:07Z",
+    "html_url": "https://github.com/rakeshgangwar/generative-radio/actions/runs/43748701299"
+  },
+  "ci_jobs": [
+    {
+      "name": "Audio and streaming integration",
+      "conclusion": "success"
+    },
+    {
+      "name": "Listener controls",
+      "conclusion": "success"
+    },
+    {
+      "name": "Python 3.11",
+      "conclusion": "success"
+    },
+    {
+      "name": "Python 3.14",
+      "conclusion": "success"
+    }
+  ],
+  "stock_firefox_step": {
+    "name": "Check stock Firefox playback",
+    "status": "completed",
+    "conclusion": "success",
+    "number": 13,
+    "started_at": "2026-11-15T18:52:39Z",
+    "completed_at": "2026-11-15T18:52:58Z"
+  },
+  "status": "Source merged and dedicated local lab image built; no live station rollout",
+  "package": {
+    "image": "generative-radio:profile-lab",
+    "image_id": "sha256:40359e7e007f9ca251878bf6a64013a3ad6e8a6b630e498ce2dbba402a32f17f",
+    "git_commit": "e384215d4cb3fbed98405d9eaf748f11ba897278",
+    "source_sha256": {
+      "profile_audition.py": "d16e4208fd60480e7cfe2bd319f7c6df5455f939ffba51f99407398846e175b8",
+      "compose.py": "843b3c8dbdaa19db7c5e44e83841927aeb5d7fad41c86845d3229b7b4e5b885e",
+      "arrangement.py": "fb1cd67ac84761d1062f1cebbc865e57493785bed07926776448ba83502b3423",
+      "render.py": "b9843b7ac2f2c786cf82d76a7a338e5db639a6f7ef8186ec1ba9bd5f3f21af09",
+      "config.py": "e974f04a38b464969900b628a9fe39127cdc8c87bf401b6871d9f84ef785ca14",
+      "audition.py": "a26ed7038bda49be477fe0f924b8235b16e84646c2da62a31961a027a0827c4c"
+    },
+    "main_aliases_preserved": {
+      "generative-radio:local": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+      "generative-radio-web:local": "sha256:fb8404f39fb902ebfd56528c75d7c5dc70c51cd7bacd933868506ab5d4a07ccc"
+    },
+    "cli_help_exit_code": 0,
+    "scope": "Packaged local offline command; no station container recreated"
+  },
+  "local_validation_receipt": "profile-audition-20261116.json",
+  "preview_url": "http://localhost:18096",
+  "deferred_minor": "Direct SIGTERM can leave an abandoned partial report marked running; Ctrl-C is recorded as cancelled. Require exit zero and report status complete.",
+  "raw_proof_sha256": {
+    "artifacts/profile-cli-acceptance-20261115T182250Z/pr-delivery/ci-receipt.json": "52f1a32b4c1c502a39c5e9a34fe620b2af918c4e8a6f470d2ae8a4a743bd4413",
+    "artifacts/profile-cli-acceptance-20261115T182250Z/pr-delivery/merge-receipt.json": "8ac7ae0c629e070287aac8c78c5dad8cc59d89a60fe9d43e291b52bf9cc47fc6",
+    "artifacts/profile-cli-acceptance-20261115T182250Z/package-proof.json": "53789b202ff32490e5af9409cf50dfcdfa2e7ceb3c4c0a10c3eb7842baf88c66",
+    "artifacts/profile-cli-acceptance-20261115T182250Z/package-help.txt": "12343e847e7f86581ae28841423641401f25fff40edd7d5f41e4cfcf25a9be91"
+  },
+  "remaining": "Listening preference, physical/Safari/assistive/public/offhost and separate six-hour observation remain open"
+}
