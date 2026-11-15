@@ -22,6 +22,13 @@ click; persistent failure still shows Try again. Pause or sleep-timer expiry can
 recovery. Browser permission refusal requires a new gesture. The optional chapter
 sentence describes the broadcast; buffered audio may be behind it.
 
+Native browser audio controls remain available if JavaScript is disabled or a page
+module fails to load. Once page setup succeeds, the enhanced controls replace an
+unused native player. If you already started native playback, that player stays
+for this visit, including after pause; reload to try the enhanced player again.
+Native mode uses your browser's controls without the custom sleep timer, chapter
+sentence or automatic reconnection.
+
 To start a new station with the page:
 
 ```sh

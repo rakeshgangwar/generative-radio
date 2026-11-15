@@ -16,7 +16,9 @@ test('small body/status/control copy meets WCAG AA text contrast',()=>{
 const html=readFileSync(new URL('../public/index.html',import.meta.url),'utf8');
 test('custom controls start hidden until JavaScript works; native fallback stays available',()=>{
   assert.match(html, /id="enhanced-controls" hidden/);
-  assert.match(html, /<noscript>[\s\S]*<audio controls/);
+  assert.match(html, /id="native-fallback"/);
+  assert.match(html, /<audio[^>]*id="native-stream"[^>]*controls[^>]*preload="none"[^>]*src="\/radio\.mp3"/);
+  assert.doesNotMatch(html, /<noscript>[\s\S]*<audio/);
 });
 test('working volume control is not described by hidden device-volume fallback',()=>{
   assert.doesNotMatch(html, /<input[^>]*aria-describedby="volume-note"/);

@@ -1,5 +1,6 @@
 // Opt-in local browser QA. Uses a temporary isolated profile, never a user profile.
 import {chromium} from 'playwright-core';
+import {checkNativeFallback} from './native-fallback-browser.mjs';
 import {checkBroadcast} from './broadcast-browser.mjs';
 import {checkLongRecovery} from './recovery-browser.mjs';
 import assert from 'node:assert/strict';
@@ -10,6 +11,7 @@ await mkdir(artifacts,{recursive:true});
 const browser=await chromium.launch({executablePath:process.env.CHROME_BIN||'/opt/google/chrome/chrome',headless:true});
 const results=[];
 try {
+  await checkNativeFallback(browser,base,artifacts,results);
   await checkLongRecovery(browser,base,artifacts,results);
   await checkBroadcast(browser,base,artifacts,results);
   const sleeping=await browser.newContext();

@@ -327,3 +327,41 @@ have now reached the runner successfully. This is not proof of the earlier media
 stall's root cause; physical sound remains unverified. Broader integration was
 still running when recorded. This evidence/documentation update still needs all
 four final-head/current-base checks before PR #27 can merge.
+
+
+## Native-first listener fallback — candidate in progress
+
+PR #27 merged as 5ab28f9 after all four jobs in CI 43713365978 passed on
+27f70c6 against 2195b7a, including actual Firefox, Chromium, audition and TLS.
+Main is fast-forwarded. No station role was replaced for that host-side tool.
+
+Next branch feat/native-listener-fallback in the managed worktree adds ordinary
+HTML native controls, keeping enhanced controls hidden until initialization ends.
+A native session already unpaused or with played ranges is preserved for the visit;
+no timer/chapter/app-retry enhancement is attached to that ongoing session.
+This fixes JS-enabled module failures that bypassed the previous noscript fallback.
+
+Candidate on loopback18092, container radio-native-fallback-preview, uses read-only
+candidate assets and the existing stream proxy. No live station role changed.
+Eight actual Chromium fallback scenarios pass; Node46 pass. Actual Firefox157.0.1
+passed all five enhanced flows and native keyboard playback with JS disabled;
+owned driver reaped and private profile removed. Full browser regression, final
+fresh review, PR/CI clearance and a measured web-only rollout are still pending.
+Raw proofs: artifacts/native-fallback-20261115. Design/plan record exact gates.
+
+The candidate's full Chromium run now passed all19 scenarios (eight newfallback
+flows), along with46Node tests and bothFirefox checks. The source-linked receipt
+is docs/evidence/native-listener-fallback-20261115.json. Fresh observer baseline
+reports all5healthy, no errors; review/CI/rollout gates still open.
+
+The sole fresh review found0Critical/1Important/2Minor. The Important mixed-version
+startup bug is fixed: an exact copy of previously deployed HTML (5ab28f9) with new
+scripts first reproduced hidden/unusable controls, then passed real start and
+pause/source release after guarding absent native markup. Corrected source passes
+46Node tests, all20 Chromium scenarios (nine focused fallback/compatibility flows),
+and refreshed enhanced/native Firefox checks with cleanup. Two Minor improvements
+are deferred: move focus when an idle native control becomes hidden (Tab currently
+recovers), and explain native limitations/reload more clearly on the page (README
+already does). Their costs are a recoverable keyboard interruption and reduced
+discoverability. No rereview. PR #28 still needs final-head/current-base CI and a
+measured web-only rollout; no live role changed.
