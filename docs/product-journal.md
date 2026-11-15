@@ -418,3 +418,33 @@ attempts and the current test identity. The current backup CLI also reproduces
 the stopped-WAL/read-only-source failure on tiny isolated data. Next I will add a
 safe explicit offline path, preserving WAL recovery rather than bypassing it with
 immutable reads. The live station will keep running during that work.
+
+
+### 15 November: recover a stopped station without losing its last commits
+
+The backup fix is now implemented in this source iteration. Online create remains
+the default. For an already stopped station, `create --offline` recovers a private
+copy of the database plus any WAL or rollback journal, then uses the same verified
+bundle format. It does not make the source writable or bypass WAL recovery.
+The operator must stop every database writer, including broadcaster; the command
+does not freeze a running station or establish offline status from file stats.
+
+Real non-root read-only mounts now pass both closed-WAL and crash-like WAL cases.
+The crash fixture's last committed row and changed seed survive, while the original
+source files/hashes stay identical and no source SHM is created. Default online
+create still returns failure on these read-only stopped sources, with actionable
+offline-mode guidance; no silent fallback manufactures a successful snapshot.
+
+An isolated actual-audio round trip created/verified/restored three jobs and seven
+files. Restored track 2 passes the 20-second audio gates; pending job 3 renders
+again, and the queue allocates ID 4. Source hashes remain unchanged, and source
+and restored station volumes were never mounted together during rendering. This
+is local recovery evidence, not an off-host exercise. The
+[measured receipt](evidence/offline-backup-20261115.json) includes the file hashes.
+
+Nine new regressions include WAL-only commits, hot rollback-journal recovery,
+source sidecar safety and copy-time changes. A real-mount check exposed SQLite's
+deferred first-read failure; that diagnostic path was reproduced and fixed too.
+All 136 real-media Python and 30 listener tests pass. Independent whole-branch
+review and final-head CI precede merge. This backup-only CLI change does not
+require replacing music workers or interrupting the active live capture.

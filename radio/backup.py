@@ -172,6 +172,8 @@ def _snapshot(data, staging, *, offline=False):
         else:
             try:
                 db = stack.enter_context(closing(_read_db(source)))
+                # WAL sidecar failures may be deferred until the first real read.
+                db.execute('SELECT name FROM sqlite_master LIMIT 1').fetchall()
             except sqlite3.OperationalError as exc:
                 raise ValueError('Cannot open source read-only; if every writer is stopped, '
                                  'use create --offline for private WAL recovery') from exc

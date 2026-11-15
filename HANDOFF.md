@@ -119,9 +119,12 @@ and one replacement-composer starting sample. Decoded source health stayed good.
 The error was reproduced on isolated data: a closed WAL database without sidecars
 cannot initialize them on a fully read-only mount. The successful rollout used
 SQL mode=ro through the existing data mount, where SQLite may initialize sidecars.
-The shipped backup CLI reproduces this same stopped-source edge case on a read-only
-mount; an explicit safe offline-backup path is the next operational fix. Do not
-silently use immutable=1 to bypass WAL recovery.
+The backup source now provides `create --offline` for an already stopped station.
+It recovers a private DB/WAL/journal copy; original source filenames/bytes remain
+unchanged. All writers, including broadcaster, must be stopped by the operator;
+the flag does not stop them. Non-root read-only mount/restore and actual rendered-
+audio round trips pass. Use an image built from this source for the new CLI;
+no worker rollout is needed. Never silently use immutable=1 to bypass WAL recovery.
 
 The 30-minute live capture started 03:21:05 UTC /08:51 IST and remains in progress:
 
@@ -162,7 +165,7 @@ liveness or completion. Prefer files/processes/CI/PR state as authoritative.
 ## Remaining work
 
 Complete the current capture and actual version-2 transition evidence; fix the
-stopped-source backup edge case. Obtain real listening feedback on repetition,
+offline-backup delivery/CI gates. Obtain real listening feedback on repetition,
 coherence and sound character.
 Then deploy to the provided host/domain, verify public DNS/ACME/reboot/capacity,
 perform actual off-host recovery and install independent monitoring/alerting at a

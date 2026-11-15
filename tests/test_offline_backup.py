@@ -1,6 +1,7 @@
 import hashlib
 import inspect
 import json
+import os
 import shutil
 import sqlite3
 import subprocess
@@ -143,6 +144,22 @@ os._exit(0)
         for value in [None,0,1,'false']:
             with self.subTest(value=value),self.assertRaises(ValueError):
                 create_backup(self.data,self.backup,offline=value)
+        self.assertFalse(self.backup.exists())
+
+    @unittest.skipIf(os.name != 'posix' or getattr(os, 'geteuid', lambda: 0)() == 0,
+                     'requires actual non-root directory permissions')
+    def test_deferred_readonly_wal_error_has_actionable_guidance(self):
+        self.data.chmod(0o555)
+        observed = None
+        try:
+            try:
+                create_backup(self.data, self.backup)
+            except Exception as exc:
+                observed = exc
+        finally:
+            self.data.chmod(0o755)
+        self.assertIsInstance(observed, ValueError)
+        self.assertIn('--offline', str(observed))
         self.assertFalse(self.backup.exists())
 
     def test_cli_offline_is_create_only_and_help_requires_stopped_writers(self):

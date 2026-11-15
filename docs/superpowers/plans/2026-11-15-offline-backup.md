@@ -43,10 +43,10 @@
 
 **Interfaces:** Existing image-based create/verify/restore CLI, plus create --offline. No source/restore volume mounted together during restored rendering.
 
-- [ ] Exercise a non-root read-only closed-WAL fixture and a crash-like committed-WAL fixture; verify and restore complete bundles, checking source hashes before/after. Require failed/default create to stay a failure, not fallback immutable.
-- [ ] On isolated actual station audio, create/verify/restore an offline bundle and decode/analyze a restored render; check queue sequence continuity and no source writes. No live volume write/recreation.
-- [ ] Record measured results, exact modes and limits; document stopping all DB writers for offline mode and keeping default online backups for normal uninterrupted operation.
-- [ ] Confirm diff/source/evidence checks and commit the deliverable.
+- [x] Exercise a non-root read-only closed-WAL fixture and a crash-like committed-WAL fixture; verify and restore complete bundles, checking source hashes before/after. Require failed/default create to stay a failure, not fallback immutable.
+- [x] On isolated actual station audio, create/verify/restore an offline bundle and decode/analyze a restored render; check queue sequence continuity and no source writes. No live volume write/recreation.
+- [x] Record measured results, exact modes and limits; document stopping all DB writers for offline mode and keeping default online backups for normal uninterrupted operation.
+- [x] Confirm diff/source/evidence checks and commit the deliverable.
 
 ## Delivery gates
 
