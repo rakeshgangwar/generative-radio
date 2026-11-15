@@ -477,3 +477,75 @@ do the new rests feel natural, and which matched SoundFont is preferable? Curren
 TimGM remains on air. Public server/domain and off-host backup destinations have
 been requested; none is assumed. Local evidence supports continuing development,
 not a claim that the public product or its musical acceptance is finished.
+
+
+### 15 November: make the musical chapter visible — in progress
+
+The next listener feature gives the music a little context: a sentence such as
+“Chapter 78 is unfolding. Warm keys.” It follows the broadcaster's metadata,
+with an explicit reminder that buffered audio can play behind the broadcast.
+It is not a confirmed individual listening history or a queue-position guess.
+
+The backend candidate now labels requests using their saved arrangement, while
+preserving the plain dispatch interface. A small Icecast response selects only
+this mount's title; the web gateway exposes that response alone. There are no
+new services or private data mounts. An actual two-track test keeps both requests
+marked served while the first label is still on air, then observes the second
+label and the fallback interlude. JSON escaping, title length and exclusion of
+other mounts are exercised against the installed server.
+
+Testing also caught that an annotated single URI is fallible in Liquidsoap 2.1.
+The cached fallback therefore keeps its original file source and receives its
+fixed label through native metadata mapping. Its infallibility now has a direct
+regression check. All 145 real-media Python tests pass; the listener display,
+full browser/TLS rehearsal and independent final review are still ahead. The
+current main station has not been changed for this development work.
+
+
+The optional browser controller is now wired in the candidate. It reads a bounded
+response only during visible playback, cancels on pause/hidden/error, limits starts
+to one per ten seconds and has a three-second overall deadline. Late responses
+cannot restore stale details after pause. Existing audio controls, sleep timer
+and MediaSession remain independent. All 44 listener tests pass, including 14 new
+context lifecycle cases. Actual browser/layout/TLS verification is next; this
+candidate has not replaced the main listener or source services.
+
+### 15 November: chapter context reaches the browser — candidate verified locally
+
+The sentence now appears beneath the listening status, with a small reminder that
+buffered audio can be behind the broadcast. It uses the existing quiet palette
+and typography; it adds no screen-reader announcement or playback control. Actual
+Chromium screenshots at 320/390 pixels and desktop were inspected for readable
+wrapping and overflow. The browser exercised real MP3 playback while context was
+replaced with unsafe text or a server failure: text stayed literal, audio kept
+moving, and the sleep timer remained armed. Idle, pause and hidden states stop
+metadata work; active requests are cancelled when the page hides.
+
+The isolated production rehearsal passed with five non-root/read-only services.
+Verified HTTPS carried only the three public context fields; admin/status/raw XSL,
+database and private data paths returned 404. The existing decoded-audio probe,
+five-second capture, rejection of an untrusted CA and persisted certificate trust
+also passed. This is loopback infrastructure with a local CA, not a public launch.
+The main five containers retained their identities, images and start times.
+
+The next delivery steps are independent review, final-head CI and a scoped PR.
+This source change requires later measured maintenance of broadcaster, Icecast
+and gateway to reach the current listener; development has not replaced them.
+The [candidate evidence](evidence/broadcast-context-20261115.json) separates tests
+from live delivery. Neither labels nor dispatch counts establish sample alignment
+or confirmed listening history.
+
+The musical direction remains a station with a recognizable voice and room to
+breathe. We have chapter development and deliberate melodic rests; the next
+musical experiment should earn its place through matched listening, rather than
+adding another variation knob. TimGM remains on air while the matched SoundFont
+preference is unanswered. Public hosting and real off-host recovery still need
+actual destinations. These are open parts of the product, not implied successes.
+
+Independent review identified one coverage gap: the transition fixture used an
+annotated fallback URI while the deployed script maps metadata over its cached
+file. The fixture now consumes that production mapping. Corrupting its title
+fails the final interlude assertion after both chapter transitions; restoring the
+correct mapping passes all 145 media tests. All 44 listener tests still pass.
+No production-code defect or deferred minor was found. Final-head CI remains the
+merge gate.

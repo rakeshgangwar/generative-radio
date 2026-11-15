@@ -1,0 +1,124 @@
+{
+  "observed_utc": "2026-11-15T05:34:05.491168+00:00",
+  "base_commit": "5ee63fa587d5000652ebec5279e3a5c9c9ec9b03",
+  "delivery": "isolated candidate; main five services unchanged; independent review resolved; final-head CI pending",
+  "backend": {
+    "tests": 145,
+    "result": "pass",
+    "log": "review-full-green.log",
+    "duration_seconds": 78.988
+  },
+  "listener": {
+    "tests": 44,
+    "result": "pass"
+  },
+  "browser": [
+    {
+      "test": "real public context, idle/pause/hidden lifecycle, XSS-as-text, failed metadata independent of real audio and sleep timer, 320/390/desktop layouts",
+      "pass": true
+    },
+    {
+      "test": "real MP3 timer arming, fade/user volume, expiry/release and explicit resume",
+      "pass": true
+    },
+    {
+      "test": "one mid-fade setter failure recovers chosen volume for manual playback",
+      "pass": true
+    },
+    {
+      "test": "device-owned volume still expires and releases real audio",
+      "pass": true
+    },
+    {
+      "test": "timer expiry cancels real failed-request retry",
+      "pass": true
+    },
+    {
+      "test": "real stream, keyboard, volume, pause/release and live resume",
+      "pass": true
+    },
+    {
+      "test": "390px/320px layout, visible play and reduced motion",
+      "pass": true
+    },
+    {
+      "test": "real failed media request automatically reconnects",
+      "pass": true
+    },
+    {
+      "test": "native pause during pending connection cancels automatic retries",
+      "pass": true
+    },
+    {
+      "test": "native no-JavaScript audio fallback",
+      "pass": true
+    }
+  ],
+  "tls": {
+    "public_preflight": {
+      "domain": "radio.my-station.net",
+      "services": [
+        "broadcaster",
+        "composer",
+        "icecast",
+        "renderer",
+        "web"
+      ],
+      "public_ports": [
+        80,
+        443
+      ]
+    },
+    "local_tls": {
+      "healthy": true,
+      "url": "https://localhost:18443",
+      "page_verified": true,
+      "stream_verified": true,
+      "decoded_seconds": 3.0,
+      "rms_dbfs": -22.641369694131708,
+      "elapsed_seconds": 8.052
+    },
+    "services_hardened": 5,
+    "private_routes": "404",
+    "broadcast_context": {
+      "version": 1,
+      "available": true,
+      "title": "Generative Radio - Chapter 1 is settling. Halo keys."
+    },
+    "context_headers_verified": true,
+    "untrusted_ca_rejected": true,
+    "capture_seconds": 5,
+    "certificate_persisted": true,
+    "root_ca_sha256": "8422acecb2aedda32d1e82fe80abc367c31d7a75d5bf3078361669e9e38a9d93"
+  },
+  "limits": [
+    "Loopback/local CA only; no public deployment.",
+    "Browser hidden state is simulated through the visibility interface; no physical-device or OS suspension acceptance.",
+    "Metadata describes broadcast output, not sample alignment or confirmed listening history.",
+    "SoundFont preference and subjective long listening acceptance remain open."
+  ],
+  "artifact_root": "local feature workspace .superpowers/sdd/2026-11-15-broadcast-context",
+  "sha256": {
+    "browser/result.json": "284ebd7582b78589c09a589c098ffc41029bacbf98b41d2f58849687f38cf6a2",
+    "browser-final.log": "284ebd7582b78589c09a589c098ffc41029bacbf98b41d2f58849687f38cf6a2",
+    "tls/result.json": "3e141b2e4ccc634257480235cfd1796faa7076f67039594226659d21c8fd94cf",
+    "tls.log": "3e141b2e4ccc634257480235cfd1796faa7076f67039594226659d21c8fd94cf",
+    "backend-final.log": "00e64eab8c1a5ff36a7d0583f2483607d9a98a3af7355c60c6adb1bc5bb1f959",
+    "listener-task3.log": "9adc1b006602622f97c96ca71113c298aa1d3a26875be026a0a11820ab5b1b83",
+    "browser/context-320.png": "9a23bb64eabc788816477af8957717dd9ec8a9d9040d222f4702c1d119bc85db",
+    "browser/context-390.png": "36749f04f1cfae9752c562f9982ca98b18a9fbdc1f1725f5e3ba4c816f100fc9",
+    "browser/context-desktop.png": "ab735a028b52d4fd8386a8c0ea2ce592b80c72910bf946fcb15ebe8ff35748d2",
+    "backend-task3.log": "d126546709a0a22d979c5db608d3fb555f8cd2eb7a608172aaea47bddb278afa",
+    "review-fallback-red-final.log": "672886aa4eb1f8616a984ab6be70fcfc5519d6775818ac782cae1220c166586d",
+    "review-full-green.log": "d258f2fc892918f4f8c938774f7a2486a098fbc24710efc38c8fcb330a3db73f",
+    "review-listener-green.log": "8435be7142988dc473b83b796b3a899a6293af89f1ba74011952898d004579da",
+    "image-source.json": "8d8913baa7489f688e67c43bd30ba396c68c9159bd6aff8b61cff4fd1c8da33a"
+  },
+  "review": {
+    "critical": 0,
+    "important": 1,
+    "minor": 0,
+    "resolved": "Runtime transition fixture now consumes production security metadata.map fragment. Corrupting that title fails the final interlude assertion after both chapter transitions. Correct mapping passes all145 media tests.",
+    "runtime_source_files_matched": 19
+  }
+}

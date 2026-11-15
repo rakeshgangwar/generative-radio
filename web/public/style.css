@@ -101,3 +101,7 @@ footer nav { display: flex; flex-wrap: wrap; gap: 1.3rem; }
 .timer-row select { color: var(--ink); background: var(--paper); border: 1px solid var(--slate); border-radius: 4px; padding: .35rem .45rem; min-height: 36px; }
 #timer-remaining { color: var(--slate); font-variant-numeric: tabular-nums; white-space: nowrap; }
 .timer-status { color: var(--slate); font-size: .75rem; margin: .45rem 0 0; }
+
+.broadcast-context { margin: .4rem 0 1rem; max-width: 34rem; overflow-wrap: anywhere; }
+.broadcast-title { margin: 0; color: var(--ink); font-weight: 500; }
+.broadcast-note { margin: .2rem 0 0; color: var(--slate); font-size: .8rem; }

@@ -3,12 +3,15 @@ log.stdout.set(true)
 
 # A local command and shared disk keep playback independent of the composer.
 def next_track() =
-  lines = process.read.lines("python -m radio next")
+  lines = process.read.lines("python -m radio next --annotate")
   request.create(list.hd(default="", lines))
 end
 
 music = request.dynamic(id="generated", next_track)
-security = single("/data/audio/fallback.wav")
+security = metadata.map(
+  fun (_) -> [("title", "A quiet interlude."), ("artist", "Generative Radio")],
+  single("/data/audio/fallback.wav")
+)
 # Finish the current fallback before switching back to new music.
 radio = fallback(track_sensitive=true, [music, security])
 radio = crossfade(duration=5., radio)

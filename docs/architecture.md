@@ -6,7 +6,8 @@ buffered generation and recovery before management UI, additional genres or AI.
 
 Three independent roles share a local SQLite WAL queue and audio volume. The
 streaming server is a fourth core container. An optional non-root/read-only Caddy
-service serves the listener page and proxies only the audio mount. SQLite avoids adding PostgreSQL before
+service serves the listener page and proxies the audio mount plus one bounded
+broadcast-context response. SQLite avoids adding PostgreSQL before
 there is a multi-user management API. No remote service is needed to schedule or
 render music. Files are visible to playback only after audio validation and atomic
 rename. Completed dispatches are retained long enough for Liquidsoap prefetch.
@@ -26,6 +27,22 @@ while sustained harmony continues. SoundFont releases/reverb can ring through it
 The versioned arrangement is saved in render analysis. This requires no history
 database/migration; legacy composition remains available through MUSICAL_MEMORY=0.
 The schedule describes queue order. Skipped jobs can skip chapter stages.
+
+Broadcast chapter labels are derived from saved versioned arrangements at dispatch,
+then carried through Liquidsoap output metadata. Dispatch/prefetch alone never
+changes the public label. A custom Icecast XSL selects only this mount's bounded
+title and emits version/available/title; Caddy exposes it at GET/HEAD
+`/broadcast.json`. Raw status/admin/XSL and private audio/database paths remain
+unavailable through the gateway. The fallback has a fixed interlude label and
+keeps its original infallible file source. No new service or private mount is used.
+
+The page reads context only during visible playback, with one request at a time,
+a ten-second start interval, three-second deadline and 4KiB streamed body limit.
+Pause/hidden/error cancel owned work. Text is rendered literally and metadata
+failure hides the sentence without affecting audio or the personal sleep timer.
+The sentence describes the broadcast; individual buffered audio may be behind it.
+It is not sample alignment or confirmed listening history. Source availability
+and deployment status are recorded separately in HANDOFF.md.
 
 The broadcaster's non-root supervisor owns Liquidsoap and probes decoded Icecast
 audio with bounded subprocess deadlines. Consecutive failures trigger child

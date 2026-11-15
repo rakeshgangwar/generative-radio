@@ -8,5 +8,6 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
 WORKDIR /app
 COPY radio /app/radio
 COPY deploy /app/deploy
+COPY deploy/broadcast-context-json.xsl /usr/share/icecast2/web/broadcast-context-json.xsl
 USER radio
 CMD ["python", "-m", "radio", "composer"]

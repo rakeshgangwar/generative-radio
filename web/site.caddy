@@ -17,6 +17,20 @@
 			}
 		}
 	}
+    @context {
+        path /broadcast.json
+        method GET HEAD
+    }
+    handle @context {
+        rewrite * /broadcast-context-json.xsl
+        reverse_proxy icecast:8000 {
+            header_down Content-Type application/json
+            header_down Cache-Control no-store
+            transport http {
+                response_header_timeout 3s
+            }
+        }
+    }
 	handle {
 		file_server
 	}

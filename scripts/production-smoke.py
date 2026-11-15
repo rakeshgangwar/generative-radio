@@ -77,7 +77,14 @@ def main():
             curl = ['curl', '--disable', '--silent', '--show-error', '--noproxy', '*', '--max-time', '10']
             redirect = run(curl + ['-I', '-H', 'Host: localhost', 'http://127.0.0.1:18082/'])
             assert 'location: https://localhost/' in redirect.lower(), redirect
-            for path in ['/admin/', '/status-json.xsl', '/radio.sqlite']:
+            context = json.loads(run(curl + ['--cacert', str(ca), origin+'/broadcast.json']))
+            assert sorted(context) == ['available', 'title', 'version'], context
+            assert context['version'] == 1 and context['available'] is True, context
+            assert isinstance(context['title'], str) and 0 < len(context['title']) <= 160, context
+            context_headers = run(curl + ['--cacert', str(ca), '-I', origin+'/broadcast.json']).lower()
+            assert 'content-type: application/json' in context_headers
+            assert 'cache-control: no-store' in context_headers
+            for path in ['/admin/', '/status-json.xsl', '/broadcast-context-json.xsl', '/radio.sqlite', '/data/', '/audio/']:
                 status = run(curl + ['--cacert', str(ca), '-o', os.devnull, '-w', '%{http_code}', origin+path])
                 assert status == '404', (path, status)
             # Run the exact capture helper and real decoder inside a disposable media container.
@@ -108,6 +115,7 @@ def main():
                     time.sleep(1)
             report = {'public_preflight': public, 'local_tls': verified,
                       'services_hardened': 5, 'private_routes': '404',
+                      'broadcast_context': context, 'context_headers_verified': True,
                       'untrusted_ca_rejected': True, 'capture_seconds': 5,
                       'certificate_persisted': True, 'root_ca_sha256': digest}
             (args.artifacts/'result.json').write_text(json.dumps(report, indent=2)+'\n')
