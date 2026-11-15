@@ -779,3 +779,39 @@ not establish unsampled resource peaks, indefinite leak absence, public capacity
 off-host recovery or subjective listening quality. The original musical questions
 and real deployment/device checks remain open. Current version 2 stays on air;
 no audition was adopted or role replaced for this observation.
+
+
+### 15 November: check the player in stock Firefox — in progress
+
+The current listener is exercised heavily in Chromium, but another engine should
+have actual playback evidence too. An exploratory private-profile run in installed
+Firefox 157.0.1 passed idle-without-source, manual start/advancing MP3, keyboard
+volume, pause/source release and resume. All eight delivered public assets matched
+the current main checkout; the temporary driver listener closed after cleanup.
+
+The repeatable version uses Mozilla GeckoDriver's W3C interface and Python's
+standard library, so it tests the installed branded Firefox without another client
+package or a Playwright browser download. It constrains the target to loopback,
+owns a new profile and driver group, caps responses and has a whole-operation
+browser/network POSIX deadline, followed by cleanup. Protocol fixtures cover malformed/oversized data, unknown error
+text, redirects before clicks, stalled/dripping HTTP and SIGTERM cleanup. The first
+tracked actual Firefox run passed all five flows in about 4.4 seconds, including
+cleanup. The host suite passes 186 tests with six media/explicit opt-in skips.
+
+The new actual-Firefox step is wired into the existing integration job, preserving
+all four required job names and the Chromium suite. The complete real-media suite
+passes 186 tests (one explicit live-project opt-in skip), and all 46 listener tests
+pass. Independent final review and final-head CI remain ahead. There is no music or
+service rollout here. This basic Linux check does not establish Safari/physical
+devices, Firefox's long-outage/timer behavior or subjective musical quality.
+
+
+The [local evidence](evidence/firefox-check-20261115.json) ties the actual result,
+screenshot and eight served-asset fingerprints to the source. A real short deadline
+reaped its observed driver process; a separate real SIGTERM probe observed seven
+owned processes, including Firefox descendants spawned by driver worker threads,
+and left none active. The private profile was removed in both cases. Five station
+service identities/start/restart/OOM values still match the earlier completed
+observer snapshot. This is not a before/after claim about unobserved source hashes
+or an independent audio-quality verdict. Cleanup follows the browser/network
+deadline; elapsed time includes shutdown waits and profile deletion.

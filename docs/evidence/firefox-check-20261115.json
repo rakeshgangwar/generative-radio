@@ -1,0 +1,75 @@
+{
+  "base_commit": "2195b7ae4ec201b07c9bd520173265f52de9729e",
+  "browser": {
+    "name": "firefox",
+    "platform": "linux",
+    "version": "157.0.1"
+  },
+  "checks": [
+    {
+      "name": "idle_without_source",
+      "pass": true
+    },
+    {
+      "name": "click_starts_advancing_mp3",
+      "pass": true
+    },
+    {
+      "name": "keyboard_changes_audio_volume",
+      "pass": true
+    },
+    {
+      "name": "pause_releases_source",
+      "pass": true
+    },
+    {
+      "name": "resume_advances_mp3",
+      "pass": true
+    }
+  ],
+  "elapsed_seconds": 4.403867918001197,
+  "cleanup": {
+    "driver_reaped": true,
+    "profiles_removed": true
+  },
+  "served_asset_sha256": {
+    "app.js": "5c68eb6b73d83bb117b45dab2d3e3842d77893648dfa5c48521cb92730c41062",
+    "broadcast-context.js": "afafb4dbaed6ec78338c7affe13c1b46c5687a1c834c70a956a3f485b134b29f",
+    "dial.svg": "066b109b2c0a13cba2c0b89381607df6253c23e0b540017e8c3ce0a974bbf0d1",
+    "favicon.svg": "18868c09e40c51595e26d64d3cd2ff12f6ca33b26784ea64b8c56d7e3d010179",
+    "index.html": "a8b2706a36323952e7b2dcf92114bf0967d68dcf871a3fb25f869a52eaffd941",
+    "player.js": "c13f200e1d71b75eb6e58449fc832f90fd54a66f8edc5400fdb367140607e00d",
+    "sleep-timer.js": "6b0d495a76ef37402e1924b2a512a8e12449116592eb077c3bfb1b435246e9a6",
+    "style.css": "6b17280fc0ae6cdc3b08969edb70bef600db908605c5d1557858d55c7fca58cb"
+  },
+  "served_assets_match_base_checkout": true,
+  "tool_source_sha256": "88e91c119c01e61a8be1e57eaa92f5cc31be6b08781d8bb900a621d8bd028469",
+  "result_sha256": "f92e09c22e2c1fa6d9d0b988baebd199961bcdefa45bf81c5fa148c3e7af8671",
+  "screenshot_sha256": "2bdd103c6c098285c50f645b8fbbdddb28f0171df46c55629f02beda818178cc",
+  "five_service_identities_start_restart_oom_states_match_observer_end": true,
+  "service_baseline_observed_at": 1794735161.4347672,
+  "post_check_observed_at": 1794737788.404893,
+  "local_evidence": "/home/rakeshgangwar/Projects/generative-radio/artifacts/firefox-check-20261115",
+  "limitations": [
+    "Basic Linux headless flows only",
+    "No Firefox long-outage or sleep-timer acceptance",
+    "No Safari, physical device, public deployment or subjective musical acceptance",
+    "Timeout triggers cleanup; elapsed time includes shutdown and profile removal"
+  ],
+  "actual_failure_cleanup": {
+    "real_deadline": {
+      "exit_code": 1,
+      "active_owned_after": [],
+      "profiles_removed": true
+    },
+    "real_cancellation": {
+      "exit_code": 130,
+      "active_owned_after": [],
+      "profiles_removed": true
+    }
+  },
+  "raw_cleanup_proof_sha256": {
+    "deadline-real-proof.json": "255fb1605652cb3b7433be4db38016712832be69987d401ea45cc48c38c764ed",
+    "cancel-real-proof.json": "90f89f9cbf598972931279deb11faa70c5747da42b51e45be7abc7a5df9a24ae"
+  }
+}

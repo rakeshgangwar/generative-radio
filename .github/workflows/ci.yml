@@ -142,6 +142,21 @@ jobs:
             -i http://web:8080/radio.mp3 -t 5 -c:a pcm_s16le /tmp/ci-web.wav
           docker compose -p "$RADIO_CI_PROJECT" exec -T broadcaster python -c \
             'from pathlib import Path; from radio.render import analyze; result=analyze(Path("/tmp/ci-web.wav")); assert abs(result["duration"]-5)<.1, result; print(result)'
+      - name: Check stock Firefox playback
+        run: |
+          mkdir -p artifacts
+          python3 -m radio.firefox_smoke \
+            --driver "$(command -v geckodriver)" --firefox "$(command -v firefox)" \
+            --output artifacts/firefox-browser
+          python3 - <<'PYFIREFOX'
+          import json
+          from pathlib import Path
+          result = json.loads(Path('artifacts/firefox-browser/result.json').read_text())
+          assert result['state'] == 'complete' and result['pass'] is True, result
+          assert len(result['checks']) == 5 and all(c['pass'] is True for c in result['checks']), result
+          assert all(result['cleanup'].values()), result
+          print({'browser': result['browser'], 'checks': result['checks'], 'cleanup': result['cleanup']})
+          PYFIREFOX
       - name: Browser-test the listener against the actual live stream
         run: |
           npm --prefix web ci --ignore-scripts
