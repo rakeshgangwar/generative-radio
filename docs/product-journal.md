@@ -627,3 +627,43 @@ First compare matched long previews with the current version 2, retain exact leg
 version 1/2 behavior, and reject the idea if it becomes busy or less restful. This
 is a proposed experiment, not implemented generation or an on-air change. TimGM
 remains the station sound while the matched SoundFont preference is unanswered.
+
+### 15 November: a small connecting-note audition — candidate, not on air
+
+The offline experiment now makes a matched 23m05s pair with the current TimGM font.
+The first strictly additive pass changed only two notes across the whole sequence,
+too little to judge the intended motion. We revised the candidate to make room by
+shortening a selected melody tail, retaining at least half its duration and half a
+beat. Existing attacks/pitches/velocities, pads, bass and phrase rests stay fixed.
+There is at most one quiet stepwise connection per eligible phrase; arrival and
+release profiles stay unchanged. The current pair adds seven notes and shortens
+five tails. This remains a subtle audition, not a solution declared from a metric.
+
+Both masters measure -22.07 LUFS, with true peaks -8.35/-8.36 dBFS. Their61,078,500-frame
+PCM files have exact 1385-second duration, and independent FFmpeg checks found no
+silence at least two seconds below -50 dB. All 161 real-media tests and 46 listener
+tests pass, including 24 historical default/v1/v2 MIDI fingerprints and the existing
+render cleanup. Workers retain the original compose path; the experiment has not
+changed the station.
+
+The [comparison](http://localhost:18091) has two explicit players and clickable
+phrase cues, starting near 2:20. Actual Chromium playback, cold-before-play cueing, same-phrase seeking,
+one-at-a-time controls, 44px targets, no-JS fallback and 320/390px/desktop layout pass. Testing caught an important delivery
+issue: the initial simple server ignored byte ranges, making seeking fail. We
+switched to an isolated read-only Caddy file server, verified 206 responses and
+repeated the same seek acceptance successfully. The initial failed browser proof
+is retained alongside the corrected result. No main service was replaced.
+
+The [runbook](melodic-connections.md) and [evidence](evidence/melodic-connections-20261115.json)
+record source/font/MIDI fingerprints, additions, shortened tails and measured audio.
+One zero-addition copy issue was corrected so unchanged scores are honestly labeled.
+Because these changes are sparse in a long sequence, the time guides now have
+explicit cue buttons: both players seek to the same lead-in and stay paused until
+you choose a version. The later phrase-guard fix regenerates all 24 archived MIDI inputs exactly;
+unchanged synthesis and SoundFont provenance keep the measured audio valid. Independent review found one important boundary gap: a connection could borrow
+an anchor from the previous phrase even after clearing its rest. All three notes
+now must share a phrase. Synthetic and real-score regressions failed before the
+fix and pass afterward; the final full suite has 161 tests. No minors were deferred.
+Actual final-head CI remains ahead. The question to listening is simple: does the line feel
+more intentional, or do the small connections disturb its restfulness? Current
+version 2 remains on air while that preference is open.

@@ -129,6 +129,38 @@ jobs:
         run: |
           npm --prefix web ci --ignore-scripts
           CHROME_BIN="$(command -v google-chrome)" npm --prefix web run test:browser
+      - name: Render and browser-test the isolated melody audition
+        run: |
+          mkdir -p artifacts/melody-browser
+          docker run --rm --network none --read-only --cap-drop ALL \
+            --user "$(id -u):$(id -g)" \
+            --tmpfs /tmp:rw,nosuid,size=64m,mode=1777 \
+            --mount "type=bind,source=$PWD/artifacts/melody-browser,target=/auditions" \
+            generative-radio:local python -m radio.melody_audition \
+            --output /auditions/pair --station-seed 20261114 --positions 2 --seconds 120
+          docker run --rm --detach --name "$RADIO_CI_PROJECT-melody" \
+            --read-only --cap-drop ALL --security-opt no-new-privileges:true \
+            --publish 127.0.0.1:18091:8080 \
+            --mount "type=bind,source=$PWD/artifacts/melody-browser/pair,target=/srv,readonly" \
+            generative-radio-web:local caddy file-server --root /srv --listen :8080
+          python3 - <<'PYREADY'
+          import time, urllib.request
+          for attempt in range(50):
+              try:
+                  with urllib.request.urlopen('http://127.0.0.1:18091/', timeout=1) as response:
+                      assert response.status == 200
+                  break
+              except OSError:
+                  time.sleep(.2)
+          else:
+              raise AssertionError('Audition preview did not start')
+          with urllib.request.urlopen(urllib.request.Request('http://127.0.0.1:18091/baseline/listen.mp3', headers={'Range':'bytes=0-15'}), timeout=5) as response:
+              assert response.status == 206 and len(response.read(17)) == 16
+          PYREADY
+          CHROME_BIN="$(command -v google-chrome)" \
+            RADIO_MELODY_URL=http://127.0.0.1:18091 \
+            RADIO_MELODY_ARTIFACTS="$PWD/artifacts/melody-browser/browser" \
+            node web/tests/melody-audition.mjs
       - name: Install decoder for the host-side public listener probe
         run: |
           sudo apt-get update
@@ -140,6 +172,12 @@ jobs:
       - name: Show final service logs
         if: always()
         run: docker compose -p "$RADIO_CI_PROJECT" logs --no-color --tail 100
+      - name: Remove only this run's audition preview
+        if: always()
+        run: |
+          if docker container inspect "$RADIO_CI_PROJECT-melody" >/dev/null 2>&1; then
+            docker rm --force "$RADIO_CI_PROJECT-melody"
+          fi
       - name: Remove only this CI run's containers and data
         if: always()
         run: docker compose -p "$RADIO_CI_PROJECT" down --volumes --remove-orphans
