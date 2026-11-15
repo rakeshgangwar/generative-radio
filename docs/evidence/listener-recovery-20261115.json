@@ -1,0 +1,247 @@
+{
+  "base": "ab7b6013c92534a27991efbf8e7ef89b210c8a61",
+  "delivery": "recovery candidate only; main remains the merged chapter release until final review/CI and a later web-only rollout",
+  "chapter_delivery": {
+    "pr": 21,
+    "merge": "ab7b6013c92534a27991efbf8e7ef89b210c8a61",
+    "ci_run": 43682302746,
+    "changed_roles": [
+      "broadcaster",
+      "icecast",
+      "web"
+    ],
+    "workers_unchanged": true,
+    "preserved": {
+      "preserved_ready_files": 11,
+      "fallback_preserved": true
+    },
+    "audio": {
+      "duration": 10.0,
+      "peak": 0.248779296875,
+      "rms_dbfs": -25.29093859022335,
+      "quiet_fraction": 0.0
+    },
+    "actual_output_context": {
+      "utc": "2026-11-15T05:59:24.625605+00:00",
+      "public": {
+        "version": 1,
+        "available": true,
+        "title": "Generative Radio - Chapter 94 is in bloom. Halo keys."
+      },
+      "icecast_title": "Generative Radio - Chapter 94 is in bloom. Halo keys.",
+      "matches_actual_output_metadata": true,
+      "scope": "Broadcast label only; not sample alignment or confirmed individual playback."
+    },
+    "fresh_browser": {
+      "pass": true,
+      "title": "Chapter 94 is closing. Halo keys.",
+      "real_audio_advanced": true,
+      "pause_released_audio_and_context": true,
+      "scope": "Fresh Chromium page after local rollout; automatic maintenance reconnection failed separately."
+    },
+    "maintenance_existing_client": {
+      "result": "failed observer timeout45000ms",
+      "final_state": "not captured; not inferred from a later reproduction",
+      "automatic_recovery_claimed": false
+    },
+    "source_artifact_sha256": {
+      "ci-receipt.json": "48f485c78e4872e0ed98e2233383966af2ff394bc6fc34be8d97f7554f788c55",
+      "merge-receipt.json": "4aacf2370611bdfaab65fc1d1521f0b1c8479e47ff611664766d55f635dc40ce",
+      "candidate-images.json": "a450d4c5548a3e24a5bac10545fba37b967b7c7c591f6a882c51b79703a934c8",
+      "main-preflight.json": "3ebb68b333363451e653f8ccc5efbd70c8c1871b352d4c2f296b6ef84792a1cf",
+      "pre-upgrade-backup-verified.json": "76f679dc69f0069ffae5aba8c59204bcd171134079292f491145c3d6d86dbba0",
+      "maintenance-before.json": "6a144d12b48b1f08edfc0bd82e2d296555354051ff163cc152033684f6d79d47",
+      "maintenance-after.json": "ae6514d5796b83b3724e5b91c6b0e771484665359b42c03198ed6e0cce515f04",
+      "maintenance-events.json": "231011badb9e890f291f335f1cbd7308428cb350c5eeb5257e3c5abaf5e1883a",
+      "queue-before.json": "54724d56eafbc32ae9034ec7de38abe6f30b51f1475fef077bcdc8285d236a51",
+      "queue-after.json": "28a974f881f1e9ebd8619bc49df8dce15fa1ddc42a45a7c8d35e9e5ddf0bd036",
+      "rollout.json": "6e9ceddf1853f508589cdec1dfc3dc76f5c86bbd58250a8d038bf0b08439454b",
+      "chapter-after-rollout.json": "754ab84178f30a3ab66ae54a720a15adc67e3b5d0223ce89286430d18f3f02a7",
+      "deployed-browser.json": "6fd4e7d44c0fd350d13a94505b5bfa6077a27a935ff08579b432133553125e9c",
+      "deployed-browser.log": "37cd0406a53bc21f8b5de69cc1ef1cfce8028ac41babcec33552214573e404d2",
+      "maintenance-browser.log": "751dee818c22d7b37ead1ad2f3da0ab9ab67e61bc32c13c590462d17684bd504",
+      "maintenance-browser/ready.json": "36cb8548b79f2d6e2d571f5c33f01cf1116af192607bc5d28c6c52af1cf526fc",
+      "maintenance-browser/live-context.png": "6dbe487253b301973670d60768f302b2eb324b792e287ef9b2caf1f01ebae880"
+    }
+  },
+  "recovery_candidate": {
+    "fixed_backoffs_seconds": [
+      1,
+      3,
+      8,
+      15,
+      15,
+      15
+    ],
+    "retries": 6,
+    "maximum_backoff_seconds": 15,
+    "scheduled_backoff_total_seconds": 57,
+    "all_hung_connection_and_backoff_seconds_with_active_timers": 162,
+    "listener_tests": 46,
+    "old_policy_actual_browser": {
+      "pass": false,
+      "requests": [
+        {
+          "elapsed": 59,
+          "failed": true
+        },
+        {
+          "elapsed": 1064,
+          "failed": true
+        },
+        {
+          "elapsed": 4069,
+          "failed": true
+        },
+        {
+          "elapsed": 12074,
+          "failed": true
+        }
+      ],
+      "errors": [],
+      "state": "error",
+      "diagnostic": "AssertionError [ERR_ASSERTION]: thirty-second outage must not exhaust recovery at fifteen seconds",
+      "scope": "Thirty-second failed requests in one Chromium context; live station unmodified."
+    },
+    "new_policy_actual_browser": {
+      "pass": true,
+      "requests": [
+        {
+          "elapsed": 52,
+          "failed": true
+        },
+        {
+          "elapsed": 1060,
+          "failed": true
+        },
+        {
+          "elapsed": 4071,
+          "failed": true
+        },
+        {
+          "elapsed": 12082,
+          "failed": true
+        },
+        {
+          "elapsed": 27089,
+          "failed": true
+        },
+        {
+          "elapsed": 42099,
+          "failed": false
+        }
+      ],
+      "errors": [],
+      "state": "paused",
+      "scope": "Thirty-second failed requests in one Chromium context; live station unmodified."
+    },
+    "full_browser_scenarios": 11,
+    "browser_exit": {
+      "started": "2026-11-15T06:12:58.527902+00:00",
+      "finished": "2026-11-15T06:15:31.216905+00:00",
+      "node_exit_code": 0
+    },
+    "real_maintenance_drill": {
+      "pass": true,
+      "events": [
+        {
+          "elapsed": 6031,
+          "phase": "connected listener; only initial user gesture"
+        },
+        {
+          "elapsed": 6612,
+          "phase": "broadcaster stopped"
+        },
+        {
+          "elapsed": 35374,
+          "phase": "Icecast and gateway replaced and healthy"
+        },
+        {
+          "elapsed": 135201,
+          "phase": "new broadcaster decoded-audio healthy"
+        },
+        {
+          "elapsed": 138498,
+          "phase": "same browser resumed without new gesture; audio advances; timer remains armed"
+        }
+      ],
+      "state_transitions": [
+        {
+          "elapsed_ms": 6031,
+          "state": "playing"
+        },
+        {
+          "elapsed_ms": 14591,
+          "state": "retrying"
+        },
+        {
+          "elapsed_ms": 41814,
+          "state": "connecting"
+        },
+        {
+          "elapsed_ms": 46341,
+          "state": "playing"
+        }
+      ],
+      "requests": [
+        {
+          "elapsed": 287,
+          "url": "http://127.0.0.1:18089/radio.mp3?listener=1794723501936-1"
+        },
+        {
+          "elapsed": 15526,
+          "url": "http://127.0.0.1:18089/radio.mp3?listener=1794723517189-3"
+        },
+        {
+          "elapsed": 18530,
+          "url": "http://127.0.0.1:18089/radio.mp3?listener=1794723520194-5"
+        },
+        {
+          "elapsed": 26536,
+          "url": "http://127.0.0.1:18089/radio.mp3?listener=1794723528197-7"
+        },
+        {
+          "elapsed": 41549,
+          "url": "http://127.0.0.1:18089/radio.mp3?listener=1794723543213-9"
+        }
+      ],
+      "workers_unchanged": true,
+      "changed_roles": [
+        "broadcaster",
+        "icecast",
+        "web"
+      ],
+      "same_browser_without_second_play": true,
+      "audio_advanced_after_recovery": true,
+      "sleep_timer_armed_after_recovery": true,
+      "node_exit_code": 0,
+      "project": "radio-recovery-drill-20261115",
+      "project_removed": true,
+      "scope": "Actual three-role replacement of a disposable station. No main service/data changed; no gap-free claim."
+    },
+    "public_or_physical_device_acceptance": false,
+    "image": "sha256:674e5647920a99741b6e7255b2d742f243c29aa84d6315a43b468a3e3ce8a074",
+    "main_five_roles_unchanged": true
+  },
+  "candidate_source_sha256": {
+    "web/public/player.js": "c13f200e1d71b75eb6e58449fc832f90fd54a66f8edc5400fdb367140607e00d",
+    "web/tests/player.test.mjs": "ccba3fbacf74755fda1e9f4190fa09765eebf6b6e8cc49cbbe719d0fdac024c9",
+    "web/tests/recovery-browser.mjs": "2221774fcd97433b0a9aea48911eee699c8e5e9bd3243e2f050cccf996afc025",
+    "web/tests/browser.mjs": "f14b6c6eea90db1f5ad47f23d57550bc2cf71b6e5b338b15fcd1b2a42b07e0ac"
+  },
+  "verification_artifact_sha256": {
+    "unit-red.log": "7ca9d1e573100075b2bfca1ce9c6fefe15df6da6c58db4a7ce63138cfee8cbae",
+    "unit-green.log": "534727db1fd987af0c69637818878f246b5272acf9bb18e7491bf40cf511b700",
+    "browser-red/recovery-long-outage.json": "f6356376a8ca9a3e5c4afacecb0b70c26ed5748b6e30b7446b399426fae78ff3",
+    "browser-final/recovery-long-outage.json": "0031034d669bd361e1595e88b82f5cc8a1054e186d2fdd05be8539eb176aa905",
+    "browser-final/result.json": "a9256f335a9392116362c42df5dd2c833f6232e45b44a886c18afd00aefe0e6c",
+    "browser-exit.json": "fd705af5e86afdea0426c88c61beaddbbc12149df71179698b85322e0cfccebb",
+    "browser-final.log": "a9256f335a9392116362c42df5dd2c833f6232e45b44a886c18afd00aefe0e6c",
+    "real-drill/result.json": "b69f7fb720773da0aa6c327ec6cf2263aaf6cdb3a8ba31fd4eb0a9ea44c253c2",
+    "real-drill.log": "7da5f46ff3e18a687308e2dfd0a985dc4611994be2aa9a2ac25fb0f14cebd50c",
+    "real-maintenance.mjs": "0606a1dbc339f983529817db1f22f079607dd342f0c007777eec4a1387b8d50f",
+    "browser-final/recovered-after-30s.png": "30f8dae660917507545e09bcd04c06aac224de2eb0a0dd272d40e67281f69c07",
+    "real-drill/recovered.png": "05a7f3788f966a74cdfe54e5f8771df2e0bae91443871a37d41c012553120abf",
+    "image-source.json": "878bc64f15140785dc74d398884b72e18a07eb309b78d1b39764c466ad3c105f"
+  }
+}

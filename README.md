@@ -16,7 +16,13 @@ checkout; the package and Compose project are named `generative-radio`.
 
 The optional listener page adds play/pause, volume and bounded reconnection at
 [localhost:8080](http://localhost:8080). It joins the existing live stream when you
-press play. To start a new station with the page:
+press play. On stream failure it tries six bounded reconnects, waiting at most
+15 seconds between attempts. A 30-second interruption can recover without another
+click; persistent failure still shows Try again. Pause or sleep-timer expiry cancels
+recovery. Browser permission refusal requires a new gesture. The optional chapter
+sentence describes the broadcast; buffered audio may be behind it.
+
+To start a new station with the page:
 
 ```sh
 docker compose -f compose.yaml -f compose.web.yaml up --build -d --wait --wait-timeout 180

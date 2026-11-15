@@ -5,7 +5,7 @@ export function createPlayer(audio, options = {}) {
   const schedule = options.setTimeout || globalThis.setTimeout.bind(globalThis);
   const cancel = options.clearTimeout || globalThis.clearTimeout.bind(globalThis);
   const now = options.now || Date.now;
-  const delays = [1000, 3000, 8000];
+  const delays = [1000, 3000, 8000, 15000, 15000, 15000];
   let state = 'idle', intent = false, disposed = false, generation = 0, attempt = 0;
   let deadline, retry, stable;
 
