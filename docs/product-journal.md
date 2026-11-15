@@ -22,10 +22,11 @@ The listener also asked whether the music is generated live, wanted memory/syste
 - Original seeded arrangements with several harmonic paths, variable chord holds, developed melodic phrases, changing texture and quieter openings/releases.
 - A render-ahead queue, independent fallback music, crossfades, retries, cleanup and bounded retained audio.
 - Decoded-audio supervision: it can detect persistent silent, missing or hung output and restart its owned Liquidsoap process within a rolling restart budget. Icecast outages allow native reconnection.
-- Actual failure drills, a completed 30-minute test and a separate one-hour variety baseline. The hour contained 3,600 seconds of audio with no detected silence at −50 dB lasting at least two seconds; all 64 monitoring samples were healthy.
-- Automated Python 3.11/3.14, rendering/streaming, browser and hardened HTTPS checks. PRs #1–#13 have merged after passing current-head CI.
+- Actual failure drills, 30-minute and one-hour baselines, and a completed two-hour musical-memory recording. The latest run contains exactly 7,200 seconds with no detected silence at −50 dB lasting two seconds; all 226 watchdog observations were healthy.
+- Automated Python 3.11/3.14, rendering/streaming, browser and hardened HTTPS checks. PRs #1–#15 have merged after passing current-head CI.
 - A local listening page with bounded reconnection, native fallback and an optional personal sleep timer.
 - Recoverable musical chapters, verified backup/restore commands and an opt-in production deployment package.
+- An offline, matched-score SoundFont comparison bench and a read-only HTTPS monitor that decodes actual audio. The current TimGM sound stays on air.
 - A public repository under the MIT software license. Bundled/installed third-party tools and the SoundFont retain their own licenses; attribution is in the README.
 
 The stream is locally accessible, not a deployed public service. Objective audio analysis does not establish that the music is emotionally satisfying. Listening acceptance of the variety update is still open.
