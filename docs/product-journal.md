@@ -42,6 +42,12 @@ experiment is a slower, deliberate energy arc within the existing station: let a
 chapter settle before its density rises again. That is an idea to compare offline,
 not a change to the current broadcast or a substitute for listening feedback.
 
+An offline [resting-profile comparison](resting-profile-experiment.md) is now
+available at [localhost:18095](http://localhost:18095): the same three chapters
+with a slower pulse, spare lead density and a fixed warm palette. Both 23m05s
+versions have matched levels. It is a local prototype for listening, not an
+on-air change or a supported profile command.
+
 The repository is public under MIT; the station itself remains local. Public
 operation needs a supplied host/domain and off-host backup/alert destinations,
 then real deployment, reboot, independent probing and recovery evidence. Physical
@@ -1146,3 +1152,36 @@ maintenance; it must not be presented as an uninterrupted all-healthy soak.
 Musical preference, physical devices, Safari, assistive technology, public hosting,
 independent external monitoring and off-host recovery remain open. The current
 v2 TimGM music remains on air while the matched listening comparisons await feedback.
+
+## Experiment: a station that can settle — 15 November 2026
+
+The original direction included music for focus and rest. I tried a coherent
+resting profile offline: 52 BPM rather than 60, the existing spare density profile
+throughout the chapter, and a fixed warm-pad/bass/electric-piano palette. The
+chapters retain their motif and harmonic sequence; tempo changes their timing.
+The tradeoff is deliberate: more room and a steadier palette may suit rest, but
+could also feel too uniform. Fewer notes alone do not solve perceived repetition.
+
+Across 256 two-minute score positions, mean lead attacks fell from 31.64 to 20.89,
+with no candidate segment exceeding its baseline. Then I rendered the same three
+complete chapters for each version. Both last 23m05s and measure −22.13 LUFS,
+matched with attenuation only. True peaks are −8.39/−8.50 dBFS; neither contains
+silence at −50 dB lasting two seconds. These establish a usable comparison, not
+a preference or a musical-quality verdict.
+
+The [local comparison](http://localhost:18095) passed actual browser playback,
+seeking, one-at-a-time controls, narrow layouts, byte-range delivery and native
+JavaScript-disabled playback. Pause other audio before comparing. A temporary
+script-name collision stopped the first isolated render before initialization;
+the error was retained, imports were checked, and the corrected fresh run completed.
+A separate JavaScript-disabled test waiter relied on animation callbacks that
+were disabled; external media polling verified actual playback. Both failed
+attempts remain distinguished from the corrected evidence.
+
+The live station stayed unchanged and healthy after rendering, with all five
+service identities and lifecycle values preserved. The [experiment receipt](evidence/resting-profile-experiment-20261115.json)
+records sources, scores, audio, preview and test scope. This prototype is not a
+shipped profile CLI or time-of-day mode. Listening should decide whether to pursue
+it as a reusable audition command and eventually a gradual energy choice. The
+existing sound/connecting-note questions and public/off-host/device gates remain
+open; the separate six-hour vitals attempt is still incomplete.
