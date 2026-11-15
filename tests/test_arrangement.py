@@ -36,7 +36,7 @@ class ArrangementTests(unittest.TestCase):
         for n in range(1,241):
             plan=arrangement_for(42,n)
             self.assertEqual(plan.position,n)
-            self.assertEqual(plan.version,1)
+            self.assertEqual(plan.version,2)
             groups[plan.chapter].append(plan)
         self.assertEqual({len(group) for group in groups.values()},{3,4,5})
         self.assertEqual(list(groups),list(range(1,len(groups)+1)))

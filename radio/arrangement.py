@@ -32,6 +32,7 @@ class Arrangement:
     rhythm_order: tuple[int, ...]
     phrase_gap: int
     version: int = 1
+    phrase_bars: int = 0
 
 
 def _permutation(seed, label, block, choices):
@@ -81,4 +82,6 @@ def arrangement_for(station_seed: int, position: int) -> Arrangement:
         programs=_choice(station_seed, 'palette', chapter - 1, PALETTES),
         rhythm_order=tuple(_permutation(station_seed, 'rhythm', chapter - 1, (0, 1, 2, 3))),
         phrase_gap=_choice(station_seed, 'breath', position - 1, (0, 1, 2, 3)),
+        version=2,
+        phrase_bars=_choice(station_seed, 'phrasing', chapter - 1, (6, 8, 10)),
     )

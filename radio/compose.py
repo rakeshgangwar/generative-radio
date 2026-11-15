@@ -17,6 +17,14 @@ class Note:
 
 def compose(seed: int, seconds: float, bpm: int = 60,
             arrangement: Arrangement | None = None) -> list[Note]:
+    phrase_bars = 0
+    if arrangement is not None:
+        if type(arrangement.version) is not int or arrangement.version not in (1, 2):
+            raise ValueError('Unsupported arrangement version')
+        if arrangement.version == 2:
+            phrase_bars = arrangement.phrase_bars
+            if type(phrase_bars) is not int or phrase_bars not in (6, 8, 10):
+                raise ValueError('Version 2 requires phrase_bars of 6, 8 or 10')
     rng = random.Random(seed)
     beat = 60 / bpm
     bar = 4 * beat
@@ -64,6 +72,8 @@ def compose(seed: int, seconds: float, bpm: int = 60,
         central = .2 <= start / seconds < .8
         if not central and bar_index % 2:
             continue
+        if phrase_bars and bar_index % phrase_bars == phrase_bars - 1:
+            continue  # End the melodic phrase while sustained harmony continues.
         phrase = bar_index // 2
         if arrangement and profile == 0 and phrase % 4 == arrangement.phrase_gap:
             continue  # A two-bar breath over the sustained harmony.
@@ -92,6 +102,9 @@ def compose(seed: int, seconds: float, bpm: int = 60,
                           and abs(p - previous) <= 7]
             pitch = min(candidates, key=lambda p: (abs(p - target), abs(p - previous), p))
             duration = (0.75, 1.5, 2.5)[(phrase + slot_index) % 3] * beat
+            if phrase_bars:
+                rest_start = ((bar_index // phrase_bars + 1) * phrase_bars - 1) * bar
+                duration = min(duration, rest_start - .1 * beat - at)
             melody.append(Note(at, min(duration, seconds - at - .75), pitch,
                                rng.randint(31, 44) if central else rng.randint(27, 35), 2))
             previous = pitch
