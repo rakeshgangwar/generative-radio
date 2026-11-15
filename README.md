@@ -22,6 +22,12 @@ click; persistent failure still shows Try again. Pause or sleep-timer expiry can
 recovery. Browser permission refusal requires a new gesture. The optional chapter
 sentence describes the broadcast; buffered audio may be behind it.
 
+The full player remembers an explicit volume choice in this browser when storage
+is available. Refresh restores that level, keeps play manual and resets the sleep
+timer. Another tab's choice affects future loads without changing a tab already
+playing. If saving is unavailable, the current control still works. Native browser
+controls and devices that control volume themselves keep their existing behavior.
+
 Native browser audio controls remain available if JavaScript is disabled or a page
 module fails to load. Once page setup succeeds, the enhanced controls replace an
 unused native player. If you already started native playback, that player stays

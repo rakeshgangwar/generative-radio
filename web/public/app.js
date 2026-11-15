@@ -14,9 +14,17 @@ function initialize() {
   const live = document.querySelector('#live-label');
   const volume = document.querySelector('#volume');
   const volumeValue = document.querySelector('#volume-value');
+  const volumePreferenceKey = 'generative-radio.volume.v1';
+  try {
+    const saved = window.localStorage.getItem(volumePreferenceKey);
+    if (typeof saved === 'string' && saved.length <= 3) {
+      const value = Number(saved);
+      if (Number.isInteger(value) && value >= 0 && value <= 100 && String(value) === saved) volume.value = saved;
+    }
+  } catch { /* Storage is optional for listening. */ }
   const activeStates = new Set(['connecting', 'playing', 'buffering', 'retrying']);
   let active = false, gain = 1, requestedVolume = Number(volume.value) / 100;
-  let volumeSupported = true, player, playing = false;
+  let volumeSupported = true, volumeCapable = false, player, playing = false;
   const broadcastPanel = document.querySelector('#broadcast-context');
   const broadcastTitle = document.querySelector('#broadcast-context-title');
   const broadcast = createBroadcastContext({onChange(title) {
@@ -32,7 +40,12 @@ function initialize() {
   const timerStatus = document.querySelector('#timer-status');
   function applyVolume(force = false) {
     if (!player || (!volumeSupported && !force)) return;
-    volumeSupported = player.setVolume(requestedVolume * gain);
+    const target = requestedVolume * gain;
+    const previous = audio.volume;
+    const applied = player.setVolume(target);
+    // An unchanged matching value is not evidence that a device accepts writes.
+    if (applied && Math.abs(previous - target) >= .01) volumeCapable = true;
+    volumeSupported = volumeCapable && applied;
     document.querySelector('#volume-control').hidden = !volumeSupported;
     document.querySelector('#volume-note').hidden = volumeSupported;
   }
@@ -75,13 +88,20 @@ function initialize() {
     }
   });
   button.addEventListener('click', () => active ? player.pause() : player.start());
-  function setVolume() {
-    requestedVolume = Number(volume.value) / 100;
+  function setVolume(remember = false) {
+    const chosen = Number(volume.value);
+    requestedVolume = chosen / 100;
     applyVolume(true);
     volumeValue.textContent = `${volume.value}%`;
     volume.setAttribute('aria-valuetext', `${volume.value} percent`);
+    if (remember && Number.isInteger(chosen) && chosen >= 0 && chosen <= 100) {
+      try { window.localStorage.setItem(volumePreferenceKey, String(chosen)); }
+      catch { /* The current control still works when persistence is unavailable. */ }
+    }
   }
-  volume.addEventListener('input', setVolume);
+  volume.addEventListener('input', () => setVolume(true));
+  // Establish capability while the enhanced audio is paused and source-free.
+  volumeCapable = player.setVolume(audio.volume > .5 ? .25 : .75);
   setVolume();
 
   if ('mediaSession' in navigator) {

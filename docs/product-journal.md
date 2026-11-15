@@ -26,10 +26,12 @@ The [host-side vitals recorder](station-observer.md) is also shipped. Its comple
 half-hour observation retained 60 healthy samples, without controlling services.
 Monitoring reports uncertainty when evidence is incomplete.
 
-One small comfort idea worth trying next is remembering the listener's chosen
-volume across page refreshes, while still requiring play and resetting the sleep
-timer. This is proposed, not implemented. Musical development remains the main
-product question: it should stay worth hearing over hours, with room to breathe.
+The next comfort change is a browser-local volume-memory candidate. It restores
+an explicit choice after refresh, keeps play manual and resets the sleep timer.
+Local tests and Firefox refresh/playback checks pass. The single review correction
+is verified; CI and rollout are still pending. The live listener remains the PR #29 build. Musical
+development remains the main product question: it should stay worth hearing over
+hours, with room to breathe.
 
 The repository is public under MIT; the station itself remains local. Public
 operation needs a supplied host/domain and off-host backup/alert destinations,
@@ -966,7 +968,7 @@ and pause/source release pass, with zero pre-play requests and one stream afterw
 Already started native sessions (playing, paused or pending) retain focus and source.
 The fallback help now names full-player features and says reload can try them.
 
-All46Node tests, all22 complete Chromium scenarios, five enhanced Firefox flows,
+All 46 Node tests, all22 complete Chromium scenarios, five enhanced Firefox flows,
 and Firefox native keyboard playback with JavaScript disabled pass. Focus/help
 screenshots fit320px. The source-linked receipt is
  docs/evidence/native-listener-polish-20261115.json. One fresh review, real CI and a
@@ -1007,3 +1009,72 @@ The opening summary now leads with the shipped local state instead of the older
 PR25 milestone. Proposed volume memory is an idea for a later iteration; no such
 setting has been added. Public/independent-host/device and human musical acceptance
 remain open. Version2 TimGM stays on air while musical preference is undecided.
+
+
+### 15 November: volume memory starts — design in progress
+
+The refreshed journal merged in PR #30 as `6518051` after all four actual CI jobs
+passed on `c6e3e8d` against `de1c460`. It changed documentation only; no service restarted.
+The six-hour read-only vitals observation is running and has not completed.
+
+The next listener comfort change is now being designed: remember an explicit
+full-player volume choice in this browser, while play remains manual and the sleep
+timer stays page-local. Invalid or unavailable browser storage should simply keep
+the existing default; another tab should never jump an ongoing listener's volume.
+Save the requested level, including mute, without saving a sleep fade. Native
+controls and physical device-volume fallback retain their existing behavior.
+No volume-memory implementation or rollout exists yet; version 2 TimGM is unchanged.
+
+
+### 15 November: volume memory — working candidate
+
+The real refresh regression first reproduced a quiet 37% choice returning to 65%.
+The candidate now validates one small browser-local preference, restores only a
+canonical whole percent from 0 to 100, and saves explicit unfaded range choices.
+Invalid data and simulated denied-storage/quota failures keep the player usable.
+No playback intent, timer, identity or history is stored; nothing is written merely
+because a page loads, and another tab cannot jump an ongoing listener's volume.
+
+All 46 Node tests and eight focused browser scenarios pass, including mute/max,
+twelve invalid values, optional storage failures and a changed user level during
+a fade. The stronger fade case saves 40% while actual audio is 20%, then refreshes
+to 40% with timer Off and no autoplay. The final full 30-scenario run with that stronger assertion passed. Actual Firefox 157.0.1
+passed the five existing flows, native JS-off keyboard playback, and a direct
+trusted-key 37%/refresh/manual-play check, with owned-profile cleanup. A 320px restored
+volume view fits. These are local candidates, not a live rollout or all-device
+privacy-mode acceptance. The background six-hour vitals window remains ongoing.
+
+
+The final volume-memory suite passed all 30 Chromium scenarios, including eight
+preference/error/fade/cross-tab cases plus the existing native, focus, legacy,
+recovery and timer flows. The stronger fade-input case saves 40% while audio is
+attenuated to 20%, then reloads at 40% with timer Off and manual play. The 46 Node
+tests, five standard Firefox flows, native Firefox JS-off playback and direct
+Firefox 37% refresh/manual-play check also passed. All eight asset hashes match
+the candidate source; the 320px volume/readout view fits. See the
+[local receipt](evidence/listener-volume-memory-20261115.json).
+
+The first requested six-hour observation was interrupted after 40 healthy samples;
+its owned process was gone and the execution session exited143. Its raw running
+summary is preserved and is not completion evidence. A fresh finite detached
+wrapper/observer is alive by PID/start identity and reports healthy samples. The
+previous partial window is not combined into continuous six-hour acceptance; the
+exact external termination cause is unknown. The live listener remains PR #29.
+One fresh source review, actual CI and an annotated web-only rollout remain pending.
+
+
+The sole fresh review found one Important hardware fallback issue and one Minor
+coverage gap. A saved 100% could match an ignored setter's getter value 1 and wrongly show
+an ineffective slider. A real simulated-device regression failed before correction.
+The app now establishes distinguishable volume capability only while enhanced audio
+is paused/source-free, restores the requested value, and never saves the probe.
+Previously proven support still recovers after the existing mid-fade transient
+failure. The ignored-setter case keeps the device-button note and manual playback.
+
+Corrected source passes 46 Node tests, nine focused cases, all 31 Chromium scenarios,
+and refreshed standard/native/direct-memory Firefox checks with cleanup. The
+separate getItem-method-throw fixture remains a Minor deferred coverage item; the
+existing enclosing try catches that path. No rereview. PR #31 remains a candidate
+until actual final-head/current-base CI clears and a measured web-only rollout.
+The current visual proof uses a distinct corrected-run directory; one initial
+root screenshot filename was reused during rerun and its old bitmap is superseded.
