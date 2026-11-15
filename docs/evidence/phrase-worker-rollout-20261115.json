@@ -1,0 +1,132 @@
+{
+  "scope": "Verified worker-only version2 source rollout; first actual broadcaster transition and completed 30-minute capture still pending",
+  "rollout": {
+    "at": "2026-11-15T03:23:52.217009+00:00",
+    "merge": {
+      "mergeCommit": {
+        "oid": "d82bd17c20eafac365667718e8fe8d4cf5c1a33f"
+      },
+      "mergedAt": "2026-11-15T03:20:51Z",
+      "state": "MERGED",
+      "url": "https://github.com/rakeshgangwar/generative-radio/pull/17"
+    },
+    "preserved_ready_files": 11,
+    "all_ready_sha256_unchanged": true,
+    "unchanged_roles": [
+      "broadcaster",
+      "icecast",
+      "web"
+    ],
+    "replaced_roles": [
+      "composer",
+      "renderer"
+    ],
+    "first_expected_version2_job_id": 306,
+    "first_future_id_is_not_on_air_proof": true,
+    "rollback_image": "generative-radio:before-phrase-breathing",
+    "all_roles_healthy": true
+  },
+  "maintenance": {
+    "snapshot_failure": "Read-only SQLite WAL source could not initialize absent sidecars on a read-only volume after writers stopped. Isolated reproduction recorded. No new code started in this attempt.",
+    "recovery": "Explicitly restarted original worker containers, then used SQL mode=ro on existing mount for second attempt. WAL may create transient sidecars; database SQL remains read-only.",
+    "first_worker_ids_unchanged_on_recovery": true,
+    "original_worker_started_at": {
+      "composer": "2026-11-14T23:24:55.777642392Z",
+      "renderer": "2026-11-14T23:24:55.907724095Z"
+    },
+    "restored_original_worker_started_at": {
+      "composer": "2026-11-15T03:21:40.683352987Z",
+      "renderer": "2026-11-15T03:21:40.820801678Z"
+    },
+    "replacement_worker_started_at": {
+      "composer": "2026-11-15T03:23:31.379138171Z",
+      "renderer": "2026-11-15T03:23:31.259377863Z"
+    },
+    "source_service_ids_unchanged": true,
+    "events_retention_note": "Docker bounded event history retained only old-container destroy events; do not claim a complete event timeline. Start times and raw monitor observations remain available.",
+    "observed_monitor_exceptions_so_far": [
+      {
+        "at": "2026-11-15T03:21:38.981389+00:00",
+        "nonhealthy_container_rows": [
+          "/generative-radio-composer-1 0be2ca0a311089f4f9966771311d066b72a8d27649484c483a5bcf33bfd37b96 2026-11-14T23:24:55.777642392Z exited unhealthy 0 false",
+          "/generative-radio-renderer-1 4c07720f9774dddd7c050deb48b1357b93d75926b9cd48aa1dd64fdb53c98df3 2026-11-14T23:24:55.907724095Z exited unhealthy 0 false"
+        ]
+      },
+      {
+        "at": "2026-11-15T03:23:48.860593+00:00",
+        "nonhealthy_container_rows": [
+          "/generative-radio-composer-1 0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146 2026-11-15T03:23:31.379138171Z running starting 0 false"
+        ]
+      }
+    ]
+  },
+  "containers_after": {
+    "composer": {
+      "id": "0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started_at": "2026-11-15T03:23:31.379138171Z",
+      "healthy": "healthy",
+      "restarts": 0,
+      "oom": false
+    },
+    "renderer": {
+      "id": "04a26abb33422649a11752d188ca9e2eb149fbe50c981fc3a2eced30a00805d4",
+      "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+      "started_at": "2026-11-15T03:23:31.259377863Z",
+      "healthy": "healthy",
+      "restarts": 0,
+      "oom": false
+    },
+    "broadcaster": {
+      "id": "ad6ff03d355acdd629bd2d9ae8eff4dd3b71dc986d2a03f142a6980de6f68eef",
+      "image": "sha256:2cf53adee8f52164ab55bb5fef40c7a90c46e310cf15d22834b180a9f4ff5255",
+      "started_at": "2026-11-14T21:28:48.804473224Z",
+      "healthy": "healthy",
+      "restarts": 0,
+      "oom": false
+    },
+    "icecast": {
+      "id": "25674fa891c1e05b47298b51369c6ab18df94cd8c62a668bd4ea3a6010bb8a12",
+      "image": "sha256:fc9b8902fe77092c22c24209e39f3d56e5ef50d14c6608da2849f3a10a206fc0",
+      "started_at": "2026-11-14T18:52:48.528054741Z",
+      "healthy": "healthy",
+      "restarts": 0,
+      "oom": false
+    },
+    "web": {
+      "id": "f49f4bb6a31ae18dd405cdfedddc1c826b7549bb763852d581b86794c82bd194",
+      "image": "sha256:82423412f306cbbaa00bd61802bdf7509a4978f50596343018d7683d9f258818",
+      "started_at": "2026-11-15T01:04:23.024559949Z",
+      "healthy": "healthy",
+      "restarts": 0,
+      "oom": false
+    }
+  },
+  "live_acceptance": {
+    "directory": "/home/rakeshgangwar/Projects/generative-radio/artifacts/phrase-breathing-live-20261115-032105",
+    "supervisor_pid": 596862,
+    "requested_seconds": 1800,
+    "monitor_seconds": 1860,
+    "safety_limit_seconds": 1980,
+    "started_at": "2026-11-15T03:21:05.069255+00:00",
+    "merge": {
+      "mergeCommit": {
+        "oid": "d82bd17c20eafac365667718e8fe8d4cf5c1a33f"
+      },
+      "mergedAt": "2026-11-15T03:20:51Z",
+      "state": "MERGED",
+      "url": "https://github.com/rakeshgangwar/generative-radio/pull/17"
+    },
+    "purpose": "Observe worker-only rollout, old ready buffer preservation and eventual version2 broadcaster transition; do not skip queued audio"
+  },
+  "ci_run": 43671299403,
+  "ci_head": "84c9d33034c72a75e63c1e6fcbd675104b6db1f1",
+  "ci_checks": "All four SUCCESS before merge",
+  "backup_edge_case_reproduction": {
+    "fixture_directory": "/tmp/radio-offline-backup-rzb89vid",
+    "closed_wal_no_shm": true,
+    "exit": 1,
+    "stdout": "",
+    "stderr": "create: unable to open database file\n"
+  }
+}
