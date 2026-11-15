@@ -28,4 +28,6 @@ CPU-only, no new runtime asset/model/dependency/schema. Natural A-minor, pitches
 - [x] Implement planner and optional composition/MIDI integration to GREEN; verify legacy hash unchanged. Add RED tests for Config/renderer/preview integration, implement and run full Python/JS suites.
 - [x] Reproduce256-position score benchmark, render all palettes/stages and crossfade a multi-segment sequence; expected unchanged quality gates and render comfortably faster than playback. Record only measured differences.
 - [x] One independent whole-branch review, fix important findings RED→GREEN, update journal with evidence/limits and completed watchdog soak.
-- [ ] Commit/push PR, merge latest main, require current-head CI before merge. After validation deploy workers only (preserve live data/Icecast/broadcaster), verify new planned renders/replenishment/audio and monitor. Record pending listening/target-deployment gates.
+- [x] Commit/push PR, merge latest main, require current-head CI before merge. After validation deploy workers only (preserve live data/Icecast/broadcaster), verify new planned renders/replenishment/audio and monitor. Record pending listening/target-deployment gates.
+
+Receipt: PR #11 merged after all four current-head checks. Workers replaced at04:54 IST; eleven ready hashes preserved; first actual planned transition182 at05:19:43 IST. Long rollout recording remains pending.

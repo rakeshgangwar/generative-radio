@@ -241,3 +241,5 @@ SoundFont, mount it read-only and set `SOUNDFONT` in the renderer environment.
 Architecture and deferred work: [docs/architecture.md](docs/architecture.md).
 
 Back up, verify, transfer off-host and restore the station: [operator commands](docs/operations.md).
+
+Production setup and recovery: [deployment runbook](docs/deployment.md).

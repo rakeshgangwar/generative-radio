@@ -122,6 +122,10 @@ jobs:
         run: |
           npm --prefix web ci --ignore-scripts
           CHROME_BIN="$(command -v google-chrome)" npm --prefix web run test:browser
+      - name: Exercise isolated production TLS, hardening and certificate recovery
+        run: >-
+          python3 scripts/production-smoke.py
+          --project "radio-smoke-${{ github.run_id }}-${{ github.run_attempt }}"
       - name: Show final service logs
         if: always()
         run: docker compose -p "$RADIO_CI_PROJECT" logs --no-color --tail 100
