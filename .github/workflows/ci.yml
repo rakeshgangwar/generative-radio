@@ -142,6 +142,20 @@ jobs:
             -i http://web:8080/radio.mp3 -t 5 -c:a pcm_s16le /tmp/ci-web.wav
           docker compose -p "$RADIO_CI_PROJECT" exec -T broadcaster python -c \
             'from pathlib import Path; from radio.render import analyze; result=analyze(Path("/tmp/ci-web.wav")); assert abs(result["duration"]-5)<.1, result; print(result)'
+      - name: Prepare audio backend for headless Firefox and host probes
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends ffmpeg pulseaudio
+          if ! pactl info >/dev/null 2>&1; then
+            echo "Starting an audio server on this ephemeral runner."
+            pulseaudio --start --exit-idle-time=-1
+            echo "RADIO_CI_PULSE_STARTED=1" >> "$GITHUB_ENV"
+          fi
+          module_id="$(pactl load-module module-null-sink sink_name=radio_ci)"
+          echo "RADIO_CI_PULSE_MODULE=$module_id" >> "$GITHUB_ENV"
+          echo "PULSE_SINK=radio_ci" >> "$GITHUB_ENV"
+          pactl set-default-sink radio_ci
+          pactl list short sinks
       - name: Check stock Firefox playback
         id: firefox_playback
         run: |
@@ -237,14 +251,19 @@ jobs:
             RADIO_MELODY_URL=http://127.0.0.1:18091 \
             RADIO_MELODY_ARTIFACTS="$PWD/artifacts/melody-browser/browser" \
             node web/tests/melody-audition.mjs
-      - name: Install decoder for the host-side public listener probe
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y --no-install-recommends ffmpeg
       - name: Exercise isolated production TLS, hardening and certificate recovery
         run: >-
           python3 scripts/production-smoke.py
           --project "radio-smoke-${{ github.run_id }}-${{ github.run_attempt }}"
+      - name: Remove only this run's virtual audio fixture
+        if: always()
+        run: |
+          if [ -n "${RADIO_CI_PULSE_MODULE:-}" ]; then
+            pactl unload-module "$RADIO_CI_PULSE_MODULE" || true
+          fi
+          if [ "${RADIO_CI_PULSE_STARTED:-}" = "1" ]; then
+            pulseaudio --kill || true
+          fi
       - name: Show final service logs
         if: always()
         run: docker compose -p "$RADIO_CI_PROJECT" logs --no-color --tail 100
