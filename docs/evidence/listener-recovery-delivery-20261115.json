@@ -1,0 +1,165 @@
+{
+  "pr": 22,
+  "merge_commit": "1c903de68d19904bb715c91d65521a5d86457432",
+  "ci": {
+    "pr": 22,
+    "head": "7001e094cf71a6f855cd4d6a9c142a623927293c",
+    "base": "ab7b6013c92534a27991efbf8e7ef89b210c8a61",
+    "latest_run": 43685359464,
+    "jobs": [
+      {
+        "name": "Python 3.11",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/rakeshgangwar/generative-radio/actions/runs/43685359464/job/132724593599"
+      },
+      {
+        "name": "Audio and streaming integration",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/rakeshgangwar/generative-radio/actions/runs/43685359464/job/132724593604"
+      },
+      {
+        "name": "Listener controls",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/rakeshgangwar/generative-radio/actions/runs/43685359464/job/132724593651"
+      },
+      {
+        "name": "Python 3.14",
+        "status": "completed",
+        "conclusion": "success",
+        "url": "https://github.com/rakeshgangwar/generative-radio/actions/runs/43685359464/job/132724593657"
+      }
+    ]
+  },
+  "rollout": {
+    "pass": true,
+    "before": {
+      "composer": {
+        "id": "0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146",
+        "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+        "started": "2026-11-15T03:23:31.379138171Z",
+        "health": "healthy",
+        "restarts": 0,
+        "oom": false
+      },
+      "renderer": {
+        "id": "04a26abb33422649a11752d188ca9e2eb149fbe50c981fc3a2eced30a00805d4",
+        "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+        "started": "2026-11-15T03:23:31.259377863Z",
+        "health": "healthy",
+        "restarts": 0,
+        "oom": false
+      },
+      "broadcaster": {
+        "id": "abb87b80c56c007c8240d5df311c9a96af9f96824c423e5b34460a138fa171fc",
+        "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+        "started": "2026-11-15T05:57:04.799911735Z",
+        "health": "healthy",
+        "restarts": 0,
+        "oom": false
+      },
+      "icecast": {
+        "id": "78f7a60cd2c96ce90c32f4ee896bd67cfb02646ebd7529f26ca402798da3bd6d",
+        "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+        "started": "2026-11-15T05:56:38.273381611Z",
+        "health": "healthy",
+        "restarts": 0,
+        "oom": false
+      },
+      "web": {
+        "id": "7b56dc59ec69e259321bb53e2073f1976c7696bc11ff9d02385743c491703164",
+        "image": "sha256:5f73061f4918e182f9a837f259d5620f3a7569e124ae5d0e253fbed436c50c3b",
+        "started": "2026-11-15T05:56:48.89950045Z",
+        "health": "healthy",
+        "restarts": 0,
+        "oom": false
+      }
+    },
+    "after": {
+      "composer": {
+        "id": "0d4c18e08de947dcaebee83f67fea9aa45fa407b7f9fa7ee90839cf20923d146",
+        "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+        "started": "2026-11-15T03:23:31.379138171Z",
+        "health": "healthy",
+        "restarts": 0,
+        "oom": false
+      },
+      "renderer": {
+        "id": "04a26abb33422649a11752d188ca9e2eb149fbe50c981fc3a2eced30a00805d4",
+        "image": "sha256:07ae2af603f9afb8ca3a74e0107d51eaf342ee477cd25356ca4545f10720aa35",
+        "started": "2026-11-15T03:23:31.259377863Z",
+        "health": "healthy",
+        "restarts": 0,
+        "oom": false
+      },
+      "broadcaster": {
+        "id": "abb87b80c56c007c8240d5df311c9a96af9f96824c423e5b34460a138fa171fc",
+        "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+        "started": "2026-11-15T05:57:04.799911735Z",
+        "health": "healthy",
+        "restarts": 0,
+        "oom": false
+      },
+      "icecast": {
+        "id": "78f7a60cd2c96ce90c32f4ee896bd67cfb02646ebd7529f26ca402798da3bd6d",
+        "image": "sha256:ec18ad04f8d0fa761f722922f1319bf08a2699de26608374b5c13617604ad462",
+        "started": "2026-11-15T05:56:38.273381611Z",
+        "health": "healthy",
+        "restarts": 0,
+        "oom": false
+      },
+      "web": {
+        "id": "3fdbed2dc51066cdda5bce815815c9b618744d109a95de6183ae36d62df935e6",
+        "image": "sha256:674e5647920a99741b6e7255b2d742f243c29aa84d6315a43b468a3e3ce8a074",
+        "started": "2026-11-15T06:36:48.504597541Z",
+        "health": "healthy",
+        "restarts": 0,
+        "oom": false
+      }
+    },
+    "events": [
+      {
+        "elapsed": 5684,
+        "phase": "old listener connected before gateway-only swap"
+      },
+      {
+        "elapsed": 31951,
+        "phase": "candidate gateway healthy"
+      },
+      {
+        "elapsed": 36768,
+        "phase": "old connected listener resumed and audio advances"
+      },
+      {
+        "elapsed": 42588,
+        "phase": "fresh listener plays deployed exact policy; context and pause pass"
+      }
+    ],
+    "oldClientRecovered": true,
+    "title": "Chapter 99 is in bloom. Soft bells.",
+    "scope": "Local web-only rollout; four music roles preserved. No gap-free or physical-device claim."
+  },
+  "backup": {
+    "volume": "radio-backups",
+    "snapshot": "before-listener-recovery-20261115-0630",
+    "jobs": 43,
+    "files": 89,
+    "off_host": false
+  },
+  "artifact_sha256": {
+    "rollout.json": "83c36fe26e725ed2103a05ea1bd29ed7e2f678023516a99fb75b7ea4c7f5d80f",
+    "rollout.log": "37ae0a4dfc548fe568858847280479d28624818399b2d86613be4d0d7c04f9d7",
+    "backup-verified.json": "c7beae70c29df6a643649386706f97d77ad437b378fe0da46831a96db0611abf",
+    "ci-receipt.json": "74fe38cdbc1c294dc9485110f9520f903eb820d40c7e067feb78441aaa4b22df",
+    "merge-receipt.json": "5b3f5e73965f71aa39e689d8ead5fad44cabb0e1d1d12f0a853be598da496bfc",
+    "live.png": "81869d09c5613d36aeda1210354c2fc53561d5b4b76d241bf89c0d3144d1eac3"
+  },
+  "deferred_minor": "Controlled HTTP-fault browser helper records final state and timestamped requests but lacks timestamped early/recovered/final state snapshots. Actual replacement drill and live rollout retain sampled state telemetry.",
+  "limits": [
+    "Public hosting and actual off-host recovery require destinations.",
+    "Physical-device/Safari/OS suspension and human musical acceptance remain open.",
+    "No gap-free maintenance claim."
+  ]
+}
