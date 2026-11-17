@@ -1255,3 +1255,40 @@ recorder processes finish. It preserves the maintenance failure and earlier
 interrupted attempt, and distinguishes a completed observation from all-healthy
 acceptance. Final resource evidence still needs inspection before publication;
 there is no independent six-hour audio recording or human musical verdict.
+
+
+## 17 November: three offline vibe sketches
+
+Proposed direction: listeners choose music for public spaces or home activities,
+with distinct musical profiles rather than instrument substitutions alone.
+Multiple live programmes, personal sessions and automatic scheduling remain
+proposals. No new station mode has shipped.
+
+At the user's request, an offline listening spike produced three 75-second
+sketches using the existing TimGM6mb SoundFont, FluidSynth and FFmpeg, with no
+new dependencies: Focus (sparse piano, nylon guitar, warm pad), Café (electric
+piano, acoustic bass, jazz guitar, light brush-kit percussion), and Unwind
+(flute, warm pad, sparse sitar, substitute conga/bongo percussion). Inspection
+found flute and guitar presets but no dedicated tabla preset. Unwind is explicitly
+labelled as a placeholder audition, not authentic tabla, bansuri or tanpura.
+A suitable licensed tabla library and listening evaluation are still needed
+before accepting that musical direction.
+
+The final three WAVs are exactly 75 seconds, each measures −22.01 LUFS, and true
+peaks range from −9.75 to −8.34 dBTP. All pass the existing PCM analysis and
+matching-level checks, have no detected two-second silence at −50 dBFS, and
+encode to MP3 that fully decodes. An initial Café ending failed with 2.38583
+seconds of quiet decay; the retained failed attempt is separate from the final
+run, whose score permits notes through the ending fade. The audio gates were
+unchanged. Human listening acceptance remains open; these metrics establish
+technical validity rather than pleasure, focus or sleep benefits.
+
+Local artifacts, including the throwaway generator, MIDI, WAV, MP3 and logs, are
+in `artifacts/vibe-previews-20261117/`, served at
+[localhost:18100](http://localhost:18100/). Audio stays outside Git under the
+existing artifacts policy. The [measurement receipt](evidence/offline-vibe-previews-20261117.json)
+retains source/audio fingerprints, settings and limitations. The page responds
+with HTTP 200; browser UI validation was unavailable because the connected
+Chrome tool requires a display. Rendering used a network-disabled container
+without station data mounts; all five live services remained healthy. This
+ships an experiment record, not production composer or streaming changes.

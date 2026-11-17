@@ -1,0 +1,112 @@
+{
+  "status": "complete",
+  "scope": "offline listening spike; no live station changes",
+  "seconds_per_clip": 75,
+  "seed": 20261117,
+  "soundfont_sha256": "c5378b62028c920cb11e4803327983fee2f2cdff5dc89c708e39da417e51c854",
+  "script_sha256": "e2ae9fe13671bf1e05099ba1ff188b1542ac5c894c3da552e0b7cb930fad9e27",
+  "engines": {
+    "fluidsynth": "FluidSynth runtime version 2.3.1\nCopyright (C) 2000-2022 Peter Hanappe and others.\nDistributed under the LGPL license.\nSoundFont(R) is a registered trademark of Creative Technology Ltd.\n\nFluidSynth executable version 2.3.1\nSample type=double\n",
+    "ffmpeg": "ffmpeg version 5.1.9-0+deb12u1 Copyright (c) 2000-2026 the FFmpeg developers\nbuilt with gcc 12 (Debian 12.2.0-14+deb12u1)\nconfiguration: --prefix=/usr --extra-version=0+deb12u1 --toolchain=hardened --libdir=/usr/lib/x86_64-linux-gnu --incdir=/usr/include/x86_64-linux-gnu --arch=amd64 --enable-gpl --disable-stripping --enable-gnutls --enable-ladspa --enable-libaom --enable-libass --enable-libbluray --enable-libbs2b --enable-libcaca --enable-libcdio --enable-libcodec2 --enable-libdav1d --enable-libflite --enable-libfontconfig --enable-libfreetype --enable-libfribidi --enable-libglslang --enable-libgme --enable-libgsm --enable-libjack --enable-libmp3lame --enable-libmysofa --enable-libopenjpeg --enable-libopenmpt --enable-libopus --enable-libpulse --enable-librabbitmq --enable-librist --enable-librubberband --enable-libshine --enable-libsnappy --enable-libsoxr --enable-libspeex --enable-libsrt --enable-libssh --enable-libsvtav1 --enable-libtheora --enable-libtwolame --enable-libvidstab --"
+  },
+  "variants": {
+    "focus": {
+      "bpm": 52,
+      "programs": [
+        0,
+        24,
+        89
+      ],
+      "description": "Sparse piano, nylon guitar and a quiet warm pad. No percussion.",
+      "note_count": 118,
+      "render_seconds": 2.6010734730007243,
+      "midi_sha256": "cd92eec6666a946ee16737ed24de8342fd43f938aba5b82e165b18f87c81e584",
+      "input_loudness": {
+        "integrated_lufs": -21.45,
+        "true_peak_dbfs": -7.78
+      },
+      "gain_db": -0.5600000000000023,
+      "analysis": {
+        "duration": 75.0,
+        "peak": 0.3829345703125,
+        "rms_dbfs": -24.221309463895114,
+        "quiet_fraction": 0.0013333333333333333
+      },
+      "final_loudness": {
+        "integrated_lufs": -22.01,
+        "true_peak_dbfs": -8.34
+      },
+      "wav_sha256": "601779cde37b8aa2e209f012ee24425d8ef1aaf88c534fc09cbfc352b9387e83",
+      "mp3_sha256": "ddcfb48d9e37b30c29138b4ac307a448ce8995a5206e0f709765a7f8c602ebb0"
+    },
+    "cafe": {
+      "bpm": 76,
+      "programs": [
+        4,
+        32,
+        26
+      ],
+      "description": "Electric piano, acoustic bass, jazz guitar and light brush-kit percussion.",
+      "note_count": 385,
+      "render_seconds": 2.6845825759992294,
+      "midi_sha256": "456db4120e0b7ecf8b65cc96092cc629a991b5903a4798018576a6d64997ca9e",
+      "input_loudness": {
+        "integrated_lufs": -22.01,
+        "true_peak_dbfs": -9.14
+      },
+      "gain_db": 0.0,
+      "analysis": {
+        "duration": 75.0,
+        "peak": 0.348785400390625,
+        "rms_dbfs": -24.650392732573753,
+        "quiet_fraction": 0.03333333333333333
+      },
+      "final_loudness": {
+        "integrated_lufs": -22.01,
+        "true_peak_dbfs": -9.14
+      },
+      "wav_sha256": "b2a093feb5bc259bbbfe1ed3d9eb645a7535e8aeda58693b75dfd042621627de",
+      "mp3_sha256": "96569548ae79cd53b08d877d0bb773634b02a4abb396d111ebb4435ce78145da"
+    },
+    "unwind": {
+      "bpm": 56,
+      "programs": [
+        73,
+        89,
+        104
+      ],
+      "description": "General MIDI flute, warm pad, sparse sitar and soft conga/bongo percussion. These are placeholders, not bansuri, tanpura or tabla samples.",
+      "note_count": 123,
+      "render_seconds": 2.7210367830002724,
+      "midi_sha256": "46b7419a2bc15ee348c26b62a3e682a48a26496ffd4bb71a2fe5104b1c4bfe89",
+      "input_loudness": {
+        "integrated_lufs": -21.54,
+        "true_peak_dbfs": -9.28
+      },
+      "gain_db": -0.4700000000000024,
+      "analysis": {
+        "duration": 75.0,
+        "peak": 0.32525634765625,
+        "rms_dbfs": -24.30843561232601,
+        "quiet_fraction": 0.0026666666666666666
+      },
+      "final_loudness": {
+        "integrated_lufs": -22.01,
+        "true_peak_dbfs": -9.75
+      },
+      "wav_sha256": "3ca19cf6f5ec7f625444ab4a4c1ffec5ac0179163afa2f638abf122132429655",
+      "mp3_sha256": "59de4246c7f1e6481a840d487ea013184d6b8edd9968636c86331882b25e1d02"
+    }
+  },
+  "target_lufs": -22.01,
+  "date": "2026-11-17",
+  "local_artifact_directory": "artifacts/vibe-previews-20261117",
+  "local_listening_url": "http://localhost:18100/",
+  "limitations": [
+    "Offline throwaway spike, not a reusable station feature.",
+    "Unwind uses GM flute and substitute conga/bongo percussion, not bansuri or tabla.",
+    "Human listening acceptance remains open.",
+    "Browser UI check unavailable: Chrome DevTools requires a display; HTTP and full MP3 decoding verified.",
+    "An initial attempt failed on a 2.38583-second quiet Cafe tail; retained under artifacts/vibe-previews-20261117-attempt1. Final score allows notes through the fade and all clips pass the unchanged silence gate."
+  ]
+}
